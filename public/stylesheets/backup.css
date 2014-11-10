@@ -1,0 +1,35 @@
+/* .dropdown-menu.cdropdown-menu li{
+	text-align: center;
+} */
+body{
+	padding-top:80px;
+}
+/* 导航条  */
+/* .navbar-default{
+	background:#555555;
+}
+.navbar-header .navbar-brand{
+	color:#FFF;
+} */
+/* 用户管理  */
+.userManMenu{
+	list-style-type:none;
+	padding:0px;
+	border:1px solid #e7e7e7;
+}
+.userManMenu li{
+	text-align: center;
+	border-bottom:1px solid #e7e7e7;
+}
+.userManMenu li.active{
+	background:#e7e7e7;
+	color:#555;
+}
+.userManMenu li a{
+	display: block;
+	padding:10px;
+	color:#555;
+}
+table#userTable tr td{
+	line-height:50px;
+}
