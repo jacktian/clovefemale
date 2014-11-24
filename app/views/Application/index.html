@@ -85,125 +85,139 @@
 		<div class="col-md-10">
 					<table class="table table-hover table-striped" id="userTable">
 						<tr>
-							<th>编号</th>
+							<th>用户编号</th>
 							<th>姓名</th>
 							<th>昵称</th>
-							<th>性别</th>
-							<th>年龄</th>
-							<th>时长</th>
-							<th>身份</th>
+							<th>密码</th>
+							<th>邮箱</th>
+              <th>手机</th>
+              <th>身份证</th>
 							<th>管理</th>
 						</tr>
-  						<tr>
-  							<td>001</td>
-  							<td>曾柏羲</td>
-  							<td>boxizen</td>
-  							<td>男</td>
-  							<td>23</td>
-  							<td>1h</td>
-  							<td>管理员</td>
-  							<td><button type="button" class="btn btn-primary">修改</button>
-  							<button type="button" class="btn btn-danger">删除</button></td>
-  						</tr>
-  						<tr>
-  							<td>001</td>
-  							<td>曾柏羲</td>
-  							<td>boxizen</td>
-  							<td>男</td>
-  							<td>23</td>
-  							<td>1h</td>
-  							<td>管理员</td>
-  							<td><button type="button" class="btn btn-primary">修改</button>
-  							<button type="button" class="btn btn-danger">删除</button></td>
-  						</tr>
-  						<tr>
-  							<td>001</td>
-  							<td>曾柏羲</td>
-  							<td>boxizen</td>
-  							<td>男</td>
-  							<td>23</td>
-  							<td>1h</td>
-  							<td>管理员</td>
-  							<td><button type="button" class="btn btn-primary">修改</button>
-  							<button type="button" class="btn btn-danger">删除</button></td>
-  						</tr>
-  						<tr>
-  							<td>001</td>
-  							<td>曾柏羲</td>
-  							<td>boxizen</td>
-  							<td>男</td>
-  							<td>23</td>
-  							<td>1h</td>
-  							<td>管理员</td>
-  							<td><button type="button" class="btn btn-primary">修改</button>
-  							<button type="button" class="btn btn-danger">删除</button></td>
-  						</tr>
-  						<tr>
-  							<td>001</td>
-  							<td>曾柏羲</td>
-  							<td>boxizen</td>
-  							<td>男</td>
-  							<td>23</td>
-  							<td>1h</td>
-  							<td>管理员</td>
-  							<td><button type="button" class="btn btn-primary">修改</button>
-  							<button type="button" class="btn btn-danger">删除</button></td>
-  						</tr>
-  						<tr>
-  							<td>001</td>
-  							<td>曾柏羲</td>
-  							<td>boxizen</td>
-  							<td>男</td>
-  							<td>23</td>
-  							<td>1h</td>
-  							<td>管理员</td>
-  							<td><button type="button" class="btn btn-primary">修改</button>
-  							<button type="button" class="btn btn-danger">删除</button></td>
-  						</tr>
-  						<tr>
-  							<td>001</td>
-  							<td>曾柏羲</td>
-  							<td>boxizen</td>
-  							<td>男</td>
-  							<td>23</td>
-  							<td>1h</td>
-  							<td>管理员</td>
-  							<td><button type="button" class="btn btn-primary">修改</button>
-  							<button type="button" class="btn btn-danger">删除</button></td>
-  						</tr>
-  						<tr>
-  							<td>001</td>
-  							<td>曾柏羲</td>
-  							<td>boxizen</td>
-  							<td>男</td>
-  							<td>23</td>
-  							<td>1h</td>
-  							<td>管理员</td>
-  							<td><button type="button" class="btn btn-primary">修改</button>
-  							<button type="button" class="btn btn-danger">删除</button></td>
-  						</tr>
-  						<tr>
-  							<td>001</td>
-  							<td>曾柏羲</td>
-  							<td>boxizen</td>
-  							<td>男</td>
-  							<td>23</td>
-  							<td>1h</td>
-  							<td>管理员</td>
-  							<td><button type="button" class="btn btn-primary">修改</button>
-  							<button type="button" class="btn btn-danger">删除</button></td>
-  						</tr>
-  						<tr>
-  							<td>001</td>
-  							<td>曾柏羲</td>
-  							<td>boxizen</td>
-  							<td>男</td>
-  							<td>23</td>
-  							<td>1h</td>
-  							<td>管理员</td>
-  							<td><button type="button" class="btn btn-primary">修改</button>
-  							<button type="button" class="btn btn-danger">删除</button></td>
-  						</tr>
+            #{list users,as:'user'}
+            <tr>
+                <td>*****</td>
+                <td>${user.userName}</td>
+                <td>${user.realName}</td>
+                <td>${user.passwd}</td>
+                <td>${user.email}</td>
+                <td>${user.phoneNum}</td>
+                <td>${user.IDcard}</td>
+                <td><button type="button" class="btn btn-primary">修改</button>
+                <button type="button" class="btn btn-danger">删除</button></td>
+            </tr>
+            #{/list}
+  				<!--     
+          <tr>
+                          <td>001</td>
+                          <td>曾柏羲</td>
+                          <td>boxizen</td>
+                          <td>123456</td>
+                          <td>boxizen@qq.com</td>
+                          <td>15989070640</td>
+                          <td>441381191110241816</td>
+                          <td><button type="button" class="btn btn-primary">修改</button>
+                          <button type="button" class="btn btn-danger">删除</button></td>
+                        </tr>
+                        <tr>
+                          <td>001</td>
+                          <td>曾柏羲</td>
+                          <td>boxizen</td>
+                          <td>123456</td>
+                          <td>boxizen@qq.com</td>
+                          <td>15989070640</td>
+                          <td>441381191110241816</td>
+                          <td><button type="button" class="btn btn-primary">修改</button>
+                          <button type="button" class="btn btn-danger">删除</button></td>
+                        </tr>
+                        <tr>
+                          <td>001</td>
+                          <td>曾柏羲</td>
+                          <td>boxizen</td>
+                          <td>123456</td>
+                          <td>boxizen@qq.com</td>
+                          <td>15989070640</td>
+                          <td>441381191110241816</td>
+                          <td><button type="button" class="btn btn-primary">修改</button>
+                          <button type="button" class="btn btn-danger">删除</button></td>
+                        </tr>
+                        <tr>
+                          <td>001</td>
+                          <td>曾柏羲</td>
+                          <td>boxizen</td>
+                          <td>123456</td>
+                          <td>boxizen@qq.com</td>
+                          <td>15989070640</td>
+                          <td>441381191110241816</td>
+                          <td><button type="button" class="btn btn-primary">修改</button>
+                          <button type="button" class="btn btn-danger">删除</button></td>
+                        </tr>
+                        <tr>
+                          <td>001</td>
+                          <td>曾柏羲</td>
+                          <td>boxizen</td>
+                          <td>123456</td>
+                          <td>boxizen@qq.com</td>
+                          <td>15989070640</td>
+                          <td>441381191110241816</td>
+                          <td><button type="button" class="btn btn-primary">修改</button>
+                          <button type="button" class="btn btn-danger">删除</button></td>
+                        </tr>
+                        <tr>
+                          <td>001</td>
+                          <td>曾柏羲</td>
+                          <td>boxizen</td>
+                          <td>123456</td>
+                          <td>boxizen@qq.com</td>
+                          <td>15989070640</td>
+                          <td>441381191110241816</td>
+                          <td><button type="button" class="btn btn-primary">修改</button>
+                          <button type="button" class="btn btn-danger">删除</button></td>
+                        </tr>
+                        <tr>
+                          <td>001</td>
+                          <td>曾柏羲</td>
+                          <td>boxizen</td>
+                          <td>123456</td>
+                          <td>boxizen@qq.com</td>
+                          <td>15989070640</td>
+                          <td>441381191110241816</td>
+                          <td><button type="button" class="btn btn-primary">修改</button>
+                          <button type="button" class="btn btn-danger">删除</button></td>
+                        </tr>
+                        <tr>
+                          <td>001</td>
+                          <td>曾柏羲</td>
+                          <td>boxizen</td>
+                          <td>123456</td>
+                          <td>boxizen@qq.com</td>
+                          <td>15989070640</td>
+                          <td>441381191110241816</td>
+                          <td><button type="button" class="btn btn-primary">修改</button>
+                          <button type="button" class="btn btn-danger">删除</button></td>
+                        </tr>
+                        <tr>
+                          <td>001</td>
+                          <td>曾柏羲</td>
+                          <td>boxizen</td>
+                          <td>123456</td>
+                          <td>boxizen@qq.com</td>
+                          <td>15989070640</td>
+                          <td>441381191110241816</td>
+                          <td><button type="button" class="btn btn-primary">修改</button>
+                          <button type="button" class="btn btn-danger">删除</button></td>
+                        </tr>
+                        <tr>
+                          <td>001</td>
+                          <td>曾柏羲</td>
+                          <td>boxizen</td>
+                          <td>123456</td>
+                          <td>boxizen@qq.com</td>
+                          <td>15989070640</td>
+                          <td>441381191110241816</td>
+                          <td><button type="button" class="btn btn-primary">修改</button>
+                          <button type="button" class="btn btn-danger">删除</button></td>
+                        </tr> -->
 					</table>
 					<nav>
   <ul class="pagination">
@@ -224,5 +238,7 @@
 	<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
 	<script src="@{'/public/javascripts/bootstrap.min.js'}"></script>
+	<!-- 加载的js -->
+	<script src="@{'/public/javascripts/userLoad.js'}"></script>
 </body>
 </html>
