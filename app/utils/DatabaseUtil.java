@@ -3,6 +3,8 @@ package utils;
 import java.util.Date;
 
 import models.Baby;
+import models.FetalMovement;
+import models.GestationalWeight;
 import models.Menses;
 import models.Temperature;
 import models.User;
@@ -49,7 +51,7 @@ public class DatabaseUtil {
     	Menses menses2 = new Menses(u1.id, new Date(),"鲜红", "少", true, true,"稀");
     	menses2.save();
     	Menses menses3 = new Menses(u2.id, new Date(),"鲜红", "少", true, true,"稀");
-    	menses3.save();
+    	menses3.save(); 
     	
     	Temperature temperature1 = new Temperature(u1.id,new Date(), 36.7F);
     	temperature1.save();
@@ -58,6 +60,20 @@ public class DatabaseUtil {
     	Temperature temperature3 = new Temperature(u1.id,new Date(), 36.9F);
     	temperature3.save();
     	
+    	GestationalWeight weight1 = new GestationalWeight(u1.id,new Date(), 56.2F);
+    	weight1.save();
+    	GestationalWeight weight2 = new GestationalWeight(u2.id,new Date(), 56.5F);
+    	weight2.save();
+    	GestationalWeight weight3 = new GestationalWeight(u1.id,new Date(), 56.6F);
+    	weight3.save();
+    	
+    	
+    	FetalMovement movement1 = new FetalMovement(u1.id,new Date(), 8);
+    	movement1.save();
+    	FetalMovement movement2 = new FetalMovement(u1.id,new Date(), 6);
+    	movement2.save();
+    	FetalMovement movement3 = new FetalMovement(u1.id,new Date(), 10);
+    	movement3.save();
     	
 	}
 }

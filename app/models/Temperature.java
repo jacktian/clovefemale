@@ -2,6 +2,7 @@ package models;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 import com.sudocn.play.BasicModel;
@@ -9,19 +10,31 @@ import com.sudocn.play.BasicModel;
 import play.data.validation.Required;
 
 /**
- * 
+ * 基础体温实体类
  *
  * @author caterZhong
  * @since 14/12/16
- * 基础体温实体类
+ * 
  */
 @Entity
 public class Temperature extends BasicModel {
+	
+	/**
+	 * 日期
+	 */
 	@Required
-	public Date tDate; //日期
+	@Column(name = "t_date")
+	public Date tDate; 
+	
+	/**
+	 * 温度
+	 */
 	@Required
-	public float tValue; //温度
+	@Column(name = "t_value")
+	public float tValue; 
+	
 	@Required
+	@Column(name = "user_id")
 	public String userId;
 	
 	public Temperature(String userId,Date tDate, float tValue){
