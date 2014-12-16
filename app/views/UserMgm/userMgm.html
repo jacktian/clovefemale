@@ -1,10 +1,10 @@
 #{extends 'main.html' /}
 #{set title:'用户管理' /}
-#{output 'Application/userTpl.html'/}
+#{output 'UserMgm/userTpl.html'/}
 <!-- 用户管理  -->
 <div class="container">
 	<div class="col-md-2">
-		<ul class="userManMenu">
+		<ul class="userManMenu manaMenu">
 			<li class="active">
 				<a href="#">信息查询</a>
 			</li>
@@ -16,7 +16,7 @@
 			</li>
 		</ul>
 	</div>
-	<div class="col-md-10 userList">
+	<div class="col-md-10 userList dataList">
 		<table class="table table-hover table-striped" id="userTable">
 			<tr class="tableHeader">
 				<th>用户编号</th>

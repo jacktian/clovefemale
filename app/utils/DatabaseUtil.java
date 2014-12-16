@@ -31,6 +31,7 @@ public class DatabaseUtil {
 			baby.pId = u1.id;
 			baby.name = "小喇叭" + i + "号";
 			baby.sex = "male";
+			baby.date = new Date();
 			baby.save();
 		}
     	

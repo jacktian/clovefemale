@@ -5,8 +5,9 @@ $(function(){
 		$(this).parents("table tr").remove();
 		var uId = $(this).attr('uid');
 		$.get('http://localhost:9000/useraction/deluser?uId='+uId, function() {
-	        alert("删除成功!");
+			alert("删除成功!");
 			$(this).parents("table tr").remove();
+			location.reload();
 	    });
 	}
 	

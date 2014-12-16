@@ -1,0 +1,16 @@
+<script id="babyTpl" type="text/template">
+	{@each babyList as baby}
+	<tr class="babyItem">
+		<input type="hidden" value="${baby.id}"/>
+		<td>${baby.name}</td>
+		<td>${baby.sex}</td>
+		<td>${baby.date}</td>
+		<td><a href="${baby.pId}" class="parent">${baby.pName}</a></td>
+		<td><a href="${baby.id}" class="health">查询</a></td>
+		<td><a href="${baby.id}" class="score">查询</a></td>
+		<td><a href="${baby.id}" class="vacci">查询</a></td>
+		<td><button type="button" class="btn btn-primary babyAltBtn" uid="${baby.id}">修改</button>
+		<button type="button" class="btn btn-danger babyDelBtn" id="${baby.id}">删除</button></td>
+	</tr>
+	{@/each}
+</script>	

@@ -14,6 +14,8 @@ $(function(){
 	    });
 	}
 	
+	$(".topNav li").removeClass("active");
+	$(".topNav li").eq(0).addClass("active");
 	$(this).bind("loadUsersByPage",loadUsersByPage);
 	$(this).trigger('loadUsersByPage');
 });
