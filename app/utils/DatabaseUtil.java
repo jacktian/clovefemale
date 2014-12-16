@@ -3,6 +3,8 @@ package utils;
 import java.util.Date;
 
 import models.Baby;
+import models.Menses;
+import models.Temperature;
 import models.User;
 import models.UserToBaby;
 
@@ -41,5 +43,21 @@ public class DatabaseUtil {
     	baby1.save();
     	UserToBaby userBaby1 = new UserToBaby(u1.id,baby1.id);
     	userBaby1.save();
+    	
+    	Menses menses = new Menses(u1.id, new Date(),"暗红", "多", true, true,"稠");
+    	menses.save();
+    	Menses menses2 = new Menses(u1.id, new Date(),"鲜红", "少", true, true,"稀");
+    	menses2.save();
+    	Menses menses3 = new Menses(u2.id, new Date(),"鲜红", "少", true, true,"稀");
+    	menses3.save();
+    	
+    	Temperature temperature1 = new Temperature(u1.id,new Date(), 36.7F);
+    	temperature1.save();
+    	Temperature temperature2 = new Temperature(u2.id,new Date(), 37.7F);
+    	temperature2.save();
+    	Temperature temperature3 = new Temperature(u1.id,new Date(), 36.9F);
+    	temperature3.save();
+    	
+    	
 	}
 }
