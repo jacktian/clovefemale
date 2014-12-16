@@ -1,244 +1,52 @@
-<!DOCTYPE html>
-<html lang="zh-cn">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>丁香女性助手后台管理</title>
-
-	<!-- normalize  -->
-	<link rel="stylesheet" href="@{'/public/stylesheets/normalize.css'}">
-	<!-- Bootstrap -->
-	<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
-	<!--  backup -->
-	<link rel="stylesheet" href="@{'/public/stylesheets/backup.css'}"></head>
-<body>
-	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-		<div class="container">
-			<!-- Brand标题 -->
-			<div class="navbar-header">
-				<a class="navbar-brand" href="#"> <i class="glyphicon glyphicon-leaf"></i>
-					&nbsp;&nbsp;CloveFemale
-				</a>
-			</div>
-
-			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-				<!-- 功能菜单 -->
-				<ul class="nav navbar-nav">
-					<li class="active">
-						<a href="#">用户管理</a>
-					</li>
-					<li>
-						<a href="#">记录管理</a>
-					</li>
-					<li>
-						<a href="#">审核管理</a>
-					</li>
-				</ul>
-
-				<!-- 注销菜单   -->
-				<ul class="nav navbar-nav navbar-right">
-					<li>
-						<a href="#">Link</a>
-					</li>
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-							管理员
-							<span class="caret"></span>
-						</a>
-						<ul class="dropdown-menu cdropdown-menu" role="menu">
-							<li>
-								<a href="#"> <i class="glyphicon glyphicon-user"></i>
-									&nbsp;&nbsp;设置
-								</a>
-							</li>
-							<li>
-								<a href="#">
-									<i class="glyphicon glyphicon-log-out"></i>
-									&nbsp;&nbsp;注销
-								</a>
-							</li>
-						</ul>
-					</li>
-				</ul>
-			</div>
-			<!-- /.navbar-collapse -->
-		</div>
-		<!-- /.container-fluid -->
-	</nav>
-
-	<!-- 用户管理  -->
-	<div class="container">
-		<div class="col-md-2">
-			<ul class="userManMenu">
-				<li class="active">
-					<a href="#">信息管理</a>
-				</li>
-				<li>
-					<a href="#">用户审核</a>
-				</li>
-				<li>
-					<a href="#">数据统计</a>
-				</li>
-			</ul>
-		</div>
-		<div class="col-md-10">
-					<table class="table table-hover table-striped" id="userTable">
-						<tr>
-							<th>用户编号</th>
-							<th>姓名</th>
-							<th>昵称</th>
-							<th>密码</th>
-							<th>邮箱</th>
-              <th>手机</th>
-              <th>身份证</th>
-							<th>管理</th>
-						</tr>
-            #{list users,as:'user'}
-            <tr>
-                <td>*****</td>
-                <td>${user.userName}</td>
-                <td>${user.realName}</td>
-                <td>${user.passwd}</td>
-                <td>${user.email}</td>
-                <td>${user.phoneNum}</td>
-                <td>${user.IDcard}</td>
-                <td><button type="button" class="btn btn-primary">修改</button>
-                <button type="button" class="btn btn-danger">删除</button></td>
-            </tr>
-            #{/list}
-  				<!--     
-          <tr>
-                          <td>001</td>
-                          <td>曾柏羲</td>
-                          <td>boxizen</td>
-                          <td>123456</td>
-                          <td>boxizen@qq.com</td>
-                          <td>15989070640</td>
-                          <td>441381191110241816</td>
-                          <td><button type="button" class="btn btn-primary">修改</button>
-                          <button type="button" class="btn btn-danger">删除</button></td>
-                        </tr>
-                        <tr>
-                          <td>001</td>
-                          <td>曾柏羲</td>
-                          <td>boxizen</td>
-                          <td>123456</td>
-                          <td>boxizen@qq.com</td>
-                          <td>15989070640</td>
-                          <td>441381191110241816</td>
-                          <td><button type="button" class="btn btn-primary">修改</button>
-                          <button type="button" class="btn btn-danger">删除</button></td>
-                        </tr>
-                        <tr>
-                          <td>001</td>
-                          <td>曾柏羲</td>
-                          <td>boxizen</td>
-                          <td>123456</td>
-                          <td>boxizen@qq.com</td>
-                          <td>15989070640</td>
-                          <td>441381191110241816</td>
-                          <td><button type="button" class="btn btn-primary">修改</button>
-                          <button type="button" class="btn btn-danger">删除</button></td>
-                        </tr>
-                        <tr>
-                          <td>001</td>
-                          <td>曾柏羲</td>
-                          <td>boxizen</td>
-                          <td>123456</td>
-                          <td>boxizen@qq.com</td>
-                          <td>15989070640</td>
-                          <td>441381191110241816</td>
-                          <td><button type="button" class="btn btn-primary">修改</button>
-                          <button type="button" class="btn btn-danger">删除</button></td>
-                        </tr>
-                        <tr>
-                          <td>001</td>
-                          <td>曾柏羲</td>
-                          <td>boxizen</td>
-                          <td>123456</td>
-                          <td>boxizen@qq.com</td>
-                          <td>15989070640</td>
-                          <td>441381191110241816</td>
-                          <td><button type="button" class="btn btn-primary">修改</button>
-                          <button type="button" class="btn btn-danger">删除</button></td>
-                        </tr>
-                        <tr>
-                          <td>001</td>
-                          <td>曾柏羲</td>
-                          <td>boxizen</td>
-                          <td>123456</td>
-                          <td>boxizen@qq.com</td>
-                          <td>15989070640</td>
-                          <td>441381191110241816</td>
-                          <td><button type="button" class="btn btn-primary">修改</button>
-                          <button type="button" class="btn btn-danger">删除</button></td>
-                        </tr>
-                        <tr>
-                          <td>001</td>
-                          <td>曾柏羲</td>
-                          <td>boxizen</td>
-                          <td>123456</td>
-                          <td>boxizen@qq.com</td>
-                          <td>15989070640</td>
-                          <td>441381191110241816</td>
-                          <td><button type="button" class="btn btn-primary">修改</button>
-                          <button type="button" class="btn btn-danger">删除</button></td>
-                        </tr>
-                        <tr>
-                          <td>001</td>
-                          <td>曾柏羲</td>
-                          <td>boxizen</td>
-                          <td>123456</td>
-                          <td>boxizen@qq.com</td>
-                          <td>15989070640</td>
-                          <td>441381191110241816</td>
-                          <td><button type="button" class="btn btn-primary">修改</button>
-                          <button type="button" class="btn btn-danger">删除</button></td>
-                        </tr>
-                        <tr>
-                          <td>001</td>
-                          <td>曾柏羲</td>
-                          <td>boxizen</td>
-                          <td>123456</td>
-                          <td>boxizen@qq.com</td>
-                          <td>15989070640</td>
-                          <td>441381191110241816</td>
-                          <td><button type="button" class="btn btn-primary">修改</button>
-                          <button type="button" class="btn btn-danger">删除</button></td>
-                        </tr>
-                        <tr>
-                          <td>001</td>
-                          <td>曾柏羲</td>
-                          <td>boxizen</td>
-                          <td>123456</td>
-                          <td>boxizen@qq.com</td>
-                          <td>15989070640</td>
-                          <td>441381191110241816</td>
-                          <td><button type="button" class="btn btn-primary">修改</button>
-                          <button type="button" class="btn btn-danger">删除</button></td>
-                        </tr> -->
-					</table>
-					<nav>
-  <ul class="pagination">
-    <li class="disabled"><a href="#">&laquo;</a></li>
-    <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
-    <li><a href="#">2</a></li>
-    <li><a href="#">3</a></li>
-    <li><a href="#">4</a></li>
-    <li><a href="#">5</a></li>
-    <li><a href="#">6</a></li>
-    <li><a href="#">7</a></li>
-    <li><a href="#">»</a></li>
-  </ul>
-</nav>
-		</div>
+#{extends 'main.html' /}
+#{set title:'用户管理' /}
+#{output 'Application/userTpl.html'/}
+<!-- 用户管理  -->
+<div class="container">
+	<div class="col-md-2">
+		<ul class="userManMenu">
+			<li class="active">
+				<a href="#">信息查询</a>
+			</li>
+			<li>
+				<a href="#">用户审核</a>
+			</li>
+			<li>
+				<a href="#">数据统计</a>
+			</li>
+		</ul>
 	</div>
-	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-	<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
-	<!-- Include all compiled plugins (below), or include individual files as needed -->
-	<script src="@{'/public/javascripts/bootstrap.min.js'}"></script>
-	<!-- 加载的js -->
-	<script src="@{'/public/javascripts/userLoad.js'}"></script>
-</body>
-</html>
+	<div class="col-md-10">
+		<table class="table table-hover table-striped" id="userTable">
+			<tr class="tableHeader">
+				<th>用户编号</th>
+				<th>姓名</th>
+				<th>昵称</th>
+				<th>密码</th>
+				<th>邮箱</th>
+				<th>手机</th>
+				<th>身份证</th>
+				<th>管理</th>
+			</tr>
+		</table>
+		<nav>
+			<ul class="pagination">
+				<li class="disabled"><a href="#">&laquo;</a></li>
+				<li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
+				<li><a href="#">2</a></li>
+				<li><a href="#">3</a></li>
+				<li><a href="#">4</a></li>
+				<li><a href="#">5</a></li>
+				<li><a href="#">6</a></li>
+				<li><a href="#">7</a></li>
+				<li><a href="#">»</a></li>
+			</ul>
+		</nav>
+	</div>
+</div>
+#{set 'moreScripts'}
+<!-- 加载的js -->
+<script type="text/javascript" src = "@{'/public/javascripts/juicer.js'}"></script>
+<script src="@{'/public/javascripts/userLoad.js'}"></script>
+<script src="@{'/public/javascripts/userOper.js'}"></script>
+#{/set}

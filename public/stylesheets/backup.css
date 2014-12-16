@@ -1,17 +1,6 @@
-/* .dropdown-menu.cdropdown-menu li{
-	text-align: center;
-} */
 body{
 	padding-top:80px;
 }
-/* 导航条  */
-/* .navbar-default{
-	background:#555555;
-}
-.navbar-header .navbar-brand{
-	color:#FFF;
-} */
-/* 用户管理  */
 .userManMenu{
 	list-style-type:none;
 	padding:0px;
@@ -30,6 +19,12 @@ body{
 	padding:10px;
 	color:#555;
 }
+table#userTable{
+	min-height:707px;
+}
 table#userTable tr td{
 	line-height:50px;
+}
+.userList nav{
+	text-align:center;
 }

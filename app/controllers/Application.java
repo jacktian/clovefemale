@@ -10,8 +10,16 @@ import models.*;
 public class Application extends Controller {
 
     public static void index() {
-    	List<User> users = User.findAll();
-        render(users);
+    	/*分页显示*/
+    	long count = User.count();
+    	long pageNum = 0;
+    	
+    	if(count%10!=0)
+    		pageNum = count/10+1;
+    	else
+    		pageNum = User.count()/10;
+    	
+        render("/Application/userMgm.html",pageNum);
     }
 
      public static void test(String name,int age){

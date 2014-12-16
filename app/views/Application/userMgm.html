@@ -1,0 +1,84 @@
+#{extends 'main.html' /}
+#{set title:'用户管理' /}
+#{output 'Application/userTpl.html'/}
+<!-- 用户管理  -->
+<div class="container">
+	<div class="col-md-2">
+		<ul class="userManMenu">
+			<li class="active">
+				<a href="#">信息查询</a>
+			</li>
+			<li>
+				<a href="#">用户审核</a>
+			</li>
+			<li>
+				<a href="#">数据统计</a>
+			</li>
+		</ul>
+	</div>
+	<div class="col-md-10 userList">
+		<table class="table table-hover table-striped" id="userTable">
+			<tr class="tableHeader">
+				<th>用户编号</th>
+				<th>姓名</th>
+				<th>昵称</th>
+				<th>密码</th>
+				<th>邮箱</th>
+				<th>手机</th>
+				<th>身份证</th>
+				<th>管理</th>
+			</tr>
+		</table>
+		<nav>
+			<ul class="pagination userPag">
+				<li class="disabled"><a href="#" class="prevPage">&laquo;</a></li>
+				<li class="active"><a href="#">1</a></li>
+				#{list items:1..pageNum-1, as:'i'}
+    				<li><a href="#">${i+1}</a></li>
+				#{/list}
+				<li><a href="#" class="nextPage">»</a></li>			
+			</ul>
+		</nav>
+		
+	</div>
+	<div class="col-md-10 hidden userDetail">
+		<form action="#" class="form-horizontal" role="form">
+			<div class="form-group">
+		    <label >用户Id</label>
+		    <input type="text" class="form-control" name="uid" id="uid" disabled>
+		  </div>
+		  <div class="form-group">
+		    <label for="userName">姓名</label>
+		    <input type="text" class="form-control" name="username" id="userName" placeholder="输入要修改的姓名">
+		  </div>
+		  <div class="form-group">
+		    <label for="nickName">昵称</label>
+		    <input type="text" class="form-control" name="nickname" id="nickName" placeholder="输入要修改的昵称">
+		  </div>
+		  <div class="form-group">
+		    <label for="email">邮箱</label>
+		    <input type="email" class="form-control" name="email" id="email" placeholder="输入要修改的邮箱">
+		  </div>
+		  <div class="form-group">
+		    <label for="password">密码</label>
+		    <input type="password" class="form-control" name="password" id="password" placeholder="输入要修改的密码">
+		  </div>
+		  <div class="form-group">
+		    <label for="phone">手机</label>
+		    <input type="phone" class="form-control" name="phone" id="phone" placeholder="输入要修改的手机">
+		  </div>
+		  <div class="form-group">
+		    <label for="idcard">身份证</label>
+		    <input type="text" class="form-control" name="idcard" id="idcard" placeholder="输入要修改的身份证号码">
+		  </div>
+		  <button type="button" class="btn btn-primary submitBtn">提交</button>
+		  <button type="button" class="btn btn-default returnBtn">返回</button>
+		</form>
+	</div>
+</div>
+#{set 'moreScripts'}
+<!-- 加载的js -->
+<script type="text/javascript" src = "@{'/public/javascripts/juicer.js'}"></script>
+<script src="@{'/public/javascripts/userLoad.js'}"></script>
+<script src="@{'/public/javascripts/userOper.js'}"></script>
+#{/set}

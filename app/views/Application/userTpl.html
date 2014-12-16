@@ -1,0 +1,15 @@
+<script id="userTpl" type="text/template">
+	{@each userList as user}
+	<tr class="userItem">
+		<td><input type="hidden" value="${user.id}"/> </td>
+		<td>${user.realName}</td>
+		<td>${user.userName}</td>
+		<td>${user.passwd}</td>
+		<td>${user.email}</td>
+		<td>${user.phoneNum}</td>
+		<td>${user.IDcard}</td>
+		<td><button type="button" class="btn btn-primary alterBtn" uid="${user.id}">修改</button>
+		<button type="button" class="btn btn-danger deleteBtn" uid="${user.id}">删除</button></td>
+	</tr>
+	{@/each}
+</script>	
