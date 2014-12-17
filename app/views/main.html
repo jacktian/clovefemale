@@ -1,16 +1,83 @@
 <!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>#{get 'title' /}</title>
+	
+	<!-- normalize  -->
+	<link rel="stylesheet" href="@{'/public/stylesheets/normalize.css'}">
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+	<!--  backup -->
+	<link rel="stylesheet" href="@{'/public/stylesheets/backup.css'}">
+	
+	#{get 'moreStyles' /}
+	
+</head>
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container">
+			<!-- Brand标题 -->
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#"> <i class="glyphicon glyphicon-leaf"></i>
+					&nbsp;&nbsp;CloveFemale
+				</a>
+			</div>
 
-<html>
-    <head>
-        <title>#{get 'title' /}</title>
-        <meta charset="${_response_encoding}">
-        <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/main.css'}">
-        #{get 'moreStyles' /}
-        <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
-        <script src="@{'/public/javascripts/jquery-1.6.4.min.js'}" type="text/javascript" charset="${_response_encoding}"></script>
-        #{get 'moreScripts' /}
-    </head>
-    <body>
-        #{doLayout /}
-    </body>
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<!-- 功能菜单 -->
+				<ul class="nav navbar-nav topNav">
+					<li class="active">
+						<a href="@{Application.userMgm}">用户管理</a>
+					</li>
+					<li>
+						<a href="@{Application.recordMgm}">记录管理</a>
+					</li>
+					<li>
+						<a href="#">审核管理</a>
+					</li>
+				</ul>
+
+				<!-- 注销菜单   -->
+				<ul class="nav navbar-nav navbar-right">
+					<li>
+						<a href="#">Link</a>
+					</li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+							管理员
+							<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu cdropdown-menu" role="menu">
+							<li>
+								<a href="#"> <i class="glyphicon glyphicon-user"></i>
+									&nbsp;&nbsp;设置
+								</a>
+							</li>
+							<li>
+								<a href="#">
+									<i class="glyphicon glyphicon-log-out"></i>
+									&nbsp;&nbsp;注销
+								</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container-fluid -->
+	</nav>
+
+	#{doLayout /}
+	
+	
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="@{'/public/javascripts/bootstrap.min.js'}"></script>
+	#{get 'moreScripts' /}
+</body>
 </html>

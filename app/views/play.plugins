@@ -1,0 +1,9 @@
+50:com.sudocn.play.ConfigPlugin
+100:com.sudocn.play.SafePlugin
+100:com.sudocn.less.Plugin
+100:com.sudocn.play.ExceptionPlugin
+100:com.sudocn.jscompress.Plugin
+100:com.sudocn.coffeescript.Plugin
+100:com.sudocn.play.TimeoutPlugin
+100:com.sudocn.number.NumberApiPlugin
+

@@ -1,37 +1,51 @@
 package controllers;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import models.Baby;
-import models.UserToBaby;
+import models.User;
+
+import beans.BabyBean;
 
 import com.sudocn.play.BasicModel;
 
 public class BabyAction extends WebService{
+    
+	/**
+	 * 返回所有孩子
+	 */
+	public static void listBabys(int curpage){
+	 List<Baby> babys = Baby.all().fetch(curpage, 10);
+   	 wsOk(babys);
+    }
 	
-	/*public static void findBabyByUser(String userId){
-		List<UserToBaby>userBabyList = UserToBaby.findByUser(userId);
-		List<Baby> babyList = new ArrayList();
-		for(UserToBaby userBaby:userBabyList){
-			System.out.println(userBaby.babyId);
-			babyList.add(Baby.findById(userBaby.babyId));
-		}
-		wsOk(babyList);
-	}*/
+	/**
+	 * 返回所有孩子Bean对象
+	 */
+	public static void listBabyBeans(int curpage){
+	 List<Baby> babyList = Baby.all().fetch(curpage, 10);
+	 List<BabyBean> babys = BabyBean.builList(babyList);
+   	 wsOk(babys);
+    }
 	
-	public static void findBabyList(){
-		List<Baby> babyList = Baby.findAll();
-		wsOk(babyList);
+	/**
+	 * 删除孩子
+	 */
+	public static void delBaby(String id){
+   	 Baby baby = Baby.findById(id);
+   	 baby.delete();
 	}
 	
-	/*public static void findA(){
-		List<UserToBaby> list = UserToBaby.findAll();
-		wsOk(list);
+	/**
+	 * 修改孩子信息
+	 */
+	public static void alterBaby(String id,String name,String sex,Date date){
+   	 Baby baby = Baby.findById(id);
+   	 baby.name = name;
+   	 baby.sex = sex;
+   	 baby.date = date;
+   	 baby.save();
 	}
-	
-	public static void findById(String id){
-		wsOk(Baby.findById(id));
-	}*/
-	
 }

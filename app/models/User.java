@@ -2,56 +2,144 @@ package models;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Column;
 
 import com.sudocn.play.BasicModel;
 
 import play.data.validation.Email;
 import play.data.validation.Phone;
-import play.data.validation.Required;
 import play.data.validation.Valid;
 import play.db.jpa.Model;
+
+/**
+ * 用户表
+ *
+ * @author boxizen
+ * @since 12/16/14
+ */
 
 @Entity
 @Table(name = "user")
 public class User extends BasicModel{
-	@Required
-	public String userName;
-	@Required
-	public String passwd;
-	@Required
-	public String realName;
-	public String sex;
-	public Date date;
-	public String introduction;
-	public String signName;
-	@Phone
-	public String phoneNum;
-	@Email
-	public String email;
-	public String role;
-	public Date registDate;
-	public String state;
-	public String userGrade;
-	@Required
-	public String IDcard;
-	public Boolean isAddV;
-	public String QQ;
-	public String weibo;
-	public String weixin;
-	public String womanStage;
 
-	public User(String userName,String passwd,String realName,String phoneNum,String email,String IDcard){
-		this.userName=userName;
-		this.passwd=passwd;
-		this.realName=realName;
-		this.phoneNum=phoneNum;
-		this.email=email;
-		this.IDcard=IDcard;
-	}
+	/**
+     * 用户名
+     */
+	@Column(name = "username")
+	public String userName;
+
+	/**
+     * 密码
+     */
+	@Column(name = "passwd")
+	public String passwd;
+	
+	/**
+     * 真实姓名
+     */
+	@Column(name = "realname")
+	public String realName;
+	
+	/**
+     * 手机信息
+     */
+	@Phone
+	@Column(name = "phonenum")
+	public String phoneNum;
+	
+	/**
+     * 邮箱信息
+     */
+	@Email
+	@Column(name = "email")
+	public String email;
+
+	/**
+     * 身份证号
+     */
+	@Column(name = "idcard")
+	public String IDcard;
+
+	/**
+     * QQ号码
+     */
+	@Column(name = "qq")
+	public String QQ;
+
+	/**
+     * 微博号
+     */
+	@Column(name = "weibo")
+	public String weibo;
+
+	/**
+     * 微信号
+     */
+	@Column(name = "weixin")
+	public String weixin;
+
+
+	/**
+     * 身份
+     */
+	@Column(name = "role")
+	public String role;
+
+	/**
+     * 注册时间
+     */
+	@Column(name = "registdate")
+	public Date registDate;
+
+	/**
+     * 用户等级
+     */
+	@Column(name = "usergrade")
+	public String userGrade;
+
+	/**
+     * 性别
+     */
+	@Column(name = "sex")
+	public String sex;
+
+	/**
+     * 自我介绍
+     */
+	@Column(name = "introduction")
+	public String introduction;
+
+	/**
+     * ???
+     */
+	@Column(name = "signname")
+	public String signName;
+
+	/**
+     * ???
+     */
+	@Column(name = "date")
+	public Date date;
+
+	/**
+     * ???
+     */
+	@Column(name = "state")
+	public String state;
+
+	/**
+     * ???
+     */
+	@Column(name = "isaddv")
+	public Boolean isAddV;
+	
+	/**
+     * ???
+     */
+	@Column(name = "womanstage")
+	public String womanStage;
+	
 }
