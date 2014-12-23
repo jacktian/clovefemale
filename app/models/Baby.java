@@ -27,19 +27,22 @@ public class Baby extends BasicModel{
 	public String sex;//性别
 	@Column(name = "name")
 	public String name;//孩子昵称
+	@Column(name = "user_Id")
+	public String userId;
 
-	public Baby(Date date,String sex,String name){
+	public Baby(Date date,String sex,String name,String userId){
 		this.date=date;
 		this.sex=sex;
 		this.name=name;
+		this.userId=userId;
 	}
 	
 	/*
 	 * 功能：当新增一个小孩时，建立小孩和用户的联系
 	 * 参数：用户ID，小孩ID
-	 * */
+	 * 
 	 public static void createUtoB(String userId,String babyId){
 		 new UserToBaby(userId, babyId).save();
-	 }
+	 }*/
 	
 }

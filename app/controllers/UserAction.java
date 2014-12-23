@@ -23,12 +23,12 @@ public class UserAction extends WebService{
     }
 	
 	/*添加小孩*/
-    public static void addBaby(Long id,Date date,String sex,String name){
-    	User user=User.findById(id);
-    	Baby baby = new Baby(date,sex,name);
+    public static void addBaby(Long id,Date date,String sex,String name,String userId){
+    	/*User user=User.findById(id);*/
+    	Baby baby = new Baby(date,sex,name,userId);
     	baby.save();
-    	UserToBaby userBaby = new UserToBaby(user.getId(),baby.getId());
-    	userBaby.save();
+    	/*UserToBaby userBaby = new UserToBaby(user.getId(),baby.getId());
+    	userBaby.save();*/
     }
      
      public static void listUsers(){
@@ -44,12 +44,13 @@ public class UserAction extends WebService{
       * 根据用户id查找所有小孩
       * */
      public static  void listBabyByUser(String userId){
-    	 List<UserToBaby> list = UserToBaby.findByUser(userId);
+    	/* List<UserToBaby> list = UserToBaby.findByUser(userId);
     	 List<Baby> babylist= new ArrayList<>();
     	 for(UserToBaby userToBaby :list){
     		 Baby baby =Baby.findById(userToBaby.babyId);
     		 babylist.add(baby);
-    	 }
-    	 wsOk(babylist);
+    	 }*/
+    	 List<Baby> babys= Baby.find("userId = ?", userId).fetch();
+    	 wsOk(babys);
      }
 }

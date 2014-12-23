@@ -27,20 +27,23 @@ public class GradeCondition extends BasicModel {
 	@Required
 	@Column(name = "mark")
 	public String mark;//成绩
+	@Column(name = "baby_Id")
+	public String babyId;
 
-	public GradeCondition(Baby baby,Date date,String grade,String subject,String mark){
+	public GradeCondition(Baby baby,Date date,String grade,String subject,String mark,String babyId){
 		
 		this.date=date;
 		this.grade=grade;
 		this.subject=subject;
 		this.mark=mark;
+		this.babyId = babyId;
 	}
 	
 	/*
 	 * 功能：当新增一张成绩表时，建立成绩表和小孩的联系
 	 * 参数：成绩表ID，小孩ID
-	 * */
+	 * 
 	 public static void createBtoG(String babyId,String gradeId){
 		 new BabyToGrade(babyId, gradeId).save();
-	 }
+	 }*/
 }

@@ -22,21 +22,24 @@ public class Note extends BasicModel{
 	public Date createDate;//创建日期
     @Column(name = "recentMFDate")
 	public Date recentMFDate;//最新修改日期
+    @Column(name = "noteBook_Id")
+    public String noteBookId;
     /*
 	 * 构造方法Note用于创建一条笔记记录，其中最新修改时间创建时初始化为创建时间
 	 * */
-	public Note(String title,String content,Date createDate){
+	public Note(String title,String content,Date createDate,String noteBookId){
 		this.title=title;
 		this.content=content;
 		this.createDate=createDate;
 		this.recentMFDate=createDate;
+		this.noteBookId=noteBookId;
 	}
 	
 	/*
 	 * 功能：当新增一张笔记记录时，建立笔记和笔记本的联系
 	 * 参数：笔记ID，笔记本ID
-	 * */
+	 * 
 	 public static void createNtoN(String noteBookId,String noteId){
 		 new NoteBookToNote(noteBookId, noteId).save();
-	 }
+	 }*/
 }

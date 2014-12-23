@@ -48,10 +48,10 @@ public class BabyBean {
 	public static List<BabyBean> builList(List<Baby> babyList){
 		List<BabyBean> beanList = new ArrayList();
 		for(int i=0;i<babyList.size();i++){
-			User user = User.findById(babyList.get(i).pId);
+			User user = User.findById(babyList.get(i).userId);
 			BabyBean babyBean = new BabyBean();
 			babyBean.id = babyList.get(i).id;
-			babyBean.pId = babyList.get(i).pId;
+			babyBean.pId = babyList.get(i).userId;
 			babyBean.name = babyList.get(i).name;
 			babyBean.sex = babyList.get(i).sex;
 			babyBean.pName = user.userName;

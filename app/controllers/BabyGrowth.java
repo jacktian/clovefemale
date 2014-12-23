@@ -51,7 +51,7 @@ public class BabyGrowth extends WebService {
 	 * */
 	public static void addVaccination(Vaccination v, String babyId) {
 		Vaccination vacc = v.save();
-		Vaccination.createBtoV(babyId, vacc.id);
+//		Vaccination.createBtoV(babyId, vacc.id);
 		findVaccByBaby(babyId);
 	}
 	/*
@@ -61,7 +61,7 @@ public class BabyGrowth extends WebService {
 	 * */
 	public static void addGradeCondition(GradeCondition grade, String babyId) {
 		GradeCondition g = grade.save();
-		GradeCondition.createBtoG(babyId, g.id);
+		/*GradeCondition.createBtoG(babyId, g.id);*/
 		findGradeByBaby(babyId);
 	}
 	/*
@@ -71,7 +71,7 @@ public class BabyGrowth extends WebService {
 	 * */
 	public static void addBodyIndex(BodyIndex bodyIndex, String babyId) {
 		BodyIndex b = bodyIndex.save();
-		BodyIndex.createBtoB(babyId, b.id);
+		/*BodyIndex.createBtoB(babyId, b.id);*/
 		findbodyByBaby(babyId);
 	}
 	/*
@@ -81,14 +81,14 @@ public class BabyGrowth extends WebService {
 	 * */
 	public static void findBySubject(String subject,String babyId) {
 		List<GradeCondition> list = GradeCondition
-				.find("select * from GradeCondition c where c.subject= ? order by date",
+				.find("select * from GradeCondition c where c.babyId = ?  and c.subject= ?order by date",babyId,
 						subject).fetch();
-		List<GradeCondition> gradeList = findGradeByBaby2(babyId);
+		/*List<GradeCondition> gradeList = findGradeByBaby2(babyId);
 		for(GradeCondition c : list){
 			if(!gradeList.contains(c)){
 				list.remove(c);
 			}
-		}
+		}*/
 		wsOk(list);
 	}
 
@@ -98,14 +98,14 @@ public class BabyGrowth extends WebService {
 	 * 返回：对应的列表
 	 * */
 	public static void findByHeight(String babyId) {
-		List<BodyIndex> list = GradeCondition.find("order by date").fetch();
+		List<BodyIndex> list = GradeCondition.find("babyId = ? order by date",babyId).fetch();
 		
-		List<BodyIndex> bodyList = findbodyByBaby2(babyId);
+		/*List<BodyIndex> bodyList = findbodyByBaby2(babyId);
 		for(BodyIndex b : list){
 			if(!bodyList.contains(b)){
 				list.remove(b);
 			}
-		}
+		}*/
 		
 		wsOk(list);
 	}
@@ -170,7 +170,7 @@ public class BabyGrowth extends WebService {
 	 * */
 	public static void deleteBodyIndex(String id,String babyId) {
 
-		BabyToBody.delete("bodyId = ?", id);
+		/*BabyToBody.delete("bodyId = ?", id);*/
 		BodyIndex.delete("id = ?", id);
 		findbodyByBaby(babyId);
 		
@@ -183,7 +183,7 @@ public class BabyGrowth extends WebService {
 	 * */
 	public static void deleteGradeCondition(String id,String babyId) {
 
-		BabyToGrade.delete("gradeId", id);
+		/*BabyToGrade.delete("gradeId", id);*/
 		GradeCondition.delete("id = ?", id);
 		findGradeByBaby(babyId);
 	}
@@ -194,7 +194,7 @@ public class BabyGrowth extends WebService {
 	 * */
 	public static void deleteVacci(String id,String babyId) {
 
-		BabyToVacci.delete("vacciId", id);
+		/*BabyToVacci.delete("vacciId", id);*/
 		Vaccination.delete("id = ?", id);
 		findVaccByBaby(babyId);
 	}
@@ -205,24 +205,26 @@ public class BabyGrowth extends WebService {
 	 * 返回：满足条件的身体指标列表
 	 * */
 	public static void findbodyByBaby(String babyId){
-		List<BabyToBody> list = BabyToBody.findByBaby(babyId);
+		/*List<BabyToBody> list = BabyToBody.findByBaby(babyId);
 		List<BodyIndex> bodyList = new ArrayList();
 		for(BabyToBody babyToBody:list){
-			/*System.out.println(userBaby.babyId);*/
+			System.out.println(userBaby.babyId);
 			BodyIndex body =BodyIndex.findById(babyToBody.bodyId);
 			bodyList.add(body);
-		}
+		}*/
+		List<BodyIndex> bodyList = BodyIndex.find("select b from BodyIndex b where b.babyId = ? ", babyId).fetch();
 		wsOk(bodyList);
 	}
 	
 	public static List<BodyIndex> findbodyByBaby2(String babyId){
-		List<BabyToBody> list = BabyToBody.findByBaby(babyId);
+		/*List<BabyToBody> list = BabyToBody.findByBaby(babyId);
 		List<BodyIndex> bodyList = new ArrayList();
 		for(BabyToBody babyToBody:list){
-			/*System.out.println(userBaby.babyId);*/
+			System.out.println(userBaby.babyId);
 			BodyIndex body =BodyIndex.findById(babyToBody.bodyId);
 			bodyList.add(body);
-		}
+		}*/
+		List<BodyIndex> bodyList = BodyIndex.find("select b from BodyIndex b where b.babyId = ? ", babyId).fetch();
 		return bodyList;
 	}
 	/*
@@ -231,22 +233,24 @@ public class BabyGrowth extends WebService {
 	 * 返回：满足条件的成绩列表
 	 * */
 	public static void findGradeByBaby(String babyId){
-		List<BabyToGrade> list = BabyToGrade.findByBaby(babyId);
+		/*List<BabyToGrade> list = BabyToGrade.findByBaby(babyId);
 		List<GradeCondition> gradeList = new ArrayList<>();
 		for(BabyToGrade babyToGrade : list){
 			GradeCondition grade = GradeCondition.findById(babyToGrade.gradeId);
 			gradeList.add(grade);
-		}
+		}*/
+		List<GradeCondition> gradeList = GradeCondition.find("select gc from GradeCondition gc where gc.babyId = ? ", babyId).fetch();
 		wsOk(gradeList);
 	}
 	
 	public static List<GradeCondition> findGradeByBaby2(String babyId){
-		List<BabyToGrade> list = BabyToGrade.findByBaby(babyId);
+		/*List<BabyToGrade> list = BabyToGrade.findByBaby(babyId);
 		List<GradeCondition> gradeList = new ArrayList<>();
 		for(BabyToGrade babyToGrade : list){
 			GradeCondition grade = GradeCondition.findById(babyToGrade.gradeId);
 			gradeList.add(grade);
-		}
+		}*/
+		List<GradeCondition> gradeList = GradeCondition.find("select gc from GradeCondition gc where gc.babyId = ? ", babyId).fetch();
 		return gradeList;
 	}
 	
@@ -256,12 +260,13 @@ public class BabyGrowth extends WebService {
 	 * 返回：满足条件的疫苗接种记录
 	 * */
 	public static void findVaccByBaby(String babyId){
-		List<BabyToVacci> list = BabyToVacci.findByBaby(babyId);
+		/*List<BabyToVacci> list = BabyToVacci.findByBaby(babyId);
 		List<Vaccination>  vaccinations = new ArrayList<>();
 		for(BabyToVacci babyToVacci : list){
 			Vaccination vacc= Vaccination.findById(babyToVacci.vacciId);
 			vaccinations.add(vacc);
-		}
+		}*/
+		List<Vaccination> vaccinations = Vaccination.find("select v from Vaccination v where v.babyId = ? ", babyId).fetch();
 		wsOk(vaccinations);
 	}
 	

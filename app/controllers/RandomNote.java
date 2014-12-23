@@ -21,12 +21,13 @@ public class RandomNote extends WebService{
 	 * 返回：满足条件的列表
 	 * */
 	public static void findNoteByNotebook(String noteBookId){
-		List<NoteBookToNote> list = NoteBookToNote.findByNoteBook(noteBookId);
+		/*List<NoteBookToNote> list = NoteBookToNote.findByNoteBook(noteBookId);
 		List<Note> notes = new ArrayList<>();
 		for(NoteBookToNote n : list){
 			Note note  = Note.findById(n.noteId);
 			notes.add(note);
-		}
+		}*/
+		List<Note> notes = Note.find("noteBookId = ?", noteBookId).fetch();
 		wsOk(notes);
 	}
 	/*
@@ -35,22 +36,24 @@ public class RandomNote extends WebService{
 	 * 返回：满足条件的列表
 	 * */
 	public static void findNoteBookByUser(String userId){
-		List<UserToNoteBook> list =UserToNoteBook.findByUser(userId);
+		/*List<UserToNoteBook> list =UserToNoteBook.findByUser(userId);
 		List<NoteBook> noteBooks = new ArrayList();
 		for(UserToNoteBook userToNoteBook : list){
 			NoteBook n= NoteBook.findById(userToNoteBook.noteBookId);
 			noteBooks.add(n);
-		}
+		}*/
+		List<NoteBook> noteBooks = NoteBook.find("userId = ?", userId).fetch();
 		wsOk(noteBooks);
 	}
 	
 	public static List<NoteBook> findNoteBookByUser2(String userId){
-		List<UserToNoteBook> list =UserToNoteBook.findByUser(userId);
+		/*List<UserToNoteBook> list =UserToNoteBook.findByUser(userId);
 		List<NoteBook> noteBooks = new ArrayList();
 		for(UserToNoteBook userToNoteBook : list){
 			NoteBook n= NoteBook.findById(userToNoteBook.noteBookId);
 			noteBooks.add(n);
-		}
+		}*/
+		List<NoteBook> noteBooks = NoteBook.find("userId = ?", userId).fetch();
 		return noteBooks;
 	}
 	/*
@@ -60,7 +63,7 @@ public class RandomNote extends WebService{
 	 * */
 	public static void addNoteBook(NoteBook noteBook,String userId){
 	  NoteBook n = noteBook.save();
-	  NoteBook.createUtoN(userId, n.id);
+	  /*NoteBook.createUtoN(userId, n.id);*/
 	  findNoteBookByUser(userId);
 	}
 	/*
@@ -70,7 +73,7 @@ public class RandomNote extends WebService{
 	 * */
 	public static void addNote(Note note,String noteBookId){
 		Note n = note.save();
-		Note.createNtoN(noteBookId, n.id);
+		/*Note.createNtoN(noteBookId, n.id);*/
 		findNoteByNotebook(noteBookId);
 	}
 	/*
@@ -116,7 +119,7 @@ public class RandomNote extends WebService{
 	 * 返回：全部列表
 	 * */
 	public static void deleteNote(String id,String noteBookId){
-		NoteBookToNote.delete("noteId", id);
+		/*NoteBookToNote.delete("noteId", id);*/
 		Note.delete("id = ?", id);
 		findNoteByNotebook(noteBookId);
 	}
@@ -126,11 +129,16 @@ public class RandomNote extends WebService{
 	 * 返回：全部列表
 	 * */
 	public static void deleteNoteBook(String id ,String userId){
-		List<NoteBookToNote> list =NoteBookToNote.findByNoteBook(id);
+		/*List<NoteBookToNote> list =NoteBookToNote.findByNoteBook(id);
 		NoteBookToNote.delete("noteBookId = ?", id);
 		//循环删除笔记
 		for(NoteBookToNote n : list){
 			Note.delete("id = ?", n.noteId);
+		}*/
+		//循环删除笔记
+		List<Note> notes = Note.find("noteBookId = ?", id).fetch();
+		for(Note n : notes){
+			n.delete();
 		}
 		NoteBook.delete("id = ?", id);
 		findNoteBookByUser(userId);
@@ -142,7 +150,9 @@ public class RandomNote extends WebService{
 	 * 返回：全部列表
 	 * */
 	public static void findNoteBookByName(String  userId,String noteBookName){
-		List<NoteBook> noteBooklist = NoteBook.find("select nb from NoteBook nb,UserToNoteBook unb where nb.id = unb.noteBookId and unb.userId = ? and nb.name = ?",userId,noteBookName).fetch();
+		/*List<NoteBook> noteBooklist = NoteBook.find("select nb from NoteBook nb,UserToNoteBook unb where nb.id = unb.noteBookId and unb.userId = ? and nb.name = ?",userId,noteBookName).fetch();*/
+		
+		List<NoteBook> noteBooklist = NoteBook.find("select nb from NoteBook nb where nb.userId = ? and nb.name = ?", userId,noteBookName).fetch();
 		wsOk(noteBooklist);
 		
 	}
@@ -154,12 +164,13 @@ public class RandomNote extends WebService{
 	 * */
     public static void findNoteByTitle(String userId,String title){
 	  
-	  List<NoteBookToNote> noteBookToNotes = NoteBookToNote.find("select n from NoteBookToNote n,(select nb from NoteBook nb,UserToNoteBook unb where nb.id = unb.noteBookId and unb.userId = ?) temp where temp.noteBookId = n.noteBookId", userId).fetch();
+	  /*List<NoteBookToNote> noteBookToNotes = NoteBookToNote.find("select n from NoteBookToNote n,(select nb from NoteBook nb,UserToNoteBook unb where nb.id = unb.noteBookId and unb.userId = ?) temp where temp.noteBookId = n.noteBookId", userId).fetch();
 	  List<Note> notes = new ArrayList();
 	  for(NoteBookToNote nb :noteBookToNotes){
 		  List<Note> notelist = Note.find("select from Note where id = ? and title like ?",nb.noteId,"%"+title+"%").fetch();
 		  notes.add(notelist.get(0));  
-	  }
+	  }*/
+    	List<Note> notes = Note.find("select n from Note n,NoteBook nb where n.noteBookId = nb.id and nb.userId = ? and n.title like ?", userId,"%"+title+"%").fetch();
 	  wsOk(notes);
   }
 	
@@ -171,12 +182,13 @@ public class RandomNote extends WebService{
     
     public static void findNoteByContent(String userId,String content){
   	  
-  	  List<NoteBookToNote> noteBookToNotes = NoteBookToNote.find("select n from NoteBookToNote n,(select nb from NoteBook nb,UserToNoteBook unb where nb.id = unb.noteBookId and unb.userId = ?) temp where temp.noteBookId = n.noteBookId", userId).fetch();
+  	  /*List<NoteBookToNote> noteBookToNotes = NoteBookToNote.find("select n from NoteBookToNote n,(select nb from NoteBook nb,UserToNoteBook unb where nb.id = unb.noteBookId and unb.userId = ?) temp where temp.noteBookId = n.noteBookId", userId).fetch();
   	  List<Note> notes = new ArrayList();
   	  for(NoteBookToNote nb :noteBookToNotes){
   		  List<Note> notelist = Note.find("select from Note where id = ? and content like ?",nb.noteId,"%"+content+"%").fetch();
   		  notes.add(notelist.get(0));  
-  	  }
+  	  }*/
+    	List<Note> notes = Note.find("select n from Note n,(select * from NoteBook where userId = ?) nb where n.noteBookId = nb.id  and n.content like ?", userId,"%"+content+"%").fetch();
   	  wsOk(notes);
     }
     

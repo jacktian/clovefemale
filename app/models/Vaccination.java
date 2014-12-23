@@ -22,18 +22,21 @@ public class Vaccination extends BasicModel{
 	public Date date;//日期
    @Column(name = "content")
 	public String content;//备注
+   @Column(name = "baby_Id")
+   public String babyId;
    
-	public Vaccination(Baby baby,Date date,String content){
+	public Vaccination(Baby baby,Date date,String content,String babyId){
 		
 		this.date=date;
 		this.content=content;
+		this.babyId=babyId;
 	}
 	
 	/*
 	 * 功能：当新增一张疫苗接种记录时，建立小孩和疫苗接种记录的联系
 	 * 参数：小孩ID，疫苗接种记录ID
-	 * */
+	 * 
 	 public static void createBtoV(String babyId,String vacciId){
 		 new BabyToVacci(babyId, vacciId).save();
-	 }
+	 }*/
 }

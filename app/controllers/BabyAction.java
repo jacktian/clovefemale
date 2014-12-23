@@ -25,13 +25,14 @@ public class BabyAction extends WebService{
 	 * 返回：满足条件的baby列表
 	 * */
 	public static void findBabyByUser(String userId){
-		List<UserToBaby> userBabyList = UserToBaby.findByUser(userId);
+		/*List<UserToBaby> userBabyList = UserToBaby.findByUser(userId);
 		List<Baby> babyList = new ArrayList();
 		for(UserToBaby userBaby:userBabyList){
-			/*System.out.println(userBaby.babyId);*/
+			System.out.println(userBaby.babyId);
 			Baby baby =Baby.findById(userBaby.babyId);
 			babyList.add(baby);
-		}
+		}*/
+		 List<Baby> babyList= Baby.find("userId = ?", userId).fetch();
 		wsOk(babyList);
 	}
 	/*
@@ -40,8 +41,9 @@ public class BabyAction extends WebService{
 	 * 返回：对应的user
 	 * */
 	public static void findUserByBaby(String babyId){
-		List<UserToBaby> userBabyList = UserToBaby.findByBaby(babyId);
-		User user=User.findById(userBabyList.get(0).userId);
+		/*List<UserToBaby> userBabyList = UserToBaby.findByBaby(babyId);*/
+		Baby baby = Baby.findById(babyId);
+		User user=User.findById(baby.userId);
 		wsOk(user);
 	}
 	
@@ -59,27 +61,27 @@ public class BabyAction extends WebService{
 	 * 返回：全部列表
 	 * */
 	public static void addBaby(Baby baby,String userId){
-		Baby b=baby.save();
-		Baby.createUtoB(userId, b.id);
-		findBabyList();
+		baby.save();
+		/*Baby.createUtoB(userId, b.id);*/
+		findBabyByUser(userId);
 	}
 	/*
 	 * 根据id删除baby
 	 * 参数：babyID
 	 * 返回：全部列表
 	 * */
-	public static void deleteBaby(String babyId){
-		UserToBaby.delete("babyId = ?", babyId);
+	public static void deleteBaby(String babyId,String userId){
+		/*UserToBaby.delete("babyId = ?", babyId);*/
 		Baby.delete("id = ?", babyId);
-		findBabyList();
+		findBabyByUser(userId);
 	}
 	/*
 	 * 更新baby
 	 * 参数：baby类
 	 * 返回：全部列表
 	 * */
-	public static void updateBaby(Baby baby){
+	public static void updateBaby(Baby baby,String userId){
 		baby.save();
-		findBabyList();
+		findBabyByUser(userId);
 	}
 }
