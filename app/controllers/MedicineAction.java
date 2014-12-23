@@ -8,7 +8,6 @@ import models.Medicine;
 import models.MedicineBox;
 import models.Note;
 import models.NoteBook;
-import models.NoteBookToNote;
 
 
 public class MedicineAction extends WebService{
