@@ -4,14 +4,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import models.MedicBToMedic;
 import models.Medicine;
 import models.MedicineBox;
 import models.Note;
 import models.NoteBook;
 import models.NoteBookToNote;
-import models.UserToMedicineBox;
-import models.UserToNoteBook;
+
 
 public class MedicineAction extends WebService{
 

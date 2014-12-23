@@ -6,8 +6,6 @@ import java.util.List;
 
 import models.Note;
 import models.NoteBook;
-import models.NoteBookToNote;
-import models.UserToNoteBook;
 
 public class RandomNote extends WebService{
 

@@ -6,12 +6,8 @@ import java.util.List;
 import org.ietf.jgss.Oid;
 
 import models.Baby;
-import models.BabyToBody;
-import models.BabyToGrade;
-import models.BabyToVacci;
 import models.BodyIndex;
 import models.GradeCondition;
-import models.UserToBaby;
 import models.Vaccination;
 import play.mvc.Controller;
 
