@@ -4,7 +4,6 @@ import java.util.Date;
 
 import models.Baby;
 import models.User;
-import models.UserToBaby;
 
 public class DatabaseUtil {
 	public static void init(){
