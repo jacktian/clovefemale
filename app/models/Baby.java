@@ -4,45 +4,42 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.sudocn.play.BasicModel;
 
+import play.data.validation.Required;
 import play.data.validation.Valid;
 import play.db.jpa.Model;
 
-/**
- * 宝贝表
- *
- * @author boxizen
- * @since 12/16/14
- */
-
+/*
+ * 宝宝类，主要属性有id、用户id、孩子出生年月 、孩子性别、孩子昵称，其中id由系统自动创建
+ * 用户id有对应关系类存储
+ * */
 @Entity
 @Table(name = "baby")
 public class Baby extends BasicModel{
 	
-	/**
-     * 父母ID
-     */
-	@Column(name = "pid")
-	public String pId;
-	
-	/**
-     * 出生日期
-     */
 	@Column(name = "date")
-	public Date date;
-
-	/**
-     * 性别
-     */
+	public Date date;//出生日期
 	@Column(name = "sex")
-	public String sex;
-
-	/**
-     * 姓名
-     */
+	public String sex;//性别
 	@Column(name = "name")
-	public String name;
+	public String name;//孩子昵称
+
+	public Baby(Date date,String sex,String name){
+		this.date=date;
+		this.sex=sex;
+		this.name=name;
+	}
+	
+	/*
+	 * 功能：当新增一个小孩时，建立小孩和用户的联系
+	 * 参数：用户ID，小孩ID
+	 * */
+	 public static void createUtoB(String userId,String babyId){
+		 new UserToBaby(userId, babyId).save();
+	 }
+	
 }
