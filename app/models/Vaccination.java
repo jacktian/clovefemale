@@ -25,6 +25,7 @@ public class Vaccination extends BasicModel{
    @Column(name = "baby_Id")
    public String babyId;
    
+   public Vaccination(){}
 	public Vaccination(Baby baby,Date date,String content,String babyId){
 		
 		this.date=date;

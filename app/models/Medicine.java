@@ -26,6 +26,7 @@ public class Medicine extends BasicModel{
 	@Column(name = "medicineBox_Id")
 	public String medicineBoxId;//药箱编号
 	
+	public Medicine(){}
 	public Medicine(String name,String type,String deadline,String code,String photoAddr,String function,String aString,String medicineBoxId){
 		this.name=name;
 		this.applicability=aString;

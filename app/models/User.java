@@ -69,6 +69,7 @@ public class User extends BasicModel{
 	@Column(name = "womanStage")
 	public String womanStage;//女性阶段
 
+	public User(){}
 	public User(String userName,String passwd,String realName,String phoneNum,String email,String IDcard){
 		this.userName=userName;
 		this.passwd=passwd;

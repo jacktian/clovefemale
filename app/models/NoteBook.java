@@ -27,6 +27,7 @@ public class NoteBook extends BasicModel{
 	/*
 	 * 构造方法noteBook用于创建笔记本，其中最新修改时间创建时初始化为创建时间
 	 * */
+	public NoteBook(){}
 	public NoteBook(String name,Date createDate,String introduceContent,String userId){
 		this.name=name;
 		this.createDate=createDate;

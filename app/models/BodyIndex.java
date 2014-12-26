@@ -19,7 +19,7 @@ import play.db.jpa.Model;
 @Table(name = "bodyindex")
 public class BodyIndex extends BasicModel {
 	@Column(name = "date")
-	public Date  date;//出生日期
+	public Date  date;//日期
 	@Column(name = "height")
 	@Required
 	public Double height;//身高
@@ -29,7 +29,8 @@ public class BodyIndex extends BasicModel {
 	@Column(name = "baby_Id")
 	public String babyId;
 
-	public BodyIndex(Baby baby,Date date,Double height,Double weight,String babyId){
+	public BodyIndex(){}
+	public BodyIndex(Date date,Double height,Double weight,String babyId){
 		
 		this.date=date;
 		this.height=height;

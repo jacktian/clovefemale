@@ -20,6 +20,7 @@ public class MedicineBox extends BasicModel{
 	@Column(name = "user_Id")
 	public String userId;//用户id
 	
+	public MedicineBox(){}
 	public MedicineBox(String name,Date cDate,String mark,String userId){
 		this.name=name;
 		this.createDate=cDate;

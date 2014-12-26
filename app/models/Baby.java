@@ -30,6 +30,7 @@ public class Baby extends BasicModel{
 	@Column(name = "user_Id")
 	public String userId;
 
+	public Baby(){}
 	public Baby(Date date,String sex,String name,String userId){
 		this.date=date;
 		this.sex=sex;

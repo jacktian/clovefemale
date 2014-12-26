@@ -37,6 +37,7 @@ public class FetalMovement extends BasicModel {
 	@Column(name = "user_id")
 	public String userId;
 	
+	public FetalMovement(){}
 	public FetalMovement(String userId,Date fDate, int num){
 		this.userId = userId;
 		this.fDate = fDate;

@@ -30,7 +30,8 @@ public class GradeCondition extends BasicModel {
 	@Column(name = "baby_Id")
 	public String babyId;
 
-	public GradeCondition(Baby baby,Date date,String grade,String subject,String mark,String babyId){
+	public GradeCondition(){}
+	public GradeCondition(Date date,String grade,String subject,String mark,String babyId){
 		
 		this.date=date;
 		this.grade=grade;

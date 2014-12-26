@@ -27,6 +27,7 @@ public class Note extends BasicModel{
     /*
 	 * 构造方法Note用于创建一条笔记记录，其中最新修改时间创建时初始化为创建时间
 	 * */
+    public Note(){}
 	public Note(String title,String content,Date createDate,String noteBookId){
 		this.title=title;
 		this.content=content;

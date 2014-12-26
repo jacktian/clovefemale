@@ -36,6 +36,7 @@ public class GestationalWeight extends BasicModel {
 	@Column(name = "user_id")
 	public String userId;
 
+	public GestationalWeight(){}
 	public GestationalWeight(String userId,Date wDate, float wValue){
 		this.userId = userId;
 		this.wDate = wDate;
