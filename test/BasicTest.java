@@ -6,7 +6,6 @@ import models.Baby;
 import models.BodyIndex;
 import models.MedicineBox;
 import models.User;
-import models.UserToBaby;
 
 import org.junit.Before;
 import org.junit.Test;
