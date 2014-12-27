@@ -1,6 +1,10 @@
 package controllers;
 
+import org.apache.commons.lang.StringUtils;
+
 import beans.WebServiceBean;
+
+import com.google.gson.Gson;
 import com.sudocn.play.XController;
 import play.mvc.Before;
 
@@ -40,5 +44,20 @@ public abstract class WebService extends XController {
     static void wsForbidden(){
         wsError("无权限");
     }
-
+    
+    static void wsOkAsJsonP(Object data){
+    	String callback = params.get("callback");
+    	if(StringUtils.isEmpty(callback)){
+    		wsOk(data);
+    	}
+    	WebServiceBean bean = new WebServiceBean();
+    	bean.result=0;
+    	bean.data=data;
+    	Gson gson = new Gson();
+    	String json = gson.toJson(bean);
+    	renderJSON(jsonP(callback,json));
+    }
+     static String jsonP(String callback,String json){
+    	 return String.format("%s(%s)", callback,json);
+     }
 }

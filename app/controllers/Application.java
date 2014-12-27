@@ -7,6 +7,12 @@ import java.util.*;
 
 import models.*;
 
+/**
+ * 主控制器
+ *
+ * @author boxiZen
+ * @since 12/16/14
+ */
 public class Application extends Controller {
 
     public static void index() {

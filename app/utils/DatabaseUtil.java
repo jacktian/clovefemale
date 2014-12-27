@@ -51,7 +51,6 @@ public class DatabaseUtil {
     	Temperature temperature3 = new Temperature(u1.id,new Date(), 36.9F);
     	temperature3.save();
     	
-<<<<<<< HEAD
     	GestationalWeight weight1 = new GestationalWeight(u1.id,new Date(), 56.2F);
     	weight1.save();
     	GestationalWeight weight2 = new GestationalWeight(u2.id,new Date(), 56.5F);
@@ -66,8 +65,6 @@ public class DatabaseUtil {
     	movement2.save();
     	FetalMovement movement3 = new FetalMovement(u1.id,new Date(), 10);
     	movement3.save();
-    	
-=======
->>>>>>> 806e5b7e2a054b65fd477fe56bf9446066dbbfde
+
 	}
 }
