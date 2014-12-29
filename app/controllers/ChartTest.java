@@ -23,45 +23,45 @@ import com.google.gson.Gson;
 public class ChartTest extends Controller {
 
 	public static void getLineHeightStore(){
-		printParams() ;
+//		printParams() ;
 		generateRandomData(10, "height", 150, "date", 0, "2014-01-0") ;
 	}
 	
 	public static void getLineGradeStore(String startDate, String endDate){
-		System.out.println("\t startDate : " + startDate);
-		System.out.println("\t endDate : " + endDate);
-		System.out.println();
-		printParams() ;
+//		System.out.println("\t startDate : " + startDate);
+//		System.out.println("\t endDate : " + endDate);
+//		System.out.println();
+//		printParams() ;
 		generateRandomData(10, "grade", 80, "date", 0, "2014-01-0") ;
 	}
 	
 	public static void getLineTempStore(){
-		printParams() ;
+//		printParams() ;
 		generateRandomData(10, "temperature", 36, "date", 0, "2014-01-0") ;
 	}
 	
 	public static void getLineBabyMoveStore(){
-		printParams() ;
+//		printParams() ;
 		generateRandomData(10, "time", 5, "date", 0, "2012-04-0") ;
 	}
 	
 	public static void getLineGesWeightStore(){
-		printParams() ;
+//		printParams() ;
 		generateRandomData(10, "weight", 20, "date", 0, "2013-05-0") ;
 	}
 	
 	public static void getPieGradeStore(){
-		printParams() ;
+//		printParams() ;
 		generateRandomData(10, "time", 3, "grade", 0, "分数区间") ;
 	}
 	
 	public static void getPieTempStore(){
-		printParams() ;
+//		printParams() ;
 		generateRandomData(5, "time", 20, "temperature", 0, "温度区间") ;
 	}
 	
 	public static void getPieBabyMoveStore(){
-		printParams() ;
+//		printParams() ;
 		generateRandomData(5, "time", 12, "num", 0, "次数区间") ;
 	}
 	
