@@ -28,7 +28,7 @@ public class DatabaseUtil {
 		/*宝贝测试数据*/
 		for(int i=0;i<10;i++){
 			Baby baby = new Baby();
-			baby.pId = u1.id;
+			baby.userId = u1.id;
 			baby.name = "小喇叭" + i + "号";
 			baby.sex = "male";
 			baby.date = new Date();

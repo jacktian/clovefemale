@@ -26,7 +26,7 @@ public class Baby extends BasicModel{
      * 父母ID
      */
 	@Column(name = "pid")
-	public String pId;
+	public String userId;
 	
 	/**
      * 出生日期

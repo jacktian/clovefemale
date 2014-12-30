@@ -57,7 +57,7 @@ public class UserAction extends WebService{
 	 */
     public static void addBaby(String pId,Date date,String sex,String name){
     	Baby baby = new Baby();
-    	baby.pId = pId;
+    	baby.userId = pId;
     	baby.date = date;
     	baby.sex = sex;
     	baby.name = name;
