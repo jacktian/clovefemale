@@ -46,3 +46,4 @@ public class Medicine extends BasicModel{
 		 new MedicBToMedic(MedicineBoxId, medicineId).save();
 	 }*/
 }
+

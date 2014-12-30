@@ -1,0 +1,38 @@
+#{extends 'main.html' /}
+#{set title:'数据统计' /}
+<!-- 用户管理  -->
+<div class="container">
+	<div class="col-md-2">
+		<ul class="statisticMenu manaMenu">
+			<li id="tallStat" class="active">
+				<a href="#">身高统计</a>
+			</li>
+			<li id="tempStat">
+				<a href="#">体温统计</a>
+			</li>
+			<li id="scoreStat">
+				<a href="#">成绩统计</a>
+			</li>
+			<li id="preWStat">
+				<a href="#">孕重统计</a>
+			</li>
+			<li id="pregStat">
+				<a href="#">胎动统计</a>
+			</li>
+		</ul>
+	</div>
+	<div class="col-md-10">
+		<canvas id="myChart" width="800" height="500">
+		</canvas>
+	</div>
+</div>
+#{set 'moreScripts'}
+<!-- 加载的js -->
+<script type="text/javascript" src = "@{'/public/javascripts/juicer.js'}"></script>
+<script src="@{'/public/javascripts/Chart.min.js'}"></script>
+<script src="@{'/public/javascripts/statistic.js'}"></script>
+<script>
+	
+
+</script>
+#{/set}

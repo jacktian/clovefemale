@@ -9,9 +9,9 @@ import play.mvc.*;
 
 /**
  * 用户控制器
- *
+ * 
  * @author boxiZen
- * @since 12/16/14
+ * @since 2014/11/24
  */
 public class UserAction extends WebService{
 	
@@ -71,5 +71,4 @@ public class UserAction extends WebService{
     	 List<User> users = User.all().fetch(curpage, 10);
     	 wsOk(users);
      }
-     
 }

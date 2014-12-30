@@ -11,12 +11,6 @@ import beans.BabyBean;
 
 import com.sudocn.play.BasicModel;
 
-/**
- * 宝贝控制器
- *
- * @author boxiZen
- * @since 12/16/14
- */
 public class BabyAction extends WebService{
     
 	/**

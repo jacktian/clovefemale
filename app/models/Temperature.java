@@ -37,6 +37,7 @@ public class Temperature extends BasicModel {
 	@Column(name = "user_id")
 	public String userId;
 	
+	public Temperature(){}
 	public Temperature(String userId,Date tDate, float tValue){
 		this.userId = userId;
 		this.tDate = tDate;
