@@ -35,6 +35,7 @@ public class DatabaseUtil {
 			baby.save();
 		}
     	
+		/*月经测试数据*/
     	Menses menses = new Menses(u1.id, new Date(),"暗红", "多", true, true,"稠");
     	menses.save();
     	Menses menses2 = new Menses(u1.id, new Date(),"鲜红", "少", true, true,"稀");
@@ -42,6 +43,7 @@ public class DatabaseUtil {
     	Menses menses3 = new Menses(u2.id, new Date(),"鲜红", "少", true, true,"稀");
     	menses3.save();
     	
+    	/*体温测试数据*/
     	Temperature temperature1 = new Temperature(u1.id,new Date(), 36.7F);
     	temperature1.save();
     	Temperature temperature2 = new Temperature(u2.id,new Date(), 37.7F);

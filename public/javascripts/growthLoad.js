@@ -8,7 +8,7 @@ $(function(){
 	
 	/*加载数据*/
 	loadBabysByPage = function(curpage){
-		$.get('http://localhost:9000/babyaction/listBabyBeans?curpage='+curpage, function(data) {
+		$.get(localhost+'/babyaction/listBabyBeans?curpage='+curpage, function(data) {
 	        successCB(data);
 	    });
 	}

@@ -9,7 +9,7 @@ $(function(){
 	
 	/*加载数据*/
 	loadUsersByPage = function(curpage){
-		$.get('http://localhost:9000/useraction/listusers?curpage='+curpage, function(data) {
+		$.get(localhost+'/useraction/listusers?curpage='+curpage, function(data) {
 	        successCB(data);
 	    });
 	}

@@ -4,7 +4,7 @@ $(function(){
 	var deleUser = function(){
 		$(this).parents("table tr").remove();
 		var uId = $(this).attr('uid');
-		$.get('http://localhost:9000/useraction/deluser?uId='+uId, function() {
+		$.get(localhost+'/useraction/deluser?uId='+uId, function() {
 			alert("删除成功!");
 			$(this).parents("table tr").remove();
 			location.reload();
@@ -41,7 +41,7 @@ $(function(){
 		var phone = $('#phone').val();
 		var idcard = $('#idcard').val();
 		console.log(uid);
-		$.get('http://localhost:9000/useraction/alteruser?uId='+uid + "&userName="+nickname+"&passwd="+password+"&realName="+username+"&phoneNum="+phone+"&email="+email+"&IDcard="+idcard, function() {
+		$.get(localhost+'/useraction/alteruser?uId='+uid + "&userName="+nickname+"&passwd="+password+"&realName="+username+"&phoneNum="+phone+"&email="+email+"&IDcard="+idcard, function() {
 	       alert("修改成功!");
 	    });
 	};

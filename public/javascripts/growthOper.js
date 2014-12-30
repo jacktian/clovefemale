@@ -63,7 +63,7 @@ $(function(){
 	var deleBaby = function(){
 		$(this).parents("table tr").remove();
 		var id = $(this).attr('id');
-		$.get('http://localhost:9000/babyaction/delbaby?id='+id, function() {
+		$.get(localhost+'/babyaction/delbaby?id='+id, function() {
 			alert("删除成功");
 			$(this).parents("table tr").remove();
 			location.reload();
