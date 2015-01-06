@@ -2,7 +2,16 @@ package controllers;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
+
+import play.mvc.Http.Request;
+
+import com.google.gson.Gson;
 
 import models.Note;
 import models.NoteBook;
@@ -13,6 +22,56 @@ public class RandomNote extends WebService{
 		List<NoteBook> list = NoteBook.findAll();
 		wsOk(list);
 	}
+	
+	public static void findAllNote(){
+		List<Map<String, String>> list = new LinkedList<Map<String, String>>();
+		Map<String, String> map = new LinkedHashMap<String, String>() ;
+		map.put("id", "0");
+		map.put("title", "MVC结构");
+		map.put("date", "2014-12-12");
+		map.put("content", "从存储数据觉的逻辑角度上来说,一个数据仓库有点类似一个数据一览表，而一个记录有点");
+		map.put("notebook", "菜谱");
+		map.put("test", "test");
+		list.add(map);
+		
+		map = new LinkedHashMap<String, String>() ;
+		map.put("id", "1");
+		map.put("title", "代理与阅读器");
+		map.put("date", "2013-12-11");
+		map.put("content", "表单面板组件Ext.form.Panel,别名Ext.form.FormPanel,xtype值为formpanel,表单");
+		map.put("notebook", "孩子学习");
+		map.put("test", "test");
+		list.add(map);
+		
+		map = new LinkedHashMap<String, String>() ;
+		map.put("id", "2");
+		map.put("title", "数据仓库");
+		map.put("date", "2014-12-1");
+		map.put("content", "从存储数据觉的逻辑角度上来说,一个数据仓库有点类似一个数据一览表，而一个记录有点");
+		map.put("notebook", "助孕");
+		map.put("test", "test");
+		list.add(map);
+		
+		map = new LinkedHashMap<String, String>() ;
+		map.put("id", "3");
+		map.put("title", "Xtype");
+		map.put("date", "2012-11-11");
+		map.put("content", "表单面板组件Ext.form.Panel,别名Ext.form.FormPanel,xtype值为formpanel,表单");
+		map.put("notebook", "孩子学习");
+		map.put("test", "test");
+		list.add(map);
+		
+		map = new LinkedHashMap<String, String>() ;
+		map.put("id", "4");
+		map.put("title", "表单域");
+		map.put("date", "2012-11-12");
+		map.put("content", "从存储数据觉的逻辑角度上来说,一个数据仓库有点类似一个数据一览表，而一个记录有点");
+		map.put("notebook", "菜谱");
+		map.put("test", "test");
+		list.add(map);
+		wsOkAsExtJsonP(list);
+	}
+	
 	/*
 	 * 根据notebookid查询所有的身体指标
 	 * 参数：noteBookId
