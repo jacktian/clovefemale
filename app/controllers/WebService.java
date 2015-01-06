@@ -63,10 +63,10 @@ public abstract class WebService extends XController {
      
      static void wsOkAsExtJsonP(Object data){
     	String callback = params.get("callback");
+    	Gson gson = new Gson();
      	if(StringUtils.isEmpty(callback)){
-     		wsOk(data);
+         	renderJSON(jsonP(callback,gson.toJson(data)));
      	}
-     	Gson gson = new Gson();
      	String json = gson.toJson(data);
      	renderJSON(jsonP(callback,json));
      }
