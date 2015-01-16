@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import beans.JsonpResultBean;
+
 import models.Medicine;
 import models.MedicineBox;
 import models.Note;
@@ -122,5 +124,4 @@ public class MedicineAction extends WebService{
 		Medicine.delete("id = ?", id);
 		findMbyMB(medicineBoxId);
 	}
-	
-}
+}	

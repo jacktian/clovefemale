@@ -2,7 +2,11 @@ package utils;
 
 import java.util.Date;
 
+import com.mysql.jdbc.StringUtils;
+
 import models.Baby;
+import models.Medicine;
+import models.MedicineBox;
 import models.Menses;
 import models.Temperature;
 import models.User;
@@ -14,6 +18,7 @@ public class DatabaseUtil {
 		/*人员测试数据*/
 		for(int i=0;i<50;i++){
 			User u = new User();
+			u.id = "00"+i;
 			u.userName = "user" + i;
 			u.realName = "测试者" + i;
 			u.passwd = "abcd";
@@ -51,5 +56,15 @@ public class DatabaseUtil {
     	Temperature temperature3 = new Temperature(u1.id,new Date(), 36.9F);
     	temperature3.save();
     	
+    	/*药箱测试数据*/
+    	MedicineBox box1 = new MedicineBox("感冒专用",new Date(),"治疗感冒用的药箱",u1.id);
+    	box1.save();
+    	MedicineBox box2 = new MedicineBox("外伤专用",new Date(),"治疗外伤用的药箱",u2.id);
+    	box2.save();
+    	MedicineBox box3 = new MedicineBox("宝宝专用",new Date(),"宝宝专用的药箱",u1.id);
+    	box3.save();
+    	
+    	/*药品测试数据*/
+    	Medicine med = new Medicine();
 	}
 }
