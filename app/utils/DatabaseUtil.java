@@ -58,7 +58,7 @@ public class DatabaseUtil {
     	Temperature temperature3 = new Temperature(u1.id,new Date(), 36.9F);
     	temperature3.save();
     	
-<<<<<<< HEAD
+
     	/*药箱测试数据*/
     	MedicineBox box1 = new MedicineBox("感冒专用",new Date(),"治疗感冒用的药箱",u1.id);
     	box1.save();
@@ -69,7 +69,7 @@ public class DatabaseUtil {
     	
     	/*药品测试数据*/
     	Medicine med = new Medicine();
-=======
+
     	NoteBook notebook = new NoteBook();
     	notebook.createDate = new Date();
     	notebook.name = "菜谱";
@@ -89,7 +89,7 @@ public class DatabaseUtil {
     	
     	note = new Note();
     	note.title = "红烧排骨";
-    	note.content = " 主料：排骨 (适量) 杏鲍菇 (适量)，调料：干辣椒 (适量) 花椒 (适量) 八角 (适量) 丁香 (适量) 姜片 (适量) 盐 (适量) 老抽 (适量) 生抽 (适量) 料酒 (适量) 冰糖 (适量) 十三香 (适量)";
+    	note.content = " 主料：排骨 (适量) 杏鲍菇 (适量)，调料：干辣椒 (适量)花椒 (适量)八角 (适量)丁香 (适量)姜片(适量)盐(适量)老抽 (适量) 生抽 (适量) 料酒 (适量) 冰糖 (适量) 十三香 (适量)";
     	note.createDate = new Date(114,0,12);
     	note.recentMFDate = new Date(114,0,12);
     	note.noteBookId = notebook.id;
@@ -151,6 +151,5 @@ public class DatabaseUtil {
     	note.noteBookId = notebook.id;
     	note.save();
     	
->>>>>>> 102a753449c8f2a2b7a6d1439c3c3d62792a67dd
 	}
 }
