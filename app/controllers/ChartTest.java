@@ -22,6 +22,21 @@ import com.google.gson.Gson;
  */
 public class ChartTest extends Controller {
 
+	public static void getSubjects(){
+		String[] texts = {"语文","数学","英语","物理","化学","生物","政治","历史","地理"} ;
+		List<Map<String, String>> list = new LinkedList<Map<String, String>>() ;
+		LinkedHashMap<String, String> map = null ;
+		Random random = new Random() ;
+		int len = 3 + random.nextInt(5) ;
+		for(int i = 0 ; i <= len ; i++){
+			map = new LinkedHashMap<String, String>() ;
+			map.put("text", texts[i]) ;
+			map.put("value", ""+i) ;
+			list.add(map) ;
+		}
+		rend(list) ;
+	}
+	
 	public static void getLineHeightStore(){
 //		printParams() ;
 		generateRandomData(10, "height", 150, "date", 0, "2014-01-0") ;
