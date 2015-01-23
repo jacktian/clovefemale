@@ -45,4 +45,10 @@ public class Baby extends BasicModel{
      */
 	@Column(name = "name")
 	public String name;
+
+	@Override
+	public String toString() {
+		return "Baby [userId=" + userId + ", date=" + date + ", sex=" + sex
+				+ ", name=" + name + "]";
+	}
 }

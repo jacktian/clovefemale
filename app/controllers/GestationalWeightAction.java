@@ -7,7 +7,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.management.monitor.GaugeMonitor;
+
 import models.GestationalWeight;
+import models.Menses;
 
 /**
  * 孕重控制器
@@ -16,10 +19,26 @@ import models.GestationalWeight;
  * @since 2014/12/16
  */
 public class GestationalWeightAction extends WebService {
+	
 	//增加孕重记录
-	public static void addWeight(String userId, Date wDate, float wValue){
-		GestationalWeight weight = new GestationalWeight(userId,wDate, wValue);
-		weight.save();
+	public static void addWeight(GestationalWeight model){
+		String result = "" ;
+		if(model != null){
+			if(model.wValue <= 0 || model.wDate == null){
+				result = "fail" ;
+			}else{
+			 	try{
+					model.save() ;
+					result = "success" ;
+			 	}catch(Exception e){
+			 		e.printStackTrace() ;
+			 		result = "fail" ;
+			 	}
+			}
+		}else{
+			result = "fail" ;
+		}
+		wsOkAsJsonP(result) ;
 	}
 	
 	//获取某个用户的所有孕重记录

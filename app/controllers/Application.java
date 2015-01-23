@@ -1,15 +1,15 @@
 package controllers;
 
-import play.*;
-import play.db.jpa.JPA;
-import play.mvc.*;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Query;
 
+import models.Baby;
+import models.User;
+import play.db.jpa.JPA;
 
-import models.*;
+import com.sudocn.play.BasicModel;
 
 /**
  * 主控制器
@@ -71,5 +71,25 @@ public class Application extends WebService {
     	 /*new beans.TestBean(u.userName,u.passwd) where u.passwd in (:regions)*/
     	 /*query.setParameter("regions",list);*/
     	 wsOk(query.getResultList());
+     }
+     
+     /**
+      * 保存实体类并返回JSONP回调结果
+      * @param model
+      */
+     protected static void saveModel(BasicModel model){
+    	 String result = "" ;
+    	 if(model != null){
+ 			try{
+ 				model.save() ;
+ 				result = "success" ;
+ 			}catch(Exception e){
+ 				e.printStackTrace() ;
+ 				result = "fail" ;
+ 			}
+ 		}else{
+ 			result = "fail" ;
+ 		}
+ 		wsOkAsJsonP(result) ;
      }
 }

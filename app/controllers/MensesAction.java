@@ -12,10 +12,23 @@ import models.Menses;
  * @since 2014/12/16
  */
 public class MensesAction extends WebService{
+	
 	//添加月经记录
-	public static void addMenses(String userId, Date mDate, String mColor, String mMeasure,boolean mPiece, boolean isMcramp, String vicidity){
-    	Menses menses = new Menses(userId, mDate, mColor, mMeasure, mPiece, isMcramp, vicidity);
-    	menses.save();
+	public static void addMenses(Menses model){
+		String result = "" ;
+		if(model != null){
+		 	model.mDate = new Date() ;
+		 	try{
+				model.save() ;
+				result = "success" ;
+		 	}catch(Exception e){
+		 		e.printStackTrace() ;
+		 		result = "fail" ;
+		 	}
+		}else{
+			result = "fail" ;
+		}
+		wsOkAsJsonP(result) ;
 	}
 	
 	public static void listMenseses(){

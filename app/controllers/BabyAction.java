@@ -13,6 +13,10 @@ import com.sudocn.play.BasicModel;
 
 public class BabyAction extends WebService{
     
+	public static void addBaby(Baby model){
+		Application.saveModel(model) ;
+	}
+	
 	/**
 	 * 返回所有孩子
 	 */

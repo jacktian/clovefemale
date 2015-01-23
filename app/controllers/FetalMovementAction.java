@@ -17,10 +17,23 @@ import models.GestationalWeight;
  * @since 2014/12/16
  */
 public class FetalMovementAction extends WebService{
+
 	//增加胎动记录
-	public static void addMovement(String userId, Date fDate, int num){
-		FetalMovement movement = new FetalMovement(userId,fDate, num);
-		movement.save();
+	public static void addMovement(FetalMovement model){
+		String result = "" ;
+		if(model != null){
+		 	try{
+		 		model.fDate = new Date() ;
+				model.save() ;
+				result = "success" ;
+		 	}catch(Exception e){
+		 		e.printStackTrace() ;
+		 		result = "fail" ;
+		 	}
+		}else{
+			result = "fail" ;
+		}
+		wsOkAsJsonP(result) ;
 	}
 	
 	//获取某个用户的所有胎动记录

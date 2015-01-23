@@ -16,10 +16,23 @@ import models.Temperature;
  * @since 2014/12/16
  */
 public class TemperatureAction extends WebService{
+	
 	//添加基础体温
-	public static void addTemperature(String userId, Date tDate, float tValue){
-		Temperature temperature = new Temperature(userId, tDate, tValue);
-		temperature.save();
+	public static void addTemperature(Temperature model){
+		String result = "" ;
+		if(model != null){
+			model.tDate = new Date() ;
+			try{
+				model.save() ;
+				result = "success" ;
+			}catch(Exception e){
+				e.printStackTrace() ;
+				result = "fail" ;
+			}
+		}else{
+			result = "fail" ;
+		}
+		wsOkAsJsonP(result) ;
 	}
 	
 	//查看某个用户的所有基础体温记录

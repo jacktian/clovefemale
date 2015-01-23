@@ -2,14 +2,24 @@ package controllers;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import org.apache.commons.lang.StringUtils;
+import javax.persistence.Query;
 
+import models.GradeCondition;
+import models.TestModel;
+
+import org.apache.commons.lang.StringUtils;
+import org.hibernate.SQLQuery;
+import org.hibernate.Session;
+
+import play.db.jpa.JPA;
 import play.mvc.Controller;
 import play.mvc.Http.Request;
 
@@ -36,7 +46,7 @@ public class ChartTest extends Controller {
 		}
 		rend(list) ;
 	}
-	
+
 	public static void getLineHeightStore(){
 //		printParams() ;
 		generateRandomData(10, "height", 150, "date", 0, "2014-01-0") ;
@@ -125,6 +135,84 @@ public class ChartTest extends Controller {
 			renderJSON(resultString);
 		}
 	}
+	
+	public static void test01(){
+		System.out.println(String.format("%s\tChartTest.test01", getCurrentTimeMilli())) ;
+		printParams() ;
+		List<Map<String, String>> list = new LinkedList<Map<String, String>>() ;
+		for(int i = 0 ; i < 5 ; i++){
+			Map<String, String> map = new LinkedHashMap<String, String>() ;
+			map.put("id", 			"1"+i) ;
+			map.put("name", 	"Tom"+i) ;
+			map.put("age", 		"2"+i) ;
+			map.put("gender", 	"male") ;
+			list.add(map) ;
+		}
+		rend(list) ;
+	}
+	
+	public static void test01Save(TestModel model){
+		System.out.println(String.format("%s\tChartTest.test01Save", getCurrentTimeMilli())) ;
+		System.out.println(model.toString());
+		printParams() ;
+		List<Map<String, String>> list = new LinkedList<Map<String, String>>() ;
+		for(int i = 0 ; i < 5 ; i++){
+			Map<String, String> map = new LinkedHashMap<String, String>() ;
+			map.put("id", 			"1"+i) ;
+			map.put("name", 	"Tom"+i) ;
+			map.put("age", 		"2"+i) ;
+			map.put("gender", 	"male") ;
+			list.add(map) ;
+		}
+		rend(list) ;
+	}
+
+	public static void test(){
+		List<GradeCondition> list = GradeCondition.find("select g.subject from GradeCondition g,\n"+
+                "(select g2.id, max(g2.date) as date, g2.subject from GradeCondition g2 group by g2.id, g2.subject) as tt\n"+
+                " where g.date=tt.date and g.id=tt.id and \n"+
+                " g.subject=tt.subject and g.subject=?","语文").fetch();
+		renderJSON("hello") ;
+	}
+	
+	public static void test2(){
+		List<GradeCondition> list = GradeCondition.find("select g.* from GradeCondition g").fetch();
+		renderJSON("hello2") ;
+	}
+	
+	public static void test3(){
+		Query q = JPA.em().createNativeQuery("select g.date, g.grade,g.subject,g.mark, g.baby_id from GradeCondition g,\n"+
+                "(select g2.id, MAX(g2.date) as date, g2.subject from GradeCondition g2 group by g2.id, g2.subject) as tt\n"+
+                " where g.date=tt.date and g.id=tt.id and \n"+
+                " g.subject=tt.subject and g.subject='语文'");
+		String s = "Hwllo hello hello hello.  hello hello hello hello. hello hello hello. hello hello hello. hello hello hello. hello hello hello. hello hello hello. hello hello hello. hello hello hello. hello hello hello. hello hello hello. hello hello hello. hello hello hello. hello hello hello. hello hello hello. hello hello hello. hello hello hello. hello hello hello. hello hello hello. hello hello hello. hello hello hello." ;
+		System.out.println(s);
+		List list = q.getResultList() ;
+		for(Object o : list){
+			Object[] cols = (Object[])o ;
+			System.out.println("object is :" + o);
+			System.out.println("cols[0] :" + cols[0]);
+			System.out.println("cols[1] :" + cols[1]);
+			System.out.println("cols[2] :" + cols[2]);
+		}
+		int a = q.getMaxResults();
+		System.out.println("adsf" + a);
+		renderJSON("hello2") ;
+	}
+	
+	
+	public static void test4(){
+		String sql = "select g.subject from GradeCondition g,\n"+
+                "(select g2.id, MAX(g2.date) as date, g2.subject from GradeCondition g2 group by g2.id, g2.subject) as tt\n"+
+                " where g.date=tt.date and g.id=tt.id and \n"+
+                " g.subject=tt.subject and g.subject='Chine'" ;
+		Session sess = (Session)JPA.em().getDelegate() ;
+		Session s = sess.getSessionFactory().openSession() ;
+		SQLQuery qu = s.createSQLQuery(sql) ;
+		org.hibernate.Query q2 = s.createQuery(sql) ;
+//		q2.
+		renderJSON("hello4") ;
+	}
 
 	/**
 	 * 保留两位小数
@@ -137,4 +225,10 @@ public class ChartTest extends Controller {
 		numF.setMinimumFractionDigits(2);
 		return numF.format(num) ;
 	}
+	
+	private static String getCurrentTimeMilli(){
+		SimpleDateFormat sdf3 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS") ; 
+		return sdf3.format(new Date()) ;
+	}
 }
+
