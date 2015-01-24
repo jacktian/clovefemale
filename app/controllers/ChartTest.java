@@ -13,7 +13,6 @@ import java.util.Random;
 import javax.persistence.Query;
 
 import models.GradeCondition;
-import models.TestModel;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.SQLQuery;
@@ -138,22 +137,6 @@ public class ChartTest extends Controller {
 	
 	public static void test01(){
 		System.out.println(String.format("%s\tChartTest.test01", getCurrentTimeMilli())) ;
-		printParams() ;
-		List<Map<String, String>> list = new LinkedList<Map<String, String>>() ;
-		for(int i = 0 ; i < 5 ; i++){
-			Map<String, String> map = new LinkedHashMap<String, String>() ;
-			map.put("id", 			"1"+i) ;
-			map.put("name", 	"Tom"+i) ;
-			map.put("age", 		"2"+i) ;
-			map.put("gender", 	"male") ;
-			list.add(map) ;
-		}
-		rend(list) ;
-	}
-	
-	public static void test01Save(TestModel model){
-		System.out.println(String.format("%s\tChartTest.test01Save", getCurrentTimeMilli())) ;
-		System.out.println(model.toString());
 		printParams() ;
 		List<Map<String, String>> list = new LinkedList<Map<String, String>>() ;
 		for(int i = 0 ; i < 5 ; i++){
