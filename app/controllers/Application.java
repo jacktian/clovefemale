@@ -13,6 +13,8 @@ import play.db.jpa.JPA;
 import beans.BIndexBean;
 import beans.GradeBean;
 
+import com.sudocn.play.BasicModel;
+
 /**
  * 主控制器
  *
@@ -142,6 +144,26 @@ public class Application extends WebService {
  		
      	render("/RecordMgm/subjectGrade.html",listbean,pageNum,curpage,babyId);
  	}
+	
+	/**
+      * 保存实体类并返回JSONP回调结果
+      * @param model
+      */
+     protected static void saveModel(BasicModel model){
+    	 String result = "" ;
+    	 if(model != null){
+ 			try{
+ 				model.save() ;
+ 				result = "success" ;
+ 			}catch(Exception e){
+ 				e.printStackTrace() ;
+ 				result = "fail" ;
+ 			}
+ 		}else{
+ 			result = "fail" ;
+ 		}
+ 		wsOkAsJsonP(result) ;
+     }
  	
  	
 }

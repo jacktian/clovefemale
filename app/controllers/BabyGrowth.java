@@ -263,36 +263,63 @@ public class BabyGrowth extends WebService {
 		List<BodyIndex> indexlist = BodyIndex.findAll();
 		wsOk(indexlist);
 	}
-	/*
+	
+	/*	
 	 * 新增疫苗接种记录
 	 * 参数：前台传回的实体类，小孩id
 	 * 返回：全部列表
-	 * */
+	 * 
 	public static void addVaccination(Vaccination v, String babyId) {
 		Vaccination vacc = v.save();
 //		Vaccination.createBtoV(babyId, vacc.id);
 		findVaccByBaby(babyId);
 	}
-	/*
+	
 	 * 新增成绩表
 	 * 参数：前台传回的实体类，小孩id
 	 * 返回：全部列表
-	 * */
+	 * 
 	public static void addGradeCondition(GradeCondition grade, String babyId) {
 		GradeCondition g = grade.save();
-		/*GradeCondition.createBtoG(babyId, g.id);*/
+		GradeCondition.createBtoG(babyId, g.id);
 		findGradeByBaby(babyId);
 	}
-	/*
+	
 	 * 新增身体指标记录
 	 * 参数：前台传回的实体类，小孩id
 	 * 返回：全部列表
-	 * */
+	 * 
 	public static void addBodyIndex(BodyIndex bodyIndex, String babyId) {
 		BodyIndex b = bodyIndex.save();
-		/*BodyIndex.createBtoB(babyId, b.id);*/
+		BodyIndex.createBtoB(babyId, b.id);
 		findbodyByBaby(babyId);
+	}*/
+	
+	
+	public static void addVaccination(Vaccination model) {
+		Application.saveModel(model) ;
 	}
+
+	public static void addGradeCondition(GradeCondition model) {
+		Application.saveModel(model) ;
+	}
+
+	public static void addBodyIndex(BodyIndex model) {
+		String result = "" ;
+		if(model != null){
+			if(model.height <=0 || model.weight <= 0){
+				result = "fail" ;
+			}else{
+				Application.saveModel(model) ;
+			}
+		}else{
+			result = "fail" ;
+		}
+		wsOkAsJsonP(result) ;
+	}
+	
+	
+	
 	/*
 	 * 根据科目名称查询对应的成绩
 	 * 参数：科目名称,小孩id
