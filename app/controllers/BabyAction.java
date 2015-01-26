@@ -13,10 +13,6 @@ import com.sudocn.play.BasicModel;
 
 public class BabyAction extends WebService{
     
-	public static void addBaby(Baby model){
-		Application.saveModel(model) ;
-	}
-	
 	/**
 	 * 返回所有孩子
 	 */
@@ -52,4 +48,48 @@ public class BabyAction extends WebService{
    	 baby.date = date;
    	 baby.save();
 	}
+	
+	 public static void searchBaby(int type,String name){
+		 String flag="all";
+		 long count=1;
+		 if(type==1){
+			  count=Baby.find("name", name).fetch().size();
+			  flag="name";
+		 }else{
+			  List<User> list=User.find("IDcard",name).fetch();
+				List<Baby> babylist = Baby.find("userId", list.get(0).id).fetch();
+			 count=babylist.size();
+			 flag="user";
+		 }
+		 /*分页显示*/
+	     	long pageNum = 0;
+	     	if(count%10!=0)
+	     		pageNum = count/10+1;
+	     	else
+	     		pageNum = count/10;
+	     	System.out.println(count);
+	     	String seachInfo=name;
+	         render("/RecordMgm/growthRecordMgm.html",pageNum,flag,seachInfo);
+     }
+	/**
+	 * 根据孩子姓名查找孩子
+	 */
+	public static void findBabyByName(int curpage,String name){
+		List<Baby> babylist = Baby.find("name", name).fetch();
+		List<BabyBean> babys = BabyBean.builList(babylist);
+		System.out.println(babys.size());
+		wsOk(babys);
+	}
+	
+	/**
+	 * 根据用户姓名查找孩子
+	 */
+	public static void findBabyByUser(int curpage,String userIDcard){
+		List<User> list=User.find("IDcard",userIDcard).fetch();
+		List<Baby> babylist = Baby.find("userId", list.get(0).id).fetch();
+		List<BabyBean> babys = BabyBean.builList(babylist);
+		wsOk(babys);
+	}
+	
+	
 }

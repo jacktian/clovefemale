@@ -71,4 +71,13 @@ public class UserAction extends WebService{
     	 List<User> users = User.all().fetch(curpage, 10);
     	 wsOk(users);
      }
+     
+     /**
+ 	 * 返回所有用户
+ 	 */
+     public static void listSearchUser(String username){
+    	 List<User> userList = User.find("IDcard = ? or userName = ? or realName = ?",username,username,username).fetch();
+    	/* List<User> userList = User.find("userName = ?",username).fetch();*/
+    	 wsOk(userList);
+     }
 }

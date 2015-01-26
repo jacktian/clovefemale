@@ -35,9 +35,10 @@ body{
 	color:#555;
 	font-weight:500;
 }
-table#userTable{
+/*取消最低高度*/
+/* table#userTable{
 	min-height:707px;
-}
+} */
 table#userTable tr td{
 	line-height:50px;
 }

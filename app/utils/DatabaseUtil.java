@@ -1,12 +1,12 @@
 package utils;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import com.mysql.jdbc.StringUtils;
+import java.util.List;
 
 import models.Baby;
-import models.Medicine;
-import models.MedicineBox;
+import models.BodyIndex;
+import models.GradeCondition;
 import models.Menses;
 import models.Note;
 import models.NoteBook;
@@ -20,7 +20,6 @@ public class DatabaseUtil {
 		/*人员测试数据*/
 		for(int i=0;i<50;i++){
 			User u = new User();
-			u.id = "00"+i;
 			u.userName = "user" + i;
 			u.realName = "测试者" + i;
 			u.passwd = "abcd";
@@ -33,15 +32,17 @@ public class DatabaseUtil {
 		User u2 = (User) User.find("byUserName", "user2").fetch().get(0);
 		
 		/*宝贝测试数据*/
-		for(int i=0;i<10;i++){
+		for(int i=0;i<11;i++){
 			Baby baby = new Baby();
 			baby.userId = u1.id;
-			baby.name = "小喇叭" + i + "号";
+			baby.name = "baby" + i;
 			baby.sex = "male";
 			baby.date = new Date();
 			baby.save();
 		}
     	
+		Baby b1 = (Baby)Baby.find("name", "baby2").fetch().get(0);
+		Baby b2 = (Baby)Baby.find("name", "baby3").fetch().get(0);
 		/*月经测试数据*/
     	Menses menses = new Menses(u1.id, new Date(),"暗红", "多", true, true,"稠");
     	menses.save();
@@ -58,18 +59,6 @@ public class DatabaseUtil {
     	Temperature temperature3 = new Temperature(u1.id,new Date(), 36.9F);
     	temperature3.save();
     	
-
-    	/*药箱测试数据*/
-    	MedicineBox box1 = new MedicineBox("感冒专用",new Date(),"治疗感冒用的药箱",u1.id);
-    	box1.save();
-    	MedicineBox box2 = new MedicineBox("外伤专用",new Date(),"治疗外伤用的药箱",u2.id);
-    	box2.save();
-    	MedicineBox box3 = new MedicineBox("宝宝专用",new Date(),"宝宝专用的药箱",u1.id);
-    	box3.save();
-    	
-    	/*药品测试数据*/
-    	Medicine med = new Medicine();
-
     	NoteBook notebook = new NoteBook();
     	notebook.createDate = new Date();
     	notebook.name = "菜谱";
@@ -89,7 +78,7 @@ public class DatabaseUtil {
     	
     	note = new Note();
     	note.title = "红烧排骨";
-    	note.content = " 主料：排骨 (适量) 杏鲍菇 (适量)，调料：干辣椒 (适量)花椒 (适量)八角 (适量)丁香 (适量)姜片(适量)盐(适量)老抽 (适量) 生抽 (适量) 料酒 (适量) 冰糖 (适量) 十三香 (适量)";
+    	note.content = " 主料：排骨 (适量) 杏鲍菇 (适量)，调料：干辣椒 (适量) 花椒 (适量) 八角 (适量) 丁香 (适量) 姜片 (适量) 盐 (适量) 老抽 (适量) 生抽 (适量) 料酒 (适量) 冰糖 (适量) 十三香 (适量)";
     	note.createDate = new Date(114,0,12);
     	note.recentMFDate = new Date(114,0,12);
     	note.noteBookId = notebook.id;
@@ -151,5 +140,135 @@ public class DatabaseUtil {
     	note.noteBookId = notebook.id;
     	note.save();
     	
+    	SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    	
+    	try{
+    	BodyIndex bindex = new BodyIndex();
+    	bindex.babyId = b1.id;
+    	bindex.date = sf.parse("2015-1-10 20:17:45");
+    	bindex.height=50.0;
+    	bindex.weight=10.0;
+    	bindex.save();
+    	
+    	BodyIndex bindex1 = new BodyIndex();
+    	bindex1.babyId = b1.id;
+    	bindex1.date = sf.parse("2015-1-20 20:17:45");
+    	bindex1.height=53.2;
+    	bindex1.weight=11.4;
+    	bindex1.save();
+    	
+    	BodyIndex bindex2 = new BodyIndex();
+    	bindex2.babyId = b2.id;
+    	bindex2.date = sf.parse("2015-1-12 20:15:45");
+    	bindex2.height=51.2;
+    	bindex2.weight=12.3;
+    	bindex2.save();
+    	
+    	BodyIndex bindex3 = new BodyIndex();
+    	bindex3.babyId = b2.id;
+    	bindex3.date = sf.parse("2015-1-15 20:17:45");
+    	bindex3.height=52.0;
+    	bindex3.weight=15.0;
+    	bindex3.save();
+    	
+    	BodyIndex bindex4 = new BodyIndex();
+    	bindex4.babyId = b2.id;
+    	bindex4.date = sf.parse("2015-1-21 20:17:45");
+    	bindex4.height=55.0;
+    	bindex4.weight=16.0;
+    	bindex4.save();
+    	
+    	BodyIndex bindex5 = new BodyIndex();
+    	bindex5.babyId = b1.id;
+    	bindex5.date = sf.parse("2015-1-22 20:17:45");
+    	bindex5.height=55.6;
+    	bindex5.weight=16.3;
+    	bindex5.save();
+    	
+    	}catch(Exception e){
+    		e.printStackTrace();
+    	}
+    	
+    	
+    	
+    	try{
+    	/*添加孩子学习成绩*/
+    	GradeCondition grade = new GradeCondition();
+        
+    	grade.babyId=b1.id;
+    	grade.date = sf.parse("2014-12-25 12:24:30");
+    	grade.subject="语文";
+    	grade.mark=59.0;
+    	grade.grade="一年级";
+    	grade.save();
+    	
+    	GradeCondition grade1 = new GradeCondition();
+    	grade1.babyId=b1.id;
+    	grade1.date = sf.parse("2014-12-26 12:24:30");
+    	grade1.subject="数学";
+    	grade1.mark=69.0;
+    	grade1.grade="一年级";
+    	grade1.save();
+    	
+    	GradeCondition grade2 = new GradeCondition();
+    	grade2.babyId=b2.id;
+    	grade2.date = sf.parse("2015-01-10 12:24:30");
+    	grade2.subject="语文";
+    	grade2.mark=79.0;
+    	grade2.grade="一年级";
+    	grade2.save();
+    	
+    	GradeCondition grade3 = new GradeCondition();
+    	grade3.babyId=b2.id;
+    	grade3.date = sf.parse("2015-01-15 12:24:30");
+    	grade3.subject="数学";
+    	grade3.mark=89.0;
+    	grade3.grade="一年级";
+    	grade3.save();
+    	
+    	GradeCondition grade4 = new GradeCondition();
+    	grade4.babyId=b1.id;
+    	grade4.date = sf.parse("2015-01-16 12:24:30");
+    	grade4.subject="语文";
+    	grade4.mark=59.0;
+    	grade4.grade="一年级";
+    	grade4.save();
+    	
+    	GradeCondition grade5 = new GradeCondition();
+    	grade5.babyId=b1.id;
+    	grade5.date = sf.parse("2015-01-16 12:24:30");;
+    	grade5.subject="数学";
+    	grade5.mark=57.0;
+    	grade5.grade="一年级";
+    	grade5.save();
+    	
+    	GradeCondition grade6 = new GradeCondition();
+    	grade6.babyId=b2.id;
+    	grade6.date = sf.parse("2015-01-17 12:24:30");
+    	grade6.subject="语文";
+    	grade6.mark=58.0;
+    	grade6.grade="一年级";
+    	grade6.save();
+    	}catch(Exception e){
+    		
+    	}
+    	String sub="语文";
+    	List<GradeCondition> list = GradeCondition.find("select g from GradeCondition g where subject=?","语文").fetch();
+    	/*Query q = JPA.em().createNativeQuery("select g.baby_Id,g.date,g.subject,g.mark from GradeCondition g,"+
+                "(select g1.baby_Id,max(g1.date) as date,g1.subject from GradeCondition g1 group by g1.baby_Id,g1.subject) t1"+
+                " where g.date=t1.date and g.baby_Id=t1.baby_Id and"+
+                " g.subject=t1.subject and g.subject = '语文' ");*/
+    	
+    	/*Query q = JPA.em().createQuery( "select g from GradeCondition g");*/
+                
+    	
+    	/*List<GradeCondition> list = q.getResultList();*/
+    	for(GradeCondition g :list){
+    	System.out.println(g.babyId+" "+g.subject+" "+g.mark+" "+g.date);
+    	}
+    	List<GradeCondition> list2 = GradeCondition.find("select g from GradeCondition g where babyId in (select id from Baby where name = ?)", "baby2").fetch();
+    	for(GradeCondition g :list2){
+        	System.out.println("test--"+g.babyId+" "+g.subject+" "+g.mark+" "+g.date);
+        	}
 	}
 }

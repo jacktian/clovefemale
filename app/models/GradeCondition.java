@@ -26,12 +26,12 @@ public class GradeCondition extends BasicModel {
 	public String subject;//科目
 	@Required
 	@Column(name = "mark")
-	public String mark;//成绩
+	public double mark;//成绩
 	@Column(name = "baby_Id")
 	public String babyId;
 
 	public GradeCondition(){}
-	public GradeCondition(Date date,String grade,String subject,String mark,String babyId){
+	public GradeCondition(Date date,String grade,String subject,double mark,String babyId){
 		
 		this.date=date;
 		this.grade=grade;

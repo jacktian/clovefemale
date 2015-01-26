@@ -8,14 +8,22 @@ $(function(){
 	}
 	
 	/*加载数据*/
-	loadUsersByPage = function(curpage){
+	 loadUsersByPage = function(curpage){
 		$.get(localhost+'/useraction/listusers?curpage='+curpage, function(data) {
 	        successCB(data);
 	    });
 	}
 	
+	loadsearchData=function(userName){
+          $.get(localhost+'/useraction/listSearchUser?username='+userName, function(data) {
+	       /* alert(data.data[0].realName);*/
+	        successCB(data);
+	    });
+	}
+
 	$(".topNav li").removeClass("active");
 	$(".topNav li").eq(0).addClass("active");
+	$(this).bind("loadsearchData",loadsearchData);
 	$(this).bind("loadUsersByPage",loadUsersByPage);
 	$(this).trigger('loadUsersByPage');
 });

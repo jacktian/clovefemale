@@ -88,9 +88,13 @@ $(function(){
 				return false;
 			}
 			else{
+				/*可以在get里面返回中改变分页信息*/
 				nextPage = parseInt(curPage)+parseInt(1);
 				$('.userList nav ul li').removeClass('active');
 				$('.userList nav ul li').eq(nextPage).addClass('active');
+				 
+				
+				
 			}
 		}
 		
@@ -110,8 +114,22 @@ $(function(){
 	$('.returnBtn').click(function(){
 		location.reload();
 	});
-	
-	
+	/*搜寻特定用户信息*/
+	$('.searchBtn').click(function(){
+		if($('#uname').val()==''){
+               window.location.href=localhost+'/Application/userMgm';
+		}else{
+			alert($('#uname').val());
+
+           /* $.get(localhost+'/Application/test1', function(data) {
+	       alert(data.data[0].userName);
+	    });*/
+	            
+                loadsearchData($('#uname').val());
+                $('.foot').addClass('hidden');
+		}
+	});
+
 	$(document).on('click','.deleteBtn',deleUser);
 	$(document).on('click','.alterBtn',changePane);
 	$('.userList nav ul li a').click(pageJump);

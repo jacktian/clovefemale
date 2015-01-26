@@ -1,0 +1,72 @@
+#{extends 'main.html' /}
+#{set title:'记录管理' /}
+#{output 'RecordMgm/growthRecordTpl.html'/}
+<!-- 记录管理  -->
+<div class="container">
+	<div class="col-md-2">
+		<ul class="babyManMenu manaMenu">
+			<li class="active">
+				<a href="#">小宝成长</a>
+				<ul>
+					<li><a href=@{Application.recordMgm()}>所有宝贝</a></li>
+					<li><a href=@{Application.findBabyByPro()}>查找宝贝</a></li>
+					<li><a href=@{Application.findBabyByCondition()}>宝贝情况筛选</a></li>
+				</ul>
+			</li>
+			<li>
+				<a href="#">助孕记录</a>
+			</li>
+			<li>
+				<a href="#">药箱管理</a>
+			</li>
+			<li>
+				<a href="#">随手记</a>
+			</li>
+		</ul>
+	</div>
+	<div class="col-md-10 findBaby">
+		<form action="#" class="form-horizontal" role="form">
+			<div class="form-group">
+				<label for="name">查找条件列表</label> <select class="form-control findBaby" id="findBaby">
+					<option value="1">全部宝贝</option>
+					<option value="2">宝贝姓名</option>
+					<option value="3">父母身份证号</option>
+					<!-- <option value="4">父母姓名</option> -->
+				</select>
+			</div>
+			<div class="form-group findform">
+			 
+			</div>
+			
+		<!-- 	<div class="form-group findform">
+			 <label for="babyId">宝宝ID：</label>
+		    <input type="text" class="form-control" name="babyId" id="babyId" placeholder="输入要查找宝宝的ID">
+			</div>
+			<div class="form-group">
+			<label for="userId">用户ID：：</label>
+		    <input type="text" class="form-control" name="userId" id="userId" placeholder="输入要查找宝宝的用户ID">
+			</div>
+			<div class="form-group">
+			<label for="babyName">宝宝名称：</label>
+		    <input type="text" class="form-control" name="babyName" id="babyName" placeholder="输入要查找宝宝的名称">
+			</div>
+			<div class="form-group">
+			<label for="userName">宝宝ID：</label>
+		    <input type="text" class="form-control" name="username" id="userName" placeholder="输入要查找宝宝的用户姓名">
+			</div> -->
+			<div class="form-group">
+		   <button type="button" class="btn btn-primary text-center submitBtn">提交</button>
+		   <button type="reset" class="btn btn-warning text-center resetBtn">清空</button>
+		    <button type="button" class="btn btn-default text-center returnBtn">返回</button>
+			</div>
+			</form>
+	</div>
+			#{set 'moreScripts'}
+			<!-- 加载的js -->
+			<script type="text/javascript"
+				src="@{'/public/javascripts/juicer.js'}"></script>
+				<script src="@{'/public/javascripts/growthLoad.js'}"></script>
+                <script src="@{'/public/javascripts/growthOper.js'}"></script>
+		        <!-- <script src="@{'/public/javascripts/findOptionLoad.js'}"></script> -->
+			
+			#{/set}

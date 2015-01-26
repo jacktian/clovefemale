@@ -8,8 +8,9 @@
 			<li class="active">
 				<a href="#">小宝成长</a>
 				<ul>
-					<li><a href="#">所有宝贝</a></li>
-					<li><a href="#">查找宝贝</a></li>
+					<li><a href=@{Application.recordMgm()}>所有宝贝</a></li>
+					<li><a href=@{Application.findBabyByPro()}>查找宝贝</a></li>
+					<li><a href=@{Application.findBabyByCondition()}>宝贝情况筛选</a></li>
 				</ul>
 			</li>
 			<li>
@@ -26,6 +27,7 @@
 	<div class="col-md-10 babyList dataList">
 		<table class="table table-hover table-striped" id="babyTable">
 			<tr class="tableHeader">
+			    <th>用户编号</th>
 				<th>姓名</th>
 				<th>性别</th>
 				<th>出生日期</th>
@@ -36,19 +38,30 @@
 				<th>管理</th>
 			</tr>
 		</table>
+		<div class="foot">
 		<nav>
 			<ul class="pagination babyPag">
 				<li class="disabled"><a href="#" class="prevPage">&laquo;</a></li>
 				<li class="active"><a href="#">1</a></li>
+				#{if pageNum>1}
 				#{list items:1..pageNum-1, as:'i'}
     				<li><a href="#">${i+1}</a></li>
 				#{/list}
+				#{/if}
+				
 				<li><a href="#" class="nextPage">»</a></li>			
 			</ul>
 		</nav>
-		
+		</div>
 	</div>
-	
+	<div class="col-md-10  hidden babyDetail">
+	<form action="#" class="form-horizontal" role="form">
+	<div class="form-group">
+		    <input type="text" class="form-control flag" name="uid" id="uid" value=${flag}>
+		     <input type="text" class="form-control searchInfo" name="uid2" id="uid2" value=${seachInfo}>
+		  </div>
+		  </form>
+		  </div>
 	<!-- <div class="col-md-10 hidden userDetail">
 		<form action="#" class="form-horizontal" role="form">
 			<div class="form-group">

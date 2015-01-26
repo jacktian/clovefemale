@@ -7,14 +7,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.sun.accessibility.internal.resources.accessibility;
-
 import models.BodyIndex;
-import models.FetalMovement;
-import models.GestationalWeight;
 import models.GradeCondition;
-import models.Temperature;
 import models.Vaccination;
+import beans.BIndexBean;
+import beans.GradeBean;
 
 
 public class BabyGrowth extends WebService {
@@ -75,7 +72,7 @@ public class BabyGrowth extends WebService {
 				 for(GradeCondition g :list){
 					 Map<String, String> map  = new HashMap<String, String>();
 					 map.put("date", g.date.toString());
-					 map.put("grade",g.mark);
+					 map.put("grade",String.valueOf(g.mark));//已改
 					 gradeList.add(map);
 				 }
 			 }
@@ -83,7 +80,87 @@ public class BabyGrowth extends WebService {
 		wsOk(gradeList);
    	}
 	
+    /**
+     * 根据科目和成绩区间查询符合条件的宝宝情况（首次查询跳转，不包括页数跳转）
+     */
 	
+    public static void selectBabyByGrade(String subject,int gradeInterval,int curpage){
+    	System.out.println("-----fenshuduan"+":"+gradeInterval+"  curpage:"+curpage);
+    	List<GradeCondition> list=new ArrayList();
+    	List<GradeCondition> gradelist=null;
+    	long count=0;
+    	double maxMark=60.0;
+    	double minMark=0;
+    	long pageNum = 0;//总页数
+    	
+    	if(gradeInterval>0){
+    		if(gradeInterval==1){
+    			minMark=0;
+    			maxMark=60.0;
+    		}else {
+    			minMark =60.0 +(gradeInterval-2)*10;
+    			maxMark = 60.0 +(gradeInterval-1)*10;
+    		}
+    		
+    		gradelist = GradeCondition.find("select g from GradeCondition g where subject = ? and mark >= ? and mark < ?", subject,minMark,maxMark).fetch();
+    	}else{
+    		gradelist =GradeCondition.find("select g from GradeCondition g where subject = ?", subject).fetch();
+    	}
+    	if(gradelist!=null){
+    	 count= gradelist.size();//计算总记录条数，以2条一页为基准
+    	}
+    	if(count%2!=0)
+    		pageNum = count/2+1;
+    	else
+    		pageNum = count/2;
+    	
+    	if(gradeInterval > 0){
+    		gradelist = GradeCondition.find("select g from GradeCondition g where subject = ? and mark >= ? and mark < ?", subject,minMark,maxMark).fetch(curpage,2);
+    	}else{
+    		gradelist =GradeCondition.find("select g from GradeCondition g where subject = ?", subject).fetch(curpage,2);
+    	}
+    	 
+    		System.out.println("-----size"+":"+gradelist.size()+"--count:"+count);
+    		System.out.println("-----pagenum"+":"+pageNum);
+    	
+    	List<GradeBean> listbean =null;
+    	if(gradelist!=null){
+    		 listbean=GradeBean.builList(gradelist);
+    	}
+    	render("/RecordMgm/findBabyByGrade.html",listbean,pageNum,curpage,subject,gradeInterval);
+        
+    	
+    }
+    
+    /**
+     * 根据宝宝名称和科目查询个体成绩
+     */
+    public static void findMarkByBaby(String babyName,String subject,int curpage){
+    	System.out.println("----------testeste-start");
+    	List<GradeCondition> gradelist=GradeCondition.find("select g from GradeCondition g where babyId in (select id from Baby where name = ?) and subject = ?", babyName,subject).fetch(curpage,2);
+        if(gradelist!=null){
+    	System.out.println("----------testeste"+gradelist.size());
+        }else{
+        	System.out.println("----------testeste null");
+        }
+    	long pageNum = 0;//总页数
+    	long count = 0;
+    	if(gradelist!=null){
+    	count=gradelist.size();//计算总记录条数，以2条一页为基准
+    	}
+    	if(count%2!=0)
+    		pageNum = count/2+1;
+    	else
+    		pageNum = count/2;
+    	List<GradeBean> listbean = null;
+    	if(gradelist!=null){
+    		listbean=GradeBean.builList(gradelist);
+    	}
+    	
+    	render("/RecordMgm/findBabyByGrade.html",listbean,pageNum,curpage,subject);
+    }
+    
+    
 	/* 查询一段时间内的孩子学科不同分数区间的占比
 	 * 参数：开始时间，结束时间，孩子id，科目
 	 * 返回：分数区间+次数
@@ -134,7 +211,8 @@ public class BabyGrowth extends WebService {
     	for(GradeCondition g :list){
     		
     		try{
-    			double mark=(Double.parseDouble(g.mark));
+    			/*double mark=(Double.parseDouble(g.mark));*/
+    			double mark=g.mark;
     		if(mark<60.0){
     		  a[0]++;
     		}else if (mark>=60.0 && mark <70.0) {
@@ -185,62 +263,36 @@ public class BabyGrowth extends WebService {
 		List<BodyIndex> indexlist = BodyIndex.findAll();
 		wsOk(indexlist);
 	}
-/*	
+	/*
 	 * 新增疫苗接种记录
 	 * 参数：前台传回的实体类，小孩id
 	 * 返回：全部列表
-	 * 
+	 * */
 	public static void addVaccination(Vaccination v, String babyId) {
 		Vaccination vacc = v.save();
 //		Vaccination.createBtoV(babyId, vacc.id);
 		findVaccByBaby(babyId);
 	}
-	
+	/*
 	 * 新增成绩表
 	 * 参数：前台传回的实体类，小孩id
 	 * 返回：全部列表
-	 * 
+	 * */
 	public static void addGradeCondition(GradeCondition grade, String babyId) {
 		GradeCondition g = grade.save();
-		GradeCondition.createBtoG(babyId, g.id);
+		/*GradeCondition.createBtoG(babyId, g.id);*/
 		findGradeByBaby(babyId);
 	}
-	
+	/*
 	 * 新增身体指标记录
 	 * 参数：前台传回的实体类，小孩id
 	 * 返回：全部列表
-	 * 
+	 * */
 	public static void addBodyIndex(BodyIndex bodyIndex, String babyId) {
 		BodyIndex b = bodyIndex.save();
-		BodyIndex.createBtoB(babyId, b.id);
+		/*BodyIndex.createBtoB(babyId, b.id);*/
 		findbodyByBaby(babyId);
-	}*/
-	
-	
-
-	public static void addVaccination(Vaccination model) {
-		Application.saveModel(model) ;
 	}
-
-	public static void addGradeCondition(GradeCondition model) {
-		Application.saveModel(model) ;
-	}
-
-	public static void addBodyIndex(BodyIndex model) {
-		String result = "" ;
-		if(model != null){
-			if(model.height <=0 || model.weight <= 0){
-				result = "fail" ;
-			}else{
-				Application.saveModel(model) ;
-			}
-		}else{
-			result = "fail" ;
-		}
-		wsOkAsJsonP(result) ;
-	}
-	
-	
 	/*
 	 * 根据科目名称查询对应的成绩
 	 * 参数：科目名称,小孩id
@@ -260,21 +312,26 @@ public class BabyGrowth extends WebService {
 	}
 
 	/*
-	 * 身高按日期排序
+	 * 根据孩子id查询孩子的身体指标
 	 * 参数：小孩id
 	 * 返回：对应的列表
 	 * */
-	public static void findByHeight(String babyId) {
-		List<BodyIndex> list = GradeCondition.find("babyId = ? order by date",babyId).fetch();
+	public static void findBI(String babyId,int curpage) {
+		List<BodyIndex> list = BodyIndex.find("babyId = ? order by date",babyId).fetch(curpage,2);
+		List<BIndexBean> listbean = null;
+		long pageNum = 0;//总页数
+    	long count = 0;
+    	if(list!=null){
+       	count=list.size();//计算总记录条数，以2条一页为基准
+       	if(count%2!=0)
+    		pageNum = count/2+1;
+    	else
+    		pageNum = count/2;
+       	
+    		listbean=BIndexBean.builList(list);
+        	}
 		
-		/*List<BodyIndex> bodyList = findbodyByBaby2(babyId);
-		for(BodyIndex b : list){
-			if(!bodyList.contains(b)){
-				list.remove(b);
-			}
-		}*/
-		
-		wsOk(list);
+    	render("/RecordMgm/bodyIndex.html",listbean,pageNum,curpage);
 	}
 	/*
 	 * 根据id查询对应的身体指标
@@ -379,7 +436,13 @@ public class BabyGrowth extends WebService {
 			BodyIndex body =BodyIndex.findById(babyToBody.bodyId);
 			bodyList.add(body);
 		}*/
-		List<BodyIndex> bodyList = BodyIndex.find("select b from BodyIndex b where b.babyId = ? ", babyId).fetch();
+		/*List<BodyIndex> bodyList = findbodyByBaby2(babyId);
+		for(BodyIndex b : list){
+			if(!bodyList.contains(b)){
+				list.remove(b);
+			}
+		}*/
+		List<BodyIndex> bodyList = BodyIndex.find("select b from BodyIndex b where b.babyId = ? order by date", babyId).fetch();
 		wsOk(bodyList);
 	}
 	
