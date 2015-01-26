@@ -271,6 +271,26 @@ public class RandomNote extends WebService{
 		Note.delete("id = ?", id);
 		findNoteByNotebook(noteBookId);
 	}
+	
+	/*
+	 * 删除笔记
+	 * 参数：noteIdList
+	 * 返回操作结果（成功/失败）
+	 */
+	public static void delNote(String[] noteIdList){
+		try{
+			if(noteIdList!=null){
+				for(int i = 0; i < noteIdList.length; i++){
+					Note.delete("id = ?", noteIdList[i]);
+				}
+			}
+			wsOkAsJsonP(null);
+		}catch(Exception e){
+			wsErrorAsJsonP(null);
+		}
+		
+	}
+	
 	/*
 	 * 根据id删除笔记本
 	 * 参数：ID
@@ -290,6 +310,25 @@ public class RandomNote extends WebService{
 		}
 		NoteBook.delete("id = ?", id);
 		findNoteBookByUser(userId);
+		
+	}
+	
+	/*
+	 * 删除笔记本
+	 * 参数noteBookId
+	 * 返回：操作成功或失败
+	 */
+	public static void delNoteBook(String noteBookId){
+		try{
+			List<Note> notes = Note.find("noteBookId = ?", noteBookId).fetch();
+			for(Note n : notes){
+				n.delete();
+			}
+			NoteBook.delete("id = ?", noteBookId);
+			wsOkAsJsonP(null);
+		}catch(Exception e){
+			wsErrorAsJsonP(null);
+		}
 	}
 	
 	/*
