@@ -20,6 +20,14 @@ public class MedicineTestAction extends WebService{
 	}
 	
 	/**
+	 * 查找所有药箱
+	 */
+	public static void findAllMedBoxByUser(String userId){
+		List<MedicineBox> list = MedicineBox.find("byUserId", userId).fetch();
+		wsOkAsExtJsonP(list);
+	}
+	
+	/**
 	 * 添加药箱
 	 */
 	public static void addMedBox(String medBoxName,String medBoxMark,String userId){
@@ -47,6 +55,30 @@ public class MedicineTestAction extends WebService{
 		try{
 			/* 找到药箱下所有药品 并删除*/
 			List<Medicine> medList =  Medicine.find("byMedicineBoxId", medBoxId).fetch();
+			for(int i=0;i<medList.size();i++){
+				Medicine.delete("id = ?", medList.get(i).id);
+			}
+			/* 删除药箱*/
+			MedicineBox.delete("id = ?",medBoxId);
+			bean.result = 1;
+			bean.rtnStr = "药箱刪除成功!";
+			wsOkAsExtJsonP(bean);
+		}
+		catch(Exception e){
+			bean.result = 0;
+			bean.rtnStr = "药箱删除失败!";
+			wsOkAsExtJsonP(bean);
+		}
+	}
+	
+	/**
+	 * 删除药箱
+	 */
+	public static void removeMedBox(String medBoxId,String userId){
+		JsonpResultBean bean = new JsonpResultBean();
+		try{
+			/* 找到药箱下所有药品 并删除*/
+			List<Medicine> medList =  Medicine.find("byMedicineBoxIdAndUserId", medBoxId,userId).fetch();
 			for(int i=0;i<medList.size();i++){
 				Medicine.delete("id = ?", medList.get(i).id);
 			}
