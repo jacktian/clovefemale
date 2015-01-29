@@ -34,9 +34,9 @@ public class RandomNote extends WebService{
 	public static void findNoteBookByUserId(String userId){		
 		String queryString = "select new beans.SimpleNoteBookBean " +
 						" (nb.id,nb.name) " +
-						" from NoteBook as nb  order by nb.createDate";//where nb.userId=?1
+						" from NoteBook as nb where nb.userId=?1 order by nb.createDate";//
 		Query query = JPA.em().createQuery(queryString);
-//		query.setParameter(1, userId);//给编号为1的参数设值 
+		query.setParameter(1, userId);//给编号为1的参数设值 
 		List<SimpleNoteBookBean> nblist  = query.getResultList();
 		wsOkAsJsonP(nblist);
 	}
@@ -138,16 +138,20 @@ public class RandomNote extends WebService{
 	 * 
 	 */
 	public static void addNoteBook2(String userId,String noteBookName){
-		NoteBook notebook = new NoteBook();
-		notebook.createDate = new Date();
-		notebook.name = noteBookName;
-		notebook.userId = userId;
-		notebook.recentMFDate = new Date();
-		notebook.save();
-		SimpleNoteBookBean simpleNoteBook = new SimpleNoteBookBean();
-		simpleNoteBook.id = notebook.id;
-		simpleNoteBook.name = notebook.name;
-		wsOkAsJsonP(simpleNoteBook);
+		try{
+			NoteBook notebook = new NoteBook();
+			notebook.createDate = new Date();
+			notebook.name = noteBookName;
+			notebook.userId = userId;
+			notebook.recentMFDate = new Date();
+			notebook.save();
+			SimpleNoteBookBean simpleNoteBook = new SimpleNoteBookBean();
+			simpleNoteBook.id = notebook.id;
+			simpleNoteBook.name = notebook.name;
+			wsOkAsJsonP(simpleNoteBook);
+		}catch(Exception e){
+			wsErrorAsJsonP(null);
+		}
 	}
 	
 	/*
@@ -173,7 +177,8 @@ public class RandomNote extends WebService{
 	
 	/*
 	 * 新增笔记
-	 *
+	 * 参数：笔记标题、笔记内容、所属笔记本Id
+	 * 返回操作成功(id)/失败
 	 * 
 	 */
 	public static void addNote2(String noteTitle,String noteContent,String noteBookId){ 
@@ -183,8 +188,13 @@ public class RandomNote extends WebService{
 		note.recentMFDate = new Date();
 		note.title = noteTitle;
 		note.noteBookId = noteBookId;
-		note.save();
-		wsOkAsJsonP(note.id);
+		try{
+			note.save();
+			wsOkAsJsonP(note.id);
+		}catch(Exception e){
+			wsErrorAsJsonP(null);
+		}
+		
 	}
 	/*
 	 * 更新笔记本信息
@@ -196,6 +206,29 @@ public class RandomNote extends WebService{
 		noteBook.save();
 		findNoteBookByUser(userId);
 	}
+	
+	/*
+	 *笔记本重命名 
+	 * 参数：noteBookId,name
+	 * 返回:操作成功/失败
+	 */
+	public static void renameNb(String noteBookId,String name){
+		try{
+			NoteBook nb= NoteBook.findById(noteBookId);
+			if(nb!=null){
+				nb.name =  name;
+				nb.recentMFDate = new Date();
+				nb.save();
+				wsOkAsJsonP("修改成功");
+			}else{
+				wsOkAsJsonP("修改失败，不存在该笔记");
+			}
+		}catch(Exception e){
+			wsErrorAsJsonP("操作异常");
+		}
+	}
+	
+	
 	/*
 	 * 更新笔记信息
 	 * 参数：notek类，笔记本id
@@ -385,34 +418,39 @@ public class RandomNote extends WebService{
      * 返回搜索结果
      */
      public static void findNoteByKeyWord(String userId, String keyword){
-    	 String queryString = "select new beans.NoteBean " +
- 				" (n.id,n.title,substring(n.content,0,49),year(n.createDate),month(n.createDate),day(n.createDate) ,n.recentMFDate,n.noteBookId,nb.name) " +
- 				"from Note as n,NoteBook as nb where (n.noteBookId = nb.id) and (n.title like ?1 or n.content like ?2) order by n.createDate desc ";//and nb.userId=?1";
- 		Query query = JPA.em().createQuery(queryString);
- 		query.setParameter(1, "%"+keyword+"%");//给编号为1的参数设值 
- 		query.setParameter(2, "%"+keyword+"%");//给编号为2的参数设值 
- 		List<NoteBean> noteBeanList = query.getResultList();
- 		
- 		int lenght = noteBeanList.size();
- 		int keywordLenght = keyword.length();
- 		int index = -2;
- 		String highLightString = "<span class='highLight'>" + keyword + "</span>";
- 		String title="";
- 		String content = "";
- 		NoteBean note;
- 		for(int i = 0; i < lenght; i++){
- 			
- 			note = noteBeanList.get(i);
- 			title = note.title;
- 			content = note.content;
-// 			index = note.title.indexOf(keyword);
- 			title = title.replaceAll(keyword, highLightString);
- 		    note.title = title;
- 		    content = content.replaceAll(keyword,highLightString);
- 		    note.content = content;
- 		}
- 		
- 		wsOkAsJsonP(noteBeanList);
+    	 try{
+	    	 String queryString = "select new beans.NoteBean " +
+	 				" (n.id,n.title,substring(n.content,0,49),year(n.createDate),month(n.createDate),day(n.createDate) ,n.recentMFDate,n.noteBookId,nb.name) " +
+	 				"from Note as n,NoteBook as nb where (n.noteBookId = nb.id) and (n.title like ?1 or n.content like ?2) and nb.userId=?3 order by n.createDate desc ";//";
+	 		Query query = JPA.em().createQuery(queryString);
+	 		query.setParameter(1, "%"+keyword+"%");//给编号为1的参数设值 
+	 		query.setParameter(2, "%"+keyword+"%");//给编号为2的参数设值 
+	 		query.setParameter(3, userId);//给编号为2的参数设值
+	 		List<NoteBean> noteBeanList = query.getResultList();
+	 		
+	 		int lenght = noteBeanList.size();
+	 		int keywordLenght = keyword.length();
+	 		int index = -2;
+	 		String highLightString = "<span class='highLight'>" + keyword + "</span>";
+	 		String title="";
+	 		String content = "";
+	 		NoteBean note;
+	 		for(int i = 0; i < lenght; i++){
+	 			
+	 			note = noteBeanList.get(i);
+	 			title = note.title;
+	 			content = note.content;
+	// 			index = note.title.indexOf(keyword);
+	 			title = title.replaceAll(keyword, highLightString);
+	 		    note.title = title;
+	 		    content = content.replaceAll(keyword,highLightString);
+	 		    note.content = content;
+	 		}
+	 		
+	 		wsOkAsJsonP(noteBeanList);
+    	 }catch(Exception e){
+    		 wsErrorAsJsonP(null);
+    	 }
      }
     
     /*
@@ -423,20 +461,24 @@ public class RandomNote extends WebService{
     public static void findNoteByUserId(String userId){
     	String queryString = "select new beans.NoteBean " +
 				" (n.id,n.title,substring(n.content,0,49),year(n.createDate),month(n.createDate),day(n.createDate) ,n.recentMFDate,n.noteBookId,nb.name) " +
-				"from Note as n,NoteBook as nb where n.noteBookId = nb.id order by n.createDate desc ";//and nb.userId=?1";
+				"from Note as n,NoteBook as nb where n.noteBookId = nb.id and nb.userId=?1 order by n.createDate desc ";
 		Query query = JPA.em().createQuery(queryString);
-//		query.setParameter(1, userId);//给编号为1的参数设值 
+		query.setParameter(1, userId);//给编号为1的参数设值 
 		List<NoteBean> noteBeanList = query.getResultList();
-		wsOkAsExtJsonP(noteBeanList);
+		wsOkAsJsonP(noteBeanList);
     }
     
-    public static void findNoteByUserIdAndBookId(String userId,String notebookId){
+    /*
+     * 查询笔记本里的笔记
+     * notebookId
+     * 返回操作成功/失败
+     */
+    public static void findNoteByUserIdAndBookId(String notebookId){
     	String queryString = "select new beans.NoteBean " +
 				" (n.id,n.title,substring(n.content,0,49),year(n.createDate),month(n.createDate),day(n.createDate) ,n.recentMFDate,n.noteBookId,nb.name) " +
 				"from Note as n,NoteBook as nb where n.noteBookId = nb.id and n.noteBookId =?1 order by n.createDate desc ";//and nb.userId=?1";
 		Query query = JPA.em().createQuery(queryString);
-//		query.setParameter(1, userId);//给编号为1的参数设值 
-		query.setParameter(1, notebookId);//给编号为2的参数设值 
+		query.setParameter(1, notebookId);//给编号为1的参数设值 
 		List<NoteBean> noteBeanList = query.getResultList();
 		wsOkAsJsonP(noteBeanList);
     }
