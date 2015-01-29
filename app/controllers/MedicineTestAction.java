@@ -40,6 +40,30 @@ public class MedicineTestAction extends WebService{
 	}
 	
 	/**
+	 * 删除药箱
+	 */
+	public static void removeMedBox(String medBoxId){
+		JsonpResultBean bean = new JsonpResultBean();
+		try{
+			/* 找到药箱下所有药品 并删除*/
+			List<Medicine> medList =  Medicine.find("byMedicineBoxId", medBoxId).fetch();
+			for(int i=0;i<medList.size();i++){
+				Medicine.delete("id = ?", medList.get(i).id);
+			}
+			/* 删除药箱*/
+			MedicineBox.delete("id = ?",medBoxId);
+			bean.result = 1;
+			bean.rtnStr = "药箱刪除成功!";
+			wsOkAsExtJsonP(bean);
+		}
+		catch(Exception e){
+			bean.result = 0;
+			bean.rtnStr = "药箱删除失败!";
+			wsOkAsExtJsonP(bean);
+		}
+	}
+	
+	/**
 	 * 添加药品
 	 */
 	public static void addMedicine(String name,String func,String type,String deadline,String medBoxId){

@@ -7,6 +7,6 @@ import utils.DatabaseUtil;
 @OnApplicationStart
 public class Bootstrap extends Job{
 	public void doJob(){
-		DatabaseUtil.init();
+		//DatabaseUtil.init();
 	}
 }
