@@ -1,6 +1,10 @@
 #{extends 'main.html' /}
 #{set title:'记录管理' /}
 #{output 'RecordMgm/growthRecordTpl.html'/}
+#{set 'moreStyles'}
+<!-- datetimepicker  -->
+<link rel="stylesheet" href="@{'/public/stylesheets/bootstrap-datetimepicker.min.css'}">
+#{/set}
 <!-- ��¼����  -->
 <div class="container">
 	<div class="col-md-2">
@@ -28,18 +32,18 @@
 		<form action="#" class="form-horizontal" role="form">
 			<div class="form-group">
 				<label for="name">筛选条件列表</label> <select class="form-control findBaby" id="findBaby">
-					<option value="0"></option>
-					<option value="1">宝宝成绩指标</option>
-					<option value="2">宝宝身体指标</option>
-					<option value="3">个体科目成绩查询</option>
-					<option value="4">个体身体指标查询</option>
-					<!-- <option value="4">��ĸ����</option> -->
-				</select>
-			</div>
-			<div class="form-group findform">
-			 
-			</div>
-			
+				<option value="0"></option>
+				<option value="1">宝宝成绩指标</option>
+				<option value="2">宝宝身体指标</option>
+				<option value="3">个体科目成绩查询</option>
+				<option value="4">个体身体指标查询</option>
+				<!-- <option value="4">��ĸ����</option> -->
+			</select>
+		</div>
+		<div class="form-group findform">
+
+		</div>
+
 		<!-- 	<div class="form-group findform">
 			 <label for="babyId">����ID��</label>
 		    <input type="text" class="form-control" name="babyId" id="babyId" placeholder="����Ҫ���ұ�����ID">
@@ -55,22 +59,31 @@
 			<div class="form-group">
 			<label for="userName">����ID��</label>
 		    <input type="text" class="form-control" name="username" id="userName" placeholder="����Ҫ���ұ������û�����">
-			</div> -->
-			<div class="form-group">
-		   <button type="button" class="btn btn-primary text-center submitBtn">提交</button>
-		  <!--  <button type="reset" class="btn btn-warning text-center resetBtn">清空</button> -->
-		    <button type="button" class="btn btn-default text-center returnBtn">返回</button>
+		</div> -->
+		<div class="form-group">
+			<div class="form-group datetimeGroup">
+				<label for="dtp_input1" class="col-md-2 control-label">选择时间段</label>
+				<div class="input-group date form_datetime col-md-5" data-date="1979-09-16T05:25:07Z" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input1">
+					<input class="form-control" size="16" type="text" value="" readonly>
+					<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+					<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+				</div>
+				<input type="hidden" id="dtp_input1" value="" /><br/>
 			</div>
-			</form>
-	</div>
-			#{set 'moreScripts'}
-			<!-- ���ص�js -->
-			<script type="text/javascript"
-				src="@{'/public/javascripts/juicer.js'}"></script>
+			<button type="button" class="btn btn-primary text-center submitBtn">提交</button>
+			<!--  <button type="reset" class="btn btn-warning text-center resetBtn">清空</button> -->
+			<button type="button" class="btn btn-default text-center returnBtn">返回</button>
+		</div>
+	</form>
+
+</div>
+#{set 'moreScripts'}
+<!-- ���ص�js -->
+<script type="text/javascript"src="@{'/public/javascripts/juicer.js'}"></script>
 				<!-- <script src="@{'/public/javascripts/growthLoad.js'}"></script>
-                <script src="@{'/public/javascripts/growthOper.js'}"></script> -->
-		        <script src="@{'/public/javascripts/findOptionLoad.js'}"></script>
-		       
-		        
-			
-			#{/set}
+				<script src="@{'/public/javascripts/growthOper.js'}"></script> -->
+				<script src="@{'/public/javascripts/bootstrap-datetimepicker.js'}"></script>
+				<script src="@{'/public/javascripts/bootstrap-datetimepicker.fr.js'}"></script>
+				<script src="@{'/public/javascripts/findOptionLoad.js'}"></script>
+				<script src="@{'/public/javascripts/datetime.js'}"></script>
+				#{/set}
