@@ -16,6 +16,25 @@ import play.mvc.*;
 public class UserAction extends WebService{
 	
 	/**
+	 * 用户登录
+	 */
+	public static void login(String accountNum, String password){
+		//先进行密码加密
+		
+		//匹配
+		try{
+			List<User> userList = User.find("(email = ? and passwd = ?) or  (phoneNum = ? and passwd = ?) or (userName = ? and passwd = ?)",accountNum,password,accountNum,password,accountNum,password).fetch();
+			if(userList.size() != 0){
+				User user = userList.get(0);
+				wsOkAsJsonP(user);
+			}else{
+				wsErrorAsJsonP("登录失败");
+			}
+		}catch(Exception e){
+			wsErrorAsJsonP("数据库操作出错");
+		}
+	}
+	/**
 	 * 添加新用户
 	 */
 	public static void addUser(String userName,String passwd,String realName,String phoneNum,String email,String IDcard){
