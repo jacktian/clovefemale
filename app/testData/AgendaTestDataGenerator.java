@@ -1,4 +1,4 @@
-package dataTest;
+package testData;
 
 import utils.DatabaseUtil;
 import models.User;

@@ -2,7 +2,7 @@ package jobs;
 
 import play.jobs.Job;
 import play.jobs.OnApplicationStart;
-import dataTest.AgendaTestDataGenerator;
+import testData.AgendaTestDataGenerator;
 
 @OnApplicationStart
 public class Bootstrap extends Job{
