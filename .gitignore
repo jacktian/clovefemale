@@ -4,3 +4,5 @@ eclipse
 .settings
 tmp
 application.conf
+logs
+server.pid
