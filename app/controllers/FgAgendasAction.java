@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import models.Agenda;
-import utils.DatabaseUtil;
 import utils.StringUtils;
+import dataTest.AgendaTestDataGenerator;
 
 /**
  * 日程控制器，专门用于与客户端交互
@@ -35,12 +35,12 @@ public class FgAgendasAction extends WebService{
 	
 	
 	public static void getTestUserId(){
-		String userId = DatabaseUtil.getTestUser().id ;
+		String userId = AgendaTestDataGenerator.getTestUser().id ;
 		wsOkAsExtJsonP(userId) ;
 	}
 	
 	public static void getTestUser(){
-		wsOkAsExtJsonP(DatabaseUtil.getTestUser()) ;
+		wsOkAsExtJsonP(AgendaTestDataGenerator.getTestUser()) ;
 	}
 
 	public static void create(Agenda model){
