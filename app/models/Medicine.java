@@ -5,6 +5,13 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import com.sudocn.play.BasicModel;
+
+/**
+ * 药物表
+ *
+ * @author Yingpeng
+ * @since 12/16/14
+ */
 @Entity
 @Table(name = "medicine")
 public class Medicine extends BasicModel{

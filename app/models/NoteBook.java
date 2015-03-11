@@ -7,10 +7,13 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import com.sudocn.play.BasicModel;
-/*
+
+/**
  * 笔记本实体类，主要有Id、名称、创建日期时间、最新修改日期时间、创建人Id、简介属性
- * 其中Id有系统自动创建，创建人Id属外键，由另外的关系实体UserToNoteBook存储
- * */
+ *
+ * @author Yingpeng
+ * @since 12/16/14
+ */
 @Entity
 @Table(name = "notebook")
 public class NoteBook extends BasicModel{

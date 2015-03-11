@@ -1,0 +1,126 @@
+#{extends 'main.html' /}
+#{set title:'记录管理' /}
+#{output 'RecordMgm/growthRecordTpl.html'/}
+<!-- ��¼����  -->
+<div class="container">
+	<div class="col-md-2">
+		<ul class="babyManMenu manaMenu">
+			<li class="active">
+				<a href="#">小宝成长</a>
+				<ul>
+					<li><a href=@{Application.recordMgm()}>所有宝贝</a></li>
+					<li><a href=@{Application.findBabyByPro()}>查找宝贝</a></li>
+					<li><a href=@{Application.findBabyByCondition()}>宝贝情况筛选</a></li>
+				</ul>
+			</li>
+			<li class="active">
+				<a href="#">助孕记录</a>
+				<ul>
+					<li><a href="@{Application.listUserGR()}">用户助孕记录列表</a></li>
+					<li><a href="@{Application.searchUsergr()}">查找用户助孕记录</a></li>
+				</ul>
+			</li>
+			<li class="active">
+				<a href="@{Application.listUserMbox()}">药箱管理</a>
+				<ul>
+					<li><a href="@{Application.listUserMbox()}">用户药箱列表</a></li>
+					<li><a href="@{Application.findUerMbox()}">查找用户药箱</a></li>
+				</ul>
+			</li>
+			<li class="active">
+				<a href="#">随手记</a>
+				<ul>
+					<li><a href="@{Application.listUserNotebook()}">用户笔记本列表</a></li>
+					<li><a href="@{Application.searchUserNotebook()}">查找用户笔记记录</a></li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+	<div class="col-md-10 selectBaby">
+		<form action="#" class="form-horizontal" role="form">
+			<div class="form-group">
+				<label for="name">筛选条件列表</label> <select class="form-control findgrcondition" id="findBaby">
+					<option value="0"></option>
+					<option value="1">孕重</option>
+					<option value="2">胎动</option>
+					<option value="3">月经</option>
+				</select>
+			</div>
+			<!-- <div class="form-group findform">
+			 
+			</div> -->
+			<div class="form-group findform2">
+			 <label for='babyId'>用户编号：</label>
+               <input type='text' class='form-control userNameInput' name='userName' id='babyName' value="${userId}" disabled>
+             
+             <label for='babyId'>用户姓名：</label>
+               <input type='text' class='form-control userNameInput2' name='userName2' id='babyName2' value="${userName}" disabled>
+               
+               <!-- <label for='dtp_input2' class='col-md-2 control-label'>Date Picking</label> -->
+                <label for='dtp_input2' for='datePick'>Date From:</label>
+                <div id='datetimepicker4' class='input-group date form_date col-md-5' data-date='' data-date-format='yyyy-mm-dd' data-link-field='dtp_input2' data-link-format='yyyy-mm-dd'>
+                <input class='form-control' size='16' type='text' value='' >
+                <span class='input-group-addon'><span class='glyphicon glyphicon-calendar'></span></span>
+                </div><input type='hidden' id='dtp_input2' value='' /><br/>
+                
+                <label for='dtp_input3' for='datePick2'>Date End:</label>
+                <div id='datetimepicker5' class='input-group date form_date col-md-5' data-date='' data-date-format='yyyy-mm-dd' data-link-field='dtp_input3' data-link-format='yyyy-mm-dd'>
+                <input class='form-control' size='16' type='text' value='' >
+                <span class='input-group-addon'><span class='glyphicon glyphicon-calendar'></span></span>
+                </div><input type='hidden' id='dtp_input3' value='' /><br/> 
+                
+			</div>
+			
+		<!-- 	<div class="form-group findform">
+			 <label for="babyId">����ID��</label>
+		    <input type="text" class="form-control" name="babyId" id="babyId" placeholder="����Ҫ���ұ�����ID">
+			</div>
+			<div class="form-group">
+			<label for="userId">�û�ID����</label>
+		    <input type="text" class="form-control" name="userId" id="userId" placeholder="����Ҫ���ұ������û�ID">
+			</div>
+			<div class="form-group">
+			<label for="babyName">������ƣ�</label>
+		    <input type="text" class="form-control" name="babyName" id="babyName" placeholder="����Ҫ���ұ��������">
+			</div>
+			<div class="form-group">
+			<label for="userName">����ID��</label>
+		    <input type="text" class="form-control" name="username" id="userName" placeholder="����Ҫ���ұ������û�����">
+			</div> -->
+			<div class="form-group">
+		   <button type="button" class="btn btn-primary text-center submitBtn">提交</button>
+		  <!--  <button type="reset" class="btn btn-warning text-center resetBtn">清空</button> -->
+		    <button type="button" class="btn btn-default text-center returnBtn">返回</button>
+			</div>
+			</form>
+			
+			<!-- 主要用来存放某些参数，如当前页数，科目，等，方便点击页码来提交 -->
+	  <div class="col-md-10  hidden babyDetail">
+	  <form action="#" class="form-horizontal" role="form">
+	   <div class="form-group">
+		    <input type="text" class="form-control typeFlag" name="uid" id="uid" value=${type}>
+		    <input type="text" class="form-control userIdFlag" name="uid2" id="uid2" value=${userId}>
+		   <input type="text" class="form-control userNameFlag" name="uid3" id="uid3" value=${userName}>
+		  </div>
+		  </form>
+		  </div>
+		  
+	</div>
+			#{set 'moreScripts'}
+			<!-- ���ص�js -->
+			<!-- <script type="text/javascript"
+				src="@{'/public/javascripts/juicer.js'}"></script> -->
+				<!-- <script src="@{'/public/javascripts/growthLoad.js'}"></script>
+                <script src="@{'/public/javascripts/growthOper.js'}"></script> -->
+               <!--  <script src="@{'/public/javascripts/jquery-1.8.3.min.js'}"></script> -->
+		       
+		        <script src="@{'/public/javascripts/bootstrap-datetimepicker.js'}"></script>
+		        <script src="@{'/public/javascripts/bootstrap-datetimepicker.zh-CN.js'}" charset="UTF-8"></script>
+		        <script src="@{'/public/javascripts/searchGrInfo.js'}" charset="UTF-8"></script>
+		   <script type="text/javascript" src="@{'/public/javascripts/dateTime.js'}"> </script> 
+		
+			#{/set}
+			
+
+
+

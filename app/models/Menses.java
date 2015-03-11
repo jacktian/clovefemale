@@ -78,11 +78,4 @@ public class Menses extends BasicModel{
 		this.isMcramp = isMcramp;
 		this.vicidity = vicidity;
 	}
-	
-	@Override
-	public String toString() {
-		return "Menses [mDate=" + mDate + ", mColor=" + mColor + ", mMeasure="
-				+ mMeasure + ", mPiece=" + mPiece + ", isMcramp=" + isMcramp
-				+ ", vicidity=" + vicidity + ", userId=" + userId + "]";
-	}
 }

@@ -1,0 +1,70 @@
+#{extends 'main.html' /}
+#{set title:'记录管理' /}
+#{output 'RecordMgm/growthRecordTpl.html'/}
+<!-- 记录管理  -->
+<div class="container">
+	<div class="col-md-2">
+		<ul class="babyManMenu manaMenu">
+			<li class="active">
+				<a href="#">小宝成长</a>
+				<ul>
+					<li><a href=@{Application.recordMgm()}>所有宝贝</a></li>
+					<li><a href=@{Application.findBabyByPro()}>查找宝贝</a></li>
+					<li><a href=@{Application.findBabyByCondition()}>宝贝情况筛选</a></li>
+				</ul>
+			</li>
+			<li class="active">
+				<a href="#">助孕记录</a>
+				<ul>
+					<li><a href="@{Application.listUserGR()}">用户助孕记录列表</a></li>
+					<li><a href="@{Application.searchUsergr()}">查找用户助孕记录</a></li>
+				</ul>
+			</li>
+			<li class="active">
+				<a href="@{Application.listUserMbox()}">药箱管理</a>
+				<ul>
+					<li><a href="@{Application.listUserMbox()}">用户药箱列表</a></li>
+					<li><a href="@{Application.findUerMbox()}">查找用户药箱</a></li>
+				</ul>
+			</li>
+			<li class="active">
+				<a href="#">随手记</a>
+				<ul>
+					<li><a href="@{Application.listUserNotebook()}">用户笔记本列表</a></li>
+					<li><a href="@{Application.searchUserNotebook()}">查找用户笔记记录</a></li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+	<div class="col-md-10 userList dataList">
+	 <form action="#" class="form-horizontal" role="form">
+	<div class="form-group">
+	       <div class="col-md-6">
+		    <input type="text" class="form-control searchFlag" name="uname" id="uname" placeholder="输入用户编号或姓名">
+		    </div>
+		    <div class="col-md-6">
+		    <button type="button" class="btn btn-primary searchBtn">搜索</button>
+		    </div>
+		  </div>
+	</form><br> 
+		
+	
+	<!-- 主要用来存放某些参数，如当前页数，科目，等，方便点击页码来提交 -->
+	<div class="col-md-10  hidden babyDetail">
+	<form action="#" class="form-horizontal" role="form">
+	<div class="form-group">
+	        <input type="text" class="form-control babyFlag" name="uid2" id="uid2" value=${babyId}>
+		    <input type="text" class="form-control curpageFlag" name="uid" id="uid" value=${curpage}>
+		     <!-- <input type="text" class="form-control gradeIntervalInfo" name="uid2" id="uid2" value=${gradeInterval}> -->
+		  </div>
+		  </form>
+		  </div>
+	
+</div>
+#{set 'moreScripts'}
+<!-- 加载的js -->
+<!-- <script type="text/javascript" src = "@{'/public/javascripts/juicer.js'}"></script> -->
+<!-- <script src="@{'/public/javascripts/growthLoad.js'}"></script>
+<script src="@{'/public/javascripts/growthOper.js'}"></script> -->
+ <script src="@{'/public/javascripts/findUserMbox.js'}"></script>
+#{/set}

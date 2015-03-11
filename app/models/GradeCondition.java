@@ -11,9 +11,13 @@ import play.data.validation.Required;
 import play.data.validation.Valid;
 
 import com.sudocn.play.BasicModel;
-/*
+
+/**
  * 成绩表单表，属性有Id、孩子Id、日期、年级、科目、成绩，其中ID由系统自动创建，孩子ID由对应关系类存储
- * */
+ *
+ * @author Yingpeng
+ * @since 12/16/14
+ */
 @Entity
 @Table(name = "gradecondition")
 public class GradeCondition extends BasicModel {

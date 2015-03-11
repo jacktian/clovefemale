@@ -35,7 +35,7 @@ body{
 	color:#555;
 	font-weight:500;
 }
-/*È¡Ïû×îµÍ¸ß¶È*/
+/*ȡ����͸߶�*/
 /* table#userTable{
 	min-height:707px;
 } */
@@ -50,12 +50,4 @@ table#babyTable tr td{
 }
 .dataList nav{
 	text-align:center;
-}
-
-/* 时间选择器  */
-.datetimeGroup{
-	display: none;
-}
-.datetimeGroup.show{
-	display: block;
 }

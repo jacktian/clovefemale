@@ -13,7 +13,11 @@ import models.Vaccination;
 import beans.BIndexBean;
 import beans.GradeBean;
 
-
+/**
+ * 宝宝成长controller
+ * @author Yingpeng
+ * @since 03/05/15
+ * */
 public class BabyGrowth extends WebService {
 
 	/* 查询一段时间内的孩子身高数据
@@ -136,28 +140,22 @@ public class BabyGrowth extends WebService {
      * 根据宝宝名称和科目查询个体成绩
      */
     public static void findMarkByBaby(String babyName,String subject,int curpage){
-    	System.out.println("----------testeste-start");
+    	List<GradeCondition> gradelistAll=GradeCondition.find("select g from GradeCondition g where babyId in (select id from Baby where name = ?) and subject = ?", babyName,subject).fetch();
     	List<GradeCondition> gradelist=GradeCondition.find("select g from GradeCondition g where babyId in (select id from Baby where name = ?) and subject = ?", babyName,subject).fetch(curpage,2);
-        if(gradelist!=null){
-    	System.out.println("----------testeste"+gradelist.size());
-        }else{
-        	System.out.println("----------testeste null");
-        }
+    	List<GradeBean> listbean = null;
     	long pageNum = 0;//总页数
     	long count = 0;
     	if(gradelist!=null){
-    	count=gradelist.size();//计算总记录条数，以2条一页为基准
-    	}
+    	count=gradelistAll.size();//计算总记录条数，以2条一页为基准
     	if(count%2!=0)
     		pageNum = count/2+1;
     	else
     		pageNum = count/2;
-    	List<GradeBean> listbean = null;
-    	if(gradelist!=null){
-    		listbean=GradeBean.builList(gradelist);
+    	
+    	listbean=GradeBean.builList(gradelist);
     	}
     	
-    	render("/RecordMgm/findBabyByGrade.html",listbean,pageNum,curpage,subject);
+    	render("/RecordMgm/findGradeByBaby.html",listbean,pageNum,curpage,subject,babyName);
     }
     
     
@@ -263,63 +261,36 @@ public class BabyGrowth extends WebService {
 		List<BodyIndex> indexlist = BodyIndex.findAll();
 		wsOk(indexlist);
 	}
-	
-	/*	
+	/*
 	 * 新增疫苗接种记录
 	 * 参数：前台传回的实体类，小孩id
 	 * 返回：全部列表
-	 * 
+	 * */
 	public static void addVaccination(Vaccination v, String babyId) {
 		Vaccination vacc = v.save();
 //		Vaccination.createBtoV(babyId, vacc.id);
 		findVaccByBaby(babyId);
 	}
-	
+	/*
 	 * 新增成绩表
 	 * 参数：前台传回的实体类，小孩id
 	 * 返回：全部列表
-	 * 
+	 * */
 	public static void addGradeCondition(GradeCondition grade, String babyId) {
 		GradeCondition g = grade.save();
-		GradeCondition.createBtoG(babyId, g.id);
+		/*GradeCondition.createBtoG(babyId, g.id);*/
 		findGradeByBaby(babyId);
 	}
-	
+	/*
 	 * 新增身体指标记录
 	 * 参数：前台传回的实体类，小孩id
 	 * 返回：全部列表
-	 * 
+	 * */
 	public static void addBodyIndex(BodyIndex bodyIndex, String babyId) {
 		BodyIndex b = bodyIndex.save();
-		BodyIndex.createBtoB(babyId, b.id);
+		/*BodyIndex.createBtoB(babyId, b.id);*/
 		findbodyByBaby(babyId);
-	}*/
-	
-	
-	public static void addVaccination(Vaccination model) {
-		Application.saveModel(model) ;
 	}
-
-	public static void addGradeCondition(GradeCondition model) {
-		Application.saveModel(model) ;
-	}
-
-	public static void addBodyIndex(BodyIndex model) {
-		String result = "" ;
-		if(model != null){
-			if(model.height <=0 || model.weight <= 0){
-				result = "fail" ;
-			}else{
-				Application.saveModel(model) ;
-			}
-		}else{
-			result = "fail" ;
-		}
-		wsOkAsJsonP(result) ;
-	}
-	
-	
-	
 	/*
 	 * 根据科目名称查询对应的成绩
 	 * 参数：科目名称,小孩id
@@ -345,11 +316,12 @@ public class BabyGrowth extends WebService {
 	 * */
 	public static void findBI(String babyId,int curpage) {
 		List<BodyIndex> list = BodyIndex.find("babyId = ? order by date",babyId).fetch(curpage,2);
+		List<BodyIndex> listAll = BodyIndex.find("babyId = ? order by date",babyId).fetch();
 		List<BIndexBean> listbean = null;
 		long pageNum = 0;//总页数
     	long count = 0;
-    	if(list!=null){
-       	count=list.size();//计算总记录条数，以2条一页为基准
+    	if(list!=null && listAll!=null){
+       	count=listAll.size();//计算总记录条数，以2条一页为基准
        	if(count%2!=0)
     		pageNum = count/2+1;
     	else
@@ -358,8 +330,85 @@ public class BabyGrowth extends WebService {
     		listbean=BIndexBean.builList(list);
         	}
 		
-    	render("/RecordMgm/bodyIndex.html",listbean,pageNum,curpage);
+    	render("/RecordMgm/bodyIndex.html",listbean,pageNum,curpage,babyId);
 	}
+	
+	/**
+	 * 根据宝宝姓名和查询日期区间查询宝宝身体指标
+	 * 参数：宝宝姓名
+	 * 返回：身体指标列表
+	 * 
+	 * */
+	public static void findBIByBaby(String name, String sDate, String eDate,
+			int curpage) {
+		Date startDate = null;
+		Date endDate = null;
+		List<BIndexBean> listbean = null;
+		long pageNum = 0;// 总页数
+		long count = 0;
+
+		if (sDate != "" && eDate != "") {
+
+			try {
+				startDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+						.parse(sDate + " 00:00:00");
+				endDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+						.parse(eDate + " 23:59:59");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			// string要用equal比較
+			if (startDate.before(endDate) && !name.equals("")) {
+
+				List<BodyIndex> listAll = BodyIndex
+						.find("select b from BodyIndex b where b.babyId in (select id from Baby where name = ? ) and b.date between ? and ?",
+								name, startDate, endDate).fetch();
+				List<BodyIndex> list = BodyIndex
+						.find("select b from BodyIndex b where b.babyId in (select id from Baby where name = ? ) and b.date between ? and ?",
+								name, startDate, endDate).fetch(curpage, 2);
+
+				if (list != null && listAll != null) {
+					count = listAll.size();// 计算总记录条数，以2条一页为基准
+					if (count % 2 != 0)
+						pageNum = count / 2 + 1;
+					else
+						pageNum = count / 2;
+
+					listbean = BIndexBean.builList(list);
+				}
+
+			} else {
+				if (startDate.before(endDate)) {
+
+					List<BodyIndex> listAll = BodyIndex
+							.find("select b from BodyIndex b where  b.date between ? and ?",
+									startDate, endDate).fetch();
+					System.out.println("5757575775" + listAll.size());
+					List<BodyIndex> list = BodyIndex
+							.find("select b from BodyIndex b where  b.date between ? and ?",
+									startDate, endDate).fetch(curpage, 2);
+
+					if (list != null && listAll != null) {
+						count = listAll.size();// 计算总记录条数，以2条一页为基准
+						if (count % 2 != 0)
+							pageNum = count / 2 + 1;
+						else
+							pageNum = count / 2;
+
+						listbean = BIndexBean.builList(list);
+					}
+				}
+
+			}
+		}
+
+		render("/RecordMgm/findBIByBaby.html", listbean, pageNum, curpage,
+				name, sDate, eDate);
+
+	}
+	
+	
 	/*
 	 * 根据id查询对应的身体指标
 	 * 参数：id

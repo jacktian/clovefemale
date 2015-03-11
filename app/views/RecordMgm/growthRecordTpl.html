@@ -9,7 +9,7 @@
 		<td><a href="${baby.pId}" class="parent">${baby.pName}</a></td>
 		<td><a href="findBI?babyId=${baby.id}&curpage=1" class="health">查询</a></td>
 		<td><a href="findGrade?babyId=${baby.id}&curpage=1" class="score">查询</a></td>
-		<td><a href="${baby.id}" class="vacci">查询</a></td>
+		<td><a href="findVacc?babyId=${baby.id}&curpage=1" class="vacci">查询</a></td>
 		<td><button type="button" class="btn btn-primary babyAltBtn" uid="${baby.id}">修改</button>
 		<button type="button" class="btn btn-danger babyDelBtn" id="${baby.id}">删除</button></td>
 	</tr>

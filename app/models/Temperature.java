@@ -43,9 +43,4 @@ public class Temperature extends BasicModel {
 		this.tDate = tDate;
 		this.tValue = tValue;
 	}
-	@Override
-	public String toString() {
-		return "Temperature [tDate=" + tDate + ", tValue=" + tValue
-				+ ", userId=" + userId + "]";
-	}
 }

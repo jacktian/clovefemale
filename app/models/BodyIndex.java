@@ -12,9 +12,13 @@ import com.sudocn.play.BasicModel;
 import play.data.validation.Required;
 import play.data.validation.Valid;
 import play.db.jpa.Model;
-/*
- * 身体指标类，主要属性包括Id、孩子Id、日期、身高和体重，其中id由系统自动创建，孩子id由关系类BabyToBody存储
- * */
+
+/**
+ * 身体指标表，主要属性包括Id、孩子Id、日期、身高和体重，其中id由系统自动创建，孩子id由关系类BabyToBody存储
+ *
+ * @author Yingpeng
+ * @since 12/16/14
+ */
 @Entity
 @Table(name = "bodyindex")
 public class BodyIndex extends BasicModel {

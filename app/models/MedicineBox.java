@@ -7,6 +7,13 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import com.sudocn.play.BasicModel;
+
+/**
+ * 药箱表
+ *
+ * @author Yingpeng
+ * @since 12/16/14
+ */
 @Entity
 @Table(name = "medicinebox")
 public class MedicineBox extends BasicModel{

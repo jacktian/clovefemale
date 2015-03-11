@@ -13,27 +13,14 @@ import models.GestationalWeight;
 /**
  * 胎动控制器
  * 
- * @author caterZhong
+ * @author Yingpeng
  * @since 2014/12/16
  */
 public class FetalMovementAction extends WebService{
-
 	//增加胎动记录
-	public static void addMovement(FetalMovement model){
-		String result = "" ;
-		if(model != null){
-		 	try{
-		 		model.fDate = new Date() ;
-				model.save() ;
-				result = "success" ;
-		 	}catch(Exception e){
-		 		e.printStackTrace() ;
-		 		result = "fail" ;
-		 	}
-		}else{
-			result = "fail" ;
-		}
-		wsOkAsJsonP(result) ;
+	public static void addMovement(String userId, Date fDate, int num){
+		FetalMovement movement = new FetalMovement(userId,fDate, num);
+		movement.save();
 	}
 	
 	//获取某个用户的所有胎动记录
@@ -72,4 +59,36 @@ public class FetalMovementAction extends WebService{
 		wsOk(movementList);
 		
    	}
+    
+    public static void getMovementDataByDate2(String userId,String userName,String sDate,String eDate,int curpage){
+ 	   System.out.println("*******"+sDate+" "+eDate);
+ 	 
+ 	 if(curpage==0){
+ 			curpage =1;
+ 		}
+ 		long count =0;
+ 	 	long pageNum =0;
+ 		Date startDate=null;
+ 		Date endDate=null;
+ 		List<FetalMovement> listbean=null;
+ 		try{
+ 		 startDate  = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(sDate+" 00:00:00");
+ 		 endDate  = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(eDate+" 23:59:59");
+ 		}catch(Exception e){
+ 			e.printStackTrace();
+ 		}
+ 		if(startDate.before(endDate)){
+ 			listbean = FetalMovement.find("select f from FetalMovement f where userId = ? and fDate between ? and ? order by fDate", userId,startDate,endDate).fetch(curpage,2);
+ 		 if(listbean!=null){
+ 			    count = FetalMovement.find("select f from FetalMovement f where userId = ? and fDate between ? and ? order by fDate", userId,startDate,endDate).fetch().size();
+ 		 		if(count%2!=0)
+ 		 	     		pageNum = count/2+1; 
+ 		 	    else
+ 		 	     		pageNum = count/2;
+ 		 }
+ 		}
+ 		render("/gestationMgm/userfm.html",listbean,pageNum,curpage,userId,userName,sDate,eDate);
+    	}
+    
+    
 }

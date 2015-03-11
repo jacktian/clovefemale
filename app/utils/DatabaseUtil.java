@@ -6,12 +6,17 @@ import java.util.List;
 
 import models.Baby;
 import models.BodyIndex;
+import models.FetalMovement;
+import models.GestationalWeight;
 import models.GradeCondition;
+import models.Medicine;
+import models.MedicineBox;
 import models.Menses;
 import models.Note;
 import models.NoteBook;
 import models.Temperature;
 import models.User;
+import models.Vaccination;
 
 public class DatabaseUtil {
 	public static void init(){
@@ -43,12 +48,131 @@ public class DatabaseUtil {
     	
 		Baby b1 = (Baby)Baby.find("name", "baby2").fetch().get(0);
 		Baby b2 = (Baby)Baby.find("name", "baby3").fetch().get(0);
+		
+		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		
+		/*疫苗数据*/
+		try{
+			Vaccination vacc = new Vaccination();
+			vacc.babyId = b1.id;
+			vacc.content ="流感疫苗A";
+			vacc.date = sf.parse("2015-1-18 20:17:45");
+			vacc.save();
+			
+			Vaccination vacc2 = new Vaccination();
+			vacc2.babyId = b1.id;
+			vacc2.content ="流感疫苗A1";
+			vacc2.date = sf.parse("2015-1-18 10:17:45");
+			vacc2.save();
+			
+			Vaccination vacc3 = new Vaccination();
+			vacc3.babyId = b1.id;
+			vacc3.content ="流感疫苗A";
+			vacc3.date = sf.parse("2015-1-28 20:17:45");
+			vacc3.save();
+			
+			Vaccination vacc4 = new Vaccination();
+			vacc4.babyId = b2.id;
+			vacc4.content ="流感疫苗A2";
+			vacc4.date = sf.parse("2015-1-18 20:17:45");
+			vacc4.save();
+			
+			Vaccination vacc5 = new Vaccination();
+			vacc5.babyId = b2.id;
+			vacc5.content ="流感疫苗A3";
+			vacc5.date = sf.parse("2015-1-28 20:17:45");
+			vacc5.save();
+		}catch(Exception e){
+			
+		}
+		
+		
+		
+		/*孕重测试数据*/
+		try{
+		GestationalWeight gw =new GestationalWeight();
+		gw.userId = u1.id;
+		gw.wDate = sf.parse("2015-1-10 20:17:45");
+		gw.wValue = 56.4f;
+		gw.save();
+		
+		GestationalWeight gw1 =new GestationalWeight();
+		gw1.userId = u1.id;
+		gw1.wDate = sf.parse("2015-1-11 20:17:45");
+		gw1.wValue = 56.4f;
+		gw1.save();
+		
+		
+		GestationalWeight gw2 =new GestationalWeight();
+		gw2.userId = u1.id;
+		gw2.wDate = sf.parse("2015-1-20 20:17:45");
+		gw2.wValue = 56.4f;
+		gw2.save();
+		
+		GestationalWeight gw3 =new GestationalWeight();
+		gw3.userId = u1.id;
+		gw3.wDate = sf.parse("2015-1-15 20:17:45");
+		gw3.wValue = 56.4f;
+		gw3.save();
+		
+		GestationalWeight gw4 =new GestationalWeight();
+		gw4.userId = u1.id;
+		gw4.wDate = sf.parse("2015-1-12 20:17:45");
+		gw4.wValue = 56.4f;
+		gw4.save();
+		
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		/*胎动测试数据*/
+		try{
+			FetalMovement fw = new FetalMovement();
+			fw.userId = u1.id;
+			fw.fDate = sf.parse("2015-1-10 20:17:45");
+			fw.num = 80;
+			fw.save();
+			
+			FetalMovement fw1 = new FetalMovement();
+			fw1.userId = u1.id;
+			fw1.fDate = sf.parse("2015-1-11 20:17:45");
+			fw1.num = 85;
+			fw1.save();
+			
+			FetalMovement fw2 = new FetalMovement();
+			fw2.userId = u1.id;
+			fw2.fDate = sf.parse("2015-1-13 20:17:45");
+			fw2.num = 90;
+			fw2.save();
+			
+			
+			FetalMovement fw3 = new FetalMovement();
+			fw3.userId = u1.id;
+			fw3.fDate = sf.parse("2015-1-15 20:17:45");
+			fw3.num = 80;
+			fw3.save();
+			
+			
+			FetalMovement fw4 = new FetalMovement();
+			fw4.userId = u1.id;
+			fw4.fDate = sf.parse("2015-1-20 20:17:45");
+			fw4.num = 70;
+			fw4.save();
+		
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
 		/*月经测试数据*/
     	Menses menses = new Menses(u1.id, new Date(),"暗红", "多", true, true,"稠");
+    	menses.mMeasure="适度";
     	menses.save();
     	Menses menses2 = new Menses(u1.id, new Date(),"鲜红", "少", true, true,"稀");
+    	menses2.mMeasure="适度";
     	menses2.save();
-    	Menses menses3 = new Menses(u2.id, new Date(),"鲜红", "少", true, true,"稀");
+    	Menses menses3 = new Menses(u1.id, new Date(),"鲜红", "少", true, true,"稀");
+    	menses3.mMeasure="适度";
     	menses3.save();
     	
     	/*体温测试数据*/
@@ -63,8 +187,25 @@ public class DatabaseUtil {
     	notebook.createDate = new Date();
     	notebook.name = "菜谱";
     	notebook.recentMFDate = new Date();
-    	notebook.userId = u1.id;
+    	notebook.userId = u2.id;
+    	notebook.introduceContent="菜谱记录";
     	notebook.save();
+    	
+    	NoteBook notebook1 = new NoteBook();
+    	notebook1.createDate = new Date();
+    	notebook1.name = "菜谱1";
+    	notebook1.recentMFDate = new Date();
+    	notebook1.userId = u2.id;
+    	notebook1.introduceContent="菜谱记录1";
+    	notebook1.save();
+    	
+    	NoteBook notebook2 = new NoteBook();
+    	notebook2.createDate = new Date();
+    	notebook2.name = "菜谱2";
+    	notebook2.recentMFDate = new Date();
+    	notebook2.userId = u2.id;
+    	notebook2.introduceContent="菜谱记录2";
+    	notebook2.save();
     	
     	/*菜谱下共5个笔记*/
     	Note note = new Note();
@@ -114,6 +255,7 @@ public class DatabaseUtil {
     	notebook.name = "孩子学习";
     	notebook.recentMFDate = new Date();
     	notebook.userId = u1.id;
+    	notebook.introduceContent="孩子学习笔记";
     	notebook.save();
     	
     	note = new Note();
@@ -140,8 +282,76 @@ public class DatabaseUtil {
     	note.noteBookId = notebook.id;
     	note.save();
     	
-    	SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     	
+    	/*添加药箱和药物*/
+    	try{
+    		MedicineBox mb1 = new MedicineBox();
+    		mb1.userId = u1.id;
+    		mb1.createDate = sf.parse("2015-1-10 20:17:45");
+    		mb1.mark = "请遵医嘱";
+    		mb1.name = "药箱1";
+    		mb1.save();
+    		
+    		MedicineBox mb2 = new MedicineBox();
+    		mb2.userId = u2.id;
+    		mb2.createDate = sf.parse("2015-1-10 20:17:45");
+    		mb2.mark = "请遵医嘱";
+    		mb2.name = "药箱2";
+    		mb2.save();
+    		
+    		MedicineBox mb3 = new MedicineBox();
+    		mb3.userId = u1.id;
+    		mb3.createDate = sf.parse("2015-1-12 20:15:45");
+    		mb3.mark = "请遵医嘱";
+    		mb3.name = "药箱3";
+    		mb3.save();
+    		
+    		MedicineBox mb4 = new MedicineBox();
+    		mb4.userId = u1.id;
+    		mb4.createDate = sf.parse("2015-1-12 20:15:45");
+    		mb4.mark = "请遵医嘱";
+    		mb4.name = "药箱4";
+    		mb4.save();
+    		
+    		MedicineBox mb5 = new MedicineBox();
+    		mb5.userId = u2.id;
+    		mb5.createDate = sf.parse("2015-1-10 20:17:45");
+    		mb5.mark = "请遵医嘱";
+    		mb5.name = "药箱5";
+    		mb5.save();
+    		
+    		MedicineBox mb6 = new MedicineBox();
+    		mb6.userId = u2.id;
+    		mb6.createDate =sf.parse("2015-1-12 20:15:45");
+    		mb6.mark = "请遵医嘱";
+    		mb6.name = "药箱6";
+    		mb6.save();
+    		
+    	}catch(Exception e){
+    		e.printStackTrace();
+    	}
+    	/*添加药物到药箱*/
+    	
+    	MedicineBox mb1 = (MedicineBox)MedicineBox.find("name", "药箱1").fetch().get(0);
+    	MedicineBox mb2 = (MedicineBox)MedicineBox.find("name", "药箱2").fetch().get(0);
+    	for(int i =0; i<10;i++){
+    		Medicine m = new Medicine();
+    		m.name="药物"+i;
+    		m.type="otc";
+    		m.deadline="2016-12-3";
+    		m.function="治疗感冒";
+    		m.applicability="小孩及成人";
+    		m.code="2014808A"+i;
+    		m.photoAddr="no";
+    		if(i%2==0){
+    		m.medicineBoxId=mb1.id;
+    		}else{
+    			m.medicineBoxId=mb2.id;
+    		}
+    		m.save();
+    	}
+    	
+    	/*添加宝宝身体指标*/
     	try{
     	BodyIndex bindex = new BodyIndex();
     	bindex.babyId = b1.id;
@@ -271,6 +481,4 @@ public class DatabaseUtil {
         	System.out.println("test--"+g.babyId+" "+g.subject+" "+g.mark+" "+g.date);
         	}
 	}
-	
-
 }

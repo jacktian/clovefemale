@@ -12,9 +12,13 @@ import com.sudocn.play.BasicModel;
 import play.data.validation.Required;
 import play.data.validation.Valid;
 import play.db.jpa.Model;
-/*
+
+/**
  * 疫苗接种实体类，主要属性有Id、孩子Id、、日期、备注，其中ID由系统自动创建，孩子ID由对应的关系类存储
- * */
+ *
+ * @author Yingpeng
+ * @since 12/16/14
+ */
 @Entity
 @Table(name = "vaccination")
 public class Vaccination extends BasicModel{

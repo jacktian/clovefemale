@@ -32,7 +32,7 @@ $(function(){
 		/*如果点击上一页*/
 		if($(this).hasClass('prevPage')){	 
 			var page = curPage - 1;
-			alert(page);
+			/*alert(page);*/
 			window.location.href=localhost+"/Application/findGrade?babyId="+babyId+"&curpage="+page;
 			/*if(curPage==1){
 				$('.babyList nav ul li').removeClass('active');
@@ -50,7 +50,7 @@ $(function(){
 		/*如果点击下一页*/
 		else if($(this).hasClass('nextPage')){	 
 			var page = parseInt(curPage) + 1;
-			alert(page);
+			/*alert(page);*/
 			window.location.href=localhost+"/Application/findGrade?babyId="+babyId+"&curpage="+page;
 		}
          else{

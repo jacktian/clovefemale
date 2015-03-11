@@ -10,19 +10,20 @@ import models.User;
 import beans.BabyBean;
 
 import com.sudocn.play.BasicModel;
-
+/**
+ * 宝贝controller
+ * @author Yingpeng
+ * @since 03/05/15
+ * */
 public class BabyAction extends WebService{
     
-	public static void addBaby(Baby model){
-		Application.saveModel(model) ;
-	}
-	
 	/**
 	 * 返回所有孩子
 	 */
 	public static void listBabys(int curpage){
 	 List<Baby> babys = Baby.all().fetch(curpage, 10);
    	 wsOk(babys);
+   /*	wsOkAsJsonP(babys);*/
     }
 	
 	/**

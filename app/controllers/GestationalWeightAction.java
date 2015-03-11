@@ -7,38 +7,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.management.monitor.GaugeMonitor;
-
 import models.GestationalWeight;
-import models.Menses;
+import models.User;
 
 /**
  * 孕重控制器
  * 
- * @author caterZhong
+ * @author Yingpeng
  * @since 2014/12/16
  */
 public class GestationalWeightAction extends WebService {
-	
 	//增加孕重记录
-	public static void addWeight(GestationalWeight model){
-		String result = "" ;
-		if(model != null){
-			if(model.wValue <= 0 || model.wDate == null){
-				result = "fail" ;
-			}else{
-			 	try{
-					model.save() ;
-					result = "success" ;
-			 	}catch(Exception e){
-			 		e.printStackTrace() ;
-			 		result = "fail" ;
-			 	}
-			}
-		}else{
-			result = "fail" ;
-		}
-		wsOkAsJsonP(result) ;
+	public static void addWeight(String userId, Date wDate, float wValue){
+		GestationalWeight weight = new GestationalWeight(userId,wDate, wValue);
+		weight.save();
 	}
 	
 	//获取某个用户的所有孕重记录
@@ -76,4 +58,35 @@ public class GestationalWeightAction extends WebService {
 		}
 		wsOk(weightList);
    	}
+    
+ public static void getWeightDataByDate2(String userId,String userName,String sDate,String eDate,int curpage){
+	   System.out.println("*******"+sDate+" "+eDate);
+	 
+	 if(curpage==0){
+			curpage =1;
+		}
+		long count =0;
+	 	long pageNum =0;
+		Date startDate=null;
+		Date endDate=null;
+		List<GestationalWeight> listbean=null;
+		try{
+		 startDate  = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(sDate+" 00:00:00");
+		 endDate  = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(eDate+" 23:59:59");
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		if(startDate.before(endDate)){
+			listbean = GestationalWeight.find("select w from GestationalWeight w where userId = ? and wDate between ? and ? order by wDate", userId,startDate,endDate).fetch(curpage,2);
+		 if(listbean!=null){
+			    count = GestationalWeight.find("select w from GestationalWeight w where userId = ? and wDate between ? and ? order by wDate", userId,startDate,endDate).fetch().size();
+		 		if(count%2!=0)
+		 	     		pageNum = count/2+1; 
+		 	    else
+		 	     		pageNum = count/2;
+		 }
+		}
+		render("/gestationMgm/usergw.html",listbean,pageNum,curpage,userId,userName,sDate,eDate);
+   	}
+ 
 }

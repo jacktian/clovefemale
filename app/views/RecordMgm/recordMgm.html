@@ -7,15 +7,32 @@
 		<ul class="userManMenu">
 			<li class="active">
 				<a href="#">小宝成长</a>
+				<ul>
+					<li><a href=@{Application.recordMgm()}>所有宝贝</a></li>
+					<li><a href=@{Application.findBabyByPro()}>查找宝贝</a></li>
+					<li><a href=@{Application.findBabyByCondition()}>宝贝情况筛选</a></li>
+				</ul>
 			</li>
-			<li>
+			<li class="active">
 				<a href="#">助孕记录</a>
+				<ul>
+					<li><a href="@{Application.listUserGR()}">用户助孕记录列表</a></li>
+					<li><a href="@{Application.searchUsergr()}">查找用户助孕记录</a></li>
+				</ul>
 			</li>
-			<li>
-				<a href="#">药箱管理</a>
+			<li class="active">
+				<a href="@{Application.listUserMbox()}">药箱管理</a>
+				<ul>
+					<li><a href="@{Application.listUserMbox()}">用户药箱列表</a></li>
+					<li><a href="@{Application.findUerMbox()}">查找用户药箱</a></li>
+				</ul>
 			</li>
-			<li>
+			<li class="active">
 				<a href="#">随手记</a>
+				<ul>
+					<li><a href="@{Application.listUserNotebook()}">用户笔记本列表</a></li>
+					<li><a href="@{Application.searchUserNotebook()}">查找用户笔记记录</a></li>
+				</ul>
 			</li>
 		</ul>
 	</div>

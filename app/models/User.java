@@ -30,6 +30,12 @@ public class User extends BasicModel{
      */
 	@Column(name = "username")
 	public String userName;
+	
+	/**
+     * 丁香号
+     */
+	@Column(name = "cloveId")
+	public String cloveId;
 
 	/**
      * 密码
@@ -113,25 +119,25 @@ public class User extends BasicModel{
 	public String introduction;
 
 	/**
-     * ???
+     * 个性签名
      */
 	@Column(name = "signname")
 	public String signName;
 
 	/**
-     * ???
+     * 出生日期
      */
 	@Column(name = "date")
 	public Date date;
 
 	/**
-     * ???
+     * 用户状态
      */
 	@Column(name = "state")
 	public String state;
 
 	/**
-     * ???
+     * 是否加V
      */
 	@Column(name = "isaddv")
 	public Boolean isAddV;
