@@ -26,6 +26,13 @@ public class GestationalWeight extends BasicModel {
 	public Date wDate; //日期
 	
 	/**
+	 * 日期字符串
+	 */
+	@Required
+	@Column(name = "dateStr")
+	public String dateStr; 
+	
+	/**
 	 * 体重
 	 */
 	@Required

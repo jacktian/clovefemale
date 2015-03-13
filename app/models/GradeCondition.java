@@ -23,6 +23,14 @@ import com.sudocn.play.BasicModel;
 public class GradeCondition extends BasicModel {
    @Column(name = "date")
 	public Date date;//日期
+   
+   /**
+	 * 日期字符串
+	 */
+	@Required
+	@Column(name = "dateStr")
+	public String dateStr; 
+	
    @Column(name = "grade")
 	public String grade;//年级
 	@Required

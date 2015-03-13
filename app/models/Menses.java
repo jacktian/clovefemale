@@ -28,6 +28,13 @@ public class Menses extends BasicModel{
 	public Date mDate;
 	
 	/**
+	 * 日期字符串
+	 */
+	@Required
+	@Column(name = "dateStr")
+	public String dateStr;
+	
+	/**
 	 * 颜色（暗红、鲜红、浅红）
 	 */
 	@Required

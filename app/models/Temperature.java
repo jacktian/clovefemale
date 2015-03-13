@@ -27,6 +27,13 @@ public class Temperature extends BasicModel {
 	public Date tDate; 
 	
 	/**
+	 * 日期字符串
+	 */
+	@Required
+	@Column(name = "dateStr")
+	public String dateStr; 
+	
+	/**
 	 * 温度
 	 */
 	@Required
