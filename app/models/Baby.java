@@ -8,6 +8,7 @@ import javax.persistence.Table;
 
 import com.sudocn.play.BasicModel;
 
+import play.data.validation.Required;
 import play.data.validation.Valid;
 import play.db.jpa.Model;
 
@@ -33,6 +34,13 @@ public class Baby extends BasicModel{
      */
 	@Column(name = "date")
 	public Date date;
+	
+	/**
+	 * 日期字符串
+	 */
+	@Required
+	@Column(name = "dateStr")
+	public String dateStr;
 
 	/**
      * 性别

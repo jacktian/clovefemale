@@ -24,6 +24,12 @@ import play.db.jpa.Model;
 public class BodyIndex extends BasicModel {
 	@Column(name = "date")
 	public Date  date;//日期
+	/**
+	 * 日期字符串
+	 */
+	@Required
+	@Column(name = "dateStr")
+	public String dateStr;
 	@Column(name = "height")
 	@Required
 	public Double height;//身高

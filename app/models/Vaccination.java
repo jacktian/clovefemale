@@ -24,6 +24,12 @@ import play.db.jpa.Model;
 public class Vaccination extends BasicModel{
    @Column(name = "date")
 	public Date date;//日期
+   /**
+	 * 日期字符串
+	 */
+	@Required
+	@Column(name = "dateStr")
+	public String dateStr;
    @Column(name = "content")
 	public String content;//备注
    @Column(name = "baby_Id")
