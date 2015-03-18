@@ -3,8 +3,14 @@ package controllers;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Query;
+
+import beans.TestBean;
+
 import models.Baby;
 import models.User;
+import play.cache.CacheFor;
+import play.db.jpa.Model;
 import play.mvc.*;
 
 /**
@@ -90,6 +96,7 @@ public class UserAction extends WebService{
     	 List<User> users = User.all().fetch(curpage, 10);
     	 wsOk(users);
      }
+
      
      /**
  	 * 返回所有用户
@@ -99,4 +106,22 @@ public class UserAction extends WebService{
     	/* List<User> userList = User.find("userName = ?",username).fetch();*/
     	 wsOk(userList);
      }
+
+    
+    @CacheFor("10s")
+    public static void test(){
+    	String sql = "select count(*) from User,Baby where User.id = Baby.pid";
+    	Query query = Model.em().createNativeQuery(sql);
+    	/*System.out.println(query.getResultList());*/
+    	wsOk(query.getResultList());
+    }
+    
+    @CacheFor("10s")
+    public static void test2(){
+    	String sql = "select * from User;";
+    	Query query = Model.em().createNativeQuery(sql,User.class);
+    	wsOk(query.getResultList());
+    	//wsOk(query.getResultList());
+    }
 }
+
