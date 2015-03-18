@@ -30,7 +30,18 @@ public class DatabaseUtil {
 			u.passwd = "abcd";
 			u.phoneNum = "1598907064" + i;
 			u.email = "31596495" + i + "@qq.com";
+			u.QQ ="51436219"+i;
+			u.weibo ="51436219"+i;
+			u.weixin = "51436219"+i;
 			u.IDcard = "44138119911024181" + i;
+			u.isAddV =false;
+			u.cloveId = "123"+i+"321";
+			if(i%2==0){
+				u.sex = "man";
+			}else{
+				u.sex="woman";
+			}
+			u.signName="test";
 			u.save();
 		}
 		User u1 = (User) User.find("byUserName", "user1").fetch().get(0);
@@ -480,5 +491,18 @@ public class DatabaseUtil {
     	for(GradeCondition g :list2){
         	System.out.println("test--"+g.babyId+" "+g.subject+" "+g.mark+" "+g.date);
         	}
+			
+		/**
+    	 * 初始化设置表数据
+    	 * */
+    	User[] users = new User[50];
+    	for(int i = 0;i<50;i++ ){
+    		User user = (User) User.find("byUserName", "user"+i).fetch().get(0);
+    		users[i] = user;
+    	}
+    	BackgroundUtil.setData(users);
+    	/**
+    	 * 设置表初始化结束
+    	 * */
 	}
 }
