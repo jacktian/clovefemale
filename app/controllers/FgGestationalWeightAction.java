@@ -24,17 +24,23 @@ public class FgGestationalWeightAction extends WebService {
 	public static void addWeight(GestationalWeight model) {
 		String result = "";
 		if (model != null) {
-			if (model.wValue <= 0 || model.wDate == null) {
-				result = "fail";
-			} else {
+			
+			List<GestationalWeight> weight =  GestationalWeight.find("dateStr=? and userId=?", model.dateStr,model.userId).fetch();				
 				try {
-					model.save();
+					// 判断是否已有今日的数据，有则覆盖，否则重新添加
+					if(weight.size()>0){
+						weight.get(0).wValue = model.wValue;
+						weight.get(0).save();
+					}
+					else{
+						model.save();
+					}
 					result = "success";
 				} catch (Exception e) {
 					e.printStackTrace();
 					result = "fail";
 				}
-			}
+			
 		} else {
 			result = "fail";
 		}

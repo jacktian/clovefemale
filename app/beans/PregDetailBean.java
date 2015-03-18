@@ -1,5 +1,6 @@
 package beans;
 
+import models.FetalMovement;
 import models.GestationalWeight;
 import models.GradeCondition;
 import models.Menses;
@@ -28,7 +29,7 @@ public class PregDetailBean {
 	public GestationalWeight weight;
 	
 	/**
-     * 胎重对象
+     * 胎动对象
      */
-	public GradeCondition condition;
+	public FetalMovement condition;
 }

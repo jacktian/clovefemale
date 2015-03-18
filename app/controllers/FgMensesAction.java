@@ -17,9 +17,21 @@ public class FgMensesAction extends WebService {
 	public static void addMenses(Menses model) {
 		String result = "";
 		if (model != null) {
-			model.mDate = new Date();
+			// 判断是否已有今日的数据，有则覆盖，否则重新添加
+			List<Menses> mense =  Menses.find("dateStr=? and userId=?", model.dateStr,model.userId).fetch();
 			try {
-				model.save();
+				model.mDate = new Date();
+				if(mense.size()>0){
+					mense.get(0).mColor = model.mColor;
+					mense.get(0).mMeasure = model.mMeasure;
+					mense.get(0).mPiece = model.mPiece;
+					mense.get(0).isMcramp = model.isMcramp;
+					mense.get(0).vicidity = model.vicidity;
+					mense.get(0).save();
+				}
+				else{
+					model.save();
+				}
 				result = "success";
 			} catch (Exception e) {
 				e.printStackTrace();

@@ -27,6 +27,13 @@ public class FetalMovement extends BasicModel {
 	public Date fDate;
 	
 	/**
+	 * 日期字符串
+	 */
+	@Required
+	@Column(name = "dateStr")
+	public String dateStr; 
+	
+	/**
 	 * 次数
 	 */
 	@Required

@@ -5,6 +5,7 @@ import java.util.List;
 
 import beans.PregDetailBean;
 
+import models.FetalMovement;
 import models.GestationalWeight;
 import models.GradeCondition;
 import models.Menses;
@@ -43,7 +44,7 @@ public class FgPregAction extends WebService{
 			pregDetail.weight = null;
 		
 		/* 存储孕动信息 */
-		List<GradeCondition> condition =  GradeCondition.find("dateStr=?", dateStr).fetch();
+		List<FetalMovement> condition =  FetalMovement.find("dateStr=?", dateStr).fetch();
 		if(condition.size()>0)
 			pregDetail.condition = condition.get(0);
 		else
