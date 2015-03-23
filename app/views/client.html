@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>#{get 'title' /}</title>
+	
+	<!-- mui样式  -->
+	<link rel="stylesheet" href="@{'/public/stylesheets/client/mui.css'}">
+	<!-- 主题样式 -->
+	<link rel="stylesheet" href="@{'/public/stylesheets/client/client.theme.css'}">
+	<!-- 更多样式 -->
+	#{get 'moreStyles' /}
+
+	<!-- mui脚本 -->
+	<script src="@{'/public/javascripts/client/mui.min.js'}"></script>
+	<!-- 更多脚本 -->
+	#{get 'moreScripts' /}
+	
+</head>
+
+	#{doLayout /}
+
+</body>
+</html>

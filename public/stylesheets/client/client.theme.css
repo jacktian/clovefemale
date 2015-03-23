@@ -1,0 +1,31 @@
+/* 顶部导航栏样式 */
+.client-bar-nav{
+	background:#DD524D;
+}
+.client-bar-tab{
+	background:#585252;
+}
+.client-title{
+	color:#FFFFFF;
+	font-size:16px;
+	font-weight:bold;
+}
+/* 列表样式 */
+.mui-content>.client-table-view:first-child{
+	margin-top:0px;
+}
+.client-media-body{
+	line-height:50px;
+}
+/* 底部导航栏样式 */
+.mui-bar-tab .mui-tab-item.client-active{
+	color:#E06868;
+	font-weight: bold;
+}
+.mui-bar-tab .mui-tab-item.client-active .client-icon,.mui-bar-tab .mui-tab-item.client-active .client-tab-label{
+	color:#E06868;
+}
+.client-icon,.client-tab-label{
+	font-weight:bold;
+	color:#FFF;
+}

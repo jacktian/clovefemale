@@ -1,0 +1,75 @@
+#{extends 'client.html' /}
+#{set title:'记录控' /}
+<header class="mui-bar mui-bar-nav client-bar-nav">
+			<h1 class="mui-title client-title">记录控</h1>
+		</header>
+		<div class="mui-content">
+			<ul class="mui-table-view client-table-view">
+				<li class="mui-table-view-cell mui-hidden">cared
+					<div id="M_Toggle" class="mui-switch mui-active">
+						<div class="mui-switch-handle"></div>
+					</div>
+				</li>
+				<li>
+					
+				</li>
+				<li class="mui-table-view-cell mui-media">
+					<a href="#" class="mui-navigate-right">
+						<img class="mui-media-object mui-pull-left" src="@{'/public/images/client/preg.png'}">
+						<div class="mui-media-body client-media-body">
+							助孕记录
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media">
+					<a href="#" class="mui-navigate-right">
+						<img class="mui-media-object mui-pull-left" src="@{'/public/images/client/kid.png'}">
+						<div class="mui-media-body client-media-body">
+							小宝成长
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media">
+					<a href="#" class="mui-navigate-right">
+						<img class="mui-media-object mui-pull-left" src="@{'/public/images/client/note.png'}">
+						<div class="mui-media-body client-media-body">
+							随手记
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media">
+					<a href="#" class="mui-navigate-right">
+						<img class="mui-media-object mui-pull-left" src="@{'/public/images/client/medicine.png'}">
+						<div class="mui-media-body client-media-body">
+							小药箱
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media">
+					<a href="#" class="mui-navigate-right">
+						<img class="mui-media-object mui-pull-left" src="@{'/public/images/client/chart.png'}">
+						<div class="mui-media-body client-media-body">
+							图表
+						</div>
+					</a>
+				</li>
+			</ul>
+		</div>
+		<nav class="mui-bar mui-bar-tab client-bar-tab">
+			<a class="mui-tab-item mui-active client-active" href="#tabbar">
+				<span class="mui-icon mui-icon-compose client-icon"></span>
+				<span class="mui-tab-label client-tab-label">记录控</span>
+			</a>
+			<a class="mui-tab-item" href="#tabbar-with-chat">
+				<span class="mui-icon mui-icon-star client-icon"></span>
+				<span class="mui-tab-label client-tab-label">空间</span>
+			</a>
+			<a class="mui-tab-item" href="#tabbar-with-sms">
+				<span class="mui-icon mui-icon-pengyouquan client-icon"></span>
+				<span class="mui-tab-label client-tab-label">女人圈</span>
+			</a>
+			<a class="mui-tab-item" href="#tabbar-with-map">
+				<span class="mui-icon mui-icon-person client-icon"></span>
+				<span class="mui-tab-label client-tab-label">我</span>
+			</a>
+		</nav>
