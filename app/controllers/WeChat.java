@@ -11,6 +11,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import beans.WeChatBean;
+import beans.WeChatResponse;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -56,6 +57,15 @@ public class WeChat extends WebService{
 	}
 	
 	/**
+	 * 令牌验证
+	 */
+	public static void tokenverify(String signature,String timestamp,String nonce,String echostr){
+		if(SignUtil.checkSignature(signature, timestamp, nonce)){
+			render("/Client/WeChat/index.html",echostr);
+		}	
+	}
+	
+	/**
 	 * 解析XML
 	 */
 	public static void xmlParse(String xmlStr){
@@ -65,6 +75,7 @@ public class WeChat extends WebService{
 		Element fromUserNameE = doc.getElementsByTag("FromUserName").get(0);
 		Element createTimeE = doc.getElementsByTag("CreateTime").get(0);
 		Element msgTypeE = doc.getElementsByTag("MsgType").get(0);
+		Element contentE = doc.getElementsByTag("Content").get(0);
 		Element msgIdE = null;
 		try{
 			msgIdE = doc.getElementsByTag("MsgId").get(0);
@@ -78,17 +89,8 @@ public class WeChat extends WebService{
 		bean.createTime = Long.parseLong(createTimeE.html());
 		bean.msgType = msgTypeE.html();
 		bean.msgId = Long.parseLong(msgIdE.html());
+		bean.content = contentE.html();
 		responseMsg(bean);
-	}
-	
-	
-	/**
-	 * 令牌验证
-	 */
-	public static void tokenverify(String signature,String timestamp,String nonce,String echostr){
-		if(SignUtil.checkSignature(signature, timestamp, nonce)){
-			render("/Client/WeChat/index.html",echostr);
-		}	
 	}
 	
 	/**
@@ -97,7 +99,18 @@ public class WeChat extends WebService{
 	public static void responseMsg(WeChatBean bean){
 		//如果发送的是文本消息
 		if(bean.msgType.equals("text")){
-			
+			WeChatResponse resp = new WeChatResponse();
+			resp.toUserName = bean.fromUserName;
+			resp.fromUserName = bean.toUserName;
+			resp.createTime = bean.createTime;
+			resp.msgType = bean.msgType;
+			if(bean.content.equals("1")){
+				resp.content = bean.content;
+			}
+			else{
+				resp.content = "测试";
+			}
+			renderText(resp);
 		}
 	}
 	
@@ -118,6 +131,16 @@ public class WeChat extends WebService{
 		models.WeChat wechat = (models.WeChat) models.WeChat.findAll().get(0);
 		wechat.access_token = json.get("access_token").getAsString();
 		wechat.save();
+	}
+	
+	/**
+	 * 控制器测试方法
+	 */
+	public static void test() {
+		//存储xml信息
+		WeChatResponse bean = new WeChatResponse();
+		bean.fromUserName = "boxizen";
+		renderText(bean.toString());
 	}
 }
 

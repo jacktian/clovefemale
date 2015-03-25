@@ -18,8 +18,27 @@ public class WeChatResponse {
 	public Long createTime;
 	
 	/**
-	 * 位0x0001被标志时，星标刚收到的消息。
-	 * PS：其实，这个我不知道是什么来的
+	 * 消息创建类型
 	 */
-	public int funcFlag;
+	public String msgType;
+	
+	/**
+	 * 消息内容
+	 */
+	public String content;
+	
+	/**
+	 * 重写toString方法，转换成微信服务器能接收的XML格式
+	 */
+	
+	@Override
+	public String toString(){
+		StringBuilder strBuilder = new StringBuilder();
+		strBuilder.append("<xml>");
+		strBuilder.append("<ToUserName><![CDATA["+toUserName+"]]></ToUserName>");
+		strBuilder.append("<FromUserName><![CDATA["+fromUserName+"]]></FromUserName>");
+		strBuilder.append("<CreateTime>"+createTime+"</CreateTime>");
+		strBuilder.append("<MsgType><![CDATA["+content+"]]></MsgType>");
+		return strBuilder.toString();
+	}
 }
