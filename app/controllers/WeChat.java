@@ -52,7 +52,7 @@ public class WeChat extends WebService{
 			for(String s : lines){
 				strBuilder.append(s);
 			}
-			xmlParse(strBuilder.toString());
+			responseMsg(strBuilder.toString());
 		}
 	}
 	
@@ -66,9 +66,9 @@ public class WeChat extends WebService{
 	}
 	
 	/**
-	 * 解析XML
+	 * 回应小心
 	 */
-	public static void xmlParse(String xmlStr){
+	public static void responseMsg(String xmlStr){
 		//读取xml结构
 		Document doc = Jsoup.parse(xmlStr);
 		Element toUserNameE = doc.getElementsByTag("ToUserName").get(0);
@@ -90,13 +90,6 @@ public class WeChat extends WebService{
 		bean.msgType = msgTypeE.html();
 		bean.msgId = Long.parseLong(msgIdE.html());
 		bean.content = contentE.html();
-		responseMsg(bean);
-	}
-	
-	/**
-	 * 回应信息
-	 */
-	public static void responseMsg(WeChatBean bean){
 		//如果发送的是文本消息
 		if(bean.msgType.equals("text")){
 			WeChatResponse resp = new WeChatResponse();
@@ -113,6 +106,7 @@ public class WeChat extends WebService{
 			renderText(resp);
 		}
 	}
+
 	
 	/**
 	 * 快速获取access_token
