@@ -40,73 +40,59 @@ public class WeChat extends WebService{
 	/**
 	 * 接收来自微信服务器的消息
 	 */
-	public static void receiveMsg(){
-		//如果是get请求，表明是验证令牌
+	public static void process(){
+		//如果是get请求，则执行令牌验证
 		if(request.method.toLowerCase().equals("get")){
-			tokenverify(params.get("signature"),params.get("timestamp"),params.get("nonce"),params.get("echostr"));
+			if(SignUtil.checkSignature(params.get("signature"), params.get("timestamp"), params.get("nonce"))){
+				renderText(params.get("echostr"));
+			}	
 		}
-		//否则为微信转发用户的信息
+		//否则为微信服务器转发用户的信息
 		else{
+			//读取XML信息
 			List<String> lines = IO.readLines(request.body);
 			StringBuilder strBuilder = new StringBuilder();
 			for(String s : lines){
 				strBuilder.append(s);
 			}
-			responseMsg(strBuilder.toString());
-		}
-	}
-	
-	/**
-	 * 令牌验证
-	 */
-	public static void tokenverify(String signature,String timestamp,String nonce,String echostr){
-		if(SignUtil.checkSignature(signature, timestamp, nonce)){
-			render("/Client/WeChat/index.html",echostr);
-		}	
-	}
-	
-	/**
-	 * 回应小心
-	 */
-	public static void responseMsg(String xmlStr){
-		//读取xml结构
-		Document doc = Jsoup.parse(xmlStr);
-		Element toUserNameE = doc.getElementsByTag("ToUserName").get(0);
-		Element fromUserNameE = doc.getElementsByTag("FromUserName").get(0);
-		Element createTimeE = doc.getElementsByTag("CreateTime").get(0);
-		Element msgTypeE = doc.getElementsByTag("MsgType").get(0);
-		Element contentE = doc.getElementsByTag("Content").get(0);
-		Element msgIdE = null;
-		try{
-			msgIdE = doc.getElementsByTag("MsgId").get(0);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		//存储xml信息
-		WeChatBean bean = new WeChatBean();
-		bean.toUserName = toUserNameE.html();
-		bean.fromUserName = fromUserNameE.html();
-		bean.createTime = Long.parseLong(createTimeE.html());
-		bean.msgType = msgTypeE.html();
-		bean.msgId = Long.parseLong(msgIdE.html());
-		bean.content = contentE.html();
-		//如果发送的是文本消息
-		if(bean.msgType.equals("text")){
-			WeChatResponse resp = new WeChatResponse();
-			resp.toUserName = bean.fromUserName;
-			resp.fromUserName = bean.toUserName;
-			resp.createTime = bean.createTime;
-			resp.msgType = bean.msgType;
-			if(bean.content.equals("1")){
-				resp.content = bean.content;
+			//解析XML信息
+			Document doc = Jsoup.parse(strBuilder.toString());
+			Element toUserNameE = doc.getElementsByTag("ToUserName").get(0);
+			Element fromUserNameE = doc.getElementsByTag("FromUserName").get(0);
+			Element createTimeE = doc.getElementsByTag("CreateTime").get(0);
+			Element msgTypeE = doc.getElementsByTag("MsgType").get(0);
+			Element contentE = doc.getElementsByTag("Content").get(0);
+			Element msgIdE = null;
+			try{
+				msgIdE = doc.getElementsByTag("MsgId").get(0);
+			}catch(Exception e){
+				e.printStackTrace();
 			}
-			else{
-				resp.content = "测试";
+			//存储xml信息
+			WeChatBean bean = new WeChatBean();
+			bean.toUserName = toUserNameE.html();
+			bean.fromUserName = fromUserNameE.html();
+			bean.createTime = Long.parseLong(createTimeE.html());
+			bean.msgType = msgTypeE.html();
+			bean.msgId = Long.parseLong(msgIdE.html());
+			bean.content = contentE.html();
+			//如果发送的是文本消息
+			if(bean.msgType.equals("text")){
+				WeChatResponse resp = new WeChatResponse();
+				resp.toUserName = bean.fromUserName;
+				resp.fromUserName = bean.toUserName;
+				resp.createTime = bean.createTime;
+				resp.msgType = bean.msgType;
+				if(bean.content.equals("1")){
+					resp.content = bean.content;
+				}
+				else{
+					resp.content = "测试";
+				}
+				renderText(resp);
 			}
-			renderText(resp);
 		}
 	}
-
 	
 	/**
 	 * 快速获取access_token
