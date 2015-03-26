@@ -22,5 +22,12 @@ public class Client extends WebService{
 	public static void record(){
 		render("/Client/record/index.html");
 	}
+
+	/**
+	 * 助孕记录
+	 */
+	public static void pregnant(){
+		render("/Client/record/pregnant.html");
+	}
 }
 

@@ -1,0 +1,111 @@
+#{extends 'client.html' /}
+#{set title:'助孕记录' /}
+#{set 'moreStyles'}
+<link rel="stylesheet" href="@{'/public/stylesheets/client/pregnant.css'}">
+#{/set}
+<header class="mui-bar mui-bar-nav client-bar-nav">
+			<h1 class="mui-title client-title">助孕记录</h1>
+		</header>
+		<div class="mui-content">
+			<ul class="mui-table-view client-table-view">
+				<li class="mui-table-view-cell mui-hidden">cared
+					<div id="M_Toggle" class="mui-switch mui-active">
+						<div class="mui-switch-handle"></div>
+					</div>
+				</li>
+				<li class="mui-table-view-cell mui-media" id="mense-btn">
+					<a href="#" class="mui-navigate-right">
+						<img class="mui-media-object mui-pull-left" src="@{'/public/images/client/kid.png'}">
+						<div class="mui-media-body client-media-body">
+							月经
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media">
+					<a href="#" class="mui-navigate-right">
+						<img class="mui-media-object mui-pull-left" src="@{'/public/images/client/health.png'}">
+						<div class="mui-media-body client-media-body">
+							基础体温
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media">
+					<a href="#" class="mui-navigate-right">
+						<img class="mui-media-object mui-pull-left" src="@{'/public/images/client/score.png'}">
+						<div class="mui-media-body client-media-body">
+							孕重
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media">
+					<a href="#" class="mui-navigate-right">
+						<img class="mui-media-object mui-pull-left" src="@{'/public/images/client/yimiao.png'}">
+						<div class="mui-media-body client-media-body">
+							胎动
+						</div>
+					</a>
+				</li>
+			</ul>
+			<div class="form-model mense-model mui-hidden">
+				<div class="model-header">
+					月经记录
+				</div>
+				<div class="model-content">
+					<div class="model-content-list">
+						<span class="model-content-list-title"><img src="@{'/public/images/client/icon.png'}">颜色:</span>
+						<select class="model-content-list-select">
+							<option>暗红</option>
+							<option>血红</option>
+						</select>
+					</div>
+					<div class="model-content-list">
+						<span class="model-content-list-title"><img src="@{'/public/images/client/dimension.png'}">经量:</span>
+						<select class="model-content-list-select">
+							<option>大</option>
+							<option>中</option>
+							<option>小</option>
+						</select>
+					</div>
+					<div class="model-content-list">
+						<span class="model-content-list-title"><img src="@{'/public/images/client/icon.png'}">色块:</span>
+						<select class="model-content-list-select">
+							<option>有</option>
+							<option>无</option>
+						</select>
+					</div>
+					<div class="model-content-list">
+						<span class="model-content-list-title"><img src="@{'/public/images/client/hurt.png'}">痛经:</span>
+						<select class="model-content-list-select">
+							<option>有</option>
+							<option>无</option>
+						</select>
+					</div>
+					<div class="model-content-list">
+						<span class="model-content-list-title"><img src="@{'/public/images/client/icon.png'}">稠度:</span>
+						<select class="model-content-list-select">
+							<option>浓</option>
+							<option>稀</option>
+						</select>
+					</div>
+				</div>
+				<div class="model-bottom">
+					<!--<button class="mui-btn mui-btn-negative">Button</button>-->
+				</div>
+			</div>
+		</div>
+		
+		
+		#{set 'moreScripts'}
+<script type="text/javascript" src = "@{'/public/javascripts/jquery-1.8.3.min.js'}"></script>
+<script>
+			var mask = mui.createMask(function(){
+				this.close();//关闭遮罩
+				$('.mense-model').addClass('mui-hidden');
+			});
+			
+			document.getElementById('mense-btn').addEventListener('click',function(){
+				$('.mense-model').removeClass('mui-hidden');
+				mask.show();
+			});
+		</script>
+#{/set}
