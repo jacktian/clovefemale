@@ -1,6 +1,20 @@
-#{extends 'client.html' /}
-#{set title:'记录控' /}
-<header class="mui-bar mui-bar-nav client-bar-nav">
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="js/mui.min.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/client.theme.css" rel="stylesheet" />
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+		</script>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav client-bar-nav">
 			<h1 class="mui-title client-title">记录控</h1>
 		</header>
 		<div class="mui-content">
@@ -15,7 +29,7 @@
 				</li>
 				<li class="mui-table-view-cell mui-media">
 					<a href="#" class="mui-navigate-right">
-						<img class="mui-media-object mui-pull-left" src="@{'/public/images/client/preg.png'}">
+						<img class="mui-media-object mui-pull-left" src="images/preg.png">
 						<div class="mui-media-body client-media-body">
 							助孕记录
 						</div>
@@ -23,7 +37,7 @@
 				</li>
 				<li class="mui-table-view-cell mui-media">
 					<a href="#" class="mui-navigate-right">
-						<img class="mui-media-object mui-pull-left" src="@{'/public/images/client/kid.png'}">
+						<img class="mui-media-object mui-pull-left" src="images/kid.png">
 						<div class="mui-media-body client-media-body">
 							小宝成长
 						</div>
@@ -31,7 +45,7 @@
 				</li>
 				<li class="mui-table-view-cell mui-media">
 					<a href="#" class="mui-navigate-right">
-						<img class="mui-media-object mui-pull-left" src="@{'/public/images/client/note.png'}">
+						<img class="mui-media-object mui-pull-left" src="images/note.png">
 						<div class="mui-media-body client-media-body">
 							随手记
 						</div>
@@ -39,7 +53,7 @@
 				</li>
 				<li class="mui-table-view-cell mui-media">
 					<a href="#" class="mui-navigate-right">
-						<img class="mui-media-object mui-pull-left" src="@{'/public/images/client/medicine.png'}">
+						<img class="mui-media-object mui-pull-left" src="images/medicine.png">
 						<div class="mui-media-body client-media-body">
 							小药箱
 						</div>
@@ -47,7 +61,7 @@
 				</li>
 				<li class="mui-table-view-cell mui-media">
 					<a href="#" class="mui-navigate-right">
-						<img class="mui-media-object mui-pull-left" src="@{'/public/images/client/chart.png'}">
+						<img class="mui-media-object mui-pull-left" src="images/chart.png">
 						<div class="mui-media-body client-media-body">
 							图表
 						</div>
@@ -73,3 +87,6 @@
 				<span class="mui-tab-label client-tab-label">我</span>
 			</a>
 		</nav>
+	</body>
+
+</html>

@@ -20,14 +20,26 @@ public class Client extends WebService{
 	 * 记录控首页
 	 */
 	public static void record(){
-		render("/Client/record/index.html");
+		render("/Client/record/mense.html");
 	}
 
 	/**
 	 * 助孕记录
 	 */
-	public static void pregnant(){
-		render("/Client/record/pregnant.html");
+	public static void pregMense(){
+		render("/Client/record/mense.html");
+	}
+
+	public static void pregTemp(){
+		render("/Client/record/temperature.html");
+	}
+
+	public static void pregWeight(){
+		render("/Client/record/pregWeight.html");
+	}
+	
+	public static void pregMove(){
+		render("/Client/record/babyMove.html");
 	}
 }
 
