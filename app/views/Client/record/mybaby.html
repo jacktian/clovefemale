@@ -1,0 +1,29 @@
+#{extends 'client.html' /}
+#{set title:'我的孩子' /}
+<link rel="stylesheet" href="@{'/public/stylesheets/client/baby.css'}">
+<script src="http://dcloudio.github.io/mui/dist/js/jquery-2.1.1.js"></script>
+<script src="http://dcloudio.github.io/mui/dist/js/bootstrap.min.js"></script>
+<script src="http://dcloudio.github.io/mui/assets/js/docs.min.js?v=2014-12-30 14:09:32 +0800"></script>
+<header class="mui-bar mui-bar-nav client-bar-nav">
+			<h1 class="mui-title client-title">小宝成长</h1>
+</header>
+
+<!--孩子列表-->
+<ul class="mui-table-view mui-grid-view mui-grid-9 child-list">
+	<li class="mui-table-view-cell mui-media mui-col-xs-4">
+		<a href="#">
+			<img class="chlid-img" src="@{'/public/images/client/child-1.jpg'}" alt="">
+			<div class="mui-media-body">天天</div>
+		</a>
+	</li>
+	<li class="mui-table-view-cell mui-media mui-col-xs-4">
+		<a href="#">
+			<img class="chlid-img" src="@{'/public/images/client/child-2.jpg'}" alt="">
+			<div class="mui-media-body">Kimi</div>
+		</a>
+	</li>
+</ul>
+<button class="mui-btn mui-btn-negative mui-btn-block babyblock-btn">
+	<span class="mui-icon mui-icon-plus"></span>
+孩子诞生
+</button>

@@ -2,6 +2,9 @@
 .client-bar-nav{
 	background:#DD524D;
 }
+.client-bar-nav a{
+	color:#FFFFFF;
+}
 .client-bar-tab{
 	background:#585252;
 }

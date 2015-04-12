@@ -1,0 +1,636 @@
+.babyTitle{
+	background-color: #DD524D;
+}
+
+.babyTitle.mui-bar-nav.mui-bar .mui-icon{
+	color: #fff;
+}
+
+.babyMuiContent .mui-segmented-control.mui-segmented-control-inverted ~ .mui-slider-progress-bar{
+	background-color: #FF9999;
+}
+
+.babyTitle>.mui-title{
+	color:#fff;
+}
+
+#slider.mui-slider{
+	min-height: 90%;
+	height:auto;
+}
+
+.mui-btn-block.babyblock-btn{
+	padding:7px 0;
+	margin:0px auto;
+	width:90%;
+}
+.mui-table-view.mui-grid-view.mui-grid-9.child-list{
+	padding-top:38px;
+	background-color: #fff;
+	border:none;
+}
+
+.mui-table-view.mui-grid-view.mui-grid-9.child-list:after{
+	background-color: #fff;
+}
+
+.mui-slider .mui-segmented-control.mui-segmented-control-inverted ~ .mui-slider-group .mui-slider-item{
+	border:none;
+}
+
+.child-link:hover{
+	background-color: #eee;
+}
+
+.chlid-img{
+	width:70px;
+	border:1px solid #ccc;
+	border-radius:70px;
+	background-color: #cacaca;
+}
+
+.chlid-img:active{
+	-webkit-filter: grayscale(100%);  
+	-moz-filter: grayscale(30%);    
+	-ms-filter: grayscale(30%);     
+	-o-filter: grayscale(30%);    
+	filter: grayscale(30%); 	  
+	filter: #ccc;
+}
+
+.mui-slider .mui-slider-group .mui-slider-item img.time-img{
+	width:13px;
+	padding-right: 2px;
+}
+
+.timeData{
+	/*padding-left:1px;*/
+}
+
+.floatRight-link{
+	color:#929292;
+	float: right;
+	font-size: 12px;
+	/*padding-right: */
+}
+
+.charBox{
+	width:95%;
+	min-height: 200px;
+	margin:0 auto;
+	/*border:1px solid #ccc;*/
+	padding-top: 0px;
+	/*border-top: none; */
+}
+
+#bodySimChart{
+	width:100%;
+}
+.mui-btn-block.babyblock-btn.newRecod-btn{
+	margin-top: 10px;
+	width:95%;
+}
+
+#item1mobile{
+	height: 100%;
+}
+html{
+	height: 100%;
+}
+body{
+	height: 100%;
+}
+#slider{
+	height: 100%;
+}
+
+.small-icon-bottom{
+	width:15px;
+}
+.small-icon-bottom2{
+	width:17px;
+}
+span.mui-icon.mui-icon-plus.test::before{
+	width:15px;
+}
+
+.objectTitle{
+	font-size: 1.1em;
+	line-height: 20px;
+	font-weight: bold;
+	padding:18px 0px 10px 0px;
+	width:95%;
+	margin:0 auto;
+}
+
+.pointSign{
+	width:4px;
+	height: 18px;
+	background-color: #FF9999;
+	float:left;
+}
+
+
+.datalist{
+	padding:0;
+	margin:0;
+}
+
+.datalist>li{
+	width:33%;
+	text-align: center;
+	display: inline-block;
+	color:#929292;
+}
+
+.dataTitle{
+	font-weight: bold;
+
+}
+
+.mui-bar-nav ~ .mui-content{
+	min-height: 100%;
+}
+
+.babySlider{
+	padding-top: 47px;
+	border-bottom: none;
+	min-height: 800px
+}
+
+.babySlider>#sliderSegmentedControl{
+	position: fixed !important;
+	border-bottom: 1px solid #c8c7cc;
+	opacity: 1;
+	/*border-bottom: 1px solid #ccc;*/
+	background-color: #fff;
+	z-index: 10;
+	top:44px !important;
+}
+
+#sliderProgressBar{
+	position: fixed;
+	top:81px;
+	z-index: 11;
+}
+
+.babySlider>.mui-slider-group>.mui-slider-item{
+	margin-top: 38px !important;
+	padding-bottom: 60px;
+	/*background-color: yellow;*/
+}
+
+.mui-slider-group>.mui-control-content{
+	border:none;
+}
+
+.babyMuiContent{
+	background-color: #fff;
+}
+
+.mui-slider-item.mui-control-content{
+	/*overflow-y:scroll;*/
+}
+
+#item1mobile{
+	/*overflow-y:scroll;*/
+}
+
+.babySelectSlide{
+	width:50%;
+}
+
+#babylist{
+	position: fixed;
+	top:44px;
+	border: 1px solid gray;
+	border-top:none;
+	border-radius:0px;
+	z-index: 1000 !important;
+	font-size: 1.1em;
+	line-height: 24px;
+}
+
+#babylist>ul{
+	width:35%;
+	background-color: #404040;
+}
+
+#babylist>.mui-table-view{
+	width:220px;
+	position: fixed;
+	top:44px;
+	right: 0;
+	background-color: #fff;/*#404040;*/
+	border-radius: 0px;
+}
+
+#babylist>ul>li{
+	padding-left:28px;
+	border-radius: 0px;
+}
+
+/*#babylist>ul>li:active{
+	background-color: black;
+}*/
+
+.mui-popovers{
+	/*display: hidden;*/
+}
+
+.grow_tab_link{
+	display: table-cell;
+	width:1%;
+	height:50px;
+	overflow:hidden;
+	color:#929292;
+	text-align: center;
+	text-overflow:ellipsis;
+	white-space:nowrap;
+	vertical-align: middle;
+}
+
+.grow_tab_link:active{
+	color:#272822;
+}
+
+/*滚轮弹出框样式*/
+.scrollerBox .dwcc{
+	background-color: #fff;
+}
+
+.scrollerBox .mui-input-group input[type=text]{
+	padding-top:26px;
+	padding-bottom: 14px;
+}
+
+.scrollerBox  .mui-input-group .mui-input-row{
+	height: 48px;
+}
+
+.scrollerBox  .mui-input-row label{
+	padding-top:17px;
+	padding-bottom: 14px;
+}
+.scrollerBox .mui-input-row .mui-input-clear~.mui-icon-clear{
+	top:15px;
+}
+/*滚轮弹出框样式结束*/
+
+/*------------------添加身体指标样式开始------------------*/
+
+.scrollerBox{
+	width:80%;
+	min-width: 225px;
+	max-width: 600px;
+	
+	margin:0 auto;
+	padding:2px 3px 0px;
+	position: absolute;
+	top:50%;
+	left:10%;
+	border:1px solid #ddd;
+	background-color: #fff;
+}
+
+.newbodyIndex{
+	height: 288px;
+	margin-top: -144px;
+}
+
+@media screen and (min-width: 749px) { 
+	.newbodyIndex {
+		left: 50%;
+		margin-left: -300px;
+	}  
+} 
+
+/*隐藏滚轮input*/
+#scroller{
+	display: none;
+}
+
+.labelunit{
+	position: absolute;
+	width: 100%;
+	height: 40px;
+	top:46px;
+	left:0px;
+}
+
+.labelunit>ul{
+	width: 100%;
+	padding:0;
+	margin:0 auto;
+	font-size: 16px;
+	padding:0 0.5em;
+}
+
+.labelunit>ul>li{
+	list-style-type: none;
+}
+
+.unit{
+	width:50%;
+	padding:0.25em;
+	line-height: 40px;
+	margin:0;
+	display: inline-block;
+	font-size: 14px;
+	font-weight: 600;
+	color:#E8C293;
+}
+
+/*调整单位位置*/
+.unit>span{
+	margin-left: 65%;
+}
+
+.newbodyIndex .dw-li{
+	line-height: 34px !important;
+}
+
+.newbodyIndex .dw-i{
+	font-size: 24px !important;	
+}
+
+.indexInputBox{
+	margin:0;
+}
+/*------------------添加身体指标样式结束------------------*/
+
+
+/*------------------添加成绩样式开始------------------*/
+/*隐藏滚轮input*/
+#scroller_mark{
+	display: none;
+}
+
+.newmark{
+	height: 278px;
+	margin-top: -139px;
+}
+
+.newmark .dw-i{
+	font-size: 16px !important;
+}
+
+/*------------------添加成绩样式结束------------------*/
+
+/*------------------成绩表单-------------------*/
+.subjectBox{
+	width:95%;
+	border-bottom: 1px dashed #ddd;
+	font-size: 1.1em;
+	padding:8px 0px;
+	margin:0 auto;
+}
+
+.subjectTitle{
+	font-size: 16px;
+	font-weight: 600;
+}
+
+.subjectBox:hover{
+	background-color: #eee;
+}
+
+.subjectArrow{
+	font-size: 15px;
+	font-weight: bold;
+	float: right;
+	padding:3px 5px ;
+
+	/*color:white;*/
+}
+
+.subjectName{
+	float:right;
+}
+
+/*科目选择列表*/
+.subjectSelectionBox{
+	
+}
+
+#subjectlist{
+	width:220px;
+	right:0px;
+	top:122px;
+	background-color: #fff;
+	box-shadow: 0px 0px 30px #ccc;
+	border-radius:0;
+	font-size: 1.1em;
+	line-height: 24px;
+}
+
+#subjectlist>ul{
+	border-radius: 0;
+	background-color: #fff;
+}
+
+#subjectlist>ul>li{
+	border-radius: 0;
+
+}
+
+.scoreTable{
+	width:95%;
+	text-align: center;
+	/*border:1px solid red;*/
+	margin: 0 auto;
+	color:#666666;
+	background-color:#EFEFF4;
+	opacity: 0.5;
+	line-height: 30px;
+}
+
+.tableTitle{
+	/*background-color: #FAA395;*/
+	border-bottom: 1px dotted #666;
+	font-size:1.1em;
+	color:black;
+}
+
+.oddLine{
+	/*background-color: #F7F7F7;*/
+}
+
+.evenLine{
+	/*background-color: #E3F7FE;*/
+	color:#666666;
+}
+/*------------------成绩表单结束------------------*/
+
+/*------------------疫苗样式开始------------------*/
+/*下次接种*/
+.nextVacList>li{
+	width:49.5%;
+}
+/*------------------疫苗样式结束------------------*/
+
+/*------------------疫苗接种页面样式开始------------------*/
+/*疫苗box，包含疫苗接种除标题的整个页面*/
+.vaccineBox{
+	background-color: rgba(238,238,238,0.9);
+	/*opacity: 0.9;*/
+}
+
+/*搜索框*/
+.searchBox{
+	padding-top:44px;
+	margin-bottom: 0;
+	/*background-color: #fff;*/
+
+}
+
+/*搜索框的输入*/
+.searchIputBox{
+	padding:0;
+	margin:0;
+	height: 43px;
+}
+
+#searchInput{
+	background-color: #fff;
+}
+
+/*三个疫苗导航*/
+.iconBox{
+	width:100%;
+	height: 75px;
+	/*margin:0 auto;*/
+	border:1px solid #ccc;
+	background-color: #fff;
+}
+
+.iconBox>ul{
+	/*border:1px solid red;*/
+	margin:0;
+	padding:0;
+	line-height: 15px;
+}
+
+
+.iconBox>ul>li{
+	display: inline-block;
+	list-style-type: none;
+	width:32%;
+	padding:0;
+	padding-top: 5px;
+	margin:0;
+	text-align: center;
+	font-size: 13px;
+	/*border:1px solid blue;*/
+}
+
+.iconBox>ul>li>a{
+	color:#000;
+}
+
+.vacLink>img{
+	width:45px;
+}
+
+.vacLink>img:active{
+	opacity: 0.5;
+}s
+
+.vacListName{
+	margin:8px 0px 5px 8px;
+	font-size: 13px;
+}
+
+.vacList{
+	margin:0px 0 10px 0;
+	display: none;
+}
+
+.activeVacList{
+	display: block;
+}
+
+.vacList .mui-input-row label{
+	font-size: 14px;
+	line-height: 1.5;
+}
+
+.dateBox_vac{
+	position: absolute;
+	width: 40px;
+	height: 100%;
+	right: 0px;
+	top:0px;
+}
+
+/*日期icon*/
+.dateImg_vac{
+	position: absolute;
+	width:20px;
+	right:10px;
+	top:10px;
+}
+
+.dateBox_vac:active{
+	opacity: 0.8;
+}
+
+/*日期icon中的日期号码*/
+.dateNo{
+	display: block;
+	position: absolute;
+	width: 20px;
+	text-align: center;
+	top:12px;
+	right: 10px;
+	font-size: 12px;
+	font-weight: bolder;
+	color:#fff;
+}
+
+/*疫苗自定义输入弹出窗*/
+#addEditVaccine{
+	width:80%;
+	height: 192px;
+	top:50%;
+	left:10%;
+	margin-top:-92px;
+	background-color: #fff;
+}
+
+/*弹出窗标题*/
+.editBoxName{
+	text-align: center;
+	color:#4C4B4B;
+	padding:9px 0px 8px 0;
+}
+
+#dateVacBox{
+	height: 38px;
+}
+
+/*弹出窗口中日期icon*/
+.popover_date_img{
+	top:8px;
+}
+
+/*弹出窗口中日期icon中的日期号码*/
+.popover_dateNo{
+	top:10px;
+}
+
+/*备注*/
+#remarkBox{
+	height: auto;
+}
+ 
+.fullVacDate{
+	position: absolute;
+	/*right: 36px;*/
+	right: 10px;
+	top:11px;
+	font-size: 11px;
+	color:#999;
+	font-weight: 600;
+} 
+/*------------------疫苗接种页面样式结束------------------*/
