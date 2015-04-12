@@ -1,0 +1,302 @@
+#{extends 'client.html' /}
+#{set title:'疫苗接种' /}
+<link rel="stylesheet" href="@{'/public/stylesheets/client/baby.css'}">
+<link rel="stylesheet" href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.custom-2.14.4.min.css'}"  rel="stylesheet"/>
+<script type="text/javascript" src = "@{'/public/javascripts/jquery-1.8.3.min.js'}"></script>
+<script src="@{'/public/javascripts/client/mobiscroll/mobiscroll-2.14.4-crack.js'}" type="text/javascript"></script>
+<script src="@{'/public/javascripts/client/vaccine.js'}"></script>
+
+
+
+<header class="mui-bar mui-bar-nav babyTitle">
+  <a class="mui-icon mui-icon-left-nav mui-pull-left"></a>
+  <!-- <a  class="mui-icon mui-icon-bars mui-pull-right"></a> -->
+  <a  id="vaccineInput" class="mui-icon mui-icon-compose mui-pull-right"></a>
+  <h1 class="mui-title">天天的疫苗接种</h1>
+</header>
+
+<div class="vaccineBox">
+	<div class="mui-content-padded searchBox">
+		<!-- <h5>默认搜索框：</h5> -->
+		<div class="mui-input-row mui-search searchIputBox">
+			<input id="searchInput" type="search" class="mui-input-clear" placeholder="搜索">
+		</div>
+	</div>
+
+	<!-- 图标盒子 -->
+	<div class="iconBox">
+		<ul>
+			<li>
+				<a id="todoVacLink" href="#" class="vacLink">
+					<img src="@{'/public/images/client/todo_active.png'}" alt=""/>
+					<div>未接种</div>
+				</a>
+			</li>
+			<li>
+				<a id="doneVacLink" href="#" class="vacLink">
+					<img src="@{'/public/images/client/done3.png'}" alt=""/>
+					<div>已接种</div>
+				</a>
+			</li>
+			<li>
+				<a id="allVacLink" href="#" class="vacLink">
+					<img src="@{'/public/images/client/all2.png'}" alt=""/>
+					<div>全部</div>
+				</a>
+			</li>
+		</ul>
+	</div><!-- 图标盒子结束 -->
+
+	<!-- 疫苗列表 -->
+	<h5 class="mui-content-padded vacListName">未接种疫苗</h5>
+	<!-- 未接种疫苗 -->
+	<div id="todoVac" class="mui-card vacList activeVacList">
+		<form class="mui-input-group">
+			<div class="mui-input-row mui-checkbox mui-left">
+				<label>乙肝疫苗(第1次)</label>
+				<input name="radio1" type="checkbox" checked/>
+				<div class="dateBox_vac">
+					<img  class="dateImg_vac" src="@{'/public/images/client/date.png'}" alt=""/>
+					<span class="dateNo"></span>
+				</div>
+			</div>
+			<div class="mui-input-row mui-checkbox mui-left">
+				<label>卡介苗(第1次)</label>
+				<input name="radio1" type="checkbox" />
+				<div class="dateBox_vac">
+					<img  class="dateImg_vac" src="@{'/public/images/client/date.png'}" alt=""/>
+					<span class="dateNo"></span>
+				</div>
+			</div>
+			<div class="mui-input-row mui-checkbox mui-left">
+				<label>乙肝疫苗(第2次)</label>
+				<input name="radio1" type="checkbox" />
+				<div class="dateBox_vac">
+					<img  class="dateImg_vac" src="@{'/public/images/client/date.png'}" alt=""/>
+					<span class="dateNo"></span>
+				</div>
+			</div>
+			<div class="mui-input-row mui-checkbox mui-left">
+				<label>脊灰疫苗(第2次)</label>
+				<input name="radio1" type="checkbox" />
+				<div class="dateBox_vac">
+					<img  class="dateImg_vac" src="@{'/public/images/client/date.png'}" alt=""/>
+					<span class="dateNo"></span>
+				</div>
+			</div>
+			<div class="mui-input-row mui-checkbox mui-left">
+				<label>脊灰疫苗(第2次)</label>
+				<input name="radio1" type="checkbox" />
+				<div class="dateBox_vac">
+					<img  class="dateImg_vac" src="@{'/public/images/client/date.png'}" alt=""/>
+					<span class="dateNo"></span>
+				</div>
+			</div>
+			<div class="mui-input-row mui-checkbox mui-left">
+				<label>无细胞百白破疫苗(第1次)</label>
+				<input name="radio1" type="checkbox" />
+				<div class="dateBox_vac">
+					<img  class="dateImg_vac" src="@{'/public/images/client/date.png'}" alt=""/>
+					<span class="dateNo"></span>
+				</div>
+			</div>
+			<div class="mui-input-row mui-checkbox mui-left">
+				<label>脊灰疫苗(第3次)</label>
+				<input name="radio1" type="checkbox" />
+				<div class="dateBox_vac">
+					<img  class="dateImg_vac" src="@{'/public/images/client/date.png'}" alt=""/>
+					<span class="dateNo"></span>
+				</div>
+			</div>
+			<div class="mui-input-row mui-checkbox mui-left">
+				<label>无细胞百白破疫苗(第2次)</label>
+				<input name="radio1" type="checkbox" />
+				<div class="dateBox_vac">
+					<img  class="dateImg_vac" src="@{'/public/images/client/date.png'}" alt=""/>
+					<span class="dateNo"></span>
+				</div>
+			</div>
+		</form>
+	</div><!-- 未接种疫苗结束 -->
+
+	<!-- 已接种疫苗 -->
+	<div id="doneVac" class="mui-card vacList">
+		<form class="mui-input-group">
+			<div class="mui-input-row mui-checkbox mui-left">
+				<label>乙肝疫苗(第1次)</label>
+				<input name="radio1" type="checkbox" checked/>
+				<!-- <div class="dateBox_vac">
+					<img  class="dateImg_vac" src="@{'/public/images/client/date.png'}" alt=""/>
+					<span class="dateNo"></span>
+				</div> -->
+				<div class="fullVacDate">2015-3-26</div>
+			</div>
+			<div class="mui-input-row mui-checkbox mui-left">
+				<label>卡介苗(第1次)</label>
+				<input name="radio1" type="checkbox" checked/>
+				<!-- <div class="dateBox_vac">
+					<img  class="dateImg_vac" src="@{'/public/images/client/date.png'}" alt=""/>
+					<span class="dateNo"></span>
+				</div> -->
+				<div class="fullVacDate">2015-3-26</div>
+			</div>
+			<div class="mui-input-row mui-checkbox mui-left">
+				<label>乙肝疫苗(第2次)</label>
+				<input name="radio1" type="checkbox" checked />
+				<!-- <div class="dateBox_vac">
+					<img  class="dateImg_vac" src="@{'/public/images/client/date.png'}" alt=""/>
+					<span class="dateNo"></span>
+				</div> -->
+				<div class="fullVacDate">2015-3-26</div>
+			</div>
+			<div class="mui-input-row mui-checkbox mui-left">
+				<label>脊灰疫苗(第2次)</label>
+				<input name="radio1" type="checkbox" checked />
+				<!-- <div class="dateBox_vac">
+					<img  class="dateImg_vac" src="@{'/public/images/client/date.png'}" alt=""/>
+					<span class="dateNo"></span>
+				</div> -->
+				<div class="fullVacDate">2015-3-26</div>
+			</div>
+			<div class="mui-input-row mui-checkbox mui-left">
+				<label>脊灰疫苗(第2次)</label>
+				<input name="radio1" type="checkbox" checked/>
+				<!-- <div class="dateBox_vac">
+					<img  class="dateImg_vac" src="@{'/public/images/client/date.png'}" alt=""/>
+					<span class="dateNo"></span>
+				</div> -->
+				<div class="fullVacDate">2015-3-26</div>
+			</div>
+			<div class="mui-input-row mui-checkbox mui-left">
+				<label>无细胞百白破疫苗(第1次)</label>
+				<input name="radio1" type="checkbox" checked/>
+				<!-- <div class="dateBox_vac">
+					<img  class="dateImg_vac" src="@{'/public/images/client/date.png'}" alt=""/>
+					<span class="dateNo"></span>
+				</div> -->
+				<div class="fullVacDate">2015-3-26</div>
+			</div>
+			<div class="mui-input-row mui-checkbox mui-left">
+				<label>脊灰疫苗(第3次)</label>
+				<input name="radio1" type="checkbox" checked/>
+				<!-- <div class="dateBox_vac">
+					<img  class="dateImg_vac" src="@{'/public/images/client/date.png'}" alt=""/>
+					<span class="dateNo"></span>
+				</div> -->
+				<div class="fullVacDate">2015-3-26</div>
+			</div>
+			<div class="mui-input-row mui-checkbox mui-left">
+				<label>无细胞百白破疫苗(第2次)</label>
+				<input name="radio1" type="checkbox"/>
+				<!-- <div class="dateBox_vac">
+					<img  class="dateImg_vac" src="@{'/public/images/client/date.png'}" alt=""/>
+					<span class="dateNo"></span>
+				</div> -->
+				<div class="fullVacDate">2015-3-26</div>
+			</div>
+		</form>
+	</div><!-- 已接种疫苗结束 -->
+
+	<!-- 全部疫苗 -->
+	<div id="allVac" class="mui-card vacList">
+		<form class="mui-input-group">
+			<div class="mui-input-row mui-checkbox mui-left">
+				<label>乙肝疫苗(第1次)</label>
+				<input name="radio1" type="checkbox" checked/>
+				<!-- <div class="dateBox_vac">
+					<img  class="dateImg_vac" src="@{'/public/images/client/date.png'}" alt=""/>
+					<span class="dateNo"></span>
+				</div> -->
+				<div class="fullVacDate">2015-3-26</div>
+			</div>
+			<div class="mui-input-row mui-checkbox mui-left">
+				<label>卡介苗(第1次)</label>
+				<input name="radio1" type="checkbox" checked/>
+				<!-- <div class="dateBox_vac">
+					<img  class="dateImg_vac" src="@{'/public/images/client/date.png'}" alt=""/>
+					<span class="dateNo"></span>
+				</div> -->
+				<div class="fullVacDate">2015-3-26</div>
+			</div>
+			<div class="mui-input-row mui-checkbox mui-left">
+				<label>乙肝疫苗(第2次)</label>
+				<input name="radio1" type="checkbox" checked/>
+				<!-- <div class="dateBox_vac">
+					<img  class="dateImg_vac" src="@{'/public/images/client/date.png'}" alt=""/>
+					<span class="dateNo"></span>
+				</div> -->
+				<div class="fullVacDate">2015-3-26</div>
+			</div>
+			<div class="mui-input-row mui-checkbox mui-left">
+				<label>脊灰疫苗(第2次)</label>
+				<input name="radio1" type="checkbox" checked/>
+				<!-- <div class="dateBox_vac">
+					<img  class="dateImg_vac" src="@{'/public/images/client/date.png'}" alt=""/>
+					<span class="dateNo"></span>
+				</div> -->
+				<div class="fullVacDate">2015-3-26</div>
+			</div>
+			<div class="mui-input-row mui-checkbox mui-left">
+				<label>脊灰疫苗(第2次)</label>
+				<input name="radio1" type="checkbox" />
+				<div class="dateBox_vac">
+					<img  class="dateImg_vac" src="@{'/public/images/client/date.png'}" alt=""/>
+					<span class="dateNo"></span>
+				</div>
+			</div>
+			<div class="mui-input-row mui-checkbox mui-left">
+				<label>无细胞百白破疫苗(第1次)</label>
+				<input name="radio1" type="checkbox" />
+				<div class="dateBox_vac">
+					<img  class="dateImg_vac" src="@{'/public/images/client/date.png'}" alt=""/>
+					<span class="dateNo"></span>
+				</div>
+			</div>
+			<div class="mui-input-row mui-checkbox mui-left">
+				<label>脊灰疫苗(第3次)</label>
+				<input name="radio1" type="checkbox" />
+				<div class="dateBox_vac">
+					<img  class="dateImg_vac" src="@{'/public/images/client/date.png'}" alt=""/>
+					<span class="dateNo"></span>
+				</div>
+			</div>
+			<div class="mui-input-row mui-checkbox mui-left">
+				<label>无细胞百白破疫苗(第2次)</label>
+				<input name="radio1" type="checkbox" />
+				<div class="dateBox_vac">
+					<img  class="dateImg_vac" src="@{'/public/images/client/date.png'}" alt=""/>
+					<span class="dateNo"></span>
+				</div>
+			</div>
+		</form>
+	</div><!-- 全部疫苗结束 -->
+
+	<!-- 疫苗列表结束 -->
+</div><!--疫苗box结束-->
+
+<div id="addEditVaccine" class="mui-popover vacInputBox">
+	<div class="editBoxName">
+		疫苗录入
+		<div id="dateVacBox" class="dateBox_vac">
+					<img  class="dateImg_vac popover_date_img" src="@{'/public/images/client/date.png'}" alt=""/>
+					<span class="dateNo popover_dateNo"></span>
+		</div>
+	</div>
+	<form class="mui-input-group">
+		<div class="mui-input-row">
+			<label>名称</label>
+			<input type="text" class="mui-input-clear" placeholder="请输入疫苗名称">
+		</div>	
+		<div id="remarkBox" class="mui-input-row remarkBox" >
+			<label>备注</label>
+			<textarea rows="2" placeholder="请输入备注说明"></textarea>
+	</div>
+	<div class="mui-button-row">
+			<button class="mui-btn mui-btn-primary" onclick="return false;">确认</button>&nbsp;&nbsp;
+			<button class="mui-btn mui-btn-primary" onclick="return false;">取消</button>
+	</div>
+	</form>
+	
+</div>
+
+

@@ -1,0 +1,342 @@
+#{extends 'client.html' /}
+#{set title:'成长记录' /}
+
+
+<link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.animation.css'}" rel="stylesheet" type="text/css" />
+<link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.frame.css'}" rel="stylesheet" type="text/css" />
+<link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.scroller.css'}" rel="stylesheet" type="text/css" />
+
+<link rel="stylesheet" href="@{'/public/stylesheets/client/baby.css'}"/>
+<script type="text/javascript" src = "@{'/public/javascripts/jquery-1.8.3.min.js'}"></script>
+
+<script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.core.js'}"></script>
+<script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.frame.js'}"></script>
+<script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.scroller.js'}"></script>
+
+<script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.select.js'}"></script>
+<script src="@{'/public/javascripts/client/baby.js'}"></script>
+<script src="@{'/public/javascripts/Chart.min.js'}"></script>
+
+
+<!-- <script src="js/mobiscroll-2.14.4-crack.js"></script> -->
+
+<header class="mui-bar mui-bar-nav babyTitle">
+  <a class="mui-icon mui-icon-left-nav mui-pull-left"></a>
+  <a id="list_children" class="mui-icon mui-icon-bars mui-pull-right"></a>
+  <h1 class="mui-title">天天的成长记录</h1>
+</header>
+
+<div id="slider" class="mui-slider babySlider">
+	<!-- <div class="test"> -->
+	<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+		<a class="mui-control-item" href="#item1mobile">
+				身体指标
+			</a>
+		<a class="mui-control-item" href="#item2mobile">
+				成绩表单
+			</a>
+		<a class="mui-control-item" href="#item3mobile">
+				疫苗接种
+			</a>
+	</div>
+	<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-4"></div>
+	<!-- </div> -->
+	<div class="mui-slider-group">
+		<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+			<!-- 上一次记录 -->
+			<!-- <div class="databox">
+				<div class="objectTitle">
+					<div class="pointSign"></div>
+					&nbsp;上一次记录
+				</div>
+				<ul class="datalist">
+					<li>
+						<span class="dataTitle">身高:</span><span class="realData">90cm</span>
+					</li>
+					<li>
+						<span class="dataTitle">体重:</span><span class="realData">23kg</span>
+					</li>
+					<li>
+						<img class="time-img" src="@{'/public/images/client/time.png'}" alt=""/>
+						<span class="timeData">2014-3-5</span>
+					</li>
+				</ul>
+			</div> -->
+			<!-- 上一次记录结束 -->
+
+			<!-- 历史记录 -->
+			<!-- <div class="databox">
+				<div class="objectTitle">
+					<span class="pointSign"></span>
+					&nbsp;历史记录
+					<a class="floatRight-link" href="#">更多></a>
+				</div>
+				<ul class="datalist">
+					<li>
+						<span class="dataTitle">身高:</span><span class="realData">90cm</span>
+					</li>
+					<li>
+						<span class="dataTitle">体重:</span><span class="realData">23kg</span>
+					</li>
+					<li>
+						<img class="time-img" src="@{'/public/images/client/time.png'}" alt="">
+						<span class="timeData">2014-3-5</span>
+					</li>
+				</ul>
+				<ul class="datalist">
+					<li>
+						<span class="dataTitle">身高:</span><span class="realData">85cm</span>
+					</li>
+					<li>
+						<span class="dataTitle">体重:</span><span class="realData">21kg</span>
+					</li>
+					<li>
+						<img class="time-img" src="@{'/public/images/client/time.png'}" alt="">
+						<span class="timeData">2013-12-1</span>
+					</li>
+				</ul>
+			</div> -->
+			<div class="databox">
+				<div class="objectTitle">
+					<span class="pointSign"></span>
+					&nbsp;历史记录
+					<a class="floatRight-link" href="#">更多></a>
+				</div>
+				<table class="scoreTable">
+					<tr class="tableTitle">
+						<td>身高(cm)</td>
+						<td>体重(kg)</td>
+						<td>记录时间</td>
+					</tr>
+					<tr class="oddLine">
+						<td>90</td>
+						<td>23</td>
+						<td>2014-3-5</td>
+					</tr>
+					<tr class="evenLine">
+						<td>85</td>
+						<td>21</td>
+						<td>2013-12-1</td>
+					</tr>
+				</table>
+			</div>
+			<!-- 历史记录结束 -->
+			<div class="objectTitle">
+					<span class="pointSign"></span>
+					&nbsp; 动态
+					<a class="floatRight-link" href="#">详细分析></a>
+			</div>
+			<!-- 身体指标图表模块 -->
+			<div class="charBox">
+				<!-- 图表区域，展示最近动态 -->
+				<canvas id="bodySimChart" height="200"></canvas>
+			</div><!-- 身体指标图表模块结束 -->
+			<!-- 添加新身体指标按钮 -->
+			<!-- <button class="mui-btn mui-btn-negative mui-btn-block babyblock-btn newRecod-btn">
+				图表分析
+			</button> -->
+
+		</div>
+
+		<!-- card2成绩表单 -->
+		<div id="item2mobile" class="mui-slider-item mui-control-content">
+			<!-- 加载显示 -->
+			<div class="mui-loading">
+				<div class="mui-spinner">
+				</div>
+			</div>
+
+			<!-- 科目 -->
+			<div id="subjectBox" class="subjectBox">
+				<div>
+					<img class="time-img" src="@{'/public/images/client/book.png'}" alt=""/>
+				<span class="subjectTitle">科目</span>
+				<span id="subjectArrow" class="mui-icon mui-icon-arrowdown subjectArrow"></span>
+				<span class="subjectName">语文</span>
+				</div>			
+			</div>
+			<!-- 科目结束 -->
+
+			<!-- 历史记录 -->
+			<div class="databox">
+				<div class="objectTitle">
+					<span class="pointSign"></span>
+					&nbsp;历史记录
+					<a class="floatRight-link" href="#">更多></a>
+				</div>
+				<table class="scoreTable">
+					<tr class="tableTitle">
+						<td>年级</td>
+						<td>次数</td>
+						<td>成绩</td>
+					</tr>
+					<tr class="oddLine">
+						<td>一年级</td>
+						<td>第3次</td>
+						<td>93</td>
+					</tr>
+					<tr class="evenLine">
+						<td>一年级</td>
+						<td>第2次</td>
+						<td>91</td>
+					</tr>
+				</table>
+			</div>
+			<!-- 历史记录结束 -->
+
+			<div class="objectTitle">
+					<span class="pointSign"></span>
+					&nbsp; 动态
+					<a class="floatRight-link" href="#">详细分析></a>
+			</div>
+			<!-- 身体指标图表模块 -->
+			<div class="charBox">
+				<!-- 图表区域，展示最近动态 -->
+				<canvas id="markSimChart" height="200"></canvas>
+			</div><!-- 身体指标图表模块结束 -->
+		</div>
+
+		<!-- card3 -->
+		<div id="item3mobile" class="mui-slider-item mui-control-content">
+			<!-- 加载中显示 -->
+			<div class="mui-loading">
+				<div class="mui-spinner">
+				</div>
+			</div>
+			<!-- 上一次记录 -->
+			<div class="databox">
+				<div class="objectTitle">
+					<div class="pointSign"></div>
+					&nbsp;下次接种
+				</div>
+				<ul class="datalist nextVacList">
+					<li>
+						<span class="realData">流脑疫苗</span>
+					</li>
+					<li>
+						<img class="time-img" src="@{'/public/images/client/time.png'}" alt=""/>
+						<span class="timeData">6月龄</span>
+					</li>
+				</ul>
+			</div>
+			<!-- 上一次记录结束 -->
+
+			<!-- 历史记录 -->
+			<div class="databox">
+				<div class="objectTitle">
+					<span class="pointSign"></span>
+					&nbsp;已接种疫苗
+					<a class="floatRight-link" href="#">更多></a>
+				</div>
+				<table class="scoreTable">
+					<tr class="tableTitle">
+						<td>名称</td>
+						<td>接种时间</td>
+					</tr>
+					<tr class="oddLine">
+						<td>无细胞百白破疫苗</td>
+						<td>2000-6-1</td>
+					</tr>
+					<tr class="evenLine">
+						<td>脊灰疫苗</td>
+						<td>2000-5-1</td>
+					</tr>
+					<tr class="evenLine">
+						<td>脊灰疫苗</td>
+						<td>2000-5-1</td>
+					</tr>
+					<tr class="evenLine">
+						<td>脊灰疫苗</td>
+						<td>2000-5-1</td>
+					</tr>
+				</table>
+			</div>
+			<!-- 历史记录结束 -->
+		</div>
+	</div>
+	
+</div>
+<nav class="mui-bar mui-bar-tab">
+			  <a id="ad" class="grow_tab_link" href="#">
+			    Tips
+			  </a>
+			  <a class="grow_tab_link" href="#">
+			    <img class="small-icon-bottom" src="@{'/public/images/client/share.png'}" alt="">
+			    分享
+			  </a>
+			  <a id="add_babygrow" class="grow_tab_link" href="#">
+			   <img class="small-icon-bottom2" src="@{'/public/images/client/add.png'}" alt="">
+			   	 添加
+			  </a>
+</nav>
+
+<!-- 孩子选择弹出窗 -->
+<div id="babylist" class="mui-popover babylist">
+  <ul class="mui-table-view">
+    <li class="mui-table-view-cell">天天</li>
+    <li class="mui-table-view-cell">Kimi</li>
+    <li class="mui-table-view-cell">石头</li>
+  </ul>
+</div><!-- 孩子选择弹出窗结束 -->
+
+<!-- 科目选择弹出窗 -->
+<div id="subjectlist" class="mui-popover subjectlist">
+	<ul class="mui-table-view">
+		<li class="mui-table-view-cell">数学</li>
+		<li class="mui-table-view-cell">英语</li>
+		<li class="mui-table-view-cell">美术</li>
+	</ul>
+</div><!-- 科目选择弹出窗结束 -->
+
+<!-- 身体记录添加 -->
+<div class="mui-popover scrollerBox newbodyIndex">
+	<input id="scroller" name="scroller" />
+	<div class="labelunit">
+		<ul>
+			<li class="unit"><span>岁</span></li><li class="unit"><span>月</span></li>
+		</ul>
+	</div>
+	<div class="mui-content-padded indexInputBox">
+		<form class="mui-input-group">
+			<div class="mui-input-row">
+				<label>身高</label>
+				<input type="text" class="mui-input-clear" placeholder="单位cm">
+			</div>
+			<div class="mui-input-row">
+				<label>体重</label>
+				<input type="text" class="mui-input-clear" placeholder="单位kg">
+			</div>
+			<div class="mui-button-row">
+				<button class="mui-btn mui-btn-primary" onclick="return false;">确认</button>&nbsp;&nbsp;
+				<button class="mui-btn mui-btn-primary" onclick="return false;">取消</button>
+			</div>
+		</form>
+	</div>	
+</div><!-- 身体记录添加结束 -->
+
+<!-- 成绩表单添加 -->
+<div class="mui-popover scrollerBox newmark">
+	<input id="scroller_mark" name="scroller" />
+	<!-- <div class="labelunit">
+		<ul>
+			<li class="unit"><span>岁</span></li><li class="unit"><span>月</span></li>
+		</ul>
+	</div> -->
+	<div class="mui-content-padded indexInputBox">
+		<form class="mui-input-group">
+			<div class="mui-input-row">
+				<label>成绩</label>
+				<input type="text" class="mui-input-clear" placeholder="单位(分)">
+			</div>
+			<!-- <div class="mui-input-row">
+				<label>体重</label>
+				<input type="text" class="mui-input-clear" placeholder="单位kg">
+			</div> -->
+			<div class="mui-button-row">
+				<button class="mui-btn mui-btn-primary" onclick="return false;">确认</button>&nbsp;&nbsp;
+				<button class="mui-btn mui-btn-primary" onclick="return false;">取消</button>
+			</div>
+		</form>
+	</div>
+	
+</div><!-- 成绩表单添加结束 -->

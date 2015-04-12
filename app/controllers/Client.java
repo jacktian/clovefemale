@@ -41,5 +41,27 @@ public class Client extends WebService{
 	public static void pregMove(){
 		render("/Client/record/babyMove.html");
 	}
+
+	/**
+	 *我的孩子
+	 **/
+	public static void mybaby(){
+		render("/Client/record/mybaby.html");
+	}
+
+	/**
+	 *孩子成长记录
+	 **/
+	public static void babyRecord(){
+		render("/Client/record/babyRecord.html");
+	}
+
+
+	/**
+	 *疫苗接种
+	 **/
+	public static void vaccine(){
+		render("/Client/record/vaccine.html");
+	}
 }
 
