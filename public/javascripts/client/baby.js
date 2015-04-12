@@ -159,9 +159,9 @@ $(function(){
 	//添加身体指标
 	document.getElementById("add_babygrow").addEventListener("tap",function(event){
  		switch(activeTab_grow){
- 			case 0 : mui('.newbodyIndex').popover('toggle'); break;
- 			case 1 : mui('.newmark').popover('toggle'); break;
- 			case 2 : break;
+ 			case 0 : mui('.newbodyIndex').popover('toggle'); return false;break;
+ 			case 1 : mui('.newmark').popover('toggle');return false; break;
+ 			case 2 : location.href = "/client/vaccine";break;
  			default:break;
  		}
  		
