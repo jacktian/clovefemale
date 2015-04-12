@@ -1,0 +1,191 @@
+body{
+	background-color: white;
+}
+
+.chart-medium {
+	height: 160px;
+	padding-top: 25px;
+}
+.chart-detail {
+	text-align: center;
+	font-size: 21px;
+}
+
+.chart-detail tr td{
+	width:33%;
+}
+
+.chart-detail.title{
+	height:30px;
+}
+
+.segment_control_container{
+	margin-left:20px;
+	margin-right: 20px;
+}
+
+.chart_medium_devision{
+	height:10px;
+	width:100%;
+	background-color: #EEE9BF;
+	border-top-style: dotted;
+	border-color: lightgray;
+	margin-top: 5px;
+	margin-bottom:5px;
+}
+
+.mui-table-view-cell.title{
+	padding-top: 20px;
+}
+
+.mui-table-view-cell.tail{
+	padding-bottom: 20px;
+}
+
+.mui-content-padded2 {
+	margin-top: -6px;
+}
+
+.bmi_pie_container{
+	width:45%;
+	float:left;
+}
+
+.bmi_pie {
+    width:100px;
+    height:100px;
+    margin-left:17%;
+    border-radius: 100%;
+    -webkit-transform:rotate(45deg);
+	-moz-transform:rotate(45deg);
+	-o-transform:rotate(45deg);
+	transform:rotate(45deg);
+}
+
+.bmi_pie_standard{
+    border-top:20px solid #FFB90F;
+    border-right:20px solid lightgrey;
+    border-bottom:20px solid #DBDBDB;
+    border-left:20px solid lightgrey;
+}
+.bmi_pie_lightheavy{
+    border-top:20px solid lightgray;
+    border-right:20px solid #FFB90F;
+    border-bottom:20px solid lightgray;
+    border-left:20px solid #DBDBDB;
+}
+.bmi_pie_heavy{
+    border-top:20px solid #DBDBDB;
+    border-right:20px solid lightgrey;
+    border-bottom:20px solid #FFB90F;
+    border-left:20px solid lightgrey;
+}
+.bmi_pie_light{
+    border-top:20px solid #DBDBDB;
+    border-right:20px solid lightgrey;
+    border-bottom:20px solid #DBDBDB;
+    border-left:20px solid #FFB90F;
+}
+
+.pie_text_container{
+	width: 130%;
+	height: 130%;
+	position: absolute;
+	margin-top: -10px;
+	margin-left: -10px;
+}
+
+.pie_text{
+	position: absolute;
+	font-size: 10px;
+	height:100%;
+	width:100%;
+	line-height: 0;
+	text-align: center;
+}
+
+.pie_text.text1{
+    /*-webkit-transform:rotate(45deg);
+	-moz-transform:rotate(45deg);
+	-o-transform:rotate(45deg);
+	transform:rotate(45deg);*/
+}
+
+.pie_text.text2{/*
+    -webkit-transform:rotate(135deg);
+	-moz-transform:rotate(135deg);
+	-o-transform:rotate(135deg);
+	transform:rotate(135deg);*/
+    -webkit-transform:rotate(90deg);
+	-moz-transform:rotate(90deg);
+	-o-transform:rotate(90deg);
+	transform:rotate(90deg);
+}
+
+.pie_text.text3{/*
+    -webkit-transform:rotate(225deg);
+	-moz-transform:rotate(225deg);
+	-o-transform:rotate(225deg);
+	transform:rotate(225deg);*/
+    -webkit-transform:rotate(180deg);
+	-moz-transform:rotate(180deg);
+	-o-transform:rotate(180deg);
+	transform:rotate(180deg);
+}
+
+.pie_text.text4{/*
+    -webkit-transform:rotate(315deg);
+	-moz-transform:rotate(315deg);
+	-o-transform:rotate(315deg);
+	transform:rotate(315deg);*/
+    -webkit-transform:rotate(270deg);
+	-moz-transform:rotate(270deg);
+	-o-transform:rotate(270deg);
+	transform:rotate(270deg);
+}
+
+.bmi_pie_text{
+	color:gray;
+	font-size: 10px;
+	-webkit-transform:rotate(-45deg);
+	-moz-transform:rotate(-45deg);
+	-o-transform:rotate(-45deg);
+	transform:rotate(-45deg);
+	margin-top:5px;
+}
+
+.bmi_pie_bmi{
+	font-size: 15px;
+	color: hotpink;
+}
+
+.chart_statement{
+	width:55%;
+	float: left;
+	/*padding-left: 45px;*/
+}
+
+.chart_statement_title{
+	font-size: medium;
+	color: hotpink;
+}
+
+.chart_statement_detail{
+	line-height: 25px;
+}
+
+.chart_statement_detail_content{
+	color:hotpink;
+	padding-left: 2px;
+	padding-right: 3px;
+}
+
+.chart_statement > hr{
+	color:red;
+}
+
+hr.devision{
+	/*margin-top:15px;
+	margin-bottom:15px;*/
+	color:blue;
+}

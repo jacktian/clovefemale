@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Test Chart</title>
+		<script type="text/javascript" src="@{'/public/javascripts/Chart.min.js'}" ></script>
+		<script type="text/javascript" src="@{'/public/javascripts/jquery-1.6.4.min.js'}" ></script>
+		<style>
+			body{
+				background: #EEEEEE;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="lineChart" width="400" height="400"></canvas>
+		<canvas id="barChart" width="400" height="400"></canvas>
+		<div id="showText"></div>
+		<script>
+			var lineData = {
+				    labels: ["January", "February", "March", "April", "May", "June", "July"],
+				    datasets: [
+				        {
+				            label: "My First dataset",
+				            fillColor: "rgba(220,220,220,0.2)",
+				            strokeColor: "rgba(220,220,220,1)",
+				            pointColor: "rgba(220,220,220,1)",
+				            pointStrokeColor: "#fff",
+				            pointHighlightFill: "#fff",
+				            pointHighlightStroke: "rgba(220,220,220,1)",
+				            data: [65, 59, 80, 81, 56, 55, 40]
+				        },
+				        {
+				            label: "My Second dataset",
+				            fillColor: "rgba(151,187,205,0.2)",
+				            strokeColor: "rgba(151,187,205,1)",
+				            pointColor: "rgba(151,187,205,1)",
+				            pointStrokeColor: "#fff",
+				            pointHighlightFill: "#fff",
+				            pointHighlightStroke: "rgba(151,187,205,1)",
+				            data: [28, 48, 40, 19, 86, 27, 90]
+				        }
+				    ]
+				};
+			var ctx = $("#lineChart").get(0).getContext("2d");
+			var myLineChart = new Chart(ctx).Line(lineData);
+			window.mml = myLineChart ;
+			// This will get the first returned node in the jQuery collection.
+			
+			$.get("/FgChartTest/test10", function(data, status){
+//		        alert("Data: " + data + "\nStatus: " + status);
+		        $("#showText").innerHTML = data ;
+		        console.log(data) ;
+		        window.aadata = data ;
+		        
+		        window.dsets = {
+				            label: "My First dataset",
+				            fillColor: "rgba(220,220,220,0.2)",
+				            strokeColor: "rgba(220,220,220,1)",
+				            pointColor: "rgba(220,220,220,1)",
+				            pointStrokeColor: "#fff",
+				            pointHighlightFill: "#fff",
+				            pointHighlightStroke: "rgba(220,220,220,1)",
+				            data: data.values
+				        }
+		        
+		        var labelss = new Array();
+		        var datass = new Array();
+		        
+		      /*  for(i = 0; i < data.length; i++){
+		        	labelss.push(data[i].name) ;
+		        	datass.push(data[i].value) ;
+		        }*/
+		        
+		        var barData = {
+//				    labels: ["January", "February", "March", "April", "May", "June", "July"],
+				    labels: data.names,
+				    datasets: [
+				        {
+				            label: "My First dataset",
+				            fillColor: "rgba(220,220,220,0.5)",
+				            strokeColor: "rgba(220,220,220,0.8)",
+				            highlightFill: "rgba(220,220,220,0.75)",
+				            highlightStroke: "rgba(220,220,220,1)",
+//				            data: [65, 59, 80, 81, 56, 55, 40]
+				            data: data.values
+				        }
+				    ]
+				};
+				window.barData = barData;
+				var ctx2 = $("#barChart").get(0).getContext("2d");
+				var barChart22 = new Chart(ctx2).Bar(barData);
+			    window.mybc = barChart22 ;  
+		    });
+			
+			console.log("aaaaadddaa") ;
+		</script>
+	</body>
+</html>
