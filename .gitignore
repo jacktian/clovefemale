@@ -6,3 +6,5 @@ tmp
 application.conf
 logs
 server.pid
+.idea
+*.iml
