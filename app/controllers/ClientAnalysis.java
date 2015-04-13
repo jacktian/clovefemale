@@ -1,11 +1,7 @@
 package controllers;
 
-import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
-
-import play.cache.CacheFor;
-import play.db.jpa.Model;
-import play.mvc.*;
 
 /**
  * 客户端分析页面控制器
@@ -43,6 +39,24 @@ public class ClientAnalysis extends WebService {
 		//每次来月经持续的时间
 		renderArgs.put("height", "165") ;
 		render("/Client/record/analysis/weight.html");
+	}
+	
+	/**
+	 * 成绩分析
+	 */
+	public static void grade(){
+		List<String> subjects = new LinkedList<String>();
+		subjects.add("语文") ;
+		subjects.add("数学") ;
+		subjects.add("英语") ;
+		subjects.add("物理") ;
+		renderArgs.put("subjects", subjects);
+		renderArgs.put("number", "90");
+		renderArgs.put("weight", "90");
+		renderArgs.put("height", "90");
+		renderArgs.put("subject0", "语文");
+		renderArgs.put("level", "standard");
+		render("/Client/record/analysis/grade.html");
 	}
 
 	public static void pregnantChart() {

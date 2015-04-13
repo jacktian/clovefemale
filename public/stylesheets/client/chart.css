@@ -16,6 +16,15 @@ body {
 .chart_detail tr td {
 	width: 33%;
 }
+
+.chart_detail.grades tr td:first-child{
+	width:45%;
+}
+
+.chart_detail.grades tr td:last-child{
+	width:22%;
+}
+
 .chart_detail.title {
 	height: 30px;
 }
@@ -189,6 +198,20 @@ body {
 .degree_pie_text_number{
 	color:hotpink;
 	font-size: 15px;
+}
+
+.chart_btn_container{
+	width:100%;
+	background-color: #EFEFF4;
+	padding-top: 10px;
+	padding-bottom:50px;
+}
+.chart_btn_container>button:first-child{
+	float:left;
+}
+
+.chart_btn_container>button:last-child{
+	float:right;
 }
 
 .chart_statement {

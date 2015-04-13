@@ -1,5 +1,5 @@
 #{extends 'client.html' /}
-#{set title:'孕重分析' /}
+#{set title:'成绩分析' /}
 #{set 'moreStyles'}
 <link rel="stylesheet" href="@{'/public/stylesheets/client/chart.css'}">
 #{/set}
@@ -9,29 +9,29 @@
 <script src="@{'/public/javascripts/client/chart.js'}"></script>
 #{/set}
 <header class="mui-bar mui-bar-nav client-bar-nav">
-	<h1 class="mui-title client-title">孕重分析</h1>
+	<h1 class="mui-title client-title">成绩分析</h1>
 </header>
 <div class="mui-content">
 	<div class="chart_medium">
 		<div class="level_pie_container">
 			<div class="level_pie level_pie_${level}">
 				<div class="pie_text_container">
-					<div class="pie_text text1">标准</div>
-					<div class="pie_text text2">偏胖</div>
-					<div class="pie_text text3">肥胖</div>
-					<div class="pie_text text4">偏瘦</div>
+					<div class="pie_text text1">优秀</div>
+					<div class="pie_text text2">良好</div>
+					<div class="pie_text text3">及格</div>
+					<div class="pie_text text4">不及格</div>
 				</div>
 				<center>
 				<p class="level_pie_text">
-					BMI指数&nbsp;&nbsp;<br>
-					<span class="level_pie_number">${bmiNumber}</span>&nbsp;&nbsp;&nbsp;
+					分数&nbsp;&nbsp;<br>
+					<span class="level_pie_number">${number}</span>&nbsp;&nbsp;&nbsp;
 				</p>
 				</center>
 			</div>
 		</div>
 		<div class="chart_statement">
 			<p class="chart_statement_title">
-				${assessment}
+				${subject0}<a href="#myPopover"><span class="mui-icon mui-icon-compose"></span></a>
 			</p>
 			<hr class="devision"/>
 			<p class="chart_statement_detail">
@@ -43,10 +43,10 @@
 	<div class="mui-content">
 		<div class="segment_control_container">
 			<div id="segmentedControl" class="mui-segmented-control mui-segmented-control-negative">
-				<a class="mui-control-item" href="#item1mobile">
+				<a class="mui-control-item mui-active" href="#item1mobile">
 						分析
 					</a>
-				<a class="mui-control-item mui-active" href="#item2mobile">
+				<a class="mui-control-item" href="#item2mobile">
 						详情
 					</a>
 				<a class="mui-control-item" href="#item3mobile">
@@ -56,7 +56,7 @@
 		</div>
 		<div class="chart_medium_devision"></div>
 		<div class="mui-content-padded2">
-			<div id="item1mobile" class="mui-control-content">
+			<div id="item1mobile" class="mui-control-content mui-active">
 				<center>
 					<canvas id="pregnantChart" width="400" height="380"></canvas>
 				</center>
@@ -72,41 +72,41 @@
 				</div>
 			</div>
 			
-			<div id="item2mobile" class="mui-control-content mui-active">
+			<div id="item2mobile" class="mui-control-content">
 				<ul id="chart_detail" class="mui-table-view">
 					<li class="mui-table-view-cell title">
-						<table id="chart_detail_title" class="chart_detail title" width="100%">
+						<table id="chart_detail_title" class="chart_detail title grades" width="100%">
 							<tr>
-							    <td>记录日期</td>
-							    <td>体重记录</td>
-							    <td>BMI指数</td>
+							    <td>时间</td>
+							    <td>科目</td>
+							    <td>分数</td>
 							  </tr>
 						</table>
 					</li>
 					<li name="chart_detail_contents" class="mui-table-view-cell">
-						<table class="chart_detail" width="100%">
+						<table class="chart_detail grades" width="100%">
 							<tr>
-							    <td>2015-04-03</td>
-							    <td>50.50</td>
-							    <td>19.7</td>
+							    <td>一年级上学期期中</td>
+							    <td>语文</td>
+							    <td>90</td>
 							  </tr>
 						</table>
 					</li>
 					<li name="chart_detail_contents" class="mui-table-view-cell">
-						<table class="chart_detail" width="100%">
+						<table class="chart_detail grades" width="100%">
 							<tr>
-							    <td>2015-04-02</td>
-							    <td>51.50</td>
-							    <td>21.3</td>
+							    <td>一年级上学期期末</td>
+							    <td>语文</td>
+							    <td>92</td>
 							  </tr>
 						</table>
 					</li>
 					<li name="chart_detail_contents" class="mui-table-view-cell tail">
-						<table class="chart_detail" width="100%">
+						<table class="chart_detail grades" width="100%">
 							<tr>
-							    <td>2015-04-01</td>
-							    <td>51.50</td>
-							    <td>21.3</td>
+							    <td>一年级下学期期中</td>
+							    <td>语文</td>
+							    <td>93</td>
 							  </tr>
 						</table>
 					</li>
@@ -119,7 +119,8 @@
 									  更早的
 									</button>
 							    </td>
-							    <td></td>
+							    <td>
+							    </td>
 							    <td style="text-align: right;">
 							    	<button class="mui-btn">
 									  更新的
@@ -152,6 +153,13 @@
 				</ul>
 			</div>
 		</div>
+	</div>
+	<div id="myPopover" class="mui-popover">
+		<ul class="mui-table-view">
+		    #{list items:subjects, as:'subject'}
+		    <li class="mui-table-view-cell">${subject}</li>
+		    #{/list}
+		</ul>
 	</div>
 </div>
 <script>
