@@ -1,0 +1,145 @@
+#{extends 'client.html' /}
+#{set title:'月经分析' /}
+#{set 'moreStyles'}
+<link rel="stylesheet" href="@{'/public/stylesheets/client/chart.css'}">
+#{/set}
+#{set 'moreScripts'}
+<script src="@{'/public/javascripts/jquery-1.6.4.min.js'}"></script>
+<script src="@{'/public/javascripts/Chart.min.js'}"></script>
+<script src="@{'/public/javascripts/client/chart.js'}"></script>
+#{/set}
+<header class="mui-bar mui-bar-nav client-bar-nav">
+	<h1 class="mui-title client-title">月经分析</h1>
+</header>
+<div class="mui-content">
+	<div class="chart_medium">
+		<div class="level_pie_container">
+			<div id="degree_pie" class="degree_pie">
+				<div id="degree_pie_cover" class="cover pie"></div>
+				<div class="pie_bg pie"></div>
+				<div id="degree_pie_filler" class="filler_right pie"></div>
+				<div id="degree_pie_mask" class="mask_left"></div>
+				<div class="degree_pie_text">
+					得分<br>
+					<span class="degree_pie_text_number">${percent}分</span>
+				</div>
+			</div>
+		</div>
+		<div class="chart_statement">
+			<p class="chart_statement_title">
+				${assessment}
+			</p>
+			<hr class="devision"/>
+			<p class="chart_statement_detail">
+				平均周期：<span class="chart_statement_detail_content">${avgCycle}</span>天<br>
+				平均经期：<span class="chart_statement_detail_content">${avgMCycle}</span>天
+			</p>
+		</div>
+	</div>
+	<div class="mui-content">
+		<div class="segment_control_container">
+			<div id="segmentedControl" class="mui-segmented-control mui-segmented-control-negative">
+				<a class="mui-control-item" href="#item1mobile">
+						分析
+					</a>
+				<a class="mui-control-item mui-active" href="#item2mobile">
+						详情
+					</a>
+				<a class="mui-control-item" href="#item3mobile">
+						建议
+					</a>
+			</div>
+		</div>
+		<div class="chart_medium_devision"></div>
+		<div class="mui-content-padded2">
+			<div id="item1mobile" class="mui-control-content">
+				<center>
+					<canvas id="pregnantChart" width="400" height="380"></canvas>
+				</center>
+			</div>
+			
+			<div id="item2mobile" class="mui-control-content mui-active">
+				<ul id="chart_detail" class="mui-table-view">
+					<li class="mui-table-view-cell title">
+						<table id="chart_detail_title" class="chart_detail title" width="100%">
+							<tr>
+							    <td>经期开始时间</td>
+							    <td>经期天数</td>
+							    <td>周期天数</td>
+							  </tr>
+						</table>
+					</li>
+					<li name="chart_detail_contents" class="mui-table-view-cell">
+						<table class="chart_detail" width="100%">
+							<tr>
+							    <td>2015-04-03</td>
+							    <td>50.50</td>
+							    <td>19.7</td>
+							  </tr>
+						</table>
+					</li>
+					<li name="chart_detail_contents" class="mui-table-view-cell">
+						<table class="chart_detail" width="100%">
+							<tr>
+							    <td>2015-04-02</td>
+							    <td>51.50</td>
+							    <td>21.3</td>
+							  </tr>
+						</table>
+					</li>
+					<li name="chart_detail_contents" class="mui-table-view-cell tail">
+						<table class="chart_detail" width="100%">
+							<tr>
+							    <td>2015-04-01</td>
+							    <td>51.50</td>
+							    <td>21.3</td>
+							  </tr>
+						</table>
+					</li>
+					<li id="chart_detail_button" class="mui-table-view-cell tail">
+						<table class="chart_detail tail" width="100%">
+							<tr>
+							    <td style="text-align: left;">
+							    	<button class="mui-btn">
+									  <span class="mui-icon mui-icon-arrowleft"></span>
+									  更早的
+									</button>
+							    </td>
+							    <td></td>
+							    <td style="text-align: right;">
+							    	<button class="mui-btn">
+									  更新的
+									  <span class="mui-icon mui-icon-arrowright"></span>
+									</button>
+							    </td>
+							  </tr>
+						</table>
+					</li>
+				</ul>
+				
+			</div>
+			<div id="item3mobile" class="mui-control-content">
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell">
+						第三个选项卡子项-1
+					</li>
+					<li class="mui-table-view-cell">
+						第三个选项卡子项-2
+					</li>
+					<li class="mui-table-view-cell">
+						第三个选项卡子项-3
+					</li>
+					<li class="mui-table-view-cell">
+						第三个选项卡子项-4
+					</li>
+					<li class="mui-table-view-cell">
+						第三个选项卡子项-5
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	setDegreePie(${percent});
+</script>

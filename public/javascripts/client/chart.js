@@ -164,6 +164,34 @@ function initPregnantChart(){
 	    ]
 	};
 	new Chart(ctx).Line(data, {
-	    bezierCurve: false
+	    bezierCurve: true,
+	    bezierCurveTension: 0.4
 	});
+}
+
+
+function setDegreePie(percent){
+	if(isNaN(percent)){
+		return;
+	}
+	if(document.getElementById('degree_pie') == undefined){
+		return;
+	}
+	percent = percent > 100 ? 100 : percent;
+	var degree = percent/100 * 360;
+	var cover = document.getElementById('degree_pie_cover');
+	var filler = document.getElementById('degree_pie_filler');
+	var mask = document.getElementById('degree_pie_mask');
+	
+	cover.style.webkitTransform = "rotate(" + degree + "deg)";
+	cover.style.transform = "rotate(" + degree + "deg)";
+	cover.style.MozTransform = "rotate(" + degree + "deg)";
+
+	if(degree > 180){
+		filler.style.opacity = 1;
+		mask.style.opacity = 0;
+	}else{
+		filler.style.opacity = 0;
+		mask.style.opacity = 1;
+	}
 }
