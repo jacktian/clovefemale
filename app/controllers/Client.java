@@ -63,7 +63,5 @@ public class Client extends WebService{
 	public static void vaccine(){
 		render("/Client/record/vaccine.html");
 	}
-
-    public static void pregnantChart() { render("Client/record/chart/pregnant.html"); }
 }
 
