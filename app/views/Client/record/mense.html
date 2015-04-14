@@ -489,7 +489,18 @@
 					$('.form-model').addClass('mui-hidden');
 				});
 				/* 添加按钮 */
-				document.getElementById('mense-add-btn').addEventListener('tap', function() {
+				/*document.getElementById('mense-add-btn').addEventListener('tap', function() {
+					if(curTab == "1")
+						$('.mense-model').removeClass('mui-hidden');
+					else if(curTab == "2")
+						$('.temp-model').removeClass('mui-hidden');
+					else if(curTab == "3")
+						$('.pregw-model').removeClass('mui-hidden');
+					else
+						$('.pregm-model').removeClass('mui-hidden');
+					mask.show();
+				});*/
+				$('#mense-add-btn').bind('touchend',function(){
 					if(curTab == "1")
 						$('.mense-model').removeClass('mui-hidden');
 					else if(curTab == "2")
