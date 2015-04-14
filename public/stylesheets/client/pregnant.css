@@ -278,11 +278,11 @@
 .table-more-btn{
 	color:#7F8286;
 }
+/*自定义遮罩层 */
+#pregDrop{
+	display: none;
+}
 /*mobiscroll样式*/
 .dwwc{
 	background:#FFF;
 }
-/*.dw-ml .dw-li .dw-i{
-	color:#EF8787;
-	font-weight:bold;
-}*/

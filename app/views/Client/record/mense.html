@@ -353,6 +353,8 @@
 		<a href="#" id="mense-add-btn" class="preg-add-btn">
 			<i class="icon iconfont">&#xe64c;</i>
 		</a>
+		<!-- 遮罩层 -->
+	    <div class="mui-backdrop" id='pregDrop'></div>
 		<!-- 加载动画 -->
 		<i class="icon iconfont" id="loading-btn">&#xe632;</i>
 
@@ -483,11 +485,6 @@
 					return false;
 				});
 
-				/* 遮罩层事件 */
-				var mask = mui.createMask(function() {
-					this.close(); //关闭遮罩
-					$('.form-model').addClass('mui-hidden');
-				});
 				/* 添加按钮 */
 				/*document.getElementById('mense-add-btn').addEventListener('tap', function() {
 					if(curTab == "1")
@@ -500,6 +497,12 @@
 						$('.pregm-model').removeClass('mui-hidden');
 					mask.show();
 				});*/
+
+ 				/*遮罩层*/
+				$('#pregDrop').bind('touchstart',function(){
+					$(this).hide();
+					$('.form-model').addClass('mui-hidden');
+				});
 				$('#mense-add-btn').bind('touchend',function(){
 					if(curTab == "1")
 						$('.mense-model').removeClass('mui-hidden');
@@ -509,7 +512,8 @@
 						$('.pregw-model').removeClass('mui-hidden');
 					else
 						$('.pregm-model').removeClass('mui-hidden');
-					mask.show();
+					$('#pregDrop').show();
+					return false;
 				});
 				/* mobiscroll 日期控件*/
 				/*$('#model-data-btn').mobiscroll().calendar({
