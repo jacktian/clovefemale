@@ -16,6 +16,7 @@
 /* 助孕记录菜单 */
 .preg-menu-content{
 	position:fixed;
+	top:0px;
 	width:100%;
 }
 #preg-menu ul{
