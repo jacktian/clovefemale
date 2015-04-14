@@ -30,17 +30,12 @@ public class Client extends WebService{
 		render("/Client/record/mense.html");
 	}
 
-	public static void pregTemp(){
-		render("/Client/record/temperature.html");
-	}
-
-	public static void pregWeight(){
-		render("/Client/record/pregWeight.html");
-	}
-	
-	public static void pregMove(){
-		render("/Client/record/babyMove.html");
-	}
+	/**
+	 * 小药箱
+	 */
+	public static void medBox(){
+		render("/Client/record/medBox.html");
+	}		
 
 	/**
 	 *我的孩子

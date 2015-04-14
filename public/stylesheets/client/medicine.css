@@ -1,0 +1,38 @@
+/* 阿里图标 */
+@font-face {font-family: 'iconfont';
+    src: url('../../fonts/iconfont-med.eot'); /* IE9*/
+    src: url('../../fonts/iconfont-med.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('../../fonts/iconfont-med.woff') format('woff'), /* chrome、firefox */
+    url('../../fonts/iconfont-med.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+    url('../../fonts/iconfont-med.svg#iconfont') format('svg'); /* iOS 4.1- */
+}
+.iconfont{
+    font-family:"iconfont" !important;
+    font-size:16px;font-style:normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+}
+.med-box-search-content{
+	position:fixed;
+	top:0px;
+	width:100%;
+	height:100px;
+	padding-bottom:0px;
+	margin-bottom:0px;
+	z-index: 1
+}
+.med-box-content{
+	background:#FFF;
+	margin-top:50px;
+}
+/* 药箱列表  */
+.med-box-list a i{
+	font-size:25px;
+	margin-right:10px;
+	color:#ED7878;
+}
+.med-box-name{
+	font-size:15px;
+	color:#838383;
+}
