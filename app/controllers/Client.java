@@ -35,6 +35,13 @@ public class Client extends WebService{
 	 */
 	public static void medBox(){
 		render("/Client/record/medBox.html");
+	}	
+
+	/**
+	 * 药品详情
+	 */
+	public static void medicine(){
+		render("/Client/record/medicine.html");
 	}		
 
 	/**

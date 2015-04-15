@@ -25,6 +25,7 @@
 .med-box-content{
 	background:#FFF;
 	margin-top:50px;
+	margin-bottom:50px;
 }
 /* 药箱列表  */
 .med-box-list a i{
@@ -35,4 +36,40 @@
 .med-box-name{
 	font-size:15px;
 	color:#838383;
+}
+/* 药品列表  */
+.med-num{
+	display: block;
+	width:40px;
+	height:40px;
+	border-radius: 20px;
+	line-height: 40px;
+	/* background: #F4EFEF; */
+	background:#F48F8F;
+	/* color:#575656; */
+	color:#FFF;
+	text-align: center;
+	float:left;
+}
+.med-arrow-right{
+	color:#FFB8B8;
+}
+.med-msg{
+	padding-left:50px;
+}
+.med-name{
+	font-size:15px;
+}
+.med-description{
+	color:#797979;
+	font-size:12px;
+}
+.med-bar-tab{
+	background:#4F4A4A;
+}
+.mui-bar-tab .mui-tab-item.mui-active.medicine-item{
+	color:#FFF;
+}
+.mui-bar-tab .mui-tab-item.mui-active.medbox-item{
+	color:#EC3636;
 }
