@@ -88,12 +88,13 @@ public class Client extends WebService{
 			/* 获取access_token*/
 			models.WeChat wechat = (models.WeChat) models.WeChat.findAll().get(0);
 			String accessToken = wechat.access_token;
-	
+			System.out.println("令牌:"+accessToken);
 			/* 调用微信接口获取jsapi_ticket */
 			HttpResponse resp = WS.url("https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token="+accessToken+"&type=jsapi").get();
 			JsonElement jsonElement = resp.getJson();
 			JsonObject json = jsonElement.getAsJsonObject();
 			String ticket = json.get("ticket").getAsString();
+			System.out.println("ticket："+ticket);
 			Map<String,String> ret = Sign.process(ticket, crtUrl);
 			for (Map.Entry entry : ret.entrySet()) {
 	            System.out.println(entry.getKey() + ", " + entry.getValue());
