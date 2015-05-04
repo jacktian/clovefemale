@@ -37,6 +37,9 @@
 	font-size:15px;
 	color:#838383;
 }
+.med-box-item{
+	background:#F8F8F8;
+}
 /* 药品列表  */
 .med-num{
 	display: block;
@@ -73,3 +76,118 @@
 .mui-bar-tab .mui-tab-item.mui-active.medbox-item{
 	color:#EC3636;
 }
+/* 模态对话框开始 */
+.form-model{
+	position: fixed;
+	width:80%;
+	min-width: 230px;
+	left:10%;
+	top:10%;
+	background:#FFFFFF;
+	z-index:2;
+	border-radius:5px;
+	padding-bottom:13px;
+}
+.model-header{
+	position:relative;
+	height:45px;
+	line-height:45px;
+	background:#EF9D9A;
+	color:#FFF;
+	text-align:center;
+	font-weight:700;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+.mui-title.model-title{
+	color:#FFF;
+	font-weight: bold;;
+}
+.mui-btn.model-btn{
+	  background-color: #DA8F8F;
+	  color: #FFF;
+	  border: none;
+	  font-weight: bold;
+}
+.model-close{
+	position:absolute;
+	display: block;
+	top:-10px;
+	right:0;
+	width:20px;
+	height:20px;
+	padding:0px;
+	margin:0px;
+}
+.model-content{
+	overflow:hidden;
+	padding-top:15px;
+}
+.model-content p{
+	padding-left:10px;
+	margin:0;
+}
+.model-content-list{
+	border-bottom:1px solid #F2EAEA;
+	text-align:center;
+	padding:10px 5px 10px 5px;
+}
+.model-bottom{
+	padding:15px 20px 20px 20px;
+}
+.model-btn-refresh{
+	float:left;
+	width:100%;
+	background-color: #DA8F8F;
+	margin-bottom:5px;
+	border:1px solid #DA8F8F;
+	font-size:15px;
+}
+.model-item{
+	width:100%;
+	padding:5px 20px 5px 20px;
+	clear:both;
+}
+.model-item-title{
+	float:left;
+	font-size:16px;
+	color:#AD7703;
+	width:20%;
+	display:block;
+	line-height:33px;
+}
+.model-item input{
+	border:0px;
+	border-bottom:1px solid #DDD7D7;
+	float:right;
+	width:80%;
+}
+.med-model{
+	display:none;
+	z-index:100;
+}
+#pregDrop{
+	position:fixed;
+	width:100%;
+	height:100%;
+	left:0;
+	top:0;
+	background:#000;
+	opacity:0.8;
+	display: none;
+	z-index:99;
+}
+/* 模态对话框结束 */
+/* 弹出菜单开始  */
+#mui-popover{
+	z-index:101;
+	width:150px;
+	display: none;
+	position: fixed;
+	right:5px;
+	top:45px;
+}
+#mui-popover li a{
+	font-size:1rem;
+}
+/* 弹出菜单结束  */

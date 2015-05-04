@@ -60,7 +60,8 @@
 }
 /* 分块内容  */
 .more-link{
-	color:#917E7E;
+	color:#929292;
+	font-size:12px;
 }
 .preg-content-section{
 	padding-top: 20px;
@@ -76,6 +77,10 @@
 	padding-bottom: 5px;
 	font-weight:bold;
 	color:#000;
+	border-left:4px solid #FF9999;
+	padding-left:4px;
+	height:20px;
+	line-height:20px;
 }
 .preg-content{
 	padding-top:90px;

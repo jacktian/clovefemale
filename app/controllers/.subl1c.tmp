@@ -5,7 +5,6 @@ package controllers;
 import java.util.List;
 import java.util.Map;
 
-import org.h2.store.Page;
 import org.jboss.netty.handler.codec.http.HttpRequest;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -26,8 +25,8 @@ import play.libs.WS;
 import play.libs.WS.HttpResponse;
 import play.libs.WS.WSRequest;
 import play.mvc.*;
+
 import utils.SignUtil;
-import utils.Sign;
 
 
 /**
@@ -122,6 +121,22 @@ public class WeChat extends WebService{
 		WeChatResponse bean = new WeChatResponse();
 		bean.fromUserName = "boxizen";
 		renderText(bean.toString());
+	}
+
+	/**
+	 * 获取jsapi_ticket
+	 */
+	public static void getAccessToken(){
+		
+		/* 获取access_token*/
+		models.WeChat wechat = (models.WeChat) models.WeChat.findAll().get(0);
+		String accessToken = wechat.access_token;
+
+		/* 调用微信接口获取jsapi_ticket */
+		HttpResponse resp = WS.url("https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token="+accessToken+"&type=jsapi");
+		JsonElement jsonElement = resp.getJson();
+		JsonObject json = jsonElement.getAsJsonObject();
+		String ticket = json.get("ticket").getAsString();
 	}
 }
 
