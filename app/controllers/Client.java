@@ -88,7 +88,7 @@ public class Client extends WebService{
 		String signature = "";
 		try{
 			/* 获取当前页面*/
-			String crtUrl = "http://clovefemale.boxizen.com/medboxwx";
+			String crtUrl = "http://clovefemale.boxizen.com/client/medboxwx";
 			/* 获取access_token*/
 			models.WeChat wechat = (models.WeChat) models.WeChat.findAll().get(0);
 			String accessToken = wechat.access_token;
