@@ -103,7 +103,7 @@ public class Client extends WebService{
 			signature = ret.get("signature");
 		}
 		catch(Exception e){
-			
+			e.printStackTrace();
 		}
 		finally{
 			render("/Client/record/medBox.html",timestamp,nonceStr,signature);
