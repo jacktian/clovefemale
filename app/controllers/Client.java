@@ -7,6 +7,8 @@ import java.util.List;
 
 import java.util.Map;
 
+import jobs.AccessTokenRefresher;
+
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -79,6 +81,8 @@ public class Client extends WebService{
 	 * 获取jsapi_ticket
 	 */
 	public static void medBoxWx(){
+		/*获取accessToken*/
+		AccessTokenRefresher.getAccessToken();
 		String timestamp = "";
 		String nonceStr = "";
 		String signature = "";
@@ -89,8 +93,13 @@ public class Client extends WebService{
 			models.WeChat wechat = (models.WeChat) models.WeChat.findAll().get(0);
 			String accessToken = wechat.access_token;
 			System.out.println("令牌:"+accessToken);
+			
 			/* 调用微信接口获取jsapi_ticket */
 			HttpResponse resp = WS.url("https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token="+accessToken+"&type=jsapi").get();
+			
+			System.out.println("-0-------------------:"+resp.getString());
+			
+			
 			JsonElement jsonElement = resp.getJson();
 			JsonObject json = jsonElement.getAsJsonObject();
 			String ticket = json.get("ticket").getAsString();
