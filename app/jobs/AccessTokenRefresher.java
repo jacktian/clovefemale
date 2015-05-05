@@ -69,7 +69,8 @@ public class AccessTokenRefresher extends Job{
 		HttpResponse resp = WS.url("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid="+appKey+"&secret="+appSecret).get();
 		JsonElement jsonElement = resp.getJson();
 		JsonObject json = jsonElement.getAsJsonObject();
-		
+		/*打印accessToken的值*/
+		System.out.println("access_token:"+json.get("access_token").getAsString());
 		try{
 			if(json.get("access_token") != null){
 				/* 将access_token保存到数据库中 */

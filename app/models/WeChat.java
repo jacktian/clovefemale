@@ -22,4 +22,10 @@ public class WeChat extends BasicModel{
      */
 	@Column(name = "access_token")
 	public String access_token;
+	
+	/**
+     * access_token
+     */
+	@Column(name = "js_ticket")
+	public String js_ticket;
 }

@@ -7,6 +7,9 @@ import testData.AgendaTestDataGenerator;
 @OnApplicationStart
 public class Bootstrap extends Job{
 	public void doJob(){
-		//AgendaTestDataGenerator.init();
+		//获取accessToken
+		AccessTokenRefresher.getAccessToken();
+		//获取js_ticket
+		JsTicketRefresher.getJsTicket();
 	}
 }

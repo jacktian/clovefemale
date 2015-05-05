@@ -7,6 +7,20 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.io.UnsupportedEncodingException;  
 
+import models.WeChat;
+import jobs.AccessTokenRefresher;
+import play.libs.WS;
+import play.libs.WS.HttpResponse;
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
+/**
+ * 微信前端签名工具
+ * @author boxiZen
+ * @since 2015/05/05
+ */
+
 public class Sign {
     public static Map<String, String> process(String ticket,String crtUrl) {
         String jsapi_ticket = ticket;
@@ -76,5 +90,22 @@ public class Sign {
 
     private static String create_timestamp() {
         return Long.toString(System.currentTimeMillis() / 1000);
+    }
+    
+    public static Map<String,String> create_sign(String url){	
+    	Map<String,String> ret = null;
+    	/*获取js_ticket值*/
+		WeChat wechat = (WeChat) WeChat.findAll().get(0);
+		String ticket = wechat.js_ticket;
+    	/*生成签名*/
+		try{
+			ret = Sign.process(ticket, url);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		finally{
+			return ret;
+		}
     }
 }

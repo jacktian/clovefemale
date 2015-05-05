@@ -81,43 +81,15 @@ public class Client extends WebService{
 	 * 获取jsapi_ticket
 	 */
 	public static void medBoxWx(){
-		/*获取accessToken*/
-		AccessTokenRefresher.getAccessToken();
-		String timestamp = "";
-		String nonceStr = "";
-		String signature = "";
-		try{
-			/* 获取当前页面*/
-			String crtUrl = "http://clovefemale.boxizen.com/client/medboxwx";
-			/* 获取access_token*/
-			models.WeChat wechat = (models.WeChat) models.WeChat.findAll().get(0);
-			String accessToken = wechat.access_token;
-			System.out.println("令牌:"+accessToken);
-			
-			/* 调用微信接口获取jsapi_ticket */
-			HttpResponse resp = WS.url("https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token="+accessToken+"&type=jsapi").get();
-			
-			System.out.println("-0-------------------:"+resp.getString());
-			
-			
-			JsonElement jsonElement = resp.getJson();
-			JsonObject json = jsonElement.getAsJsonObject();
-			String ticket = json.get("ticket").getAsString();
-			System.out.println("ticket："+ticket);
-			Map<String,String> ret = Sign.process(ticket, crtUrl);
-			for (Map.Entry entry : ret.entrySet()) {
-	            System.out.println(entry.getKey() + ", " + entry.getValue());
-	        }
-			timestamp = ret.get("timestamp");
-			nonceStr = ret.get("nonceStr");
-			signature = ret.get("signature");
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
-		finally{
-			render("/Client/record/medBox.html",timestamp,nonceStr,signature);
-		}
+		String url = "http://clovefemale.boxizen.com/client/medboxwx";
+		Map<String,String>ret = Sign.create_sign(url);
+		for (Map.Entry entry : ret.entrySet()) {
+	        System.out.println(entry.getKey() + ", " + entry.getValue());
+	    }
+		String timestamp = ret.get("timestamp");
+		String nonceStr = ret.get("nonceStr");
+		String signature = ret.get("signature");
+		render("/Client/record/medBox.html",timestamp,nonceStr,signature);
 	}
 }
 
