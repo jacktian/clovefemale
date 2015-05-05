@@ -76,20 +76,5 @@ public class Client extends WebService{
 	public static void vaccine(){
 		render("/Client/record/vaccine.html");
 	}
-	
-	/**
-	 * 获取jsapi_ticket
-	 */
-	public static void medBoxWx(){
-		String url = "http://clovefemale.boxizen.com/client/medboxwx";
-		Map<String,String>ret = Sign.create_sign(url);
-		for (Map.Entry entry : ret.entrySet()) {
-	        System.out.println(entry.getKey() + ", " + entry.getValue());
-	    }
-		String timestamp = ret.get("timestamp");
-		String nonceStr = ret.get("nonceStr");
-		String signature = ret.get("signature");
-		render("/Client/record/medBox.html",timestamp,nonceStr,signature);
-	}
 }
 

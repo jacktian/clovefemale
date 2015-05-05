@@ -12,6 +12,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import beans.WeChatBean;
+import beans.WeChatJsConfig;
 import beans.WeChatResponse;
 
 import com.google.gson.JsonElement;
@@ -122,6 +123,22 @@ public class WeChat extends WebService{
 		WeChatResponse bean = new WeChatResponse();
 		bean.fromUserName = "boxizen";
 		renderText(bean.toString());
+	}
+	
+	/**
+	 * 获取jsapi_ticket
+	 */
+	public static void jsApiCall(){
+		String url = "http://clovefemale.boxizen.com/client/medboxwx";
+		Map<String,String>ret = Sign.create_sign(url);
+		String timestamp = ret.get("timestamp");
+		String nonceStr = ret.get("nonceStr");
+		String signature = ret.get("signature");
+		WeChatJsConfig config = new WeChatJsConfig();
+		config.timestamp = timestamp;
+		config.nonceStr = nonceStr;
+		config.signature = signature;
+		wsOk(config);
 	}
 }
 
