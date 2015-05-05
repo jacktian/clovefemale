@@ -128,8 +128,7 @@ public class WeChat extends WebService{
 	/**
 	 * 获取jsapi_ticket
 	 */
-	public static void jsApiCall(){
-		String url = "http://clovefemale.boxizen.com/client/medboxwx";
+	public static void jsApiCall(String url){
 		Map<String,String>ret = Sign.create_sign(url);
 		String timestamp = ret.get("timestamp");
 		String nonceStr = ret.get("nonceStr");
