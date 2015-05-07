@@ -1,14 +1,15 @@
 .babyTitle{
 	background-color: #DD524D;
+	font-size:16px;
 }
 
 .babyTitle.mui-bar-nav.mui-bar .mui-icon{
 	color: #fff;
 }
 
-.babyMuiContent .mui-segmented-control.mui-segmented-control-inverted ~ .mui-slider-progress-bar{
+/*.babyMuiContent .mui-segmented-control.mui-segmented-control-inverted ~ .mui-slider-progress-bar{
 	background-color: #FF9999;
-}
+}*/
 
 .babyTitle>.mui-title{
 	color:#fff;
@@ -25,7 +26,7 @@
 	width:90%;
 }
 .mui-table-view.mui-grid-view.mui-grid-9.child-list{
-	padding-top:38px;
+	padding-top:44px;
 	background-color: #fff;
 	border:none;
 }
@@ -38,25 +39,119 @@
 	border:none;
 }
 
-.child-link:hover{
-	background-color: #eee;
+.child-list .mui-table-view-cell.mui-media.mui-col-xs-4{
+	border:0;
 }
 
+.child-list .mui-table-view-cell.mui-media.mui-col-xs-4.mui-active{
+	background-color: #fff;
+}
+
+/*宝宝头像*/
 .chlid-img{
-	width:70px;
+	/*width:70px;
 	border:1px solid #ccc;
 	border-radius:70px;
-	background-color: #cacaca;
+	background-color: #cacaca;*/
+	/*border-radius:21px;*/
 }
 
-.chlid-img:active{
-	-webkit-filter: grayscale(100%);  
-	-moz-filter: grayscale(30%);    
-	-ms-filter: grayscale(30%);     
-	-o-filter: grayscale(30%);    
-	filter: grayscale(30%); 	  
-	filter: #ccc;
+.child-list{
+	padding-top: 44px;
 }
+
+.sexAndAge{
+	/*padding-left:-5px;*/
+	/*margin-left:5px;*/
+	height: 21px;
+	/*line-height: 0px;*/
+	/*border:1px solid red;*/
+}
+
+.sexAndAge>img{
+	display: block;
+	float:left;
+	margin-left:-3px;
+	width: 21px;
+	/*height: 21px;
+	margin:0;
+	padding:0;*/
+}
+
+.age{
+	/*padding:0;
+	margin:0;*/
+	/*line-height: 0px;*/
+	/*display: block;*/
+	padding:0 3px;
+	font-size:13px;
+	background-color: rgba(244,144,144,0.5);
+	/*border:1px solid red;*/
+	color:#666;
+	border-radius:5px;
+}
+
+/*-----------宝宝诞生样式------------*/
+.newBabyBox{
+/*	display: inline;
+	opacity: 1;*/
+	width:80%;
+	position: absolute;
+	top:50%;
+	margin-top:-92px;
+	left:10%;
+	background-color: #fff;
+}
+
+.newBabyBox .mui-input-group .mui-input-row:after{
+	/*left:5px;*/
+}
+
+.newBabyBox .mui-input-row label{
+	padding-right: 10px;
+	padding-top:11.5px;
+	width:40%
+}
+
+.sexSelection{
+	margin:0;
+	padding:0;
+	float:right;
+	width:60%;
+	/*text-align: left;*/
+}
+
+.sexSelection>li{
+	float:left;
+	width: 50%;
+	/*border:1px solid red;*/
+	height:38px;
+	line-height: 19px;
+	text-align: left;
+}
+
+.sexSelection>li>input{
+	text-align: left;
+}
+
+.sexSelection .mui-radio.mui-left{
+	padding-left:30px;
+}
+
+.sexSelection .mui-radio.mui-left input[type=radio]{
+	top:4px;
+	left:0;
+}
+
+.sexSelection .mui-table-view-cell:after{
+	background-color: #fff;
+}
+
+.newBabyBox .mui-input-row input{
+	width:60%;
+}
+/*-----------宝宝诞生样式结束------------*/
+
 
 .mui-slider .mui-slider-group .mui-slider-item img.time-img{
 	width:13px;
@@ -254,6 +349,22 @@ span.mui-icon.mui-icon-plus.test::before{
 	color:#272822;
 }
 
+/*.nav_bottom{
+
+	position: fixed;
+	bottom:0;
+	right:0;
+	width: 100%;
+	height: 50px;
+	z-index: 10;
+	background-color: rgba(247,247,247,.98);
+	box-shadow: 0 0 1px rgba(0,0,0,.85);
+	backface-visibility:hidden;
+	display: table;
+	table-layout: fixed;
+
+}*/
+
 /*滚轮弹出框样式*/
 .scrollerBox .dwcc{
 	background-color: #fff;
@@ -370,6 +481,13 @@ span.mui-icon.mui-icon-plus.test::before{
 	height: 278px;
 	margin-top: -139px;
 }
+
+@media screen and (min-width: 749px) { 
+	.newmark {
+		left: 50%;
+		margin-left: -300px;
+	}  
+} 
 
 .newmark .dw-i{
 	font-size: 16px !important;
@@ -534,7 +652,7 @@ span.mui-icon.mui-icon-plus.test::before{
 
 .vacLink>img:active{
 	opacity: 0.5;
-}s
+}
 
 .vacListName{
 	margin:8px 0px 5px 8px;

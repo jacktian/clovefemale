@@ -1,0 +1,57 @@
+#{extends 'client.html' /}
+#{set title:'首页' /}
+<link rel="stylesheet" href="@{'/public/stylesheets/client/first.css'}">
+<script type="text/javascript" src = "@{'/public/javascripts/jquery-1.8.3.min.js'}"></script>
+<header class="mui-bar mui-bar-nav babyTitle">
+  <h1 class="mui-title">首页</h1>
+</header>
+
+<!-- 个人信息 -->
+<div class="userBox mui-navigate-right">
+  <!-- <div class="userLink"> -->
+    <div class="headImg">
+      <img src="@{'/public/images/client/child-1.jpg'}" alt=""/>
+    </div>    
+    <span class="nickname">钊哥</span>
+  <!-- </div> -->
+</div>
+
+<!-- 菜单 -->
+<ul class="mui-table-view mui-grid-view mui-grid-9 navList">
+  <li class="mui-table-view-cell mui-media mui-col-xs-4">
+    <a href="#">
+      <i class="icon-first iconfont">&#xe711;</i>
+      <div class="mui-media-body">助孕记录</div>
+    </a>
+  </li>
+  <li class="mui-table-view-cell mui-media mui-col-xs-4">
+    <a href="#">
+      <i class="icon-first iconfont">&#xf001d;</i>
+      <div class="mui-media-body">宝宝成长</div>
+    </a>
+  </li>
+  <li class="mui-table-view-cell mui-media mui-col-xs-4">
+    <a href="#">
+      <i class="icon-first iconfont">&#xe626;</i>
+      <div class="mui-media-body">小药箱</div>
+    </a>
+  </li>
+  <li class="mui-table-view-cell mui-media mui-col-xs-4">
+    <a href="#">
+      <i class="icon-first iconfont">&#xe60b;</i>
+      <div class="mui-media-body">会员中心</div>
+    </a>
+  </li>
+  <li class="mui-table-view-cell mui-media mui-col-xs-4">
+    <a href="#">
+      <i class="icon-first iconfont">&#xe616;</i>
+      <div class="mui-media-body">小工具</div>
+    </a>
+  </li>
+  <li class="mui-table-view-cell mui-media mui-col-xs-4">
+    <a href="#">
+      <i class="icon-first iconfont">&#xe61e;</i>
+      <div class="mui-media-body">常见问题</div>
+    </a>
+  </li>
+</ul>

@@ -76,5 +76,29 @@ public class Client extends WebService{
 	public static void vaccine(){
 		render("/Client/record/vaccine.html");
 	}
+
+	/**
+	 *会员中心
+	 **/
+	public static void psnCenter(){
+		render("/Client/record/psnCenter.html");
+	}
+
+	/**
+	 *提醒
+	 **/
+	public static void remind(){
+		render("/Client/personal/remind.html");
+	}
+
+
+	/**
+	 *首页
+	 **/
+	public static void first(){
+		render("/Client/personal/first.html");
+	}
+
+
 }
 

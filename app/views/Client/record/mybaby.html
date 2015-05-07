@@ -4,26 +4,117 @@
 <script src="http://dcloudio.github.io/mui/dist/js/jquery-2.1.1.js"></script>
 <script src="http://dcloudio.github.io/mui/dist/js/bootstrap.min.js"></script>
 <script src="http://dcloudio.github.io/mui/assets/js/docs.min.js?v=2014-12-30 14:09:32 +0800"></script>
-<header class="mui-bar mui-bar-nav client-bar-nav">
+<link rel="stylesheet" href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.custom-2.14.4.min.css'}"  rel="stylesheet"/>
+<script src="@{'/public/javascripts/client/mobiscroll/mobiscroll-2.14.4-crack.js'}" type="text/javascript"></script>
+<!-- <header class="mui-bar mui-bar-nav client-bar-nav">
 			<h1 class="mui-title client-title">小宝成长</h1>
+</header> -->
+<header class="mui-bar mui-bar-nav babyTitle">
+  <a class="mui-icon mui-icon-left-nav mui-pull-left"></a>
+  <a id="newBabyBtn" class="mui-icon mui-icon-plusempty mui-pull-right"></a>
+  <h1 class="mui-title">宝宝列表</h1>
 </header>
 
 <!--孩子列表-->
-<ul class="mui-table-view mui-grid-view mui-grid-9 child-list">
-	<li class="mui-table-view-cell mui-media mui-col-xs-4">
-		<a href="#">
-			<img class="chlid-img" src="@{'/public/images/client/child-1.jpg'}" alt="">
-			<div class="mui-media-body">天天</div>
+<ul class="mui-table-view child-list">
+	<li class="mui-table-view-cell mui-hidden">cared
+		<div id="M_Toggle" class="mui-switch mui-active">
+			<div class="mui-switch-handle"></div>
+		</div>
+	</li>
+	<li class="mui-table-view-cell mui-media">
+		<a href="#" class="mui-navigate-right">
+			<img class="mui-media-object mui-pull-left chlid-img" src="http://dcloudio.github.io/mui/assets/img/shuijiao.jpg">
+			<div class="mui-media-body">
+				天天
+				<div id="test"  class="sexAndAge"><img src="@{'/public/images/client/boy.png'}" alt=""/><span class="age">6岁</span></div>
+				<!-- <p class='mui-ellipsis'>能和心爱的人一起睡觉，是件幸福的事情；可是，打呼噜怎么办？</p> -->
+			</div>
 		</a>
 	</li>
-	<li class="mui-table-view-cell mui-media mui-col-xs-4">
-		<a href="#">
-			<img class="chlid-img" src="@{'/public/images/client/child-2.jpg'}" alt="">
-			<div class="mui-media-body">Kimi</div>
+	<li class="mui-table-view-cell mui-media">
+		<a href="#" class="mui-navigate-right">
+			<img class="mui-media-object mui-pull-left chlid-img" src="http://dcloudio.github.io/mui/assets/img/muwu.jpg">
+			<div class="mui-media-body">
+				Kimi
+				<div id="test"  class="sexAndAge"><img src="@{'/public/images/client/boy.png'}" alt=""/><span class="age">5岁</span></div>
+				<!-- <p class='mui-ellipsis'>想要这样一间小木屋，夏天挫冰吃瓜，冬天围炉取暖.</p> -->
+			</div>
+		</a>
+	</li>
+	<li class="mui-table-view-cell mui-media">
+		<a href="#" class="mui-navigate-right">
+			<img class="mui-media-object mui-pull-left chlid-img" src="http://dcloudio.github.io/mui/assets/img/cbd.jpg">
+			<div class="mui-media-body">
+				Cindy
+				<div id="test"  class="sexAndAge"><img src="@{'/public/images/client/girl.png'}" alt=""/><span class="age">7岁</span></div>
+				<!-- <p class='mui-ellipsis'>烤炉模式的城，到黄昏，如同打翻的调色盘一般.</p> -->
+			</div>
 		</a>
 	</li>
 </ul>
-<button class="mui-btn mui-btn-negative mui-btn-block babyblock-btn">
-	<span class="mui-icon mui-icon-plus"></span>
-孩子诞生
-</button>
+
+
+<!-- 添加宝宝 -->
+<div class="mui-popover newBabyBox">
+	<div class="mui-content-padded">
+	
+	<form class="mui-input-group">
+		<div class="mui-input-row">
+			<label>小名</label>
+			<input type="text" placeholder="请输入小名">
+		</div>
+		<div class="mui-input-row">
+			<label>性别</label>
+			<ul class="sexSelection">
+				<li class="mui-table-view-cell mui-radio mui-left">
+					<input name="radio" type="radio" checked/>男
+				</li>
+				<li class="mui-table-view-cell mui-radio mui-left">
+					<input name="radio" type="radio"/>女
+				</li>
+			</ul>
+		</div>
+		<div class="mui-input-row">
+			<div id="dateVacBox" class="dateBox_vac">
+					<img  class="dateImg_vac popover_date_img" src="@{'/public/images/client/date.png'}" alt=""/>
+					<span class="dateNo popover_dateNo"></span>
+			</div>
+			<label>出生日期</label>
+			<input type="text" placeholder="日期输入">
+		</div>
+		<div class="mui-button-row">
+			<button class="mui-btn mui-btn-primary" onclick="return false;">确认</button>&nbsp;&nbsp;
+			<button class="mui-btn mui-btn-primary" onclick="return false;">取消</button>
+		</div>
+	</form>
+</div>
+	
+</div>
+<!-- 添加宝宝结束 -->
+
+<script>
+	$(function(){
+		//添加孩子
+		document.getElementById("newBabyBtn").addEventListener("tap",function(event){
+ 			mui('.newBabyBox').popover('toggle');
+		});
+
+		//设置日期图标中的日期号码
+		$('.dateNo').text(new Date().getDate());
+
+		//日期控件触发
+		$(".dateBox_vac").mobiscroll().calendar({
+				theme:'ios',
+				lang:'zh',
+				display:'bottom'
+		});
+
+		//日期控件触发
+		$(".dateBox_vac").mobiscroll().calendar({
+				theme:'ios',
+				lang:'zh',
+				display:'bottom'
+		});
+	});
+</script>
