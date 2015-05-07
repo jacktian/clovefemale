@@ -43,6 +43,14 @@ public class WeChat extends WebService{
 	 * 接收来自微信服务器的消息
 	 */
 	public static void process(){
+		/*输出接收流*/
+			List<String> lines = IO.readLines(request.body);
+			StringBuilder strBuilder = new StringBuilder();
+			for(String s : lines){
+				strBuilder.append(s);
+			}
+			System.out.println(strBuilder.toString());
+
 		//如果是get请求，则执行令牌验证
 		if(request.method.toLowerCase().equals("get")){
 			if(SignUtil.checkSignature(params.get("signature"), params.get("timestamp"), params.get("nonce"))){
@@ -57,7 +65,6 @@ public class WeChat extends WebService{
 			for(String s : lines){
 				strBuilder.append(s);
 			}
-			System.out.println(strBuilder.toString());
 			//解析XML信息
 			Document doc = Jsoup.parse(strBuilder.toString());
 			Element toUserNameE = doc.getElementsByTag("ToUserName").get(0);
