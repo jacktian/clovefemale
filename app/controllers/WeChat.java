@@ -57,35 +57,31 @@ public class WeChat extends WebService{
 			for(String s : lines){
 				strBuilder.append(s);
 			}
-			System.out.println(strBuilder.toString());
-			/*//解析XML信息
+			//System.out.println(strBuilder.toString());
+			//解析XML信息
 			Document doc = Jsoup.parse(strBuilder.toString());
 			Element toUserNameE = doc.getElementsByTag("ToUserName").get(0);
 			Element fromUserNameE = doc.getElementsByTag("FromUserName").get(0);
 			Element createTimeE = doc.getElementsByTag("CreateTime").get(0);
 			Element msgTypeE = doc.getElementsByTag("MsgType").get(0);
-			Element contentE = doc.getElementsByTag("Content").get(0);
-			Element msgIdE = null;
-			try{
-				msgIdE = doc.getElementsByTag("MsgId").get(0);
-			}catch(Exception e){
-				e.printStackTrace();
-			}
+			
 			//存储xml信息
 			WeChatBean bean = new WeChatBean();
 			bean.toUserName = toUserNameE.html();
 			bean.fromUserName = fromUserNameE.html();
 			bean.createTime = Long.parseLong(createTimeE.html());
 			bean.msgType = msgTypeE.html();
-			bean.msgId = Long.parseLong(msgIdE.html());
-			bean.content = contentE.html();
+
 			//如果发送的是文本消息
 			if(bean.msgType.equals("text")){
+				Element content = doc.getElementsByTag("Content").get(0);
+				bean.content = content.html();
 				WeChatResponse resp = new WeChatResponse();
 				resp.toUserName = bean.fromUserName;
 				resp.fromUserName = bean.toUserName;
 				resp.createTime = bean.createTime;
 				resp.msgType = bean.msgType;
+				resp.content = bean.content;
 				if(bean.content.equals("1")){
 					resp.content = bean.content;
 				}
@@ -93,7 +89,19 @@ public class WeChat extends WebService{
 					resp.content = "测试";
 				}
 				renderText(resp);
-			}*/
+			}
+			//如果事件响应
+			else if(bean.msgType.equals("event")){
+				Element event = doc.getElementsByTag("Event").get(0);
+				bean.event = event.html();
+				//如果是取消关注事件
+				if(bean.event.equals("unsubscribe")){
+					System.out.println("用户openId:"+bean.fromUserName+",cancel");
+				}
+				else if(bean.event.equals("subscribe")){
+					System.out.println("用户openId:"+bean.fromUserName+",concentrate");
+				}
+			}
 		}
 	}
 	

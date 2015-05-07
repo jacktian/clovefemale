@@ -19,4 +19,6 @@ public class WeChatBean {
 	public Long msgId;
 	
 	public String content;
+	
+	public String event;
 }
