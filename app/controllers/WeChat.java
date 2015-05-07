@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 
+
+import models.Client;
+
 import org.h2.store.Page;
 import org.jboss.netty.handler.codec.http.HttpRequest;
 import org.jsoup.Jsoup;
@@ -89,6 +92,7 @@ public class WeChat extends WebService{
 				else{
 					resp.content = "测试";
 				}
+				System.out.println(resp);
 				renderText(resp);
 			}
 			//如果事件响应
@@ -97,20 +101,37 @@ public class WeChat extends WebService{
 				bean.event = event.html();
 				//如果是取消关注事件
 				if(bean.event.equals("unsubscribe")){
-					System.out.println("用户openId:"+bean.fromUserName+",cancel");
+					System.out.println("用户openId:"+bean.fromUserName+",取消关注");
 				}
+				//如果是关注事件
 				else if(bean.event.equals("subscribe")){
-					System.out.println("用户openId:"+bean.fromUserName+",concentrate");
+					/*首先获取accessToken的值，直接从数据库取出即可*/
+					models.WeChat wxbean = new models.WeChat();
+					wxbean = (models.WeChat) models.WeChat.findAll().get(0);
+					String accessToken = wxbean.access_token;
+					/*调用用户信息接口*/
+					HttpResponse resp = WS.url("https://api.weixin.qq.com/cgi-bin/user/info?access_token="+accessToken+"&openid="+bean.fromUserName+"&lang=zh_CN").get();
+					JsonElement jsonElement = resp.getJson();
+					JsonObject json = jsonElement.getAsJsonObject();
+					/*存储用户的信息*/
+					String openid = json.get("openid").getAsString();
+					models.Client client = models.Client.find("byOpenid", openid).first();
+					if(client == null){
+						client = new models.Client();
+						client.subscribe = json.get("subscribe").getAsString();
+						client.nickname = json.get("nickname").getAsString();
+						client.sex = json.get("sex").getAsString();
+						client.language = json.get("language").getAsString();
+						client.city = json.get("city").getAsString();
+						client.province = json.get("province").getAsString();
+						client.country = json.get("country").getAsString();
+						client.headimgurl = json.get("headimgurl").getAsString();
+						client.subscribe_time =json.get("subscribe_time").getAsString();
+						client.unionid = json.get("unionid").getAsString();
+						client.save();
+					}
+		
 				}
-				/*首先获取accessToken的值，直接从数据库取出即可*/
-				models.WeChat wxbean = new models.WeChat();
-				wxbean = (models.WeChat) models.WeChat.findAll().get(0);
-				String accessToken = wxbean.access_token;
-				/*调用用户信息接口*/
-				HttpResponse resp = WS.url("https://api.weixin.qq.com/cgi-bin/user/info?access_token="+accessToken+"&openid="+bean.fromUserName+"&lang=zh_CN").get();
-				JsonElement jsonElement = resp.getJson();
-				JsonObject json = jsonElement.getAsJsonObject();
-				System.out.println("用户的信息是:"+json.toString());
 			}
 		}
 	}

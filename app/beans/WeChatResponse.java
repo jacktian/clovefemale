@@ -38,7 +38,9 @@ public class WeChatResponse {
 		strBuilder.append("<ToUserName><![CDATA["+toUserName+"]]></ToUserName>");
 		strBuilder.append("<FromUserName><![CDATA["+fromUserName+"]]></FromUserName>");
 		strBuilder.append("<CreateTime>"+createTime+"</CreateTime>");
-		strBuilder.append("<MsgType><![CDATA["+content+"]]></MsgType>");
+		strBuilder.append("<MsgType><![CDATA["+msgType+"]]></MsgType>");
+		strBuilder.append("<Content><![CDATA["+content+"]]></Content>");
+		strBuilder.append("</xml>");
 		return strBuilder.toString();
 	}
 }
