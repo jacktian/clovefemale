@@ -119,6 +119,7 @@ public class WeChat extends WebService{
 					if(client == null){
 						client = new models.Client();
 						client.subscribe = json.get("subscribe").getAsString();
+						client.openid = openid;
 						client.nickname = json.get("nickname").getAsString();
 						client.sex = json.get("sex").getAsString();
 						client.language = json.get("language").getAsString();
