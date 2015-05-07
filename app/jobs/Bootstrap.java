@@ -11,5 +11,7 @@ public class Bootstrap extends Job{
 		AccessTokenRefresher.getAccessToken();
 		//获取js_ticket
 		JsTicketRefresher.getJsTicket();
+		//创建自定义菜单
+		CustomMenuRefresher.createMenuNow();
 	}
 }
