@@ -5,6 +5,7 @@ package controllers;
 import java.util.List;
 import java.util.Map;
 
+
 import org.h2.store.Page;
 import org.jboss.netty.handler.codec.http.HttpRequest;
 import org.jsoup.Jsoup;
@@ -101,6 +102,15 @@ public class WeChat extends WebService{
 				else if(bean.event.equals("subscribe")){
 					System.out.println("用户openId:"+bean.fromUserName+",concentrate");
 				}
+				/*首先获取accessToken的值，直接从数据库取出即可*/
+				models.WeChat wxbean = new models.WeChat();
+				wxbean = (models.WeChat) models.WeChat.findAll().get(0);
+				String accessToken = wxbean.access_token;
+				/*调用用户信息接口*/
+				HttpResponse resp = WS.url("https://api.weixin.qq.com/cgi-bin/user/info?access_token="+accessToken+"&openid="+bean.fromUserName+"&lang=zh_CN").get();
+				JsonElement jsonElement = resp.getJson();
+				JsonObject json = jsonElement.getAsJsonObject();
+				System.out.println("用户的信息是:"+json.toString());
 			}
 		}
 	}
