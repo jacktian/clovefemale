@@ -92,7 +92,6 @@ public class WeChat extends WebService{
 				else{
 					resp.content = "测试";
 				}
-				System.out.println(resp);
 				renderText(resp);
 			}
 			//如果事件响应
@@ -115,6 +114,7 @@ public class WeChat extends WebService{
 					JsonObject json = jsonElement.getAsJsonObject();
 					/*存储用户的信息*/
 					String openid = json.get("openid").getAsString();
+					System.out.println(json.toString());
 					models.Client client = models.Client.find("byOpenid", openid).first();
 					if(client == null){
 						client = new models.Client();
@@ -127,7 +127,7 @@ public class WeChat extends WebService{
 						client.country = json.get("country").getAsString();
 						client.headimgurl = json.get("headimgurl").getAsString();
 						client.subscribe_time =json.get("subscribe_time").getAsString();
-						client.unionid = json.get("unionid").getAsString();
+						//client.unionid = json.get("unionid").getAsString();
 						client.save();
 					}
 		

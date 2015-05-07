@@ -13,5 +13,6 @@ public class Bootstrap extends Job{
 		JsTicketRefresher.getJsTicket();
 		//创建自定义菜单
 		CustomMenuRefresher.createMenuNow();
+		models.Client client = models.Client.find("byOpenid", "23232").first();
 	}
 }
