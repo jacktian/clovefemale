@@ -76,7 +76,7 @@ public class CustomMenuRefresher extends Job {
 		                     "{"+
 		                     	"\"type\":\"view\","+
 		                     	"\"name\":\"会员中心\","+
-		                     	"\"url\":\"http://clovefemale.boxizen.com/client/psnCenter\""+
+		                     	"\"url\":\"http://www.baidu.com\""+
 		                     "},"+
 		                     "{"+
 		                     	"\"type\":\"view\","+
