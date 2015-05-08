@@ -38,18 +38,68 @@ public class CustomMenuRefresher extends Job {
 		WSRequest request = WS.url("https://api.weixin.qq.com/cgi-bin/menu/create?access_token="+accessToken);
 		 String responeJsonStr = "{"+
                  "\"button\":["+
-                     "{\"name\":\"菜单名称1\","+
-                     "\"type\":\"click\"," +
-                     "\"key\":\"V01_S01\"" +
-                     "},"+
-                     "{\"name\":\"菜单名称2\","+
-                     "\"type\":\"click\"," +
-                     "\"key\":\"V02_S01\"" +
-                     "},"+
-                     "{\"name\":\"菜单名称1\","+
-                     "\"type\":\"click\"," +
-                     "\"key\":\"V03_S01\"" +
-                     "}"+
+				 	 //记录控开始
+                     "{\"name\":\"记录控\","+
+	                     "\"sub_button\":["+
+		                     "{"+
+		                     	"\"type\":\"view\","+
+		                     	"\"name\":\"助孕记录\","+
+		                     	"\"url\":\"http://clovefemale.boxizen.com/client/pregMense\""+
+		                     "},"+
+		                     "{"+
+		                     	"\"type\":\"view\","+
+		                     	"\"name\":\"宝宝成长\","+
+		                     	"\"url\":\"http://clovefemale.boxizen.com/client/babyRecord\""+
+		                     "},"+
+		                     "{"+
+		                     	"\"type\":\"view\","+
+		                     	"\"name\":\"小药箱\","+
+		                     	"\"url\":\"http://clovefemale.boxizen.com/client/medBox\""+
+		                     "},"+
+		                     "{"+
+		                     	"\"type\":\"view\","+
+		                     	"\"name\":\"小工具\","+
+		                     	"\"url\":\"http://www.baidu.com\""+
+		                     "}"+
+		                  "]"+
+		               "},"+
+		             //记录控结束
+		             //丁香资讯开始
+		             "{\"name\":\"丁香资讯\","+
+		             "\"type\":\"view\","+
+		             "\"url\":\"http://www.baidu.com\""+
+		             "},"+
+		             //丁香资讯结束
+		             //丁香会员开始
+		             "{\"name\":\"丁香会员\","+
+	                     "\"sub_button\":["+
+		                     "{"+
+		                     	"\"type\":\"view\","+
+		                     	"\"name\":\"会员中心\","+
+		                     	"\"url\":\"http://clovefemale.boxizen.com/client/psnCenter\""+
+		                     "},"+
+		                     "{"+
+		                     	"\"type\":\"view\","+
+		                     	"\"name\":\"会员绑定\","+
+		                     	"\"url\":\"http://www.baidu.com\""+
+		                     "},"+
+		                     "{"+
+		                     	"\"type\":\"view\","+
+		                     	"\"name\":\"常见问题\","+
+		                     	"\"url\":\"http://www.baidu.com\""+
+		                     "},"+
+		                     "{"+
+		                     	"\"type\":\"view\","+
+		                     	"\"name\":\"联系我们\","+
+		                     	"\"url\":\"http://www.baidu.com\""+
+		                     "},"+
+		                     "{"+
+		                     	"\"type\":\"view\","+
+		                     	"\"name\":\"关于我们\","+
+		                     	"\"url\":\"http://www.baidu.com\""+
+		                     "}"+
+		                  "]"+
+		               "}"+
                  "]"+
              "}";
 		request.body = responeJsonStr;
