@@ -36,8 +36,23 @@ public class CustomMenuRefresher extends Job {
 		String accessToken = bean.access_token;
 		/* 调用微信接口创建菜单 */
 		WSRequest request = WS.url("https://api.weixin.qq.com/cgi-bin/menu/create?access_token="+accessToken);
-		String json = "{'button':[{'type':'click','name':'今日歌曲','key':'V1001_TODAY_MUSIC'},{'type':'click','name':'今日歌曲','key':'V1001_TODAY_MUSIC'}]}";
-		request.body = json;
+		 String responeJsonStr = "{"+
+                 "\"button\":["+
+                     "{\"name\":\"菜单名称1\","+
+                     "\"type\":\"click\"," +
+                     "\"key\":\"V01_S01\"" +
+                     "},"+
+                     "{\"name\":\"菜单名称2\","+
+                     "\"type\":\"click\"," +
+                     "\"key\":\"V02_S01\"" +
+                     "},"+
+                     "{\"name\":\"菜单名称1\","+
+                     "\"type\":\"click\"," +
+                     "\"key\":\"V03_S01\"" +
+                     "}"+
+                 "]"+
+             "}";
+		request.body = responeJsonStr;
 		HttpResponse resp = request.post();
 		JsonElement jsonElement = resp.getJson();
 		JsonObject rtnJson = jsonElement.getAsJsonObject();
