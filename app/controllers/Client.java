@@ -32,6 +32,8 @@ public class Client extends WebService{
 		String code = params.get("code");
 		System.out.println("code:"+code);
 	}
+	
+	
 	/**
 	 * 记录控首页
 	 */
@@ -42,7 +44,8 @@ public class Client extends WebService{
 	/**
 	 * 助孕记录
 	 */
-	public static void pregMense(){
+	public static void pregMense(String code){
+		System.out.println("preg code:"+code);
 		render("/Client/record/mense.html");
 	}
 
