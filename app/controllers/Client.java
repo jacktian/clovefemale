@@ -80,8 +80,9 @@ public class Client extends WebService{
 	/**
 	 *会员中心
 	 **/
-	public static void psnCenter(){
-		render("/Client/record/psnCenter.html");
+	public static void psnCenter(String openid){
+		models.Client client = models.Client.find("byOpenid", openid).first();
+		render("/Client/record/psnCenter.html",client);
 	}
 
 	/**

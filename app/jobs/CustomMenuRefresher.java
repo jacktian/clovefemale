@@ -34,10 +34,11 @@ public class CustomMenuRefresher extends Job {
 		WeChat bean = new WeChat();
 		bean = (WeChat) WeChat.findAll().get(0);
 		String accessToken = bean.access_token;
-		/* 调用微信接口获取创建菜单 */
+		/* 调用微信接口创建菜单 */
 		WSRequest request = WS.url("https://api.weixin.qq.com/cgi-bin/menu/create?access_token="+accessToken);
 		String json = "{'button':[{'type':'click','name':'今日歌曲','key':'V1001_TODAY_MUSIC'},{'type':'click','name':'今日歌曲','key':'V1001_TODAY_MUSIC'}]}";
 		request.body = json;
-		request.post();
+		HttpResponse response = request.post();
+		System.out.println("创建自定义菜单结果:"+response.getStatusText());
 	}
 }
