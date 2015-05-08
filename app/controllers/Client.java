@@ -28,12 +28,21 @@ import utils.Sign;
  * @since 2015/03/23
  */
 public class Client extends WebService{
-	/* 从配置文件中获取appKey与appSecret */
+	/**
+	 * 从配置文件中获取appKey与appSecret
+	 */
 	public static String appKey = Play.configuration.getProperty("wechat_appkey");
 	public static String appSecret = Play.configuration.getProperty("wechat_secret");
-	/*用户openid*/
+	
+	/**
+	 * 用户openid
+	 */
 	public static String openid = null;
-	/* 拦截器 */
+	
+	
+	/**
+	 * 拦截器
+	 */
 	@Before(unless={"record","first"})
 	public static void getCrtUser(){
 		String code = params.get("code");
