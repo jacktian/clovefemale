@@ -27,6 +27,11 @@ import utils.Sign;
  */
 public class Client extends WebService{
 	
+	@Before(unless={"record","first"})
+	public static void getCrtUser(){
+		String code = params.get("code");
+		System.out.println("code:"+code);
+	}
 	/**
 	 * 记录控首页
 	 */

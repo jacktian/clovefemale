@@ -12,8 +12,16 @@ import play.libs.WS;
 import play.libs.WS.HttpResponse;
 import play.libs.WS.WSRequest;
 
-@Every("50min")
 public class CustomMenuRefresher extends Job {
+	
+	/* 从配置文件中获取appKey与appSecret */
+	public static String appKey = Play.configuration.getProperty("wechat_appkey");
+	public static String appSecret = Play.configuration.getProperty("wechat_secret");
+	/* 返回的Url地址 */
+	public static String pregUrl = "http://clovefemale.boxizen.com/client/pregMense";
+	public static String babyUrl = "http://clovefemale.boxizen.com/client/mybaby";
+	public static String medUrl = "http://clovefemale.boxizen.com/client/medBox";
+	public static String psnUrl = "http://clovefemale.boxizen.com/client/psnCenter";
 	
 	@Override
 	public void doJob(){
@@ -43,18 +51,18 @@ public class CustomMenuRefresher extends Job {
 	                     "\"sub_button\":["+
 		                     "{"+
 		                     	"\"type\":\"view\","+
-		                     	"\"name\":\"助孕记录\","+
-		                     	"\"url\":\"http://clovefemale.boxizen.com/client/pregMense\""+
+		                     	"\"name\":\"助孕记录\","+  
+		                     	"\"url\":\"https://open.weixin.qq.com/connect/oauth2/authorize?appid="+appKey+"&redirect_uri="+pregUrl+"&response_type=code&scope=snsapi_base&state=123#wechat_redirect\""+
 		                     "},"+
 		                     "{"+
 		                     	"\"type\":\"view\","+
 		                     	"\"name\":\"宝宝成长\","+
-		                     	"\"url\":\"http://clovefemale.boxizen.com/client/babyRecord\""+
+		                     	"\"url\":\"https://open.weixin.qq.com/connect/oauth2/authorize?appid="+appKey+"&redirect_uri="+babyUrl+"&response_type=code&scope=snsapi_base&state=123#wechat_redirect\""+
 		                     "},"+
 		                     "{"+
 		                     	"\"type\":\"view\","+
 		                     	"\"name\":\"小药箱\","+
-		                     	"\"url\":\"http://clovefemale.boxizen.com/client/medBox\""+
+		                     	"\"url\":\"https://open.weixin.qq.com/connect/oauth2/authorize?appid="+appKey+"&redirect_uri="+medUrl+"&response_type=code&scope=snsapi_base&state=123#wechat_redirect\""+
 		                     "},"+
 		                     "{"+
 		                     	"\"type\":\"view\","+
@@ -76,7 +84,7 @@ public class CustomMenuRefresher extends Job {
 		                     "{"+
 		                     	"\"type\":\"view\","+
 		                     	"\"name\":\"会员中心\","+
-		                     	"\"url\":\"http://www.baidu.com\""+
+		                     	"\"url\":\"https://open.weixin.qq.com/connect/oauth2/authorize?appid="+appKey+"&redirect_uri="+psnUrl+"&response_type=code&scope=snsapi_base&state=123#wechat_redirect\""+
 		                     "},"+
 		                     "{"+
 		                     	"\"type\":\"view\","+
