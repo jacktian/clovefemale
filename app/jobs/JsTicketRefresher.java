@@ -60,7 +60,7 @@ public class JsTicketRefresher extends Job {
 		JsonElement jsonElement = resp.getJson();
 		JsonObject json = jsonElement.getAsJsonObject();
 		/*打印js_ticket的值*/
-		System.out.println("js_ticket:"+json.get("ticket").getAsString());
+		System.out.println("accessToken:"+accessToken+"js_ticket:"+json.get("ticket").getAsString());
 		try{
 			if(json.get("ticket").getAsString() != null){
 				/* 将js_ticket保存到数据库中 */

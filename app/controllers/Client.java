@@ -45,7 +45,7 @@ public class Client extends WebService{
 	/**
 	 * 拦截器
 	 */
-	@Before(unless={"record","first","medBox"})
+	@Before(unless={"record","first"})
 	public static void getCrtUser(){
 		String code = params.get("code");
 		try{
