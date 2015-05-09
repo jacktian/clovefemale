@@ -136,7 +136,3 @@ public class Client extends WebService{
 
 
 }
-
-
-session.put("openid",openid);
-session.get("openid");
