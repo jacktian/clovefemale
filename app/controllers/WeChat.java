@@ -178,6 +178,7 @@ public class WeChat extends WebService{
 		config.timestamp = timestamp;
 		config.nonceStr = nonceStr;
 		config.signature = signature;
+		System.out.println(timestamp+","+nonceStr+","+signature);
 		wsOk(config);
 	}
 }
