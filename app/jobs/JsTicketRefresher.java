@@ -11,7 +11,7 @@ import play.jobs.Job;
 import play.libs.WS;
 import play.libs.WS.HttpResponse;
 
-@Every("50min")
+@Every("110min")
 public class JsTicketRefresher extends Job {
 	
 	@Override
