@@ -43,13 +43,18 @@ public class Client extends WebService{
 	/**
 	 * 拦截器
 	 */
-	@Before(unless={"record","first"})
+	@Before(unless={"record","first","medBox"})
 	public static void getCrtUser(){
 		String code = params.get("code");
-		String requestUrl = "https://api.weixin.qq.com/sns/oauth2/access_token?appid="+appKey+"&secret="+appSecret+"&code="+code+"&grant_type=authorization_code";
-		JsonElement jsonElement = WS.url(requestUrl).get().getJson();
-		JsonObject json = jsonElement.getAsJsonObject();
-		openid = json.get("openid").getAsString();
+		try{
+			String requestUrl = "https://api.weixin.qq.com/sns/oauth2/access_token?appid="+appKey+"&secret="+appSecret+"&code="+code+"&grant_type=authorization_code";
+			JsonElement jsonElement = WS.url(requestUrl).get().getJson();
+			JsonObject json = jsonElement.getAsJsonObject();
+			openid = json.get("openid").getAsString();
+		}
+		catch(Exception e){
+			//此处做拦截操作
+		}
 	}
 	
 	
@@ -130,3 +135,6 @@ public class Client extends WebService{
 
 }
 
+
+session.put("openid",openid);
+session.get("openid");
