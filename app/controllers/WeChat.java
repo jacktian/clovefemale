@@ -7,7 +7,9 @@ import java.util.Map;
 
 
 
+
 import models.Client;
+import models.User;
 
 import org.h2.store.Page;
 import org.jboss.netty.handler.codec.http.HttpRequest;
@@ -115,9 +117,9 @@ public class WeChat extends WebService{
 					/*存储用户的信息*/
 					String openid = json.get("openid").getAsString();
 					System.out.println(json.toString());
-					models.Client client = models.Client.find("byOpenid", openid).first();
+					User client = User.find("byOpenid", openid).first();
 					if(client == null){
-						client = new models.Client();
+						client = new User();
 						client.subscribe = json.get("subscribe").getAsString();
 						client.openid = openid;
 						client.nickname = json.get("nickname").getAsString();

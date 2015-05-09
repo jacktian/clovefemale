@@ -45,7 +45,7 @@ public class Client extends WebService{
 	/**
 	 * 拦截器
 	 */
-	@Before(unless={"record","first","medBox"})
+	@Before(unless={"record","first"})
 	public static void getCrtUser(){
 		String code = params.get("code");
 		try{
@@ -116,7 +116,7 @@ public class Client extends WebService{
 	 **/
 	public static void psnCenter(){
 		User user = User.find("byOpenid", openid).first();
-		render("/Client/record/psnCenter.html",client);
+		render("/Client/record/psnCenter.html",user);
 	}
 
 	/**
