@@ -28,9 +28,6 @@ public class Sign {
         // 注意 URL 一定要动态获取，不能 hardcode
         String url = crtUrl;
         Map<String, String> ret = sign(jsapi_ticket, url);
-        /*for (Map.Entry entry : ret.entrySet()) {
-            System.out.println(entry.getKey() + ", " + entry.getValue());
-        }*/
         return ret;
     }
 
@@ -46,7 +43,7 @@ public class Sign {
                   "&noncestr=" + nonce_str +
                   "&timestamp=" + timestamp +
                   "&url=" + url;
-        System.out.println(string1);
+        //System.out.println(string1);
 
         try
         {
