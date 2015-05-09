@@ -9,7 +9,7 @@
 
 
 <header class="mui-bar mui-bar-nav babyTitle">
-  <a class="mui-icon mui-icon-left-nav mui-pull-left"></a>
+  <a class="mui-icon mui-icon-left-nav mui-pull-left" href="/client/babyRecord"></a>
   <!-- <a  class="mui-icon mui-icon-bars mui-pull-right"></a> -->
   <a  id="vaccineInput" class="mui-icon mui-icon-compose mui-pull-right"></a>
   <h1 class="mui-title">天天的疫苗接种</h1>
@@ -28,20 +28,20 @@
 		<ul>
 			<li>
 				<a id="todoVacLink" href="#" class="vacLink">
-					<img src="@{'/public/images/client/todo_active.png'}" alt=""/>
-					<div>未接种</div>
+					<i class="iconfont vacIconNav todoIcon">&#xf00c4;</i>
+					<div class="vacNavText">未接种</div>
 				</a>
 			</li>
 			<li>
 				<a id="doneVacLink" href="#" class="vacLink">
-					<img src="@{'/public/images/client/done3.png'}" alt=""/>
-					<div>已接种</div>
+					<i class="iconfont vacIconNav doneIcon">&#xe786;</i>
+					<div class="vacNavText">已接种</div>
 				</a>
 			</li>
 			<li>
 				<a id="allVacLink" href="#" class="vacLink">
-					<img src="@{'/public/images/client/all2.png'}" alt=""/>
-					<div>全部</div>
+					<i class="iconfont vacIconNav allIcon">&#xe60d;</i>
+					<div class="vacNavText">全部</div>
 				</a>
 			</li>
 		</ul>
@@ -54,10 +54,10 @@
 		<form class="mui-input-group">
 			<div class="mui-input-row mui-checkbox mui-left">
 				<label>乙肝疫苗(第1次)</label>
-				<input name="radio1" type="checkbox" checked/>
+				<input name="radio1" type="checkbox"/>
 				<div class="dateBox_vac">
 					<img  class="dateImg_vac" src="@{'/public/images/client/date.png'}" alt=""/>
-					<span class="dateNo"></span>
+					<span class="dateNo"></span>	
 				</div>
 			</div>
 			<div class="mui-input-row mui-checkbox mui-left">
@@ -125,73 +125,41 @@
 			<div class="mui-input-row mui-checkbox mui-left">
 				<label>乙肝疫苗(第1次)</label>
 				<input name="radio1" type="checkbox" checked/>
-				<!-- <div class="dateBox_vac">
-					<img  class="dateImg_vac" src="@{'/public/images/client/date.png'}" alt=""/>
-					<span class="dateNo"></span>
-				</div> -->
 				<div class="fullVacDate">2015-3-26</div>
 			</div>
 			<div class="mui-input-row mui-checkbox mui-left">
 				<label>卡介苗(第1次)</label>
 				<input name="radio1" type="checkbox" checked/>
-				<!-- <div class="dateBox_vac">
-					<img  class="dateImg_vac" src="@{'/public/images/client/date.png'}" alt=""/>
-					<span class="dateNo"></span>
-				</div> -->
 				<div class="fullVacDate">2015-3-26</div>
 			</div>
 			<div class="mui-input-row mui-checkbox mui-left">
 				<label>乙肝疫苗(第2次)</label>
-				<input name="radio1" type="checkbox" checked />
-				<!-- <div class="dateBox_vac">
-					<img  class="dateImg_vac" src="@{'/public/images/client/date.png'}" alt=""/>
-					<span class="dateNo"></span>
-				</div> -->
+				<input name="radio1" type="checkbox" checked/>
 				<div class="fullVacDate">2015-3-26</div>
 			</div>
 			<div class="mui-input-row mui-checkbox mui-left">
 				<label>脊灰疫苗(第2次)</label>
 				<input name="radio1" type="checkbox" checked />
-				<!-- <div class="dateBox_vac">
-					<img  class="dateImg_vac" src="@{'/public/images/client/date.png'}" alt=""/>
-					<span class="dateNo"></span>
-				</div> -->
 				<div class="fullVacDate">2015-3-26</div>
 			</div>
 			<div class="mui-input-row mui-checkbox mui-left">
 				<label>脊灰疫苗(第2次)</label>
 				<input name="radio1" type="checkbox" checked/>
-				<!-- <div class="dateBox_vac">
-					<img  class="dateImg_vac" src="@{'/public/images/client/date.png'}" alt=""/>
-					<span class="dateNo"></span>
-				</div> -->
 				<div class="fullVacDate">2015-3-26</div>
 			</div>
 			<div class="mui-input-row mui-checkbox mui-left">
 				<label>无细胞百白破疫苗(第1次)</label>
 				<input name="radio1" type="checkbox" checked/>
-				<!-- <div class="dateBox_vac">
-					<img  class="dateImg_vac" src="@{'/public/images/client/date.png'}" alt=""/>
-					<span class="dateNo"></span>
-				</div> -->
 				<div class="fullVacDate">2015-3-26</div>
 			</div>
 			<div class="mui-input-row mui-checkbox mui-left">
 				<label>脊灰疫苗(第3次)</label>
 				<input name="radio1" type="checkbox" checked/>
-				<!-- <div class="dateBox_vac">
-					<img  class="dateImg_vac" src="@{'/public/images/client/date.png'}" alt=""/>
-					<span class="dateNo"></span>
-				</div> -->
 				<div class="fullVacDate">2015-3-26</div>
 			</div>
 			<div class="mui-input-row mui-checkbox mui-left">
 				<label>无细胞百白破疫苗(第2次)</label>
-				<input name="radio1" type="checkbox"/>
-				<!-- <div class="dateBox_vac">
-					<img  class="dateImg_vac" src="@{'/public/images/client/date.png'}" alt=""/>
-					<span class="dateNo"></span>
-				</div> -->
+				<input name="radio1" type="checkbox" checked/>
 				<div class="fullVacDate">2015-3-26</div>
 			</div>
 		</form>
@@ -203,37 +171,21 @@
 			<div class="mui-input-row mui-checkbox mui-left">
 				<label>乙肝疫苗(第1次)</label>
 				<input name="radio1" type="checkbox" checked/>
-				<!-- <div class="dateBox_vac">
-					<img  class="dateImg_vac" src="@{'/public/images/client/date.png'}" alt=""/>
-					<span class="dateNo"></span>
-				</div> -->
 				<div class="fullVacDate">2015-3-26</div>
 			</div>
 			<div class="mui-input-row mui-checkbox mui-left">
 				<label>卡介苗(第1次)</label>
 				<input name="radio1" type="checkbox" checked/>
-				<!-- <div class="dateBox_vac">
-					<img  class="dateImg_vac" src="@{'/public/images/client/date.png'}" alt=""/>
-					<span class="dateNo"></span>
-				</div> -->
 				<div class="fullVacDate">2015-3-26</div>
 			</div>
 			<div class="mui-input-row mui-checkbox mui-left">
 				<label>乙肝疫苗(第2次)</label>
 				<input name="radio1" type="checkbox" checked/>
-				<!-- <div class="dateBox_vac">
-					<img  class="dateImg_vac" src="@{'/public/images/client/date.png'}" alt=""/>
-					<span class="dateNo"></span>
-				</div> -->
 				<div class="fullVacDate">2015-3-26</div>
 			</div>
 			<div class="mui-input-row mui-checkbox mui-left">
 				<label>脊灰疫苗(第2次)</label>
 				<input name="radio1" type="checkbox" checked/>
-				<!-- <div class="dateBox_vac">
-					<img  class="dateImg_vac" src="@{'/public/images/client/date.png'}" alt=""/>
-					<span class="dateNo"></span>
-				</div> -->
 				<div class="fullVacDate">2015-3-26</div>
 			</div>
 			<div class="mui-input-row mui-checkbox mui-left">

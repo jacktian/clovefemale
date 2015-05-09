@@ -21,6 +21,8 @@ import play.libs.WS.WSRequest;
 import play.mvc.*;
 import utils.Sign;
 
+import models.User;
+
 /**
  * 客户端控制器
  * 
@@ -108,7 +110,7 @@ public class Client extends WebService{
 	 *会员中心
 	 **/
 	public static void psnCenter(){
-		models.Client client = models.Client.find("byOpenid", openid).first();
+		User user = User.find("byOpenid", openid).first();
 		render("/Client/record/psnCenter.html",client);
 	}
 
