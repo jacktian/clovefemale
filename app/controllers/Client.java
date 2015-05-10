@@ -45,7 +45,7 @@ public class Client extends WebService{
 	/**
 	 * 拦截器
 	 */
-	@Before(unless={"record","first","medBox"})
+	@Before(unless={"record","first"})
 	public static void getCrtUser(){
 		String code = params.get("code");
 		try{
@@ -53,6 +53,8 @@ public class Client extends WebService{
 			JsonElement jsonElement = WS.url(requestUrl).get().getJson();
 			JsonObject json = jsonElement.getAsJsonObject();
 			openid = json.get("openid").getAsString();
+			//移除页面的code参数
+			params.remove("code");
 		}
 		catch(Exception e){
 			//此处做拦截操作
