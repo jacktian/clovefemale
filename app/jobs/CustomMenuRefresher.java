@@ -62,7 +62,7 @@ public class CustomMenuRefresher extends Job {
 		                     "{"+
 		                     	"\"type\":\"view\","+
 		                     	"\"name\":\"小药箱\","+
-		                     	"\"url\":\"https://open.weixin.qq.com/connect/oauth2/authorize?appid="+appKey+"&redirect_uri="+medUrl+"&response_type=code&scope=snsapi_base&state=123#wechat_redirect\""+
+		                     	"\"url\":\""+medUrl+"\""+
 		                     "},"+
 		                     "{"+
 		                     	"\"type\":\"view\","+
