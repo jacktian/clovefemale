@@ -38,7 +38,16 @@
 	color:#838383;
 }
 .med-box-item{
-	background:#F8F8F8;
+	background:#FFF;
+}
+.med-box-item.select-wait{
+	background: #F8F8F8;
+}
+.med-box-item.select-wait.delete-wait{
+	background:#D55F5F;
+}
+.med-box-item.select-wait.delete-wait .med-box-name,.med-box-item.select-wait.delete-wait .iconfont{
+	color:#FFF;
 }
 /* 药品列表  */
 .med-num{

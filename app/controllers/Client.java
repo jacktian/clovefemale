@@ -54,6 +54,8 @@ public class Client extends WebService{
 			JsonElement jsonElement = WS.url(requestUrl).get().getJson();
 			JsonObject json = jsonElement.getAsJsonObject();
 			openid = json.get("openid").getAsString();
+			//移除页面的code参数
+			params.remove("code");
 		}
 		catch(Exception e){
 			//此处做拦截操作
