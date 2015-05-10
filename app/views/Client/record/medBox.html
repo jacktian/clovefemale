@@ -28,38 +28,39 @@
 
 <div class="mui-content med-box-content">
 	<ul class="mui-table-view med-box-list">
-		<li class="mui-table-view-cell med-box-item select-wait">
+		<li class="mui-table-view-cell med-box-item">
+			<input name="checkbox" type="checkbox">
 			<a class="mui-navigate-right" href="/client/medicine"> <i class="iconfont">&#xe63f;</i>
-				<span class="med-box-name">感冒药箱</span>
+				<span class="med-box-name">内服药</span>
 			</a>
 			<span class="mui-badge mui-badge-danger">10</span>
 		</li>
 		<li class="mui-table-view-cell med-box-item">
 			<a class="mui-navigate-right" href="/client/medicine"> <i class="iconfont">&#xe605;</i>
-				<span class="med-box-name">小儿药箱</span>
+				<span class="med-box-name">外用药</span>
 			</a>
 			<span class="mui-badge mui-badge-success">21</span>
 		</li>
 		<li class="mui-table-view-cell med-box-item">
 			<a class="mui-navigate-right" href="/client/medicine">
 				<i class="iconfont">&#xe605;</i>
-				<span class="med-box-name">小儿药箱</span>
+				<span class="med-box-name">儿童小药箱</span>
 			</a>
 			<span class="mui-badge mui-badge-success">21</span>
 		</li>
 		<li class="mui-table-view-cell med-box-item">
 			<a class="mui-navigate-right" href="/client/medicine">
 				<i class="iconfont">&#xe63f;</i>
-				<span class="med-box-name">感冒药箱</span>
+				<span class="med-box-name">医用材料</span>
 			</a>
 			<span class="mui-badge mui-badge-danger">10</span>
 		</li>
 		<li class="mui-table-view-cell med-box-item">
 			<a class="mui-navigate-right" href="/client/medicine">
-				<i class="iconfont">&#xe605;</i>
-				<span class="med-box-name">小儿药箱</span>
+				<i class="iconfont">&#xe63f;</i>
+				<span class="med-box-name">其他</span>
 			</a>
-			<span class="mui-badge mui-badge-success">21</span>
+			<span class="mui-badge mui-badge-danger">10</span>
 		</li>
 	</ul>
 </div>
@@ -68,9 +69,9 @@
 		<span class="mui-icon">
 			<i class="iconfont">&#xe636;</i>
 		</span>
-		<span class="mui-tab-label">提示</span>
+		<span class="mui-tab-label">添加</span>
 	</a>
-	<a class="mui-tab-item medbox-item" href="#tabbar-with-chat">
+	<a class="mui-tab-item medbox-item select-item" href="#tabbar-with-chat">
 		<span class="mui-icon mui-icon-checkmarkempty"></span>
 		<span class="mui-tab-label">选择</span>
 	</a>
@@ -131,13 +132,6 @@
 			$('.med-model').show();
 			$('#pregDrop').show();
 		});
-		/*药箱菜单*/
-		$('.med-box-item a').click(function(){
-			if($(this).parent().hasClass('select-wait'))
-				return false;
-			else
-				return true;
-		});
 		/*微信扫描*/
 		$('.scanner-add-btn a').bind('touchstart',function(){
 			$('.med-popover').hide();
@@ -150,6 +144,20 @@
 				}
 			});
 			return false;
+		});
+		/*药箱菜单*/
+		$('.med-box-item a').click(function(){
+			if($(this).parent().hasClass('select-wait')){
+				$(this).parent().addClass('delete-wait');
+				return false;
+			}
+			else
+				return true;
+		});
+		/* 选择菜单 */
+		$('.select-item').bind('touchstart',function(){
+			$('.med-box-item').addClass('mui-checkbox');
+			$('.med-box-item').addClass('mui-left');
 		});
 	});
 </script>
