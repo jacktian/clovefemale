@@ -121,6 +121,12 @@ public class Client extends WebService{
 		User userModel = User.find("byOpenid", openid).first();
 		UserCenterBean user = new UserCenterBean();
 
+		//头像
+		userModel.headimgurl;
+
+		//昵称
+		userModel.nickname;
+
 		//丁香号
 		if(userModel.cloveId == null || "".equals(userModel.cloveId)){
 			user.cloveId = "未设置";
