@@ -5,9 +5,9 @@
 <div class="psnBox">
 	<div class="imgAndname">
 		<div class="headImg">
-			<img src="${client.headimgurl}" alt="${client.nickname}"/>
+			<img src="${user.headimgurl}" alt="${user.nickname}"/>
 		</div>	
-		<span class="nickname">${client.nickname}</span>
+		<span class="nickname">${user.nickname}</span>
 	</div>
 	
 	<div class="introdction">快乐生活每一天</div>
@@ -71,7 +71,7 @@
 	    <div class="listItemIcon">
 	    	<i class="icon-psnItem idIcon iconfont">&#xe63e;</i>
 	    </div>
-	    <div class="listItemText">未设置</div>
+	    <div class="listItemText">${user.cloveId}</div>
       丁香号
     </a>
   </li>
@@ -80,7 +80,7 @@
 	    <div class="listItemIcon">
 	    	<i class="icon-psnItem iconfont">&#xe6bb;</i>
 	    </div>
-	    <div class="listItemText">136*****312</div>
+	    <div class="listItemText">${user.phoneNum}</div>
       手机号
     </a>
   </li>
@@ -89,7 +89,7 @@
 	    <div class="listItemIcon">
 	    	<i class="icon-psnItem iconfont">&#xe838;</i>
 	    </div>
-	    <div class="listItemText">*******@qq.com</div>
+	    <div class="listItemText">${user.email}</div>
       邮箱
     </a>
   </li>
@@ -98,7 +98,7 @@
 	    <div class="listItemIcon">
 	    	<i class="icon-psnItem iconfont">&#xe619;</i>
 	    </div>
-	    <div class="listItemText">银级</div>
+	    <div class="listItemText">${user.userGrade}</div>
       用户等级
     </a>
   </li>
@@ -107,7 +107,7 @@
     	<div class="listItemIcon">
     		<i id="icontest" class="icon-psnItem addVIcon iconfont">&#xe6d9;</i>
     	</div>
-    	<div class="listItemText">未加V</div>
+    	<div class="listItemText">${user.isAddV}</div>
       加V认证
     </a>
   </li>

@@ -22,6 +22,7 @@ import play.mvc.*;
 import utils.Sign;
 
 import models.User;
+import beans.UserCenterBean;
 
 /**
  * 客户端控制器
@@ -115,7 +116,47 @@ public class Client extends WebService{
 	 *会员中心
 	 **/
 	public static void psnCenter(){
-		User user = User.find("byOpenid", openid).first();
+		User userModel = User.find("byOpenid", openid).first();
+		UserCenterBean user = new UserCenterBean();
+
+		//丁香号
+		if(userModel.cloveId == null || "".equals(userModel.cloveId)){
+			user.cloveId = "未设置";
+		}else{
+			user.cloveId = userModel.cloveId;
+		}
+
+		//个性签名
+		if(userModel.signName == null || "".equals(userModel.signName)){
+			user.signName = "点击设置";
+		}else{
+			user.signName = userModel.signName;
+		}
+
+		//加V
+		if(userModel.isAddV == null || userModel.isAddV == false)){
+			user.isAddV = "未加V";
+		}else{
+			user.isAddV = "已加V";
+		}
+
+		//用户等级
+		user.userGrade = userModel.userGrade;
+
+		//手机
+		if(userModel.phoneNum == null || "".equals(userModel.phoneNum)){
+			user.phoneNum = "未绑定";
+		}else{
+			user.phoneNum = userModel.phoneNum;
+		}
+
+		//邮箱
+		if(userModel.email == null || "".equals(userModel.email)){
+			user.email = "未绑定";
+		}else{
+			user.email = userModel.phoneNum;
+		}
+
 		render("/Client/record/psnCenter.html",user);
 	}
 
