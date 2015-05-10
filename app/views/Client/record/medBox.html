@@ -164,7 +164,7 @@
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
 <script type="text/javascript">
 	/* ajax调用获得接口信息 */
-	$.get("/WeChat/jsApiCall?url="+location.href.split('#')[0],function(data,status){
+	$.post("/WeChat/jsApiCall?url="+location.href.split('#')[0],function(data,status){
 		/*获取接口配置信息*/
 		var timestamp = data.data.timestamp;
 		var nonceStr = data.data.nonceStr;
