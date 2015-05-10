@@ -142,7 +142,7 @@ public class Client extends WebService{
 		}
 
 		//加V
-		if(userModel.isAddV == null || userModel.isAddV == false)){
+		if(userModel.isAddV == null || userModel.isAddV == false){
 			user.isAddV = "未加V";
 		}else{
 			user.isAddV = "已加V";

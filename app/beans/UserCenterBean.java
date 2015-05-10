@@ -15,6 +15,11 @@ public class UserCenterBean {
      * 用户名(昵称)
      */
 	public String nickname;
+
+	/**
+     * 头像
+     */
+	public String headimgurl;
 	/**
      * 性别
      */
