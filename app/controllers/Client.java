@@ -122,10 +122,10 @@ public class Client extends WebService{
 		UserCenterBean user = new UserCenterBean();
 
 		//头像
-		userModel.headimgurl;
+		user.headimgurl = userModel.headimgurl ;
 
 		//昵称
-		userModel.nickname;
+		user.nickname = userModel.nickname;
 
 		//丁香号
 		if(userModel.cloveId == null || "".equals(userModel.cloveId)){
