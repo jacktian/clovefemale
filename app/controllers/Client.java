@@ -46,7 +46,7 @@ public class Client extends WebService{
 	/**
 	 * 拦截器
 	 */
-	@Before(unless={"record","first"})
+	@Before(unless={"record","first","vaccine","remind"})
 	public static void getCrtUser(){
 		String code = params.get("code");
 		try{
@@ -56,6 +56,7 @@ public class Client extends WebService{
 			openid = json.get("openid").getAsString();
 			//移除页面的code参数
 			params.remove("code");
+			session.put("openid", openid);
 		}
 		catch(Exception e){
 			//此处做拦截操作
