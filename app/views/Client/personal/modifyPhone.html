@@ -17,7 +17,7 @@
 	<input id="infText" type="tel" class="infText" placeholder="">
 	<h6 class="infTips" id="infTips"></h6>
 </div>
-<div class="responseInf" id="responseInf">testtest</div>
+<div class="responseInf" id="responseInf"></div>
 <script type="text/javascript">
 	$(function(){
         //文本框只能输入数字，并屏蔽输入法和粘贴  
@@ -85,13 +85,15 @@
                 }   
                 
             });  
+
+
         };  
 
         $.fn.idRule = function(){
             this.bind("keyup", function(e) {  
                 var char_code = e.charCode ? e.charCode : e.keyCode; 
                 // alert(char_code);
-                console.log(/^[a-zA-Z]\w/.test(this.value));
+                // console.log(/^[a-zA-Z]\w/.test(this.value));
                 // if((char_code>=48 && char_code <=57) || (char_code>=65 && char_code<=90) || (char_code>=97&&char_code<=122) || char_code==95 || char_code == 45 ||char_code == 8){      
                 //     return true;  
                 // }else{  
@@ -101,6 +103,10 @@
                 // }   
                 
             });  
+
+            this.bind("focus", function(e) {  
+                 $('#responseInf').hide();
+            });  
         };
 
 		switch(localStorage.modifyItem){
@@ -108,7 +114,7 @@
 				window.document.title = "设置丁香号";
 				$("#headTitle").text("设置丁香号");
 				$("#infTips").text("丁香号可以作为系统的唯一性凭证，只能设置一次哦！");
-                 // $("#infText").idRule();
+                 $("#infText").idRule();
 				break;
 			case '2': 
 				window.document.title = "绑定手机号";
@@ -128,7 +134,7 @@
                 window.document.title = "设置丁香号";
                 $("#headTitle").text("设置丁香号");
                 $("#infTips").text("丁香号可以作为系统的唯一性凭证，只能设置一次哦！");
-                 // $("#infText").idRule();
+                 $("#infText").idRule();
                 break;
 		}
 
@@ -138,25 +144,42 @@
             var modifyItem = localStorage.modifyItem;
             // window.location.href="modifyPhone"; 
             var inf = $('#infText').val();
+            alert(inf);
             if(modifyItem == "1"){//设置丁香号
                 //先检查格式
-                $.post(
-                  '/UserAction/setCloveId',
-                  {
-                    cloveId:inf
-                  },function (data) //回传函数
-                  {
-                    if(data.result == 0){
-                        if(data.data.status == 0){
-                            window.location.href="psnCenter"; //修改成功
+               try{
+                    $.ajax({
+                        type:'post',
+                        async:true,
+                        url:'/CUserAction/setCloveId',
+                        dataType:"json",
+                      
+                      data:{
+                        cloveId:inf
+                      },
+                      success:function(data,textStatus) //回传函数
+                      { 
+                        // alert(textStatus);
+                        if(data.result == 0){
+                            if(data.data.status == 0){
+                                window.location.href="psnCenter"; //修改成功
+                            }
+                            $('#responseInf').text(data.data.discribe);   
+                        }else{//修改失败
+                             $('#responseInf').text("修改失败,请检查网络并重试！");
                         }
-                        $('#responseInf').text(data.data.discribe);   
-                    }else{//修改失败
-                         $('#responseInf').text("修改失败,请检查网络并重试！");
-                    }
-                    $('#responseInf').show();
-                  }
-                );
+                        $('#responseInf').show();
+                        
+                        },
+                        
+                        error:function(){
+                            alert("error");
+                        }
+
+                    });
+               }catch(e){//连接失败
+                    alert("异常");
+                }
             }else if(modifyItem == "2"){//绑定手机号
 
             }else{//绑定邮箱

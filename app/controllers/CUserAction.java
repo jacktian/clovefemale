@@ -75,9 +75,10 @@ public class CUserAction extends WebService{
     		response.discribe = "此丁香号已被使用";//已经被使用
     	}else{
     		String openid = session.get("openid");
-    		if(openid == null && "".equals(openid)){
+    		System.out.println(openid);
+    		if(openid == null || "".equals(openid)){
     			response.status = 3;//3表示获取openid失败
-                response.discribe = "表示获取openid失败,请使用微信公众号进入系统!";
+                response.discribe = "获取openid失败,请使用微信公众号进入系统!";
     		}else{
     			users = User.find("openid = ?", openid).fetch();
                 if(users.size() != 0){
@@ -94,6 +95,7 @@ public class CUserAction extends WebService{
                 }
     		}	
     	}
+    	System.out.println(response.status);
     	wsOk(response);
     }
     
