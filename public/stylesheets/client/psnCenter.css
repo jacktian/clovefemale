@@ -244,4 +244,49 @@ body{
 	border-color:#F2837F;
 }
 
-/*-----------------------------提醒样式结束----------------------------
+/*-----------------------------提醒样式结束----------------------------*/
+
+/*-----------------------------修改信息样式开始----------------------------*/
+.mui-btn-link.mui-btn-nav.infSaveBtn{
+	color:#fff;
+}
+
+.settingModular{
+	position: relative;
+	padding:54px 10px 5px 10px;
+
+}
+
+.numRemainder{
+	position:absolute;
+	top:73px;
+	right: 15px;
+	z-index:99;
+	font-size: 13px;
+	color:#ccc;
+	display: none;
+}
+
+input.infText{
+	margin-bottom: 3px;
+	padding-left:7px;
+	font-size: 14px;
+}
+
+.infTips{
+	color:#aaa;
+	padding-left:7px;
+}
+
+.responseInf{
+	text-align: center;
+	border-radius: 5px;
+	margin:20px auto;
+	padding:10px 0; 
+	width:80%;
+	color:red;
+	font-size: 16px;
+	/*background-color: rgba(39,40,34,0.3);*/
+	display: none;
+}
+/*-----------------------------修改信息样式结束----------------------------*/

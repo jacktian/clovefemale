@@ -176,6 +176,21 @@ public class Client extends WebService{
 		render("/Client/personal/remind.html");
 	}
 
+	/**
+	 *修改手机号
+	 **/
+	public static void modifyPhone(){
+		render("/Client/personal/modifyPhone.html");
+	}
+
+
+	/**
+	 *测试
+	 **/
+	public static void infTest(){
+		render("/Client/personal/infTest.html");
+	}
+
 
 	/**
 	 *首页
