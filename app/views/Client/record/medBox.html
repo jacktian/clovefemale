@@ -3,6 +3,7 @@
 #{set 'moreStyles'}
 <link href="@{'/public/stylesheets/client/medicine.css'}?v=20150414" rel="stylesheet" />
 #{/set}
+#{output 'Client/record/medBoxTpl.html'/}
 <header class="mui-bar mui-bar-nav client-bar-nav">
 	<a class="mui-icon mui-icon-left-nav mui-pull-left"></a>
 	<h1 class="mui-title client-title">小药箱</h1>
@@ -97,45 +98,42 @@
 		<div class="model-item">
 			<span class="model-item-title">名称</span>
 			<span class="model-item-content">
-				<input type="text" placeholder="输入药箱名称"/>
+				<input type="text" name="medBox-name" placeholder="输入药箱名称"/>
 			</span>
 		</div>
 		<div class="model-item">
 			<span class="model-item-title">标签</span>
 			<span class="model-item-content">
-				<input type="text" placeholder="输入药箱标签"/>
+				<input type="text" name="medBox-tag" placeholder="输入药箱标签"/>
 			</span>
 		</div>
 		<div class="model-item">
 			<span class="model-item-title">描述</span>
 			<span class="model-item-content">
-				<input type="text" placeholder="输入药箱描述"/>
+				<input type="text" name="medBox-mark" placeholder="输入药箱描述"/>
 			</span>
 		</div>
 	</div>
 	<div class="model-bottom">
-		<button class="mui-btn mui-btn-negative model-btn-refresh">添加</button>
+		<button class="mui-btn mui-btn-negative model-btn-refresh medBox-add-btn">添加</button>
 	</div>
 </div>
 #{set 'moreScripts'}
 <script type="text/javascript" charset="utf-8">mui.init();</script>
 <script src="@{'/public/javascripts/client/jquery-1.9.1.min.js'}"></script>
+<script type="text/javascript" src = "@{'/public/javascripts/juicer.js'}"></script>
 <script type="text/javascript">
 	$(function(){
+		/*加载药箱列表*/
+		$.get("/CMedicine/loadMedboxList",function(data){
+			var html = juicer($('#medBoxTpl').html(),{medBoxList:data.data});
+			$('.med-box-list').append(html);
+		});
 		var delSelect = 0;
 		/*遮罩层*/
 		$('#pregDrop').bind('touchstart',function(){
 			$('.med-model').hide();
 			$(this).hide();
-		});
-		/*弹出菜单*/
-		$('.add-menu').bind('touchstart',function(){
-			$('#mui-popover').show();
-		});
-		$('.man-add-btn a').bind('touchstart',function(){
-			$(this).parents('.med-popover').hide();
-			$('.med-model').show();
-			$('#pregDrop').show();
 		});
 		/*药箱菜单*/
 		$('.med-box-item a').click(function(){
@@ -164,7 +162,11 @@
 				$('.med-box-check').removeClass('show');
 				$('.medbox-item-iconfont').removeClass('hidden');
 			}
-		})
+		});
+		$('.add-item').bind('touchstart',function(){
+			$('.med-model').show();
+			$('#pregDrop').show();
+		});
 		$('.select-item').bind('touchstart',function(){
 			if(delSelect == 0){
 				delSelect = 1;
@@ -174,8 +176,20 @@
 				$('.medbox-item-iconfont').addClass('hidden');
 			}
 		});
+		/* 删除药箱 */
 		$('.del-item').bind('touchstart',function(){
 			alert('选中了'+$("input[name='checkbox']:checked").length+"个药箱");
+		});
+		/* 添加药箱 */
+		$('.medBox-add-btn').bind('click',function(){
+			var name = $("input[name='medBox-name']").val();
+			var mark = $("input[name='medBox-mark']").val();
+			$.get("/CMedicine/addMedBox?name="+name+"&mark="+mark,function(data){
+				if(data.result == 0)
+					alert("创建成功!");
+				else
+					alert("创建失败!");
+			});
 		});
 	});
 </script>
