@@ -1,5 +1,6 @@
 package jobs;
 
+import models.Medicine;
 import play.jobs.Job;
 import play.jobs.OnApplicationStart;
 import testData.AgendaTestDataGenerator;
@@ -13,5 +14,7 @@ public class Bootstrap extends Job{
 		CustomMenuRefresher.createMenuNow();
 		//获取js_ticket
 		JsTicketRefresher.getJsTicket();
+	/*	Medicine med = new Medicine();
+		med.name = "加味藿香正气丸";*/
 	}
 }

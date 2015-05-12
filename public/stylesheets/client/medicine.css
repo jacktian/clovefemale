@@ -200,3 +200,15 @@
 	font-size:1rem;
 }
 /* 弹出菜单结束  */
+.med-box-check{
+	display: none;
+}
+.mui-checkbox input[type=checkbox]:checked:before, .mui-radio input[type=radio]:checked:before{
+	color:#DF5A5A;
+}
+.med-box-item>.mui-navigate-right.med-box-item-right{
+	padding-left:15px;
+}
+.medbox-item-iconfont.hidden{
+	display: none;
+}

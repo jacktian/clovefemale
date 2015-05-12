@@ -33,6 +33,54 @@ public class Medicine extends BasicModel{
 	@Column(name = "medicineBox_Id")
 	public String medicineBoxId;//药箱编号
 	
+	/**
+	 * 	规格
+	 */
+	@Column(name = "specification")
+	public String specification;
+	
+	/**
+	 * 	产地
+	 */
+	@Column(name = "prodAddr")
+	public String prodAddr;
+	
+	/**
+	 * 	厂家
+	 */
+	@Column(name = "productor")
+	public String productor;
+	
+	/**
+	 * 	价格
+	 */
+	@Column(name = "price")
+	public String price;
+	
+	/**
+	 * 	是否OTC
+	 */
+	@Column(name = "isOtc")
+	public Boolean isOtc;
+	
+	/**
+	 * 	是否基础药物
+	 */
+	@Column(name = "isFound")
+	public Boolean isFound;
+
+	/**
+	 * 	供应商
+	 */
+	@Column(name = "supplier")
+	public String supplier;
+	
+	/**
+	 * 	批准文号
+	 */
+	@Column(name = "license")
+	public String license;
+	
 	public Medicine(){}
 	public Medicine(String name,String type,String deadline,String code,String photoAddr,String function,String aString,String medicineBoxId){
 		this.name=name;

@@ -6,7 +6,7 @@
 <header class="mui-bar mui-bar-nav client-bar-nav">
 	<a class="mui-icon mui-icon-left-nav mui-pull-left"></a>
 	<h1 class="mui-title client-title">小药箱</h1>
-	<a href="#mui-popover" class="mui-icon mui-icon-bars mui-pull-right add-menu"></a>
+	<!-- <a href="#mui-popover" class="mui-icon mui-icon-bars mui-pull-right add-menu"></a>
 	<div id="mui-popover" class="med-popover">
 		<ul class="mui-table-view med-pop-menu">
 			<li class="mui-table-view-cell man-add-btn">
@@ -16,7 +16,7 @@
 				<a href="#">扫描添加</a>
 			</li>
 		</ul>
-	</div>
+	</div> -->
 </header>
 
 <div class="mui-content med-box-search-content">
@@ -29,35 +29,39 @@
 <div class="mui-content med-box-content">
 	<ul class="mui-table-view med-box-list">
 		<li class="mui-table-view-cell med-box-item">
-			<input name="checkbox" type="checkbox">
-			<a class="mui-navigate-right" href="/client/medicine"> <i class="iconfont">&#xe63f;</i>
+			<input name="checkbox" type="checkbox" class="med-box-check">
+			<a class="mui-navigate-right med-box-item-right" href="/client/medicine"> <i class="iconfont medbox-item-iconfont">&#xe63f;</i>
 				<span class="med-box-name">内服药</span>
 			</a>
 			<span class="mui-badge mui-badge-danger">10</span>
 		</li>
 		<li class="mui-table-view-cell med-box-item">
-			<a class="mui-navigate-right" href="/client/medicine"> <i class="iconfont">&#xe605;</i>
+			<input name="checkbox" type="checkbox" class="med-box-check">
+			<a class="mui-navigate-right med-box-item-right" href="/client/medicine"> <i class="iconfont medbox-item-iconfont">&#xe605;</i>
 				<span class="med-box-name">外用药</span>
 			</a>
 			<span class="mui-badge mui-badge-success">21</span>
 		</li>
 		<li class="mui-table-view-cell med-box-item">
-			<a class="mui-navigate-right" href="/client/medicine">
-				<i class="iconfont">&#xe605;</i>
+			<input name="checkbox" type="checkbox" class="med-box-check">
+			<a class="mui-navigate-right med-box-item-right" href="/client/medicine">
+				<i class="iconfont medbox-item-iconfont">&#xe605;</i>
 				<span class="med-box-name">儿童小药箱</span>
 			</a>
 			<span class="mui-badge mui-badge-success">21</span>
 		</li>
 		<li class="mui-table-view-cell med-box-item">
-			<a class="mui-navigate-right" href="/client/medicine">
-				<i class="iconfont">&#xe63f;</i>
+			<input name="checkbox" type="checkbox" class="med-box-check">
+			<a class="mui-navigate-right med-box-item-right" href="/client/medicine">
+				<i class="iconfont medbox-item-iconfont">&#xe63f;</i>
 				<span class="med-box-name">医用材料</span>
 			</a>
 			<span class="mui-badge mui-badge-danger">10</span>
 		</li>
 		<li class="mui-table-view-cell med-box-item">
-			<a class="mui-navigate-right" href="/client/medicine">
-				<i class="iconfont">&#xe63f;</i>
+			<input name="checkbox" type="checkbox" class="med-box-check">
+			<a class="mui-navigate-right med-box-item-right" href="/client/medicine">
+				<i class="iconfont medbox-item-iconfont">&#xe63f;</i>
 				<span class="med-box-name">其他</span>
 			</a>
 			<span class="mui-badge mui-badge-danger">10</span>
@@ -65,7 +69,7 @@
 	</ul>
 </div>
 <nav class="mui-bar mui-bar-tab">
-	<a class="mui-tab-item mui-active medbox-item" href="#tabbar">
+	<a class="mui-tab-item mui-active medbox-item add-item" href="#tabbar">
 		<span class="mui-icon">
 			<i class="iconfont">&#xe636;</i>
 		</span>
@@ -75,7 +79,7 @@
 		<span class="mui-icon mui-icon-checkmarkempty"></span>
 		<span class="mui-tab-label">选择</span>
 	</a>
-	<a class="mui-tab-item medbox-item" href="#tabbar-with-sms">
+	<a class="mui-tab-item medbox-item del-item" href="#tabbar-with-sms">
 		<span class="mui-icon">
 			<i class="iconfont">&#xf008b;</i>
 		</span>
@@ -118,6 +122,7 @@
 <script src="@{'/public/javascripts/client/jquery-1.9.1.min.js'}"></script>
 <script type="text/javascript">
 	$(function(){
+		var delSelect = 0;
 		/*遮罩层*/
 		$('#pregDrop').bind('touchstart',function(){
 			$('.med-model').hide();
@@ -132,19 +137,6 @@
 			$('.med-model').show();
 			$('#pregDrop').show();
 		});
-		/*微信扫描*/
-		$('.scanner-add-btn a').bind('touchstart',function(){
-			$('.med-popover').hide();
-			wx.scanQRCode({
-			    needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
-			    scanType: ["qrCode","barCode"], // 可以指定扫二维码还是一维码，默认二者都有
-			    success: function (res) {
-			    	var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
-			    	alert(JSON.stringify(res));
-				}
-			});
-			return false;
-		});
 		/*药箱菜单*/
 		$('.med-box-item a').click(function(){
 			if($(this).parent().hasClass('select-wait')){
@@ -154,39 +146,38 @@
 			else
 				return true;
 		});
-		/* 选择菜单 */
+		/* 跳转链接 */
+		$('.med-box-item a').click(function(){
+			if(delSelect == 1){
+				return false;
+			}
+			else{
+				return true;
+			}
+		})
+		/* 底部菜单 */
+		$('.medbox-item').bind('touchstart',function(){
+			if(delSelect == 1){
+				delSelect = 0;
+				$('.med-box-item').removeClass('mui-checkbox');
+				$('.med-box-item').removeClass('mui-left');
+				$('.med-box-check').removeClass('show');
+				$('.medbox-item-iconfont').removeClass('hidden');
+			}
+		})
 		$('.select-item').bind('touchstart',function(){
-			$('.med-box-item').addClass('mui-checkbox');
-			$('.med-box-item').addClass('mui-left');
+			if(delSelect == 0){
+				delSelect = 1;
+				$('.med-box-item').addClass('mui-checkbox');
+				$('.med-box-item').addClass('mui-left');
+				$('.med-box-check').addClass('show');
+				$('.medbox-item-iconfont').addClass('hidden');
+			}
+		});
+		$('.del-item').bind('touchstart',function(){
+			alert('选中了'+$("input[name='checkbox']:checked").length+"个药箱");
 		});
 	});
 </script>
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
-<script type="text/javascript">
-	alert(location.href.split('#')[0]);
-	/* ajax调用获得接口信息 */
-	$.get("/WeChat/jsApiCall?url="+location.href.split('#')[0],function(data,status){
-		/*获取接口配置信息*/
-		var timestamp = data.data.timestamp;
-		var nonceStr = data.data.nonceStr;
-		var signature = data.data.signature;
-	    /* 配置微信接口信息 */
-		wx.config({
-		    debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-		    appId: 'wx485f2bc0867fe1c2', // 必填，公众号的唯一标识
-		    timestamp: timestamp, // 必填，生成签名的时间戳
-		    nonceStr: nonceStr, // 必填，生成签名的随机串
-		    signature: signature,// 必填，签名，见附录1
-		    jsApiList: ['scanQRCode','onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareWeibo'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
-		});
-	});
-	
-	wx.ready(function(){
-    // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
-	});
-
-	wx.error(function(res){
-    // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
-	});
-</script>
 #{/set}
