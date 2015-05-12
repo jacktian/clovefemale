@@ -1,0 +1,176 @@
+#{extends 'client.html' /}
+#{set title:'设置信息' /}
+<link rel="stylesheet" href="@{'/public/stylesheets/client/psnCenter.css'}">
+<script type="text/javascript" src = "@{'/public/javascripts/jquery-1.8.3.min.js'}"></script>
+<!-- header -->
+<header class="mui-bar mui-bar-nav headTitle">
+  <a class="mui-icon mui-icon-left-nav mui-pull-left" href="/client/psnCenter"></a>
+  <button class="mui-btn mui-btn-link mui-btn-nav infSaveBtn mui-pull-right" id="saveInfBtn">
+    保存
+    <span class="mui-icon mui-icon-right-nav"></span>
+  </button>
+  <h1 class="mui-title" id="headTitle"></h1>
+</header>
+
+<div class="settingModular">
+	<div class="numRemainder" id="numRemainder">11</div>
+	<input id="infText" type="tel" class="infText" placeholder="">
+	<h6 class="infTips" id="infTips"></h6>
+</div>
+<div class="responseInf" id="responseInf">testtest</div>
+<script type="text/javascript">
+	$(function(){
+        //文本框只能输入数字，并屏蔽输入法和粘贴  
+        $.fn.numeral = function() {     
+            $(this).css("ime-mode", "disabled");     
+            this.bind("keypress",function(e) {     
+                var code = (e.keyCode ? e.keyCode : e.which);  //兼容火狐 IE      
+                     //火狐下不能使用退格键   
+                 //    if(!$.browser.msie&&(e.keyCode==0x8))   
+                    // {     
+                 //         return ;     
+                 //    }     
+                 //    return code >= 48 && code<= 57;     
+            });  
+
+            this.bind("blur", function() {     
+                if (this.value.lastIndexOf(".") == (this.value.length - 1)) {     
+                    this.value = this.value.substr(0, this.value.length - 1);     
+                } else if (isNaN(this.value)) {     
+                    this.value = "";     
+                }     
+            });     
+
+            this.bind("paste", function(e) {    
+                // alert(this.value); 
+                 this.value=this.value.replace(/[^1-9]{1}[^0-9]*/g,"");
+                // var s = window.clipboardData.getData('text/plain') 
+
+                // if (!/\D/.test(s));     
+                // value = s.replace(/^0*/, '');     
+                // return false;     
+            });     
+
+            this.bind("dragenter", function() {     
+                return false;     
+            });     
+
+            this.bind("keyup", function(e) {  
+                
+                var char_code = e.charCode ? e.charCode : e.keyCode;  
+                if (!/^[0-9]*$/.test(this.value)) {     
+                    this.value=this.value.replace(/[^1-9]{1}[^0-9]*/g,"");
+                }     
+                var remainder = 11;
+                remainder = 11 - this.value.length;
+                $("#numRemainder").text(remainder);
+                
+            });     
+
+            this.bind("keydown", function(e) {  
+                var char_code = e.charCode ? e.charCode : e.keyCode; 
+                if(char_code == 8){
+                    return true;
+                }else if(char_code<48 || char_code >57){      
+                    return false;  
+                }else{  
+                    
+                    if(this.value.length < 11){
+                        
+                        return true;  
+                    }else{
+                        return false;    
+                    }
+                        
+                }   
+                
+            });  
+        };  
+
+        $.fn.idRule = function(){
+            this.bind("keyup", function(e) {  
+                var char_code = e.charCode ? e.charCode : e.keyCode; 
+                // alert(char_code);
+                console.log(/^[a-zA-Z]\w/.test(this.value));
+                // if((char_code>=48 && char_code <=57) || (char_code>=65 && char_code<=90) || (char_code>=97&&char_code<=122) || char_code==95 || char_code == 45 ||char_code == 8){      
+                //     return true;  
+                // }else{  
+                //     alert("false");
+                //     return false;
+                        
+                // }   
+                
+            });  
+        };
+
+		switch(localStorage.modifyItem){
+			case '1':
+				window.document.title = "设置丁香号";
+				$("#headTitle").text("设置丁香号");
+				$("#infTips").text("丁香号可以作为系统的唯一性凭证，只能设置一次哦！");
+                 // $("#infText").idRule();
+				break;
+			case '2': 
+				window.document.title = "绑定手机号";
+				$("#headTitle").text("绑定手机号");
+				$("#infTips").text("绑定手机号，可以保障你的账户安全哦！");
+                $("#numRemainder").show();//显示数字提示
+                 //调用文本框的id  
+                $("#infText").numeral();
+				break;
+			case '3': 
+				window.document.title = "绑定邮箱"; 
+				$("#headTitle").text("绑定邮箱");
+				$("#infTips").text("绑定邮箱，可以保障你的账户安全哦！");
+				break;
+			default:
+                localStorage.modifyItem = 1;
+                window.document.title = "设置丁香号";
+                $("#headTitle").text("设置丁香号");
+                $("#infTips").text("丁香号可以作为系统的唯一性凭证，只能设置一次哦！");
+                 // $("#infText").idRule();
+                break;
+		}
+
+		//保存
+        document.getElementById("saveInfBtn").addEventListener("tap",function(event){
+            // localStorage.modifyItem = 3;
+            var modifyItem = localStorage.modifyItem;
+            // window.location.href="modifyPhone"; 
+            var inf = $('#infText').val();
+            if(modifyItem == "1"){//设置丁香号
+                //先检查格式
+                $.post(
+                  '/UserAction/setCloveId',
+                  {
+                    cloveId:inf
+                  },function (data) //回传函数
+                  {
+                    if(data.result == 0){
+                        if(data.data.status == 0){
+                            window.location.href="psnCenter"; //修改成功
+                        }
+                        $('#responseInf').text(data.data.discribe);   
+                    }else{//修改失败
+                         $('#responseInf').text("修改失败,请检查网络并重试！");
+                    }
+                    $('#responseInf').show();
+                  }
+                );
+            }else if(modifyItem == "2"){//绑定手机号
+
+            }else{//绑定邮箱
+
+            }
+
+            
+        });
+
+		 
+
+         
+
+	});
+</script>
+
+

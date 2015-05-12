@@ -172,6 +172,24 @@ li{
 	border-radius:5px;
 }
 
+/*---------没有宝宝数据提示样式---------*/
+.nullTips{
+	padding-top: 110px;
+	margin: 0 auto;
+	width: 80%;
+	text-align: center;
+	display: none;
+}
+
+.babyIcon{
+	padding-bottom: 15px;
+}
+.noBabyTips{
+	text-align: center;
+	font-size: 15px;
+	color:#aaa;
+}
+
 /*-----------宝宝诞生样式------------*/
 .newBabyBox{
 /*	display: inline;

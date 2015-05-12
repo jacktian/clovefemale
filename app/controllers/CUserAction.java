@@ -3,6 +3,8 @@ package controllers;
 import java.util.Date;
 import java.util.List;
 
+import beans.ResponseStatus;
+
 import models.Baby;
 import models.User;
 import play.mvc.*;
@@ -60,7 +62,53 @@ public class CUserAction extends WebService{
     	user.email = email;
     	user.IDcard = IDcard;
     	user.save();
-    	System.out.println("执行了");
+    }
+
+    /**
+     * 设置丁香号
+     */
+    public static void setCloveId(String cloveId){
+    	List<User> users = User.find("cloveId = ?", cloveId).fetch();
+    	ResponseStatus response = new ResponseStatus();
+    	if(users.size()!=0){
+    		response.status = 1;//1表示已经存在此cloveId
+    		response.discribe = "此丁香号已被使用";//已经被使用
+    	}else{
+    		String openid = session.get("openid");
+    		if(openid == null && "".equals(openid)){
+    			response.status = 3;//3表示获取openid失败
+                response.discribe = "表示获取openid失败,请使用微信公众号进入系统!";
+    		}else{
+    			users = User.find("openid = ?", openid).fetch();
+                if(users.size() != 0){
+                	 User user = users.get(0);
+                	 if(user.cloveId == null || "".equals(user.cloveId)){//从未设置丁香号
+                		 user.cloveId = cloveId;
+                         user.save();
+                         response.status = 0;//0表示设置成功
+                         response.discribe = "设置成功";
+                	 }else{//已经设置过丁香号
+                		 response.status = 2;//已经设置过丁香号
+                         response.discribe = "丁香号只能设置一次哦！";
+                	 }
+                }
+    		}	
+    	}
+    	wsOk(response);
+    }
+    
+    /**
+     * 绑定手机号
+     */
+    public static void setPhone(String openId,String phoneNum){
+    	
+    }
+    
+    /**
+     * 绑定邮箱
+     */
+    public static void setEmail(String openId,String email){
+    	
     }
 	
 	/**

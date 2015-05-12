@@ -66,7 +66,7 @@
 </ul>
 
 <ul class="mui-table-view navList">
-  <li class="mui-table-view-cell">
+  <li class="mui-table-view-cell" id="cloveIdItem">
     <a class="mui-navigate-right ">
 	    <div class="listItemIcon">
 	    	<i class="icon-psnItem idIcon iconfont">&#xe63e;</i>
@@ -75,7 +75,7 @@
       丁香号
     </a>
   </li>
-  <li class="mui-table-view-cell">
+  <li class="mui-table-view-cell" id="phoneItem">
     <a class="mui-navigate-right">
 	    <div class="listItemIcon">
 	    	<i class="icon-psnItem iconfont">&#xe6bb;</i>
@@ -84,7 +84,7 @@
       手机号
     </a>
   </li>
-  <li class="mui-table-view-cell">
+  <li class="mui-table-view-cell" id="emailItem">
     <a class="mui-navigate-right">
 	    <div class="listItemIcon">
 	    	<i class="icon-psnItem iconfont">&#xe838;</i>
@@ -113,5 +113,24 @@
   </li>
 </ul>
 
+<script type="text/javascript">
+  //丁香号
+  document.getElementById("cloveIdItem").addEventListener("tap",function(event){
+    localStorage.modifyItem = 1;
+    window.location.href="modifyPhone"; 
+  });
+
+  //手机号
+  document.getElementById("phoneItem").addEventListener("tap",function(event){
+    localStorage.modifyItem = 2;
+    window.location.href="modifyPhone"; 
+  });
+
+  //邮箱
+  document.getElementById("emailItem").addEventListener("tap",function(event){
+    localStorage.modifyItem = 3;
+    window.location.href="modifyPhone"; 
+  });
+</script>
 
 
