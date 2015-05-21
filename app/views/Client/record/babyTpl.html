@@ -1,0 +1,24 @@
+<script id="babyTpl" type="text/template">
+	{@each babyList as baby}
+	<li class="mui-table-view-cell mui-media">
+		<a href="#" class="mui-navigate-right">
+			<img class="mui-media-object mui-pull-left chlid-img" src="http://dcloudio.github.io/mui/assets/img/shuijiao.jpg">
+			
+			<div class="mui-media-body">
+				${baby.name}
+				
+				<div id="test"  class="sexAndAge">
+					{@if baby.sex == "男"}
+					<img src="/public/images/client/boy.png" alt=""/>
+					{@else}
+					<img src="/public/images/client/girl.png" alt=""/>
+					{@/if}
+					<span class="age">${baby.dateStr}岁</span>
+				</div>
+				
+			</div>
+		</a>
+	</li>
+	{@/each}
+</script>
+	

@@ -53,4 +53,14 @@ public class Baby extends BasicModel{
      */
 	@Column(name = "name")
 	public String name;
+	
+	public Baby(){};
+	
+	public Baby(String userId,Date date,String dateStr, String sex,String name){
+		this.userId = userId;
+		this.date = date;
+		this.dateStr = dateStr;
+		this.sex = sex;
+		this.name = name;
+	}
 }

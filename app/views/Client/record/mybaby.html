@@ -1,5 +1,6 @@
 #{extends 'client.html' /}
 #{set title:'我的孩子' /}
+#{output 'Client/record/babyTpl.html'/}
 <link rel="stylesheet" href="@{'/public/stylesheets/client/baby.css'}">
 <link rel="stylesheet" href="@{'/public/stylesheets/client/myBaby.css'}">
 <script src="http://dcloudio.github.io/mui/dist/js/jquery-2.1.1.js"></script>
@@ -10,6 +11,7 @@
 <!-- <header class="mui-bar mui-bar-nav client-bar-nav">
 			<h1 class="mui-title client-title">小宝成长</h1>
 </header> -->
+
 <header class="mui-bar mui-bar-nav babyTitle">
   <a class="mui-icon mui-icon-left-nav mui-pull-left"></a>
   <a id="newBabyBtn" class="mui-icon mui-icon-plusempty mui-pull-right"></a>
@@ -17,8 +19,8 @@
 </header>
 
 <!--孩子列表-->
-<!-- <ul class="mui-table-view child-list">
-	<li class="mui-table-view-cell mui-hidden">cared
+<ul class="mui-table-view child-list">
+	<!-- <li class="mui-table-view-cell mui-hidden">cared
 		<div id="M_Toggle" class="mui-switch mui-active">
 			<div class="mui-switch-handle"></div>
 		</div>
@@ -49,8 +51,8 @@
 				<div id="test"  class="sexAndAge"><img src="@{'/public/images/client/girl.png'}" alt=""/><span class="age">7岁</span></div>
 			</div>
 		</a>
-	</li>
-</ul> -->
+	</li> -->
+</ul>
 
 <!-- 还没有宝宝数据提示 -->
 <div class="nullTips">
@@ -65,16 +67,16 @@
 	<form class="mui-input-group">
 		<div class="mui-input-row">
 			<label>小名</label>
-			<input type="text" placeholder="请输入小名">
+			<input id="babyName" type="text" placeholder="请输入小名">
 		</div>
 		<div class="mui-input-row">
 			<label>性别</label>
 			<ul class="sexSelection">
 				<li class="mui-table-view-cell mui-radio mui-left">
-					<input name="radio" type="radio" checked/>男
+					<input id="radio-male" name="radio-sex-baby" type="radio" value="男" checked/>男
 				</li>
 				<li class="mui-table-view-cell mui-radio mui-left">
-					<input name="radio" type="radio"/>女
+					<input name="radio-sex-baby" type="radio" value="女" />女
 				</li>
 			</ul>
 		</div>
@@ -84,10 +86,10 @@
 					<span class="dateNo popover_dateNo"></span>
 			</div>
 			<label>出生日期</label>
-			<input type="text" placeholder="日期输入">
+			<input id="birthday-input" type="text" placeholder="日期输入" class="dateBox_vac">
 		</div>
 		<div class="mui-button-row">
-			<button class="mui-btn mui-btn-primary" onclick="return false;">确认</button>&nbsp;&nbsp;
+			<button id="baby-add-btn" class="mui-btn mui-btn-primary" onclick="return false;">确认</button>&nbsp;&nbsp;
 			<button class="mui-btn mui-btn-primary" onclick="return false;">取消</button>
 		</div>
 	</form>
@@ -96,9 +98,10 @@
 </div>
 <!-- 添加宝宝结束 -->
 
+<script type="text/javascript" src = "@{'/public/javascripts/juicer.js'}"></script>
 <script>
 	$(function(){
-		//添加孩子
+		/*弹出宝宝添加框*/
 		document.getElementById("newBabyBtn").addEventListener("tap",function(event){
  			mui('.newBabyBox').popover('toggle');
 		});
@@ -107,11 +110,11 @@
 		$('.dateNo').text(new Date().getDate());
 
 		//日期控件触发
-		$(".dateBox_vac").mobiscroll().calendar({
-				theme:'ios',
-				lang:'zh',
-				display:'bottom'
-		});
+		// $(".dateBox_vac").mobiscroll().calendar({
+		// 		theme:'ios',
+		// 		lang:'zh',
+		// 		display:'bottom'
+		// });
 
 		//日期控件触发
 		$(".dateBox_vac").mobiscroll().calendar({
@@ -119,5 +122,73 @@
 				lang:'zh',
 				display:'bottom'
 		});
+
+		/*加载宝宝列表*/
+		$.get("/CBabyAction/loadBabyList",function(data){
+			// alert(data);
+			if(data.result==0){//操作成功
+				var html = juicer($('#babyTpl').html(),{babyList:data.data});
+				if(data.data == null || "" == data.data){
+					$('.nullTips').show();
+				}
+				$('.child-list').append(html);
+			}else{//操作异常
+
+			}
+			
+		});
+
+		/*添加宝宝*/
+		document.getElementById("baby-add-btn").addEventListener("tap",function(event){
+		 	//检查资料完整性
+		 	var dataComplete = true;
+		 	var name = $("#babyName").val();
+		 	if("" == name){
+		 		dataComplete = false;
+		 	}
+
+		 	var sex = $('input:radio[name="radio-sex-baby"]:checked').val();
+
+		 	var birthday_string = $("#birthday-input").val();
+		 	// var birthday_date;
+		 	// if("" == birthday_string){
+		 	// 	dataComplete = false;
+		 	// }else{
+		 	// 	birthday_date = new Date(birthday_string);
+		 	// }
+		 	alert(birthday_string);
+		 	
+		 	//资料完整
+		 	if(dataComplete){
+		 		$.post("/CBabyAction/addBaby",{
+		 			name:name,
+		 			sex:sex,
+		 			birthday:birthday_string
+		 		},function(data,textStatus){
+		 			if(data.result == 0){
+		 				mui('.newBabyBox').popover('toggle');
+			 			var html = juicer($('#babyTpl').html(),{babyList:data.data});
+			 			$('.child-list').append(html);
+
+			 			//清空添加框的内容
+			 			recoverAddBox();
+		 			}
+		 			
+		 			// alert(data.result+"----"+data.data);
+		 		});
+		 	}else{//资料不完整，显示提示消息
+
+		 	}
+
+		});
+
+
 	});
+
+	/*还原添加框内容*/
+	function recoverAddBox(){
+		$("#babyName").val("");
+		$("#radio-male").trigger("click");
+		$("#birthday-input").val("");
+	}
 </script>
