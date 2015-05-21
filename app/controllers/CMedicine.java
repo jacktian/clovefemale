@@ -56,6 +56,7 @@ public class CMedicine extends WebService{
 	 * 加载药箱
 	 */
 	public static void loadMedboxList(){
+		
 		String openid = session.get("openid");
 		List<MedicineBox> medboxList = MedicineBox.find("byUserId", openid).fetch(); 
 		//List<MedicineBox> medboxList = MedicineBox.findAll();

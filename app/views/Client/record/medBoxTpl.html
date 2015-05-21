@@ -1,11 +1,19 @@
 <script id="medBoxTpl" type="text/template">
-	{@each medBoxList as medbox}
-	<li class="mui-table-view-cell med-box-item">
-		<input name="checkbox" type="checkbox" class="med-box-check" data-mid="${medbox.id}" disabled="{@if medbox.disabled==1}true{@else}false{/@if}">
-		<a class="mui-navigate-right med-box-item-right" href="/client/medicine?medBoxId=${medbox.id}"> <i class="iconfont medbox-item-iconfont">&#xe605;</i>
-			<span class="med-box-name">${medbox.name}</span>
-		</a>
-		<span class="mui-badge mui-badge-success">21</span>
-	</li>
-	{@/each}
+	{@if medBoxList.length == 0}
+		药箱为空，请点击下方按钮添加药箱
+	{@else}
+		{@each medBoxList as medbox}
+		<li class="mui-table-view-cell med-box-item">
+			<input name="checkbox" type="checkbox" class="med-box-check" data-mid="${medbox.id}" {@if medbox.disabled==0}
+	        	disabled="false"
+	    	{@else}
+	        	disabled="true"
+	    	{@/if}>
+			<a class="mui-navigate-right med-box-item-right" href="/client/medicine?medBoxId=${medbox.id}"> <i class="iconfont medbox-item-iconfont">&#xe605;</i>
+				<span class="med-box-name">${medbox.name}</span>
+			</a>
+			<span class="mui-badge mui-badge-success">21</span>
+		</li>
+		{@/each}
+	{@/if}
 </script>	

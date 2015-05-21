@@ -1,16 +1,20 @@
 <script id="medicineTpl" type="text/template">
-	{@each medicineList as medicine,index}
-		<li class="mui-table-view-cell med-box-item">
-			<input name="checkbox" type="checkbox" class="med-box-check" data-mid="${medicine.id}">
-			<a href="#" class="mui-navigate-right">
-				<span class="med-num medbox-item-iconfont">${index}</span>
-				<div class="med-msg">
-					<div class="med-name">${medicine.name}</div>
-					<div class="med-description">
-						${medicine.function}
+	{@if medicineList.length == 0}
+	<div class="med-description">当前药箱为空，请点击右上方按钮添加药品</div>
+	{@else}
+		{@each medicineList as medicine,index}
+			<li class="mui-table-view-cell med-box-item">
+				<input name="checkbox" type="checkbox" class="med-box-check" data-mid="${medicine.id}">
+				<a href="#" class="mui-navigate-right">
+					<span class="med-num medbox-item-iconfont">${index}</span>
+					<div class="med-msg">
+						<div class="med-name">${medicine.name}</div>
+						<div class="med-description">
+							${medicine.function}
+						</div>
 					</div>
-				</div>
-			</a>
-		</li>
-	{@/each}
+				</a>
+			</li>
+		{@/each}
+	{@/if}
 </script>	
