@@ -86,16 +86,6 @@ public class Medicine extends BasicModel{
 	public String license;
 	
 	public Medicine(){}
-	public Medicine(String name,String type,String deadline,String code,String photoAddr,String function,String aString,String medicineBoxId){
-		this.name=name;
-		this.applicability=aString;
-		this.type=type;
-		this.deadline=deadline;
-		this.code=code;
-		this.photoAddr=photoAddr;
-		this.function=function;
-		this.medicineBoxId=medicineBoxId;
-	}
 	
 	/*
 	 * 功能：当新增一种药时，建立药和药箱的联系
