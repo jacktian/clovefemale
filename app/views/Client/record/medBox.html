@@ -80,7 +80,7 @@
 		var loadMedBoxList = function(){
 			$.get("/CMedicine/loadMedboxList",function(data){
 				var html = juicer($('#medBoxTpl').html(),{medBoxList:data.data});
-				$('.med-box-list').append(html);
+				$('.med-box-list').html(html);
 			});
 		}
 		loadMedBoxList();

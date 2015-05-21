@@ -2,6 +2,9 @@
 #{set title:'药品详情' /}
 #{set 'moreStyles'}
 <link href="@{'/public/stylesheets/client/medicine.css'}?v=20150414" rel="stylesheet" />
+<link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.scroller.css'}" rel="stylesheet" type="text/css" />
+<link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.animation.css'}" rel="stylesheet" type="text/css" />
+<link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.frame.css'}" rel="stylesheet" type="text/css" />
 #{/set}
 #{output 'Client/record/medicineTpl.html'/}
 <header class="mui-bar mui-bar-nav client-bar-nav">
@@ -54,15 +57,19 @@
 	<div class="model-content">
 		<div class="model-item">
 			<span class="model-item-title">名称</span>
-			<span class="model-item-content"><input type="text" placeholder="输入药箱名称"/></span>
-		</div>
-		<div class="model-item">
-			<span class="model-item-title">标签</span>
-			<span class="model-item-content"><input type="text" placeholder="输入药箱标签"/></span>
+			<span class="model-item-content"><input type="text" name="medicine-name" placeholder="输入药品名称"/></span>
 		</div>
 		<div class="model-item">
 			<span class="model-item-title">描述</span>
-			<span class="model-item-content"><input type="text" placeholder="输入药箱描述"/></span>
+			<span class="model-item-content"><input type="text" name="medicine-desc" placeholder="输入药品描述"/></span>
+		</div>
+		<div class="model-item">
+			<span class="model-item-title">出产</span>
+			<span class="model-item-content"><input type="text" id="produce-date" name="medicine-produce" placeholder="输入生产日期"/></span>
+		</div>
+		<div class="model-item">
+			<span class="model-item-title">到期</span>
+			<span class="model-item-content"><input type="text" id="end-date" name="medicine-end" placeholder="输入保质期"/></span>
 		</div>
 	</div>
 	<div class="model-bottom">
@@ -74,6 +81,13 @@
 <script src="@{'/public/javascripts/client/jquery-1.9.1.min.js'}"></script>\
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
 <script type="text/javascript" src = "@{'/public/javascripts/juicer.js'}"></script>
+<script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.core.js'}"></script>
+<script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.frame.js'}"></script>
+<script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.scroller.js'}"></script>
+<script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.util.datetime.js'}"></script>
+<script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.datetimebase.js'}"></script>
+<script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.datetime.js'}"></script>
+<script src="@{'/public/javascripts/client/mobiscroll/i18n/mobiscroll.i18n.zh.js'}"></script>
 <script type="text/javascript">
 	$(function(){
 		var delSelect = 0;
@@ -82,7 +96,7 @@
 		var loadMedicineList = function(){
 			$.get("/CMedicine/loadAllMedicine",function(data){
 				var html = juicer($('#medicineTpl').html(),{medicineList:data.data});
-				$('.med-box-list').append(html);
+				$('.med-box-list').html(html);
 				console.log(html);
 			});
 		}
@@ -120,7 +134,7 @@
 			    scanType: ["qrCode","barCode"], // 可以指定扫二维码还是一维码，默认二者都有
 			    success: function (res) {
 			    	var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
-			    	alert(JSON.stringify(res));
+			    	alert("条形码为:"+result.split(",")[1]);
 				}
 			});
 			return false;
@@ -166,6 +180,41 @@
 			});
 			$("input[name='checkbox']:checked").attr("checked",false);
 		});
+		/* 日期控件 */
+		$('#produce-date').mobiscroll().date({
+	        theme: 'mobiscroll',
+	    	display: 'bottom',
+	        startYear: '2013',
+	        lang: 'zh',
+	        onSelect: function (valueText, inst) {
+	            var selectedDate = inst.getVal(); // Call the getVal method
+	        }
+	    });
+	    $('#end-date').mobiscroll().date({
+	        theme: 'mobiscroll',
+	    	display: 'bottom',
+	        startYear: '2013',
+	        lang: 'zh',
+	        onSelect: function (valueText, inst) {
+	            var selectedDate = inst.getVal(); // Call the getVal method
+	        }
+	    });
+	    /* 添加药品 */
+	    $('.model-btn-refresh').bind('touchstart',function(){
+	    	var medName = $("input[name='medicine-name']").val();
+	    	var medDesc = $("input[name='medicine-desc']").val();
+	    	var medProd = $("input[name='medicine-produce']").val();
+	    	var medEnd = $("input[name='medicine-end']").val();
+	    	$.get('/CMedicine/addMedicine?name='+medName+"&mark="+medDesc+"&prodDate="+medProd+"&endDate"=medEnd,function(data){
+	    		if(data.result == 1){
+	    			loadMedicineList();
+	    		}
+	    		else{
+	    			alert("创建失败");
+	    		}
+	    	})
+	    	
+	    });
 	});
 </script>
 <script type="text/javascript">

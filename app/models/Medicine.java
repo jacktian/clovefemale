@@ -1,5 +1,7 @@
 package models;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -21,7 +23,9 @@ public class Medicine extends BasicModel{
 	@Column(name = "type")
 	public String type;//药物类型
 	@Column(name = "deadline")
-	public String deadline;//有效期
+	public Date deadline;//有效期
+	@Column(name = "produce")
+	public Date produce;//生产期
 	@Column(name = "code")
 	public String code;//药物条码
 	@Column(name = "photoAddr")

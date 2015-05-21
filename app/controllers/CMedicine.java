@@ -1,7 +1,12 @@
 package controllers;
 
+import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Query;
+
+import play.db.jpa.JPA;
+import models.Baby;
 import models.Medicine;
 import models.MedicineBox;
 
@@ -80,6 +85,26 @@ public class CMedicine extends WebService{
 		List<Medicine> medicineList = Medicine.findAll(); 
 		//List<MedicineBox> medboxList = MedicineBox.findAll();
 		wsOk(medicineList);
+	}
+	
+	/**
+	 * 添加药品
+	 */
+	public static void addMedicine(String name,String mark,String prodDate,String endDate){
+		String medboxid = session.get("medboxid");
+		Medicine med = new Medicine();
+		try{
+			med.name = name;
+			med.function = mark;
+			med.produce = new Date(prodDate);
+			med.deadline = new Date(endDate);
+			med.medicineBoxId = medboxid;
+			med.save();
+			wsError("创建成功");
+		}
+		catch(Exception e){
+			wsError("创建失败");
+		}
 	}
 	
 	/**
