@@ -8,7 +8,10 @@ import java.util.Map;
 
 
 
+
+
 import models.Client;
+import models.MedicineBox;
 import models.User;
 
 import org.h2.store.Page;
@@ -35,6 +38,7 @@ import play.libs.WS.WSRequest;
 import play.mvc.*;
 import utils.SignUtil;
 import utils.Sign;
+import utils.UserInitUtil;
 
 
 /**
@@ -132,6 +136,8 @@ public class WeChat extends WebService{
 						client.subscribe_time =json.get("subscribe_time").getAsString();
 						//client.unionid = json.get("unionid").getAsString();
 						client.save();
+						//新建药箱
+						UserInitUtil.initMedBox(openid);
 					}
 		
 				}
@@ -180,7 +186,6 @@ public class WeChat extends WebService{
 		config.timestamp = timestamp;
 		config.nonceStr = nonceStr;
 		config.signature = signature;
-		System.out.println(timestamp+","+nonceStr+","+signature+",url:"+ret.get("url"));
 		wsOk(config);
 	}
 }

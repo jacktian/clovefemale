@@ -26,6 +26,8 @@ public class MedicineBox extends BasicModel{
 	public String mark;//备注
 	@Column(name = "user_Id")
 	public String userId;//用户id
+	@Column(name = "disabled")
+	public boolean disabled;//用户id
 	
 	public MedicineBox(){}
 	public MedicineBox(String name,Date cDate,String mark,String userId){

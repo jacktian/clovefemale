@@ -89,7 +89,8 @@ public class Client extends WebService{
 	/**
 	 * 药品详情
 	 */
-	public static void medicine(){
+	public static void medicine(String medBoxId){
+		session.put("medboxid", medBoxId);
 		render("/Client/record/medicine.html");
 	}		
 

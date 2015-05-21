@@ -50,6 +50,9 @@
 	color:#FFF;
 }
 /* 药品列表  */
+.mui-table-view.medicine-list.mui-table-view-chevron{
+	margin-top:0px;
+}
 .med-num{
 	display: block;
 	width:40px;
@@ -84,6 +87,10 @@
 }
 .mui-bar-tab .mui-tab-item.mui-active.medbox-item{
 	color:#EC3636;
+}
+.med-box-item a.medicine-select-item{
+	padding-left:0;
+	margin-left:-45px;
 }
 /* 模态对话框开始 */
 .form-model{

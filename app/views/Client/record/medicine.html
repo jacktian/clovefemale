@@ -3,6 +3,7 @@
 #{set 'moreStyles'}
 <link href="@{'/public/stylesheets/client/medicine.css'}?v=20150414" rel="stylesheet" />
 #{/set}
+#{output 'Client/record/medicineTpl.html'/}
 <header class="mui-bar mui-bar-nav client-bar-nav">
 	<a class="mui-icon mui-icon-left-nav mui-pull-left" href="/client/medbox"></a>
 	<h1 class="mui-title client-title">药品详情</h1>
@@ -23,11 +24,11 @@
 </div>
 
 <div class="mui-content med-box-content">
-	<ul class="mui-table-view mui-table-view-chevron">
-		<li class="mui-table-view-cell">
+	<ul class="mui-table-view medicine-list mui-table-view-chevron med-box-list">
+		<li class="mui-table-view-cell med-box-item">
 			<input name="checkbox" type="checkbox" class="med-box-check">
 			<a href="#" class="mui-navigate-right med-arrow-right">
-				<span class="med-num">01</span>
+				<span class="med-num medbox-item-iconfont">01</span>
 				<div class="med-msg">
 					<div class="med-name">小柴胡</div>
 					<div class="med-description">
@@ -36,10 +37,10 @@
 				</div>
 			</a>
 		</li>
-		<li class="mui-table-view-cell">
+		<li class="mui-table-view-cell med-box-item">
 			<input name="checkbox" type="checkbox" class="med-box-check">
 			<a href="#" class="mui-navigate-right">
-				<span class="med-num">02</span>
+				<span class="med-num medbox-item-iconfont">02</span>
 				<div class="med-msg">
 					<div class="med-name">小柴胡</div>
 					<div class="med-description">
@@ -48,10 +49,10 @@
 				</div>
 			</a>
 		</li>
-		<li class="mui-table-view-cell">
+		<li class="mui-table-view-cell med-box-item">
 			<input name="checkbox" type="checkbox" class="med-box-check">
 			<a href="#" class="mui-navigate-right">
-				<span class="med-num">03</span>
+				<span class="med-num medbox-item-iconfont">03</span>
 				<div class="med-msg">
 					<div class="med-name">小柴胡</div>
 					<div class="med-description">
@@ -60,10 +61,10 @@
 				</div>
 			</a>
 		</li>
-		<li class="mui-table-view-cell">
+		<li class="mui-table-view-cell med-box-item">
 			<input name="checkbox" type="checkbox" class="med-box-check">
 			<a href="#" class="mui-navigate-right">
-				<span class="med-num">04</span>
+				<span class="med-num medbox-item-iconfont">04</span>
 				<div class="med-msg">
 					<div class="med-name">小柴胡</div>
 					<div class="med-description">
@@ -72,130 +73,10 @@
 				</div>
 			</a>
 		</li>
-		<li class="mui-table-view-cell">
+		<li class="mui-table-view-cell med-box-item">
 			<input name="checkbox" type="checkbox" class="med-box-check">
 			<a href="#" class="mui-navigate-right">
-				<span class="med-num">05</span>
-				<div class="med-msg">
-					<div class="med-name">小柴胡</div>
-					<div class="med-description">
-						褪黑素、灵芝、枣任、珍珠、天麻
-					</div>
-				</div>
-			</a>
-		</li>
-		<li class="mui-table-view-cell">
-			<input name="checkbox" type="checkbox" class="med-box-check">
-			<a href="#" class="mui-navigate-right">
-				<span class="med-num">06</span>
-				<div class="med-msg">
-					<div class="med-name">小柴胡</div>
-					<div class="med-description">
-						褪黑素、灵芝、枣任、珍珠、天麻
-					</div>
-				</div>
-			</a>
-		</li>
-		<li class="mui-table-view-cell">
-			<input name="checkbox" type="checkbox" class="med-box-check">
-			<a href="#" class="mui-navigate-right">
-				<span class="med-num">07</span>
-				<div class="med-msg">
-					<div class="med-name">小柴胡</div>
-					<div class="med-description">
-						褪黑素、灵芝、枣任、珍珠、天麻
-					</div>
-				</div>
-			</a>
-		</li>
-		<li class="mui-table-view-cell">
-			<input name="checkbox" type="checkbox" class="med-box-check">
-			<a href="#" class="mui-navigate-right">
-				<span class="med-num">08</span>
-				<div class="med-msg">
-					<div class="med-name">小柴胡</div>
-					<div class="med-description">
-						褪黑素、灵芝、枣任、珍珠、天麻
-					</div>
-				</div>
-			</a>
-		</li>
-		<li class="mui-table-view-cell">
-			<input name="checkbox" type="checkbox" class="med-box-check">
-			<a href="#" class="mui-navigate-right">
-				<span class="med-num">09</span>
-				<div class="med-msg">
-					<div class="med-name">小柴胡</div>
-					<div class="med-description">
-						褪黑素、灵芝、枣任、珍珠、天麻
-					</div>
-				</div>
-			</a>
-		</li>
-		<li class="mui-table-view-cell">
-			<input name="checkbox" type="checkbox" class="med-box-check">
-			<a href="#" class="mui-navigate-right">
-				<span class="med-num">10</span>
-				<div class="med-msg">
-					<div class="med-name">小柴胡</div>
-					<div class="med-description">
-						褪黑素、灵芝、枣任、珍珠、天麻
-					</div>
-				</div>
-			</a>
-		</li>
-		<li class="mui-table-view-cell">
-			<input name="checkbox" type="checkbox" class="med-box-check">
-			<a href="#" class="mui-navigate-right">
-				<span class="med-num">11</span>
-				<div class="med-msg">
-					<div class="med-name">小柴胡</div>
-					<div class="med-description">
-						褪黑素、灵芝、枣任、珍珠、天麻
-					</div>
-				</div>
-			</a>
-		</li>
-		<li class="mui-table-view-cell">
-			<input name="checkbox" type="checkbox" class="med-box-check">
-			<a href="#" class="mui-navigate-right">
-				<span class="med-num">12</span>
-				<div class="med-msg">
-					<div class="med-name">小柴胡</div>
-					<div class="med-description">
-						褪黑素、灵芝、枣任、珍珠、天麻
-					</div>
-				</div>
-			</a>
-		</li>
-		<li class="mui-table-view-cell">
-			<input name="checkbox" type="checkbox" class="med-box-check">
-			<a href="#" class="mui-navigate-right">
-				<span class="med-num">13</span>
-				<div class="med-msg">
-					<div class="med-name">小柴胡</div>
-					<div class="med-description">
-						褪黑素、灵芝、枣任、珍珠、天麻
-					</div>
-				</div>
-			</a>
-		</li>
-		<li class="mui-table-view-cell">
-			<input name="checkbox" type="checkbox" class="med-box-check">
-			<a href="#" class="mui-navigate-right">
-				<span class="med-num">14</span>
-				<div class="med-msg">
-					<div class="med-name">小柴胡</div>
-					<div class="med-description">
-						褪黑素、灵芝、枣任、珍珠、天麻
-					</div>
-				</div>
-			</a>
-		</li>
-		<li class="mui-table-view-cell">
-			<input name="checkbox" type="checkbox" class="med-box-check">
-			<a href="#" class="mui-navigate-right">
-				<span class="med-num">15</span>
+				<span class="med-num medbox-item-iconfont">05</span>
 				<div class="med-msg">
 					<div class="med-name">小柴胡</div>
 					<div class="med-description">
@@ -207,16 +88,16 @@
 	</ul>
 </div>
 <nav class="mui-bar mui-bar-tab med-bar-tab">
-	<a class="mui-tab-item medicine-item mui-active" href="#tabbar">
+	<a class="mui-tab-item medicine-item mui-active alert-item" href="#tabbar">
 		<span class="mui-icon"> <i class="iconfont">&#xe636;</i>
 		</span>
 		<span class="mui-tab-label">提示</span>
 	</a>
-	<a class="mui-tab-item medicine-item" href="#tabbar-with-chat">
+	<a class="mui-tab-item medicine-item select-item" href="#tabbar-with-chat">
 		<span class="mui-icon mui-icon-checkmarkempty"></span>
 		<span class="mui-tab-label">选择</span>
 	</a> 
-	<a class="mui-tab-item medicine-item" href="#tabbar-with-sms">
+	<a class="mui-tab-item medicine-item del-item" href="#tabbar-with-sms">
 		<span class="mui-icon">
 			<i class="iconfont">&#xf008b;</i>
 		</span>
@@ -252,8 +133,20 @@
 <script type="text/javascript" charset="utf-8">mui.init();</script>
 <script src="@{'/public/javascripts/client/jquery-1.9.1.min.js'}"></script>\
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+<script type="text/javascript" src = "@{'/public/javascripts/juicer.js'}"></script>
 <script type="text/javascript">
 	$(function(){
+		var delSelect = 0;
+		var popMenu = 0;
+		/*加载药箱列表*/
+		var loadMedicineList = function(){
+			$.get("/CMedicine/loadAllMedicine",function(data){
+				var html = juicer($('#medicineTpl').html(),{medicineList:data.data});
+				$('.med-box-list').append(html);
+				console.log(html);
+			});
+		}
+		loadMedicineList();
 		/*遮罩层*/
 		$('#pregDrop').bind('touchstart',function(){
 			$('.med-model').hide();
@@ -261,15 +154,26 @@
 		});
 		/*弹出菜单*/
 		$('.add-menu').bind('touchstart',function(){
-			$('#mui-popover').show();
+			if(popMenu == 0){
+				popMenu = 1;
+				$('#mui-popover').show();
+			}
+			else{
+				popMenu = 0;
+				$('#mui-popover').hide();
+			}
+			return false;
 		});
 		$('.man-add-btn a').bind('touchstart',function(){
+			popMenu = 0;
 			$(this).parents('.med-popover').hide();
 			$('.med-model').show();
 			$('#pregDrop').show();
+			return false;
 		});
 		/*微信扫描*/
 		$('.scanner-add-btn a').bind('touchstart',function(){
+			popMenu = 0;
 			$('.med-popover').hide();
 			wx.scanQRCode({
 			    needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
@@ -280,6 +184,47 @@
 				}
 			});
 			return false;
+		});
+		/* 药品列表 */
+		$('.med-box-item a').click(function(){
+			return false;
+		});
+		/* 底部菜单 */
+		$('.mui-tab-item').bind('touchstart',function(){
+			if(delSelect == 1){
+				delSelect = 0;
+				$('.med-box-item').removeClass('mui-checkbox');
+				$('.med-box-item').removeClass('mui-left');
+				$('.med-box-check').removeClass('show');
+				$('.med-box-item a').removeClass('medicine-select-item');
+				$('.medbox-item-iconfont').removeClass('hidden');
+			}
+		});
+		$('.select-item').bind('touchstart',function(){
+			if(delSelect == 0){
+				delSelect = 1;
+				$('.med-box-item').addClass('mui-checkbox');
+				$('.med-box-item').addClass('mui-left');
+				$('.med-box-check').addClass('show');
+				$('.med-box-item a').addClass('medicine-select-item');
+				$('.medbox-item-iconfont').addClass('hidden');
+			}
+		});
+		/* 删除药品 */
+		$('.del-item').bind('touchstart',function(){
+			var medBox = $("input[name='checkbox']:checked");
+			var midArr = new Array();
+			for(var i=0;i<medBox.length;i++){
+				midArr[i] = medBox[i].getAttribute('data-mid');
+			}
+			$.get("/CMedicine/removeMedicine?mid="+midArr,function(data){
+				if(data.result == 0){
+					loadMedicineList();
+				}
+				else
+					alert("创建失败!");
+			});
+			$("input[name='checkbox']:checked").attr("checked",false);
 		});
 	});
 </script>
@@ -292,7 +237,7 @@
 		var signature = data.data.signature;
 	    /* 配置微信接口信息 */
 		wx.config({
-		    debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+		    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
 		    appId: 'wx485f2bc0867fe1c2', // 必填，公众号的唯一标识
 		    timestamp: timestamp, // 必填，生成签名的时间戳
 		    nonceStr: nonceStr, // 必填，生成签名的随机串
