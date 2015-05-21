@@ -14,22 +14,22 @@ public class UserInitUtil {
 		MedicineBox medBox = new MedicineBox();
 		medBox.userId = openid;
 		medBox.name = "内服药";
-		medBox.disabled = true;
+		medBox.disabled = 1;
 		medBox.save();
 		medBox = new MedicineBox();
 		medBox.userId = openid;
 		medBox.name = "外服药";
-		medBox.disabled = true;
+		medBox.disabled = 1;
 		medBox.save();
 		medBox = new MedicineBox();
 		medBox.userId = openid;
 		medBox.name = "儿童小药箱";
-		medBox.disabled = true;
+		medBox.disabled = 1;
 		medBox.save();
 		medBox = new MedicineBox();
 		medBox.userId = openid;
 		medBox.name = "医用材料";
-		medBox.disabled = true;
+		medBox.disabled = 1;
 		medBox.save();
 	}
 }

@@ -1,7 +1,7 @@
 <script id="medBoxTpl" type="text/template">
 	{@each medBoxList as medbox}
 	<li class="mui-table-view-cell med-box-item">
-		<input name="checkbox" type="checkbox" class="med-box-check" data-mid="${medbox.id}" disabled="${medbox.disabled}">
+		<input name="checkbox" type="checkbox" class="med-box-check" data-mid="${medbox.id}" disabled="{@if medbox.disabled==1}true{@else}false{/@if}">
 		<a class="mui-navigate-right med-box-item-right" href="/client/medicine?medBoxId=${medbox.id}"> <i class="iconfont medbox-item-iconfont">&#xe605;</i>
 			<span class="med-box-name">${medbox.name}</span>
 		</a>

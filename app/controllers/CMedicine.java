@@ -22,7 +22,7 @@ public class CMedicine extends WebService{
 		medBox.userId = openid;
 		medBox.name = name;
 		medBox.mark = mark;
-		medBox.disabled = true;
+		medBox.disabled = 0;
 		try{
 			medBox.save();
 			wsOk("创建成功");
