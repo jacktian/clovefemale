@@ -106,7 +106,7 @@ public class MedicineTestAction extends WebService{
 		med.function = func;
 		med.medicineBoxId = medBoxId;
 		med.type = type;
-		med.deadline = deadline;
+		/*med.deadline = deadline;*/
 		try{
 			med.save();
 			bean.result = 1;
@@ -131,7 +131,7 @@ public class MedicineTestAction extends WebService{
 		med.function = func;
 		med.medicineBoxId = medBoxId;
 		med.type = type;
-		med.deadline = deadline;
+		/*med.deadline = deadline;*/
 		try{
 			med.save();
 			bean.result = 1;
@@ -182,7 +182,7 @@ public class MedicineTestAction extends WebService{
 		med.type = "感冒类";
 		med.function = "治疗感冒神器，中华良品";
 		med.id = "1";
-		med.deadline = "2015.10.23";
+		//med.deadline = "2015.10.23";
 		medList.add(med);
 		
 		med = new Medicine();
@@ -190,7 +190,7 @@ public class MedicineTestAction extends WebService{
 		med.type = "清热解毒";
 		med.function = "清热解毒，散风止痛。用于肺胃蕴热引起...";
 		med.id = "2";
-		med.deadline = "2014.10.23";
+		//med.deadline = "2014.10.23";
 		medList.add(med);
 		
 		med = new Medicine();
@@ -198,7 +198,7 @@ public class MedicineTestAction extends WebService{
 		med.type = "青春痘类";
 		med.function = "攃痘痘，用红霉素药膏";
 		med.id = "3";
-		med.deadline = "2015.03.23";
+		/*med.deadline = "2015.03.23";*/
 		medList.add(med);
 		
 		med = new Medicine();
@@ -206,7 +206,7 @@ public class MedicineTestAction extends WebService{
 		med.type = "保健类";
 		med.function = "皮肤干燥，口舌生疮";
 		med.id = "4";
-		med.deadline = "2012.11.14";
+		/*med.deadline = "2012.11.14";*/
 		medList.add(med);
 		wsOkAsExtJsonP(medList);
 	}
@@ -224,7 +224,7 @@ public class MedicineTestAction extends WebService{
 		med.type = "保健类";
 		med.function = "皮肤干燥，口舌生疮";
 		med.id = "4";
-		med.deadline = "2012.11.14";
+		//med.deadline = "2012.11.14";
 		medList.add(med);
 		
 		med = new Medicine();
@@ -233,7 +233,7 @@ public class MedicineTestAction extends WebService{
 		med.type = "保健类";
 		med.function = "皮肤干燥，口舌生疮";
 		med.id = "5";
-		med.deadline = "2012.11.14";
+		//med.deadline = "2012.11.14";
 		medList.add(med);
 		
 		wsOkAsExtJsonP(med);

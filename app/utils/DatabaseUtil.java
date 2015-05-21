@@ -349,7 +349,7 @@ public class DatabaseUtil {
     		Medicine m = new Medicine();
     		m.name="药物"+i;
     		m.type="otc";
-    		m.deadline="2016-12-3";
+    		//m.deadline="2016-12-3";
     		m.function="治疗感冒";
     		m.applicability="小孩及成人";
     		m.code="2014808A"+i;
