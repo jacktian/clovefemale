@@ -1,0 +1,90 @@
+#{extends 'client.html' /}
+#{set title:'药品信息' /}
+#{set 'moreStyles'}
+<link href="@{'/public/stylesheets/client/medicine.css'}?v=20150414" rel="stylesheet" />
+<link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.scroller.css'}" rel="stylesheet" type="text/css" />
+<link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.animation.css'}" rel="stylesheet" type="text/css" />
+<link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.frame.css'}" rel="stylesheet" type="text/css" />
+#{/set}
+
+<header class="mui-bar mui-bar-nav client-bar-nav">
+	<a class="mui-icon mui-icon-left-nav mui-pull-left" href="/client/medicine?medBoxId=${medicine.medicineBoxId}"></a>
+	<h1 class="mui-title client-title">药品详情</h1>
+</header>
+<div class="mui-content-padded medicine-detail-content">
+	<form class="mui-input-group">
+		<input type="hidden" value="${medicine.id}" id="mid" />
+		<div class="mui-input-row">
+			<label>药品名称</label>
+			<input type="text" class="mui-input-clear" id="mname" placeholder="输入药品名称" value="${medicine.name}">
+		</div>
+		<div class="mui-input-row">
+			<label>药品描述</label>
+			<input type="text" class="mui-input-clear" id="mdesc" placeholder="输入药品用途" value="${medicine.function}">
+		</div>
+		<div class="mui-input-row">
+			<label>生产日期</label>
+			<input type="text" class="mui-input-clear" id="start-date" placeholder="输入药品生产日期" value="${medicine.produce}">
+		</div>
+		<div class="mui-input-row">
+			<label>到期日期</label>
+			<input type="text" class="mui-input-clear" id="end-date" placeholder="输入药品到期日期" value="${medicine.deadline}">
+		</div>
+		<div class="mui-input-row">
+			<label>条形码</label>
+			<input type="text" class="mui-input-clear" id="mcode" placeholder="输入药品条形码" value="${medicine.code}">
+		</div>
+	</form>
+</div>
+<button class="mui-btn btn-negative medicine-refresh-btn">更新</button>
+#{set 'moreScripts'}
+<script type="text/javascript" charset="utf-8">mui.init();</script>
+<script src="@{'/public/javascripts/client/jquery-1.9.1.min.js'}"></script>
+<script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.core.js'}"></script>
+<script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.frame.js'}"></script>
+<script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.scroller.js'}"></script>
+<script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.util.datetime.js'}"></script>
+<script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.datetimebase.js'}"></script>
+<script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.datetime.js'}"></script>
+<script src="@{'/public/javascripts/client/mobiscroll/i18n/mobiscroll.i18n.zh.js'}"></script>
+<script type="text/javascript">
+	$(function(){
+		$('#start-date').mobiscroll().date({
+	        theme: 'mobiscroll',
+	    	display: 'bottom',
+	        startYear: '2013',
+	        lang: 'zh',
+	        onSelect: function (valueText, inst) {
+	            var selectedDate = inst.getVal(); // Call the getVal method
+	        }
+	    });
+		$('#end-date').mobiscroll().date({
+	        theme: 'mobiscroll',
+	    	display: 'bottom',
+	        startYear: '2013',
+	        lang: 'zh',
+	        onSelect: function (valueText, inst) {
+	            var selectedDate = inst.getVal(); // Call the getVal method
+	        }
+	    });
+		$('.medicine-refresh-btn').bind('touchend',function(){
+			var mid = $('#mid').val();
+			var name = $('#mname').val();
+			var desc = $('#mdesc').val();
+			var code = $('#mcode').val();
+			var sdate = $('#start-date').val();
+			var edate = $('#end-date').val();
+			//altMedicine(String id,String name,String mark,String prodDate,String endDate,String code)
+			$.get("/CMedicine/altMedicine?id="+mid+"&name="+name+"&mark="+desc+"&prodDate="+sdate+"&endDate="+edate+"&code="+code,function(data){
+				console.log(data);
+				if(data.result==0){
+					alert("更新成功");
+				}
+				else{
+					alert("更新出錯");
+				}
+			});
+		});
+	})
+</script>
+#{/set}
