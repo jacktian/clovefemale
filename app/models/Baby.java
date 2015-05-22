@@ -56,7 +56,8 @@ public class Baby extends BasicModel{
 	
 	public Baby(){};
 	
-	public Baby(String userId,Date date,String dateStr, String sex,String name){
+	public Baby(String id,String userId,Date date,String dateStr, String sex,String name){
+		this.id = id;
 		this.userId = userId;
 		this.date = date;
 		this.dateStr = dateStr;

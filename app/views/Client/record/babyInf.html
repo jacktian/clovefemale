@@ -1,0 +1,137 @@
+#{extends 'client.html' /}
+#{set title:'宝宝资料' /}
+<header class="mui-bar mui-bar-nav babyTitle">
+  <a class="mui-icon mui-icon-left-nav mui-pull-left" href="/Client/myBaby"></a>
+  <h1 class="mui-title">宝宝资料</h1>
+</header>
+
+<div class="babyInf-box">
+<ul class="mui-table-view infList-baby-headImg">
+	<li class="mui-table-view-cell item-headImg">
+      <div class="item-baby-Inf">
+      	<img id="baby-headImg" class="mui-media-object mui-pull-right chlid-img" src="http://dcloudio.github.io/mui/assets/img/shuijiao.jpg">
+      </div>
+      头像
+  </li>
+
+</ul>
+
+<ul class="mui-table-view infList-baby-inf">
+  <li id="item-baby-name" class="mui-table-view-cell">
+      <div id="baby-name" class="item-baby-Inf"></div>
+      小名
+  </li>
+  <li id="item-baby-sex" class="mui-table-view-cell" >
+    <div id="baby-sex" class="item-baby-Inf"></div>
+      性别
+  </li>
+  <li id="item-baby-btd" class="mui-table-view-cell" >
+    <div id="baby-birthday" class="item-baby-Inf"></div>
+      生日
+  </li>
+</ul>
+</div>
+
+<!-- 小名修改模块 -->
+<div class="form-model mui-popover mn-model">
+	<header class="mui-bar mui-bar-nav model-header">
+		<h1 class="mui-title model-title">修改小名</h1>
+	</header>
+	<form class="mui-input-group">
+		<div class="mui-input-row">
+			<label>小名</label>
+			<input id="bn-input" type="text" class="mui-input-clear" placeholder="请输入小名">
+		</div>
+		<div class="mui-button-row">
+			<button id="mbn-confirm-btn" class="mui-btn mui-btn-primary confirm-btn" onclick="return false;">确认</button>&nbsp;&nbsp;
+			<button id="mbn-cancel-btn" class="mui-btn mui-btn-primary cancel-btn" onclick="return false;">取消</button>
+		</div>
+		
+	</form>
+	<div class="mn-tips infTips"></div>
+</div>
+
+<!-- 操作结果信息 -->
+<div class="infTips response-tips">
+	
+</div>
+
+<link rel="stylesheet" href="@{'/public/stylesheets/client/baby.css'}">
+<style rel="stylesheet">
+body{
+	background:#eee;	
+}
+</style>
+<script src="http://dcloudio.github.io/mui/dist/js/jquery-2.1.1.js"></script>
+<script>
+	$(function(){
+		var babyId = localStorage.babyId;
+		// alert(babyId);
+		/*加载宝宝详细资料*/
+		$.post("/CBabyAction/loadBabyInf",{
+			babyId: babyId
+		},function(data){
+			if(data.result==0){
+				$("#baby-name").text(data.data.name);
+				$("#baby-sex").text(data.data.sex);
+				$("#baby-birthday").text(data.data.dateStr);
+				$(".babyInf-box").show();
+			}
+		});
+
+		//修改小名
+		document.getElementById("item-baby-name").addEventListener("tap",function(){
+			mui('.mn-model').popover('toggle');
+		});
+
+		//修改性别
+		document.getElementById("item-baby-sex").addEventListener("tap",function(){
+			alert("修改性别");
+		});
+		//修改生日
+		document.getElementById("item-baby-btd").addEventListener("tap",function(){
+			alert("修改生日");
+		});
+
+		//确认修改小名
+		document.getElementById("mbn-confirm-btn").addEventListener("tap",function(){
+			var name = $("#bn-input").val();
+			if("" == name){//名字为空
+				$(".mn-tips ").text("小名不能为空!");
+				$(".mn-tips ").show();
+			}
+			$.post("/CBabyAction/modifyBabyName",{
+				babyId:babyId,
+				name:name
+			},function(data){
+				if(data.result == 0 ){//操作成功
+					$("#baby-name").text(name);
+					mui('.mn-model').popover('toggle');
+					$(".response-tips").text("操作成功！");
+					$(".response-tips").show();
+					window.setTimeout("hideTips()",1500);
+				}else{
+
+				}
+			});
+		});
+
+		//取消修改小名
+		document.getElementById("mbn-cancel-btn").addEventListener("tap",function(){
+			mui('.mn-model').popover('toggle');
+		});
+
+		//隐藏小名提示
+		$("#bn-input").bind("focus", function(e) {  
+                $(".mn-tips ").text("");
+				$(".mn-tips ").hide();
+        });  ;
+		
+	})
+
+	//隐藏信息提示，并清空
+	function hideTips(){
+		$(".response-tips").text("");
+		$(".response-tips").hide();
+	}
+</script>

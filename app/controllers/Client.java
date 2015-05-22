@@ -121,6 +121,13 @@ public class Client extends WebService{
 	}
 
 	/**
+	 *孩子资料
+	 **/
+	public static void babyInf(){
+		render("/Client/record/babyInf.html");
+	}
+
+	/**
 	 *孩子成长记录
 	 **/
 	public static void babyRecord(){

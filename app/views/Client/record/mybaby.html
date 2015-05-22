@@ -20,38 +20,7 @@
 
 <!--孩子列表-->
 <ul class="mui-table-view child-list">
-	<!-- <li class="mui-table-view-cell mui-hidden">cared
-		<div id="M_Toggle" class="mui-switch mui-active">
-			<div class="mui-switch-handle"></div>
-		</div>
-	</li>
-	<li class="mui-table-view-cell mui-media">
-		<a href="#" class="mui-navigate-right">
-			<img class="mui-media-object mui-pull-left chlid-img" src="http://dcloudio.github.io/mui/assets/img/shuijiao.jpg">
-			<div class="mui-media-body">
-				天天
-				<div id="test"  class="sexAndAge"><img src="@{'/public/images/client/boy.png'}" alt=""/><span class="age">6岁</span></div>
-			</div>
-		</a>
-	</li>
-	<li class="mui-table-view-cell mui-media">
-		<a href="#" class="mui-navigate-right">
-			<img class="mui-media-object mui-pull-left chlid-img" src="http://dcloudio.github.io/mui/assets/img/muwu.jpg">
-			<div class="mui-media-body">
-				Kimi
-				<div id="test"  class="sexAndAge"><img src="@{'/public/images/client/boy.png'}" alt=""/><span class="age">5岁</span></div>
-			</div>
-		</a>
-	</li>
-	<li class="mui-table-view-cell mui-media">
-		<a href="#" class="mui-navigate-right">
-			<img class="mui-media-object mui-pull-left chlid-img" src="http://dcloudio.github.io/mui/assets/img/cbd.jpg">
-			<div class="mui-media-body">
-				Cindy
-				<div id="test"  class="sexAndAge"><img src="@{'/public/images/client/girl.png'}" alt=""/><span class="age">7岁</span></div>
-			</div>
-		</a>
-	</li> -->
+
 </ul>
 
 <!-- 还没有宝宝数据提示 -->
@@ -103,6 +72,7 @@
 	$(function(){
 		/*弹出宝宝添加框*/
 		document.getElementById("newBabyBtn").addEventListener("tap",function(event){
+
  			mui('.newBabyBox').popover('toggle');
 		});
 
@@ -128,15 +98,25 @@
 			// alert(data);
 			if(data.result==0){//操作成功
 				var html = juicer($('#babyTpl').html(),{babyList:data.data});
-				if(data.data == null || "" == data.data){
-					$('.nullTips').show();
-				}
+				
 				$('.child-list').append(html);
-			}else{//操作异常
+				$(".item-babyList").bind('touchend',function(){
+					localStorage.babyId = $(this).children(".babyId").text();
+					// window.location.href="/Cient/babyInf"; 
+					return true;
+				});
+				
+			}else{//操作失败
+				if(data.data == "找不到宝宝"){
+					$('.nullTips').show();
+				}else{//操作异常
 
+				}
 			}
 			
 		});
+
+		
 
 		/*添加宝宝*/
 		document.getElementById("baby-add-btn").addEventListener("tap",function(event){
