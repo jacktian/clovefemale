@@ -1,7 +1,7 @@
 <script id="babyTpl" type="text/template">
 	{@each babyList as baby}
 	<li class="mui-table-view-cell mui-media">
-		<a href="#" class="mui-navigate-right">
+		<a href="babyInf" class="mui-navigate-right item-babyList">
 			<img class="mui-media-object mui-pull-left chlid-img" src="http://dcloudio.github.io/mui/assets/img/shuijiao.jpg">
 			
 			<div class="mui-media-body">
@@ -17,6 +17,7 @@
 				</div>
 				
 			</div>
+			<div class="babyId">${baby.id}</div>
 		</a>
 	</li>
 	{@/each}

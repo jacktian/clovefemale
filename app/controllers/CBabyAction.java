@@ -1,5 +1,6 @@
 package controllers;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,27 +25,23 @@ public class CBabyAction extends WebService{
 	public static void loadBabyList(){
 		//String openid = session.get("openid");//从session中获取openid
 		String openid = "ob1R-uIRkLLp6lmmrT4w-2rrZ5jQ";
-//		String queryString = "select new Baby(b.userId,b.date,b.dateStr,b.sex,b.name) " +
-//				" from Baby b,User u where b.userId= u.id  and u.openid = ?1";
-		String queryString = "select new Baby(b.userId,b.date,CONCAT(TIMESTAMPDIFF(YEAR,b.date,now()),''),b.sex,b.name) " +
+		String queryString = "select new Baby(b.id,b.userId,b.date,CONCAT(TIMESTAMPDIFF(YEAR,b.date,now()),''),b.sex,b.name) " +
 				" from Baby b where b.userId = ?1";
 		
-//		CONCAT(TIMESTAMPDIFF(YEAR,b.date,now()),'')
-		
-//		queryString = "select datediff(now(),'20150412')";
-//		queryString = "select count(*) from Baby";
 		List<Baby> babyList =  new ArrayList<Baby>();
-		//try{
+		try{
 			Query query = JPA.em().createQuery(queryString);
 			query.setParameter(1, openid);//给编号为1的参数设值 
-//			int year = query.getFirstResult();
 			babyList  = query.getResultList();
-//			List<Baby> babyList = Baby.find("userId", openid).fetch();
-			wsOk(babyList);
-		//}catch(Exception e){
-		//	wsError("操作异常");
-			//render("/Client/record/mybaby.html",babyList);
-	//	}
+			if(babyList.size() != 0){
+				wsOk(babyList);
+			}else{
+				wsError("找不到宝宝");
+			}
+			
+		}catch(Exception e){
+			wsError("操作异常");
+		}
 	}
 	
 	/**
@@ -67,6 +64,92 @@ public class CBabyAction extends WebService{
 			wsError("添加失败");
 		}
 	}
+	
+	/**
+	 *加载宝宝详细资料
+	 *babyId:宝宝id 
+	 */
+	public static void loadBabyInf(String babyId){
+		try{
+			Baby baby = Baby.findById(babyId);
+			if(baby!=null){
+				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+				baby.dateStr = format.format(baby.date);
+				wsOk(baby);
+			}else{
+				wsError("不存在该宝宝哦!");
+			}
+		}catch(Exception e){
+			wsError("操作异常!");
+		}
+		
+	}
+	
+	/**
+	 * 修改宝宝小名
+	 * name:宝宝名字
+	 * babyId:宝宝Id
+	 */
+	public static void modifyBabyName(String babyId,String name){
+		try{
+			Baby baby = Baby.findById(babyId);
+			if(baby!=null){
+				baby.name = name;
+				baby.save();
+				wsOk("修改成功");
+			}else{
+				wsError("找不到该宝宝");
+			}
+		}catch(Exception e){
+			wsError("操作异常");
+		}
+		
+	}
+	
+	/**
+	 * 修改宝宝性别
+	 * sex:性别
+	 * babyId:宝宝Id
+	 */
+	public static void modifyBabySex(String babyId,String sex){
+		try{
+			Baby baby = Baby.findById(babyId);
+			if(baby!=null){
+				baby.sex = sex;
+				baby.save();
+				wsOk("修改成功");
+			}else{
+				wsError("找不到该宝宝");
+			}
+		}catch(Exception e){
+			wsError("操作异常");
+		}
+		
+	}
+	
+	/**
+	 * 修改宝宝出生日期
+	 * date:出生日期
+	 * babyId:宝宝Id
+	 */
+	public static void modifyBabySex(String babyId,Date date){
+		try{
+			Baby baby = Baby.findById(babyId);
+			if(baby!=null){
+				baby.date = date;		
+				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");	
+				baby.dateStr = format.format(baby.date);
+				baby.save();
+				wsOk("修改成功");
+			}else{
+				wsError("找不到该宝宝");
+			}
+		}catch(Exception e){
+			wsError("操作异常");
+		}
+		
+	}
+	
 	
 	public static void test() {
 		String queryString = "select count(*) from Baby";
