@@ -153,6 +153,8 @@
 				if(data.result == 0){
 					alert("创建成功!");
 					loadMedBoxList();
+					$('.med-model').hide();
+					$('#pregDrop').hide();
 				}
 				else
 					alert("创建失败!");
