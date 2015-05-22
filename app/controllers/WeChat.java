@@ -178,6 +178,7 @@ public class WeChat extends WebService{
 	 * 获取jsapi_ticket
 	 */
 	public static void jsApiCall(String url){
+		System.out.println(url);
 		Map<String,String>ret = Sign.create_sign(url);
 		String timestamp = ret.get("timestamp");
 		String nonceStr = ret.get("nonceStr");
