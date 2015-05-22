@@ -44,10 +44,6 @@ public class Client extends WebService{
 	public static String appKey = Play.configuration.getProperty("wechat_appkey");
 	public static String appSecret = Play.configuration.getProperty("wechat_secret");
 	
-	/**
-	 * 用户openid
-	 */
-	public static String openid = null;
 	
 	
 	/**
@@ -60,7 +56,7 @@ public class Client extends WebService{
 			String requestUrl = "https://api.weixin.qq.com/sns/oauth2/access_token?appid="+appKey+"&secret="+appSecret+"&code="+code+"&grant_type=authorization_code";
 			JsonElement jsonElement = WS.url(requestUrl).get().getJson();
 			JsonObject json = jsonElement.getAsJsonObject();
-			openid = json.get("openid").getAsString();
+			String openid = json.get("openid").getAsString();
 			//移除页面的code参数
 			params.remove("code");
 			session.put("openid", openid);
@@ -82,7 +78,7 @@ public class Client extends WebService{
 	 * 助孕记录
 	 */
 	public static void pregMense(){
-		System.out.println("用户openid"+openid);
+		System.out.println("用户openid"+session.get("openid"));
 		render("/Client/record/mense.html");
 	}
 
@@ -143,7 +139,7 @@ public class Client extends WebService{
 	 *会员中心
 	 **/
 	public static void psnCenter(){
-		User userModel = User.find("byOpenid", openid).first();
+		User userModel = User.find("byOpenid", session.get("openid")).first();
 		UserCenterBean user = new UserCenterBean();
 
 		//头像
