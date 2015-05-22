@@ -1,16 +1,36 @@
 <script id="medicineTpl" type="text/template">
 	{@if medicineList.length == 0}
-	<div class="med-description">当前药箱为空，请点击右上方按钮添加药品</div>
+		<div class="med-note">当前药箱为空，请点击右上方按钮添加药品</div>
 	{@else}
 		{@each medicineList as medicine,index}
 			<li class="mui-table-view-cell med-box-item">
 				<input name="checkbox" type="checkbox" class="med-box-check" data-mid="${medicine.id}">
-				<a href="#" class="mui-navigate-right">
+				<a href="/Client/medicineDetail?medicineId=${medicine.id}" class="mui-navigate-right medicine-detail">
 					<span class="med-num medbox-item-iconfont">${index}</span>
 					<div class="med-msg">
 						<div class="med-name">${medicine.name}</div>
 						<div class="med-description">
 							${medicine.function}
+						</div>
+					</div>
+				</a>
+			</li>
+		{@/each}
+	{@/if}
+</script>	
+<script id="medicineSearchTpl" type="text/template">
+	{@if medicineList.length == 0}
+		<div class="med-note">没有找到符合要求的药品</div>
+	{@else}
+		{@each medicineList as medicine,index}
+			<li class="mui-table-view-cell med-box-item">
+				<input name="checkbox" type="checkbox" class="med-box-check" data-mid="${medicine[0]}">
+				<a href="/Client/medicineDetail?medicineId=${medicine.id}" class="mui-navigate-right medicine-detail">
+					<span class="med-num medbox-item-iconfont">${index}</span>
+					<div class="med-msg">
+						<div class="med-name">${medicine[1]}</div>
+						<div class="med-description">
+							${medicine[2]}
 						</div>
 					</div>
 				</a>

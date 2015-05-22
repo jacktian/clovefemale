@@ -12,7 +12,7 @@
 <div class="mui-content med-box-search-content">
 	<div class="mui-content-padded">
 		<div class="mui-input-row mui-search">
-			<input type="search" class="mui-input-clear" placeholder="输入药箱名称"></div>
+			<input type="search" class="mui-input-clear" id="medbox-search" placeholder="输入药箱名称"></div>
 	</div>
 </div>
 
@@ -90,23 +90,14 @@
 			$(this).hide();
 		});
 		/*药箱菜单*/
-		$('.med-box-item a').click(function(){
-			if($(this).parent().hasClass('select-wait')){
-				$(this).parent().addClass('delete-wait');
-				return false;
-			}
-			else
-				return true;
-		});
-		/* 跳转链接 */
-		$('.med-box-item a').click(function(){
-			if(delSelect == 1){
+		$(document).on('click', '.med-box-item a', function() {
+		   if(delSelect == 1){
 				return false;
 			}
 			else{
 				return true;
 			}
-		})
+		});
 		/* 底部菜单 */
 		$('.medbox-item').bind('touchstart',function(){
 			if(delSelect == 1){
@@ -135,18 +126,24 @@
 		/* 删除药箱 */
 		$('.del-item').bind('touchstart',function(){
 			var medBox = $("input[name='checkbox']:checked");
-			var midArr = new Array();
-			for(var i=0;i<medBox.length;i++){
-				midArr[i] = medBox[i].getAttribute('data-mid');
+			if(medBox.length == 0){
+				alert("请先选择要删除的药箱");
 			}
-			$.get("/CMedicine/removeMedBox?mid="+midArr,function(data){
-				if(data.result == 0){
-					loadMedBoxList();
+			else{
+				var midArr = new Array();
+				for(var i=0;i<medBox.length;i++){
+					midArr[i] = medBox[i].getAttribute('data-mid');
 				}
-				else
-					alert("创建失败!");
-			});
-			$("input[name='checkbox']:checked").attr("checked",false);
+				$.get("/CMedicine/removeMedBox?mid="+midArr,function(data){
+					if(data.result == 0){
+						alert("删除成功")
+						loadMedBoxList();
+					}
+					else
+						alert("删除失败");
+				});
+				$("input[name='checkbox']:checked").attr("checked",false);
+			}
 		});
 		/* 添加药箱 */
 		$('.medBox-add-btn').bind('click',function(){
@@ -161,6 +158,19 @@
 					alert("创建失败!");
 			});
 		});
+		/*药品搜索*/
+	    $('#medbox-search').change(function(){
+	    	var keyWord = $.trim($(this).val());
+	    	$.get('/CMedicine/searchMedbox?medBoxName='+keyWord,function(data){
+	    		var html = juicer($('#medBoxSearchTpl').html(),{medBoxList:data.data});
+	    		var newhtml = "";
+	    		if(keyWord == '')
+	    			newhtml = html;
+	    		else
+	    			newhtml = html.replace(new RegExp(keyWord,"g"),"<span class='key-word'>"+keyWord+"</span>");
+	    		$('.med-box-list').html(newhtml);
+	    	});
+	    });
 	});
 </script>
 #{/set}

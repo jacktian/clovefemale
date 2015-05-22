@@ -24,9 +24,10 @@ import play.libs.WS.HttpResponse;
 import play.libs.WS.WSRequest;
 import play.mvc.*;
 import utils.Sign;
-
 import models.Baby;
+import models.Medicine;
 import models.User;
+import beans.MedicineBean;
 import beans.UserCenterBean;
 
 /**
@@ -36,6 +37,7 @@ import beans.UserCenterBean;
  * @since 2015/03/23
  */
 public class Client extends WebService{
+	
 	/**
 	 * 从配置文件中获取appKey与appSecret
 	 */
@@ -92,13 +94,29 @@ public class Client extends WebService{
 	}	
 
 	/**
-	 * 药品详情
+	 * 药品列表
 	 */
 	public static void medicine(String medBoxId){
+		params.remove(medBoxId);
 		session.put("medboxid", medBoxId);
 		render("/Client/record/medicine.html");
 	}		
 
+	/**
+	 * 药品详情
+	 */
+	public static void medicineDetail(String medicineId){
+		Medicine med = Medicine.findById(medicineId);
+		MedicineBean medicine = new MedicineBean();
+		medicine.id = med.id;
+		medicine.name = med.name;
+		medicine.produce = med.produce.toString().split(" ")[0].replaceAll("-", "/");
+		medicine.deadline = med.deadline.toString().split(" ")[0].replaceAll("-", "/");
+		medicine.code = med.code;
+		medicine.medicineBoxId = med.medicineBoxId;
+		render("/Client/record/medicineDetail.html",medicine);
+	}		
+	
 	/**
 	 *我的孩子
 	 **/

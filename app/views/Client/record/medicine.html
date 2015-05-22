@@ -22,7 +22,7 @@
 <div class="mui-content med-box-search-content">
 	<div class="mui-content-padded">
 		<div class="mui-input-row mui-search">
-			<input type="search" class="mui-input-clear" placeholder="输入药品名称"></div>
+			<input type="search" class="mui-input-clear" id="medicine-search" placeholder="输入药品名称"></div>
 	</div>
 </div>
 
@@ -92,7 +92,7 @@
 	$(function(){
 		var delSelect = 0;
 		var popMenu = 0;
-		/*加载药箱列表*/
+		/*加载药品列表*/
 		var loadMedicineList = function(){
 			$.get("/CMedicine/loadAllMedicine",function(data){
 				var html = juicer($('#medicineTpl').html(),{medicineList:data.data});
@@ -135,13 +135,20 @@
 			    success: function (res) {
 			    	var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
 			    	alert("条形码为:"+result.split(",")[1]);
+			    	$('.med-model').show();
+					$('#pregDrop').show();
 				}
 			});
 			return false;
 		});
 		/* 药品列表 */
-		$('.med-box-item a').click(function(){
-			return false;
+		$(document).on('click', '.med-box-item a', function() {
+		   if(delSelect == 1){
+				return false;
+			}
+			else{
+				return true;
+			}
 		});
 		/* 底部菜单 */
 		$('.mui-tab-item').bind('touchstart',function(){
@@ -167,18 +174,24 @@
 		/* 删除药品 */
 		$('.del-item').bind('touchstart',function(){
 			var medBox = $("input[name='checkbox']:checked");
-			var midArr = new Array();
-			for(var i=0;i<medBox.length;i++){
-				midArr[i] = medBox[i].getAttribute('data-mid');
+			if(medBox.length == 0){
+				alert("请先选择要删除的药箱");
 			}
-			$.get("/CMedicine/removeMedicine?mid="+midArr,function(data){
-				if(data.result == 0){
-					loadMedicineList();
+			else{
+				var midArr = new Array();
+				for(var i=0;i<medBox.length;i++){
+					midArr[i] = medBox[i].getAttribute('data-mid');
 				}
-				else
-					alert("创建失败!");
-			});
-			$("input[name='checkbox']:checked").attr("checked",false);
+				$.get("/CMedicine/removeMedicine?mid="+midArr,function(data){
+					if(data.result == 0){
+						alert("删除成功");
+						loadMedicineList();
+					}
+					else
+						alert("创建失败!");
+				});
+				$("input[name='checkbox']:checked").attr("checked",false);
+			}
 		});
 		/* 日期控件 */
 		$('#produce-date').mobiscroll().date({
@@ -205,15 +218,28 @@
 	    	var medDesc = $("input[name='medicine-desc']").val();
 	    	var medProd = $("input[name='medicine-produce']").val();
 	    	var medEnd = $("input[name='medicine-end']").val();
-	    	$.get('/CMedicine/addMedicine?name='+medName+"&mark="+medDesc+"&prodDate="+medProd+"&endDate"=medEnd,function(data){
-	    		if(data.result == 1){
+	    	$.get('/CMedicine/addMedicine?name='+medName+"&mark="+medDesc+"&prodDate="+medProd+"&endDate="+medEnd,function(data){
+	    		if(data.result == 0){
+	    			alert("创建成功");
 	    			loadMedicineList();
 	    		}
 	    		else{
 	    			alert("创建失败");
 	    		}
 	    	})
-	    	
+	    });
+	    /*药品搜索*/
+	    $('#medicine-search').change(function(){
+	    	var keyWord = $.trim($(this).val());
+	    	$.get('/CMedicine/searchMedicine?medName='+keyWord,function(data){
+	    		var html = juicer($('#medicineSearchTpl').html(),{medicineList:data.data});
+	    		var newhtml = "";
+	    		if(keyWord == '')
+	    			newhtml = html;
+	    		else
+	    			newhtml = html.replace(new RegExp(keyWord,"g"),"<span class='key-word'>"+keyWord+"</span>");
+	    		$('.med-box-list').html(newhtml);
+	    	});
 	    });
 	});
 </script>
