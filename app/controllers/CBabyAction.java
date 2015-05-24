@@ -74,7 +74,11 @@ public class CBabyAction extends WebService{
 			Baby baby = Baby.findById(babyId);
 			if(baby!=null){
 				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-				baby.dateStr = format.format(baby.date);
+				try{
+					baby.dateStr = format.format(baby.date);
+				}catch(Exception e){
+					baby.dateStr = "未设置";
+				}
 				wsOk(baby);
 			}else{
 				wsError("不存在该宝宝哦!");
@@ -132,7 +136,7 @@ public class CBabyAction extends WebService{
 	 * date:出生日期
 	 * babyId:宝宝Id
 	 */
-	public static void modifyBabySex(String babyId,Date date){
+	public static void modifyBabyBtd(String babyId,Date date){
 		try{
 			Baby baby = Baby.findById(babyId);
 			if(baby!=null){

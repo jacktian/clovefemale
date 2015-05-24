@@ -464,7 +464,7 @@ span.mui-icon.mui-icon-plus.test::before{
 	background-color: #fff;
 	z-index: 999;
 	border-radius:10px;
-	min-height: 155px;
+	min-height: 135px;
 }
 
 .mui-bar.mui-bar-nav.model-header{
@@ -524,6 +524,15 @@ span.mui-icon.mui-icon-plus.test::before{
 	border-radius:5px;
 	/*background-color: rgba(39,40,34,0.4);*/
 }
+
+/*.mui-radio.sex-radio input[type=radio]:checked:before{
+	color:#EF9D9A;
+}*/
+
+.mui-popover .mui-table-view.sex-baby-list{
+	padding-top:10px;
+}
+
 /*-------------宝宝资料样式结束-----------------*/
 .mui-popovers{
 	/*display: hidden;*/

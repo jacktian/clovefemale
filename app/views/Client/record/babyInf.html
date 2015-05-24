@@ -7,7 +7,7 @@
 
 <div class="babyInf-box">
 <ul class="mui-table-view infList-baby-headImg">
-	<li class="mui-table-view-cell item-headImg">
+	<li id="item-baby-headImg" class="mui-table-view-cell item-headImg">
       <div class="item-baby-Inf">
       	<img id="baby-headImg" class="mui-media-object mui-pull-right chlid-img" src="http://dcloudio.github.io/mui/assets/img/shuijiao.jpg">
       </div>
@@ -51,6 +51,21 @@
 	<div class="mn-tips infTips"></div>
 </div>
 
+<!-- 性别修改模块 -->
+<div class="form-model mui-popover ms-model">
+	<header class="mui-bar mui-bar-nav model-header">
+		<h1 class="mui-title model-title">宝宝性别</h1>
+	</header>
+	<ul class="mui-table-view sex-baby-list">
+		<li class="mui-table-view-cell mui-radio mui-left item-sex-baby">
+			<input id="male-radio" class="sex-radio" name="sex-radio" type="radio" value="男" checked>男
+		</li>
+		<li class="mui-table-view-cell mui-radio mui-left item-sex-baby">
+			<input id="female-radio" class="sex-radio" name="sex-radio" value="女" type="radio">女
+		</li>
+	</ul>
+</div>
+
 <!-- 操作结果信息 -->
 <div class="infTips response-tips">
 	
@@ -63,6 +78,9 @@ body{
 }
 </style>
 <script src="http://dcloudio.github.io/mui/dist/js/jquery-2.1.1.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+<link rel="stylesheet" href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.custom-2.14.4.min.css'}"  rel="stylesheet"/>
+<script src="@{'/public/javascripts/client/mobiscroll/mobiscroll-2.14.4-crack.js'}" type="text/javascript"></script>
 <script>
 	$(function(){
 		var babyId = localStorage.babyId;
@@ -79,59 +97,152 @@ body{
 			}
 		});
 
-		//修改小名
+		/*更换宝宝头像*/
+		document.getElementById("item-baby-headImg").addEventListener("tap",function(){
+			// console.log("更换头像");
+			wx.chooseImage({
+			    success: function (res) {
+			    	//返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+			    	var localIds = res.localIds; 
+			    	alert(localIds.toString());
+			    	var localId = localIds[0];
+			    	
+
+			    	//上传头像图片
+			    	wx.uploadImage({
+					    localId: localId, // 需要上传的图片的本地ID，由chooseImage接口获得
+					    isShowProgressTips: 0, // 默认为1，显示进度提示
+					    success: function (res) {
+					        var serverId = res.serverId; // 返回图片的服务器端ID
+					        $("#baby-headImg").attr("src",serverId);
+					    }
+					});
+				}
+			});
+		});
+
+		/*展示修改小名模态框*/
 		document.getElementById("item-baby-name").addEventListener("tap",function(){
 			mui('.mn-model').popover('toggle');
 		});
 
-		//修改性别
+		/*展示修改性别模态框*/
 		document.getElementById("item-baby-sex").addEventListener("tap",function(){
-			alert("修改性别");
-		});
-		//修改生日
-		document.getElementById("item-baby-btd").addEventListener("tap",function(){
-			alert("修改生日");
+			// console.log($("#baby-sex").text());
+			if($("#baby-sex").text()=="男"){
+				$("#male-radio").trigger("click");
+			}else if($("#baby-sex").text()=="女"){
+				$("#female-radio").trigger("click");
+			}
+			mui('.ms-model').popover('toggle');
 		});
 
-		//确认修改小名
+		/*展示日期控件,修改生日*/
+		$("#item-baby-btd").mobiscroll().calendar({
+				theme:'ios',
+				lang:'zh',
+				display:'bottom',
+				endYear:new Date().getFullYear(), 
+				onSelect:function(valueText,inst){
+					if(inst.getDate()<=new Date()){
+						$.post("/CBabyAction/modifyBabyBtd",{
+							babyId:babyId,
+							date:valueText
+						},function(data){
+							if(data.result==0){//修改成功
+								$("#baby-birthday").text(valueText);
+							}
+							showResTips(data.data);
+						});
+					}
+				}
+		});
+
+		/*确认修改小名*/
 		document.getElementById("mbn-confirm-btn").addEventListener("tap",function(){
 			var name = $("#bn-input").val();
 			if("" == name){//名字为空
 				$(".mn-tips ").text("小名不能为空!");
 				$(".mn-tips ").show();
-			}
-			$.post("/CBabyAction/modifyBabyName",{
-				babyId:babyId,
-				name:name
-			},function(data){
-				if(data.result == 0 ){//操作成功
-					$("#baby-name").text(name);
-					mui('.mn-model').popover('toggle');
-					$(".response-tips").text("操作成功！");
-					$(".response-tips").show();
-					window.setTimeout("hideTips()",1500);
-				}else{
+			}else{
+				$.post("/CBabyAction/modifyBabyName",{
+					babyId:babyId,
+					name:name
+				},function(data){
+					if(data.result == 0 ){//操作成功
+						$("#baby-name").text(name);
+						mui('.mn-model').popover('toggle');
+						showResTips("操作成功！")
+					}else{
 
-				}
-			});
+					}
+					recoverMnBox();
+				});
+			}
+			
 		});
 
-		//取消修改小名
+		/*取消修改小名*/
 		document.getElementById("mbn-cancel-btn").addEventListener("tap",function(){
 			mui('.mn-model').popover('toggle');
 		});
 
-		//隐藏小名提示
+		/*隐藏小名提示*/
 		$("#bn-input").bind("focus", function(e) {  
                 $(".mn-tips ").text("");
 				$(".mn-tips ").hide();
-        });  ;
-		
-	})
+        });
 
-	//隐藏信息提示，并清空
+        /*修改性别为男*/	
+		$(".item-sex-baby").bind('touchend',function(){
+			var sex = $('input:radio[name="sex-radio"]:checked').val();
+			var tap_sex = $(this).children(".sex-radio").val();
+			if(sex == tap_sex){
+				return 0;
+			}else{
+				if(tap_sex == "男"){
+					modifyBabySex(babyId,"男");
+				}else if(tap_sex == "女"){
+					modifyBabySex(babyId,"女");
+				}
+				
+			}
+		});
+
+		
+	});
+
+	/*展示操作信息*/
+	function showResTips(result){
+		$(".response-tips").text(result);
+		$(".response-tips").show();
+		window.setTimeout("hideTips()",1500);
+	}
+
+	/*隐藏信息提示，并清空*/
 	function hideTips(){
 		$(".response-tips").text("");
 		$(".response-tips").hide();
+	}
+
+	/*复原小名修改框*/
+	function recoverMnBox(){
+		hideTips();
+		$("#bn-input").val("")
+	}
+
+	/*修改性别---提交数据库*/
+	function modifyBabySex(babyId,sex){
+		console.log(babyId,sex)
+		$.post("/CBabyAction/modifyBabySex",{
+			babyId:babyId,
+			sex:sex
+		},function(data){
+			if(data.result==0){//修改成功
+				$("#baby-sex").text(sex);
+			}
+			showResTips(data.data);
+			mui('.ms-model').popover('toggle');
+		});
 	}
 </script>
