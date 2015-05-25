@@ -1,5 +1,8 @@
 package controllers;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,9 +11,12 @@ import java.util.List;
 import javax.persistence.Query;
 
 import play.db.jpa.JPA;
+import play.libs.WS;
+import play.libs.WS.HttpResponse;
 import beans.SimpleNoteBookBean;
 import models.Baby;
 import models.Note;
+import models.WeChat;
 
 /**
  * 客户端婴儿控制器
@@ -25,7 +31,7 @@ public class CBabyAction extends WebService{
 	public static void loadBabyList(){
 		//String openid = session.get("openid");//从session中获取openid
 		String openid = "ob1R-uIRkLLp6lmmrT4w-2rrZ5jQ";
-		String queryString = "select new Baby(b.id,b.userId,b.date,CONCAT(TIMESTAMPDIFF(YEAR,b.date,now()),''),b.sex,b.name) " +
+		String queryString = "select new Baby(b.id,b.userId,b.date,CONCAT(TIMESTAMPDIFF(YEAR,b.date,now()),''),b.headImgUrl,b.sex,b.name) " +
 				" from Baby b where b.userId = ?1";
 		
 		List<Baby> babyList =  new ArrayList<Baby>();
@@ -154,6 +160,42 @@ public class CBabyAction extends WebService{
 		
 	}
 	
+	/**
+	 * 获取access_token
+	 */
+	public static void getAccess_token(){
+		List<WeChat> weChatList = WeChat.all().fetch(1,1);
+		wsOk(weChatList);
+	}
+	
+	/**
+	 * 从微信服务器下载用户上传的宝宝头像
+	 */
+	public static void downloadBabyImg(String babyId,String media_id){
+		List<WeChat> weChatList = WeChat.all().fetch(1,1);
+		String ACCESS_TOKEN = weChatList.get(0).access_token;
+		String MEDIA_ID = media_id;
+		String headImgUrl = "/public/images/client/" + MEDIA_ID + ".jpg";
+		HttpResponse resp = WS.url("http://file.api.weixin.qq.com/cgi-bin/media/get?access_token=" + ACCESS_TOKEN + "&media_id=" + MEDIA_ID).get();
+		try{
+			File file = new File(headImgUrl);
+			FileOutputStream output = new FileOutputStream(file);
+			InputStream inputStream = resp.getStream();
+			byte[]  value = new byte[10];
+			while(inputStream.read(value) != -1){
+				output.write(value);
+			}
+			output.flush();
+			output.close();
+			Baby baby = Baby.findById(babyId);
+			baby.headImgUrl = headImgUrl;
+			baby.save();
+		}catch(Exception e){
+			
+		}
+		
+		
+	}
 	
 	public static void test() {
 		String queryString = "select count(*) from Baby";

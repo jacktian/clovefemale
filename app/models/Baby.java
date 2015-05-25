@@ -43,6 +43,12 @@ public class Baby extends BasicModel{
 	public String dateStr;
 
 	/**
+	 *头像路径 
+	 */
+	@Column(name = "headImgUrl")
+	public String headImgUrl;
+	
+	/**
      * 性别
      */
 	@Column(name = "sex")
@@ -56,11 +62,12 @@ public class Baby extends BasicModel{
 	
 	public Baby(){};
 	
-	public Baby(String id,String userId,Date date,String dateStr, String sex,String name){
+	public Baby(String id,String userId,Date date,String dateStr,String headImgUrl, String sex,String name){
 		this.id = id;
 		this.userId = userId;
 		this.date = date;
 		this.dateStr = dateStr;
+		this.headImgUrl = headImgUrl;
 		this.sex = sex;
 		this.name = name;
 	}

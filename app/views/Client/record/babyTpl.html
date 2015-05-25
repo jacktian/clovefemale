@@ -2,7 +2,11 @@
 	{@each babyList as baby}
 	<li class="mui-table-view-cell mui-media">
 		<a href="babyInf" class="mui-navigate-right item-babyList">
+			{@if baby.headImgUrl == null || "" == baby.headImgUrl}
 			<img class="mui-media-object mui-pull-left chlid-img" src="http://dcloudio.github.io/mui/assets/img/shuijiao.jpg">
+			{@else}
+			<img class="mui-media-object mui-pull-left chlid-img" src="${baby.headImgUrl}">
+			{@/if}
 			
 			<div class="mui-media-body">
 				${baby.name}
