@@ -105,9 +105,10 @@ body{
 			    success: function (res) {
 			    	//返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
 			    	var localIds = res.localIds; 
-			    	alert(localIds.toString());
+			    	// alert(localIds.toString());
 			    	var localId = localIds[0];
 			    	alert(localId);
+			    	$("#baby-headImg").attr("src",localId);
 
 			    	//上传头像图片
 			    	wx.uploadImage({
@@ -115,12 +116,19 @@ body{
 					    isShowProgressTips: 0, // 默认为1，显示进度提示
 					    success: function (res) {
 					        var serverId = res.serverId; // 返回图片的服务器端ID
-					        $("#baby-headImg").attr("src",serverId);
+					        alert(serverId);
+					        // $("#baby-headImg").attr("src",serverId);
 					        $.post("/CBabyAction/downloadBabyImg",{
 					        	babyId:babyId,
 					        	media_id:serverId
 					        },function(data){
-					        	alert("success");
+					        	if(data.result==0){
+					        		alert("从微信服务器下载头像成功");
+					        		$("#baby-headImg").attr("src",data.headImgUrl);
+					        	}else{
+					        		alert("Error");
+					        	}
+					        	
 					        });
 					    }
 					});
