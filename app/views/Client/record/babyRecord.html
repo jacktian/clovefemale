@@ -7,7 +7,7 @@
 <link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.scroller.css'}" rel="stylesheet" type="text/css" />
 
 <link rel="stylesheet" href="@{'/public/stylesheets/client/baby.css'}"/>
-<script type="text/javascript" src = "@{'/public/javascripts/jquery-1.8.3.min.js'}"></script>
+<script src="http://dcloudio.github.io/mui/dist/js/jquery-2.1.1.js"></script>
 
 
 <script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.core.js'}"></script>
@@ -54,17 +54,17 @@
 					<tr class="tableTitle">
 						<td>身高(cm)</td>
 						<td>体重(kg)</td>
-						<td>记录时间</td>
+						<td>年龄</td>
 					</tr>
 					<tr class="oddLine">
 						<td>90</td>
-						<td>23</td>
-						<td>2014-3-5</td>
+						<td>23</td> 
+						<td>3岁</td>
 					</tr>
 					<tr class="evenLine">
 						<td>85</td>
 						<td>21</td>
-						<td>2013-12-1</td>
+						<td>2岁</td>
 					</tr>
 				</table>
 			</div>
@@ -231,25 +231,28 @@
 
 <!-- 身体记录添加 -->
 <div class="mui-popover scrollerBox newbodyIndex">
+	<header class="mui-bar mui-bar-nav model-header">
+		<h1 class="mui-title model-title">身体指标</h1>
+	</header>
 	<input id="scroller" name="scroller" />
-	<div class="labelunit">
+	<!-- <div class="labelunit">
 		<ul>
-			<li class="unit"><span>岁</span></li><li class="unit"><span>月</span></li>
+			<li class="unit"><span id="year_unit">岁</span></li><li class="unit"><span>月</span></li>
 		</ul>
-	</div>
+	</div> -->
 	<div class="mui-content-padded indexInputBox">
 		<form class="mui-input-group">
 			<div class="mui-input-row">
 				<label>身高</label>
-				<input type="text" class="mui-input-clear" placeholder="单位cm">
+				<input id="baby_height" type="text" class="mui-input-clear" placeholder="单位cm">
 			</div>
 			<div class="mui-input-row">
 				<label>体重</label>
-				<input type="text" class="mui-input-clear" placeholder="单位kg">
+				<input id="baby_weight" type="text" class="mui-input-clear" placeholder="单位kg">
 			</div>
 			<div class="mui-button-row">
-				<button class="mui-btn mui-btn-primary" onclick="return false;">确认</button>&nbsp;&nbsp;
-				<button class="mui-btn mui-btn-primary" onclick="return false;">取消</button>
+				<button id="abi-confirm-btn" class="mui-btn mui-btn-primary confirm-btn" onclick="return false;">确认</button>&nbsp;&nbsp;
+				<button id="abi-cancel-btn" class="mui-btn mui-btn-primary cancel-btn" onclick="return false;">取消</button>
 			</div>
 		</form>
 	</div>	

@@ -16,6 +16,7 @@ import play.libs.WS.HttpResponse;
 import beans.SimpleNoteBookBean;
 import models.Baby;
 import models.Note;
+import models.BodyIndex;
 import models.WeChat;
 
 /**
@@ -197,6 +198,54 @@ public class CBabyAction extends WebService{
 		
 	}
 	
+	/**
+	 * 增加或修改宝宝身体指标
+	 */
+	public static void addOrMdfBabyIndex(String bodyIndexId,String babyId,double age,double height,double weight){
+		BodyIndex bodyIndex;
+		
+		if(!"".equals(bodyIndexId)){//bodyIndexId不为空，表示已经是已经记录过的身体指标，此操作为修改身体指标
+			try{
+				bodyIndex = BodyIndex.findById(bodyIndexId);
+				bodyIndex.height = height;
+				bodyIndex.weight = weight;
+				bodyIndex.save();
+				wsOk("修改成功");
+			}catch(Exception e){
+				wsError("修改记录失败");
+			}
+			
+		}else{//bodyIndexId为空，表示未级路过的身体指标，此操作为增加身体指标
+			String ageDcb;
+			if(age < 1){//一岁以下
+				ageDcb = (int)age * 10 + "个月";
+			}else{
+				int age_int = (int) Math.floor(age);
+				String age_digit_string = "";
+				if((int)Math.round(age) - age != 0){
+					age_digit_string = "半";
+				}
+				 
+				ageDcb = age_int + "岁" + age_digit_string;
+			}
+			bodyIndex = new BodyIndex();
+			bodyIndex.babyId = babyId;
+			bodyIndex.age = age;
+			bodyIndex.ageDcb = ageDcb;
+			bodyIndex.height = height;
+			bodyIndex.weight = weight;
+			try{
+				bodyIndex.save();
+				wsOk("添加成功");
+			}catch(Exception e){
+				wsError("添加记录失败");
+			}
+			
+			
+		}
+		
+	}
+	
 	public static void test() {
 		String queryString = "select count(*) from Baby";
 		queryString = "SELECT TIMESTAMPDIFF(YEAR, '2011-01-27 15:52:11',now())";
@@ -206,4 +255,5 @@ public class CBabyAction extends WebService{
 		System.out.println(year);
 		wsOk(year);
 	}
+	
 }

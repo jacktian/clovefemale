@@ -41,7 +41,7 @@ public class BabyGrowth extends WebService {
 			 for(BodyIndex bodyIndex :list){
 				 Map<String, String> map  = new HashMap<String, String>();
 				 map.put("date", bodyIndex.date.toString());
-				 map.put("height",bodyIndex.height.toString());
+				 map.put("height",bodyIndex.height+"");
 				 heightList.add(map);
 			 }
 		 }

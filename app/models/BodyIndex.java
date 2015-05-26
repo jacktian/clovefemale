@@ -32,20 +32,34 @@ public class BodyIndex extends BasicModel {
 	public String dateStr;
 	@Column(name = "height")
 	@Required
-	public Double height;//身高
+	public double height;//身高
 	@Column(name = "weight")
 	@Required
-	public Double weight;//体重
+	public double weight;//体重
 	@Column(name = "baby_Id")
 	public String babyId;
+	
+	/**
+	 * 年龄
+	 */
+	@Column(name="age")
+	public double age;
+	
+	/**
+	 * 年龄说明
+	 */
+	@Column(name="ageDcb")
+	public String ageDcb;
 
 	public BodyIndex(){}
-	public BodyIndex(Date date,Double height,Double weight,String babyId){
+	public BodyIndex(Date date,Double height,Double weight,String babyId,double age,String ageDcb){
 		
 		this.date=date;
 		this.height=height;
 		this.weight=weight;
 		this.babyId = babyId;
+		this.age = age;
+		this.ageDcb = ageDcb;
 	}
 	
 	/*

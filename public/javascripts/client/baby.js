@@ -28,11 +28,12 @@ $(function(){
 	});
 
 
+	//身体指标动态
 	var ctx = document.getElementById("bodySimChart").getContext("2d");
 	$("#bodySimChart").attr("width", $(window).get(0).innerWidth*0.95);
 	var options = {};
 	var data = {
-		labels : ["0","1","2","3","4","5","6","7","8","9","10","11","1岁"],
+		labels : ["初生儿","1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","1岁半"],
 		datasets : [
 			{
 				fillColor : "rgba(151,187,205,0.5)",
@@ -103,30 +104,49 @@ $(function(){
 	});
 
 	
-
+	/*身体指标添加滚轮*/
     $('#scroller').mobiscroll().scroller({
         theme: 'mobiscroll',
         lang: 'zh',
         display: 'inline',
         rows:3,
-        multiline:2,
+        multiline:1,
         // showLabel:true,
         layout:'liquid',
         height:40,
          wheels: [[
                 {
                 	label:'岁',
-                    // keys: [3, 4, 5, 6],
-                    values: ["0","1","2","3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25"]
-                },
-                {
-                	label:'月',
-                    // keys: [3, 4, 5, 6],
-                    values: ["0","1","2","3", "4", "5", "6", "7", "8", "9", "10", "11"]
+                	name:'years',
+                    keys: [0,0.01,0.02,0.03, 0.04, 0.05, 0.06,0.07,0.08,0.09,0.10,0.11,0.12,1,2,3, 4, 5, 6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22],
+                    values: ["0月","1月","2月","3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "1岁", "1岁半", "2岁", "2岁半", "3岁", "3岁半", "4岁", "4岁半",  "5岁", "5岁半", "6岁", "6岁半", "7岁", "8岁","9岁","10岁","11岁","12岁","13岁","14岁","15岁", "16岁", "17岁", "18岁", "19岁", "20岁", "21岁", "22岁"]
                 }
-            ]]
+                // ,
+                // {
+                // 	label:'月',
+                //     keys: [0,1,2,3, 4, 5, 6,7,8,9,10,11],
+                //     values: ["0","1","2","3", "4", "5", "6", "7", "8", "9", "10", "11"]
+                // }
+            ]],
+        onChange:function(valueText,inst){
+        	// 
+        	var age = parseInt(valueText.split(" ")[0]);
+        	console.log(age);
+        	if(age<=0){
+        		console.log("月");
+        		$("#year_unit").text("月")
+        	}else{
+        		$("#year_unit").text("岁")
+        	}
+        	// console.log(valueText.split(" ")[0]);
+        	// if()
+        },
+        onShow:function(html,valueText,inst){
+        	console.log(valueText.split(" ")[0]);
+        }
     });
 
+    /*成绩表单添加滚轮*/
     $('#scroller_mark').mobiscroll().scroller({
         theme: 'mobiscroll',
         lang: 'zh',
@@ -152,11 +172,15 @@ $(function(){
                     // keys: [3, 4, 5, 6],
                     values: ["0","1","2","3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25"]
                 }
-            ]]
+            ]],
+        onSelect:function(){
+        	// 
+        	console.log("select");
+        }
     });
     
     
-	//添加身体指标
+	//成长记录添加按钮tap事件
 	document.getElementById("add_babygrow").addEventListener("tap",function(event){
  		switch(activeTab_grow){
  			case 0 : mui('.newbodyIndex').popover('toggle'); return false;break;
@@ -167,6 +191,30 @@ $(function(){
  		
 	});
 
+	//身体指标弹出框确定按钮tap事件
+	document.getElementById("abi-confirm-btn").addEventListener("tap",function(event){
+ 		var bodyIndexId = localStorage.bodyIndexId;
+ 		var height = $("#baby_height").val();
+ 		var weight = $("#baby_height").val();
+ 		var age ;
+ 		console.log($('#scroller').mobiscroll('getVal',age));
+ 		console.log(age)
+ 		// $.post("/CBabyAction/addOrMdfBabyIndex",{
+ 		// 	bodyIndexId:bodyIndexId,
+ 		// 	babyId:babyId,
+ 		// 	age:age,
+ 		// 	height:height,
+ 		// 	weight:weight
+ 		// },function(data){//显示操作结果
+			// mui('.newbodyIndex').popover('toggle');	
+
+ 		// })
+	});
+
+	//身体指标弹出框取消按钮tap事件
+	document.getElementById("abi-cancel-btn").addEventListener("tap",function(event){
+ 		mui('.newbodyIndex').popover('toggle');	
+	});
 });
 
 var changeSubject = function(event){
