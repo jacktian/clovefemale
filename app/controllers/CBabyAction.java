@@ -181,18 +181,21 @@ public class CBabyAction extends WebService{
 		try{
 			File file = new File(headImgUrl);
 			FileOutputStream output = new FileOutputStream(file);
-			InputStream inputStream = resp.getStream();
-			byte[]  value = new byte[10];
-			while(inputStream.read(value) != -1){
-				output.write(value);
-			}
-			output.flush();
-			output.close();
-			Baby baby = Baby.findById(babyId);
-			baby.headImgUrl = headImgUrl;
-			baby.save();
+//			resp.getString();
+			wsOk(resp.getString());
+//			InputStream inputStream = resp.getStream();
+//			byte[]  value = new byte[10];
+//			while(inputStream.read(value) != -1){
+//				output.write(value);
+//			}
+//			output.flush();
+//			output.close();
+//			Baby baby = Baby.findById(babyId);
+//			baby.headImgUrl = headImgUrl;
+//			baby.save();
+//			wsOk(baby);
 		}catch(Exception e){
-			
+			wsError("下载失败");
 		}
 		
 		
