@@ -14,9 +14,19 @@ $(function(){
 	});
 
 	/*加载宝宝历史数据*/
-	$.post("",{},function{
-		
-	})
+	// $.post("/CBabyAction/loadBabyGrowth",{
+	// 	babyId:babyId
+	// },function(data){
+	// 	if(data.result == 0){//成功
+			
+	// 	}else{//失败
+	// 		if(data.data == "没有记录"){
+	// 			$("#nullTips").text("没有找到宝宝的身体指标,<br/>赶紧去添加吧！");
+	// 			$("#nullTips").show();
+	// 		}
+	// 	}
+	// })
+	
     //孩子列表
 	document.getElementById("list_children").addEventListener("tap",function(event){
  		mui('.babylist').popover('toggle');

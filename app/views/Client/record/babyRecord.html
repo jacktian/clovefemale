@@ -44,6 +44,14 @@
 	<!-- </div> -->
 	<div class="mui-slider-group">
 		<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+			<!-- 加载显示 -->
+			<!-- <div class="mui-loading">
+				<div class="mui-spinner">
+				</div>
+			</div> -->
+			
+			<!-- 身体指标内容模块 -->
+			<div class="bodyIndex-content">
 			<div class="databox">
 				<div class="objectTitle">
 					<span class="pointSign"></span>
@@ -79,7 +87,7 @@
 				<!-- 图表区域，展示最近动态 -->
 				<canvas id="bodySimChart" height="200"></canvas>
 			</div><!-- 身体指标图表模块结束 -->
-			<!-- 添加新身体指标按钮 -->
+			</div><!--身体指标内容模块结束-->
 		</div>
 
 		<!-- card2成绩表单 -->
@@ -199,6 +207,11 @@
 	</div>
 	
 </div>
+<!-- 消息提示 -->
+<div id="nullTips" class="nullTips-babyGrowth">
+	没有找到宝宝的身体指标,<br/>赶紧去添加吧！
+</div>
+
 <nav class="mui-bar mui-bar-tab">
 			  <a id="ad" class="grow_tab_link" href="#">
 			   	 <i class="iconfont recordNavIcon">&#xe6a8;</i>提示

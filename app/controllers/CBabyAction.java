@@ -312,8 +312,9 @@ public class CBabyAction extends WebService{
 	/**
 	 * 加载成长记录数据
 	 */
-	public static void loadBabyGrowth(String babyId){
-		List<BodyIndex> bodyIndexList = BodyIndex.find("select top 6 new BodyIndex() from BodyIndex bi where babyId = ? Order by bi.age", params).fetch();
+	public static void loadBabyGrowth(){
+		String babyId = "1BFB8CDDECC24BE49F8D3C5B9528BBB0";
+		List<BodyIndex> bodyIndexList = BodyIndex.find("select new BodyIndex(bi.date,bi.height,bi.weight,bi.babyId,bi.age,bi.ageDcb) from BodyIndex bi where babyId = ? Order by bi.age", babyId).fetch(6);
 		wsOk(bodyIndexList);
 	}
 	

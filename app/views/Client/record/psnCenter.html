@@ -21,7 +21,7 @@
 			</a>
 		</li>
 		<li>
-			<a href="#" class="psnnav">
+			<a id="baby-link" href="myBaby" class="psnnav">
 				<i class="icon-psnNav babyIconFont iconfont">&#xf01d4;</i>
 				<div class="psnnavName">宝宝</div>
 			</a>
@@ -131,6 +131,12 @@
     localStorage.modifyItem = 3;
     window.location.href="modifyPhone"; 
   });
+
+  /*我的宝宝*/
+  document.getElementById("baby-link").addEventListener("tap",function(event){
+    localStorage.lastPage = "psnCenter";
+    return true;
+  });;
 </script>
 
 

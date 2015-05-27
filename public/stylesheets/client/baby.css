@@ -428,6 +428,19 @@ span.mui-icon.mui-icon-plus.test::before{
 	display: none;
 }
 
+.nullTips-babyGrowth{
+	position: absolute;
+	width: 80%;
+	margin: 0 auto;
+	left:10%;
+	top:160px;
+	text-align: center;
+	color:red;
+	font-size: 15px;
+	display: none;
+
+}
+
 /*#babylist>ul>li:active{
 	background-color: black;
 }*/
