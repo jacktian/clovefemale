@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -176,30 +177,89 @@ public class CBabyAction extends WebService{
 		List<WeChat> weChatList = WeChat.all().fetch(1,1);
 		String ACCESS_TOKEN = weChatList.get(0).access_token;
 		String MEDIA_ID = media_id;
-		String headImgUrl = "/public/images/client/" + MEDIA_ID + ".jpg";
+		String headImgUrl ="babyimage/" + MEDIA_ID + ".jpg";
+//		wsOk(MEDIA_ID+"---");
 		HttpResponse resp = WS.url("http://file.api.weixin.qq.com/cgi-bin/media/get?access_token=" + ACCESS_TOKEN + "&media_id=" + MEDIA_ID).get();
 		try{
 			File file = new File(headImgUrl);
+//			wsOk(file.getAbsolutePath());
 			FileOutputStream output = new FileOutputStream(file);
 //			resp.getString();
-			wsOk(resp.getString());
-//			InputStream inputStream = resp.getStream();
-//			byte[]  value = new byte[10];
-//			while(inputStream.read(value) != -1){
-//				output.write(value);
-//			}
-//			output.flush();
-//			output.close();
-//			Baby baby = Baby.findById(babyId);
-//			baby.headImgUrl = headImgUrl;
-//			baby.save();
-//			wsOk(baby);
+			
+			InputStream inputStream = resp.getStream();
+			//得到图片的二进制数据，以二进制封装得到数据，具有通用性  
+	        byte[] data = readInputStream(inputStream);  
+			 
+	        output.write(data);
+			output.flush();
+			output.close();
+			Baby baby = Baby.findById(babyId);
+			baby.headImgUrl = "/" + headImgUrl;
+			baby.save();
+			wsOk(baby);
+//			wsOk(resp.getString());
 		}catch(Exception e){
-			wsError("下载失败");
+			wsError(e.getMessage());
+//			wsError(e.p);
 		}
 		
 		
 	}
+	
+	
+	public static void downloadBabyImg2(){
+		String babyId = "";
+		; 
+		List<WeChat> weChatList = WeChat.all().fetch(1,1);
+		String ACCESS_TOKEN = weChatList.get(0).access_token;
+		String MEDIA_ID = "tFkgoV7R6idCdyHgOrg9jVIKv_7CPU6BBu6nm0UZwiO_jBgjX4F67PTMPHkvR4uc";//media_id;
+		String headImgUrl ="babyimage/" + MEDIA_ID + ".jpg";
+//		wsOk(MEDIA_ID+"---");
+		
+		HttpResponse resp = WS.url("http://file.api.weixin.qq.com/cgi-bin/media/get?access_token=" + ACCESS_TOKEN + "&media_id=" + MEDIA_ID).get();
+	//	HttpResponse resp = WS.url("http://localhost:9001/babyimage/boy.png").get();
+		try{
+			File file = new File(headImgUrl);
+//			wsOk(file.getAbsolutePath());
+			FileOutputStream output = new FileOutputStream(file);
+//			resp.getString();
+			
+			InputStream inputStream = resp.getStream();
+			//得到图片的二进制数据，以二进制封装得到数据，具有通用性  
+	        byte[] data = readInputStream(inputStream);  
+			 
+	        output.write(data);
+			output.flush();
+			output.close();
+			Baby baby = Baby.findById(babyId);
+			baby.headImgUrl = "/" + headImgUrl;
+			baby.save();
+			wsOk(baby);
+			wsOk(resp.getString());
+		}catch(Exception e){
+			wsError(e.getMessage());
+//			wsError(e.p);
+		}
+		
+		
+	}
+	
+	public static byte[] readInputStream(InputStream inStream) throws Exception{  
+        ByteArrayOutputStream outStream = new ByteArrayOutputStream();  
+        //创建一个Buffer字符串  
+        byte[] buffer = new byte[1024];  
+        //每次读取的字符串长度，如果为-1，代表全部读取完毕  
+        int len = 0;  
+        //使用一个输入流从buffer里把数据读取出来  
+        while( (len=inStream.read(buffer)) != -1 ){  
+            //用输出流往buffer里写入数据，中间参数代表从哪个位置开始读，len代表读取的长度  
+            outStream.write(buffer, 0, len);  
+        }  
+        //关闭输入流  
+        inStream.close();  
+        //把outStream里的数据写入内存  
+        return outStream.toByteArray();  
+    }  
 	
 	/**
 	 * 增加或修改宝宝身体指标
@@ -247,6 +307,14 @@ public class CBabyAction extends WebService{
 			
 		}
 		
+	}
+	
+	/**
+	 * 加载成长记录数据
+	 */
+	public static void loadBabyGrowth(String babyId){
+		List<BodyIndex> bodyIndexList = BodyIndex.find("select top 6 new BodyIndex() from BodyIndex bi where babyId = ? Order by bi.age", params).fetch();
+		wsOk(bodyIndexList);
 	}
 	
 	public static void test() {

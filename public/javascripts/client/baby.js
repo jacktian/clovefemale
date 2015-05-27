@@ -13,7 +13,10 @@ $(function(){
 	  }
 	});
 
-	
+	/*加载宝宝历史数据*/
+	$.post("",{},function{
+		
+	})
     //孩子列表
 	document.getElementById("list_children").addEventListener("tap",function(event){
  		mui('.babylist').popover('toggle');

@@ -13,7 +13,7 @@
 </header> -->
 
 <header class="mui-bar mui-bar-nav babyTitle">
-  <a class="mui-icon mui-icon-left-nav mui-pull-left"></a>
+  <a href="first" class="mui-icon mui-icon-left-nav mui-pull-left"></a>
   <a id="newBabyBtn" class="mui-icon mui-icon-plusempty mui-pull-right"></a>
   <h1 class="mui-title">宝宝列表</h1>
 </header>
@@ -101,6 +101,9 @@
 				
 				$('.child-list').append(html);
 				$(".item-babyList").bind('touchend',function(){
+					if("psnCenter" == localStorage.lastPage){
+						$(this).attr("href","babyInf");
+					}
 					localStorage.babyId = $(this).children(".babyId").text();
 					// window.location.href="/Cient/babyInf"; 
 					return true;

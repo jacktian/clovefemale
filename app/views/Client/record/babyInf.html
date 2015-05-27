@@ -85,6 +85,8 @@ body{
 <script>
 	$(function(){
 		var babyId = localStorage.babyId;
+
+
 		// alert(babyId);
 		/*加载宝宝详细资料*/
 		$.post("/CBabyAction/loadBabyInf",{
@@ -101,6 +103,7 @@ body{
 		/*更换宝宝头像*/
 		document.getElementById("item-baby-headImg").addEventListener("tap",function(){
 			console.log("更换头像");
+			$("#baby-headImg").attr("src","/babyimage/1.png");
 			wx.chooseImage({
 			    success: function (res) {
 			    	//返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
@@ -116,6 +119,7 @@ body{
 					    isShowProgressTips: 1, // 默认为1，显示进度提示
 					    success: function (res) {
 					        var serverId = res.serverId; // 返回图片的服务器端ID
+					        localStorage.serverId = serverId;
 					        alert(serverId);
 					        // $("#baby-headImg").attr("src",serverId);
 					        $.post("/CBabyAction/downloadBabyImg",{
@@ -138,7 +142,16 @@ body{
 
 		/*展示修改小名模态框*/
 		document.getElementById("item-baby-name").addEventListener("tap",function(){
-			mui('.mn-model').popover('toggle');
+			// mui('.mn-model').popover('toggle');
+			wx.downloadImage({
+			    serverId: localStorage.serverId, // 需要下载的图片的服务器端ID，由uploadImage接口获得
+			    isShowProgressTips: 1, // 默认为1，显示进度提示
+			    success: function (res) {
+			        var localId = res.localId; // 返回图片下载后的本地ID
+			        $("#baby-headImg").attr("src",localId);
+			        alert("success");
+			    }
+			});
 		});
 
 		/*展示修改性别模态框*/
