@@ -188,7 +188,7 @@ public class CBabyAction extends WebService{
 			File file = new File(headImgUrl);
 //			wsOk(file.getAbsolutePath());
 			FileOutputStream output = new FileOutputStream(file);
-			wsOk(resp.getString());
+//			wsOk(resp.getString());
 //			wsOk(resp.getJson());
 //			JsonElement jsonElement = resp.getJson();
 //			JsonObject json = jsonElement.getAsJsonObject();
@@ -243,7 +243,7 @@ public class CBabyAction extends WebService{
 			baby.headImgUrl = "/" + headImgUrl;
 			baby.save();
 			wsOk(baby);
-			wsOk(resp.getString());
+//			wsOk(resp.getString());
 		}catch(Exception e){
 			wsError(e.getMessage());
 //			wsError(e.p);
