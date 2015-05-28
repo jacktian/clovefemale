@@ -127,7 +127,8 @@ body{
 					        	media_id:serverId
 					        },function(data){
 					        	if(data.result==0){
-					        		alert("从微信服务器下载头像成功");
+					        		alert(data.data);
+					        		// alert("从微信服务器下载头像成功");
 					        		$("#baby-headImg").attr("src",data.headImgUrl);
 					        	}else{
 					        		alert(data.data);
