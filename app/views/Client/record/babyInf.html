@@ -103,14 +103,14 @@ body{
 		/*更换宝宝头像*/
 		document.getElementById("item-baby-headImg").addEventListener("tap",function(){
 			console.log("更换头像");
-			$("#baby-headImg").attr("src","/babyimage/1.png");
+			// $("#baby-headImg").attr("src","/babyimage/1.png");
 			wx.chooseImage({
 			    success: function (res) {
 			    	//返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
 			    	var localIds = res.localIds; 
 			    	// alert(localIds.toString());
 			    	var localId = localIds[0];
-			    	alert(localId);
+			    	alert(localId+"---"+localId.length);
 			    	$("#baby-headImg").attr("src",localId);
 
 			    	//上传头像图片
@@ -149,7 +149,7 @@ body{
 			    success: function (res) {
 			        var localId = res.localId; // 返回图片下载后的本地ID
 			        $("#baby-headImg").attr("src",localId);
-			        alert("success");
+			        alert("success---"+localId);
 			    }
 			});
 		});
@@ -285,7 +285,7 @@ body{
 			var signature = data.data.signature;
 		    /* 配置微信接口信息 */
 			wx.config({
-			    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+			    debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
 			    appId: 'wx485f2bc0867fe1c2', // 必填，公众号的唯一标识
 			    timestamp: timestamp, // 必填，生成签名的时间戳
 			    nonceStr: nonceStr, // 必填，生成签名的随机串

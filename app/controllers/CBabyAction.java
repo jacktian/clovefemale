@@ -11,6 +11,9 @@ import java.util.List;
 
 import javax.persistence.Query;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
 import play.db.jpa.JPA;
 import play.libs.WS;
 import play.libs.WS.HttpResponse;
@@ -176,7 +179,8 @@ public class CBabyAction extends WebService{
 	public static void downloadBabyImg(String babyId,String media_id){
 		List<WeChat> weChatList = WeChat.all().fetch(1,1);
 		String ACCESS_TOKEN = weChatList.get(0).access_token;
-		String MEDIA_ID = media_id;
+
+		String MEDIA_ID = media_id;//"jF6mH0Sk50TVa-8LmDHZm6aAbfLMxB0gi37zVp_LJ9yDUwYBhmDaBz4JW_G2Z8XV";//"qpBC8Kby5ihwwlJKRi5KXLdTB2e_2RwSeCrrGc15KROJfcVTcRFLCw9MxVmpwD9v";//media_id;
 		String headImgUrl ="babyimage/" + MEDIA_ID + ".jpg";
 //		wsOk(MEDIA_ID+"---");
 		HttpResponse resp = WS.url("http://file.api.weixin.qq.com/cgi-bin/media/get?access_token=" + ACCESS_TOKEN + "&media_id=" + MEDIA_ID).get();
@@ -184,8 +188,12 @@ public class CBabyAction extends WebService{
 			File file = new File(headImgUrl);
 //			wsOk(file.getAbsolutePath());
 			FileOutputStream output = new FileOutputStream(file);
-//			resp.getString();
-			
+			wsOk(resp.getString());
+//			wsOk(resp.getJson());
+//			JsonElement jsonElement = resp.getJson();
+//			JsonObject json = jsonElement.getAsJsonObject();
+//			String openid = json.get("errcode").getAsString();
+//			System.out.println(json.toString());
 			InputStream inputStream = resp.getStream();
 			//得到图片的二进制数据，以二进制封装得到数据，具有通用性  
 	        byte[] data = readInputStream(inputStream);  
@@ -193,7 +201,7 @@ public class CBabyAction extends WebService{
 	        output.write(data);
 			output.flush();
 			output.close();
-			Baby baby = Baby.findById(babyId);
+			Baby baby = Baby.findById(babyId);//("1D77F11947684F6E867BA06D68EEC673");
 			baby.headImgUrl = "/" + headImgUrl;
 			baby.save();
 			wsOk(baby);
