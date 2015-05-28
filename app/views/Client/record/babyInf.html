@@ -8,8 +8,8 @@
 <div class="babyInf-box">
 <ul class="mui-table-view infList-baby-headImg">
 	<li id="item-baby-headImg" class="mui-table-view-cell item-headImg">
-      <div class="item-baby-Inf">
-      	<img id="baby-headImg" class="mui-media-object mui-pull-right chlid-img" src="http://dcloudio.github.io/mui/assets/img/shuijiao.jpg">
+      <div class="item-baby-Inf baby-headImg-box">
+      	<img id="baby-headImg" class="mui-media-object mui-pull-right child-img" src="http://dcloudio.github.io/mui/assets/img/shuijiao.jpg">
       </div>
       头像
   </li>
@@ -93,6 +93,9 @@ body{
 			babyId: babyId
 		},function(data){
 			if(data.result==0){
+				if(""!=data.headImgUrl&&data.headImgUrl!=null){
+					$("#baby-headImg").attr("src",data.headImgUrl);
+				}	
 				$("#baby-name").text(data.data.name);
 				$("#baby-sex").text(data.data.sex);
 				$("#baby-birthday").text(data.data.dateStr);
@@ -110,7 +113,7 @@ body{
 			    	var localIds = res.localIds; 
 			    	// alert(localIds.toString());
 			    	var localId = localIds[0];
-			    	alert(localId+"---"+localId.length);
+			    	alert(localId+"---"+localIds.length);
 			    	$("#baby-headImg").attr("src",localId);
 
 			    	//上传头像图片
@@ -127,7 +130,7 @@ body{
 					        	media_id:serverId
 					        },function(data){
 					        	if(data.result==0){
-					        		alert(data.data);
+					        		// alert(data.data);
 					        		// alert("从微信服务器下载头像成功");
 					        		$("#baby-headImg").attr("src",data.headImgUrl);
 					        	}else{
@@ -144,7 +147,7 @@ body{
 		/*展示修改小名模态框*/
 		document.getElementById("item-baby-name").addEventListener("tap",function(){
 			// mui('.mn-model').popover('toggle');
-			wx.downloadImage({
+		/*	wx.downloadImage({
 			    serverId: localStorage.serverId, // 需要下载的图片的服务器端ID，由uploadImage接口获得
 			    isShowProgressTips: 1, // 默认为1，显示进度提示
 			    success: function (res) {
@@ -153,6 +156,8 @@ body{
 			        alert("success---"+localId);
 			    }
 			});
+		*/
+				$("#baby-headImg").attr("src","/babyimage/jF6mH0Sk50TVa-8LmDHZm6aAbfLMxB0gi37zVp_LJ9yDUwYBhmDaBz4JW_G2Z8XV.jpg");
 		});
 
 		/*展示修改性别模态框*/
@@ -286,7 +291,7 @@ body{
 			var signature = data.data.signature;
 		    /* 配置微信接口信息 */
 			wx.config({
-			    debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+			    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
 			    appId: 'wx485f2bc0867fe1c2', // 必填，公众号的唯一标识
 			    timestamp: timestamp, // 必填，生成签名的时间戳
 			    nonceStr: nonceStr, // 必填，生成签名的随机串

@@ -129,7 +129,7 @@ li{
 }
 
 /*宝宝头像*/
-.chlid-img{
+.child-img{
 	/*width:70px;
 	border:1px solid #ccc;
 	border-radius:70px;
@@ -444,6 +444,21 @@ span.mui-icon.mui-icon-plus.test::before{
 /*#babylist>ul>li:active{
 	background-color: black;
 }*/
+
+/*-----------宝宝列表样式开始---------------*/
+.headImgBox{
+	float:left;
+	height: 42px;
+	width:42px;
+	overflow: hidden;
+	margin-right: 10px;
+}
+
+.mui-table-view .mui-media-object.mui-pull-left.child-img{
+	max-width: none;
+	margin-right: 10px;
+}
+/*-------------宝宝列表样式结束---------------*/
 /*-------------宝宝资料样式开始-----------------*/
 .infList-baby-headImg{
 	margin-top:60px;
@@ -462,7 +477,18 @@ span.mui-icon.mui-icon-plus.test::before{
 .item-baby-Inf{
 	float:right;
 	color:#bbb;
+	
 	/*padding-right: 15px;*/
+}
+
+.baby-headImg-box{
+	height: 42px;
+	width:42px;
+	overflow: hidden;
+}
+.mui-table-view .mui-media-object.mui-pull-right.child-img{
+	margin-left:0px;
+	max-width: none;
 }
 
 .babyInf-box{

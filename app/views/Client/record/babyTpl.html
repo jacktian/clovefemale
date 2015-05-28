@@ -3,15 +3,19 @@
 	<li class="mui-table-view-cell mui-media">
 		<a href="babyRecord" class="mui-navigate-right item-babyList">
 			{@if baby.headImgUrl == null || "" == baby.headImgUrl}
-			<img class="mui-media-object mui-pull-left chlid-img" src="http://dcloudio.github.io/mui/assets/img/shuijiao.jpg">
+			<div class="headImgBox">
+				<img class="mui-media-object mui-pull-left child-img" src="http://dcloudio.github.io/mui/assets/img/shuijiao.jpg">
+			</div>
 			{@else}
-			<img class="mui-media-object mui-pull-left chlid-img" src="${baby.headImgUrl}">
+			<div class="headImgBox">
+				<img class="mui-media-object mui-pull-left child-img" src="${baby.headImgUrl}">
+			</div>
 			{@/if}
 			
 			<div class="mui-media-body">
 				${baby.name}
 				
-				<div id="test"  class="sexAndAge">
+				<div id="test"  class="sexAndAge"> 
 					{@if baby.sex == "男"}
 					<img src="/public/images/client/boy.png" alt=""/>
 					{@else}
