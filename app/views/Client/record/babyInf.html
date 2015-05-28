@@ -93,7 +93,7 @@ body{
 			babyId: babyId
 		},function(data){
 			if(data.result==0){
-				if(""!=data.headImgUrl&&data.headImgUrl!=null){
+				if(""!=data.data.headImgUrl&&data.data.headImgUrl!=null){
 					$("#baby-headImg").attr("src",data.headImgUrl);
 				}	
 				$("#baby-name").text(data.data.name);
@@ -132,7 +132,7 @@ body{
 					        	if(data.result==0){
 					        		// alert(data.data);
 					        		// alert("从微信服务器下载头像成功");
-					        		$("#baby-headImg").attr("src",data.headImgUrl);
+					        		$("#baby-headImg").attr("src",data.data.headImgUrl);
 					        	}else{
 					        		alert(data.data);
 					        	}
