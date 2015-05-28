@@ -94,7 +94,7 @@ body{
 		},function(data){
 			if(data.result==0){
 				if(""!=data.data.headImgUrl&&data.data.headImgUrl!=null){
-					$("#baby-headImg").attr("src",data.headImgUrl);
+					$("#baby-headImg").attr("src",data.data.headImgUrl);
 				}	
 				$("#baby-name").text(data.data.name);
 				$("#baby-sex").text(data.data.sex);
@@ -123,7 +123,7 @@ body{
 					    success: function (res) {
 					        var serverId = res.serverId; // 返回图片的服务器端ID
 					        localStorage.serverId = serverId;
-					        alert(serverId);
+					        // alert(serverId);
 					        // $("#baby-headImg").attr("src",serverId);
 					        $.post("/CBabyAction/downloadBabyImg",{
 					        	babyId:babyId,
