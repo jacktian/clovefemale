@@ -114,7 +114,7 @@ body{
 			    	// alert(localIds.toString());
 			    	var localId = localIds[0];
 			    	alert(localId+"---"+localIds.length);
-			    	$("#baby-headImg").attr("src",localId+"");
+			    	$("#baby-headImg").attr("src",localId.toString());
 
 			    	//上传头像图片
 			    	wx.uploadImage({
@@ -123,9 +123,9 @@ body{
 					    success: function (res) {
 					        var serverId = res.serverId; // 返回图片的服务器端ID
 					        localStorage.serverId = serverId;
-					        // alert(serverId);
+					        alert(serverId);
 					        // $("#baby-headImg").attr("src",serverId);
-					        $.post("/CBabyAction/downloadBabyImg",{
+					        $.post("/CBabyAction/replaceBabyImg",{
 					        	babyId:babyId,
 					        	media_id:serverId
 					        },function(data){
@@ -139,9 +139,9 @@ body{
 					        	
 					        });
 					    }
-					});
+					});//结束uploadImage接口
 				}
-			});
+			});//结束chooseImage接口
 		});
 
 		/*展示修改小名模态框*/

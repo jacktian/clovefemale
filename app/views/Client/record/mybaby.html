@@ -138,8 +138,8 @@
 
 		/*添加宝宝头像*/
 		document.getElementById("item-headImg-add").addEventListener("tap",function(event){
-			$("#newBaby-HeadImg").attr("src","/babyimage/jF6mH0Sk50TVa-8LmDHZm6aAbfLMxB0gi37zVp_LJ9yDUwYBhmDaBz4JW_G2Z8XV.jpg");;
-			$("#newBaby-HeadImg").addClass("circle-headImg");
+			// $("#newBaby-HeadImg").attr("src","/babyimage/jF6mH0Sk50TVa-8LmDHZm6aAbfLMxB0gi37zVp_LJ9yDUwYBhmDaBz4JW_G2Z8XV.jpg");;
+			
 
 			wx.chooseImage({
 			    success: function (res) {
@@ -147,8 +147,10 @@
 			    	var localIds = res.localIds; 
 			    	var localId = localIds[0];
 			    	// alert(localId+"---"+localIds.length);
-			    	$("#baby-headImg").attr("src",localId+"");
+			    	$("#baby-headImg").attr("src",localId.toString());
+			    	$("#newBaby-HeadImg").addClass("circle-headImg");
 					localStorage.localId =  localId;//把localId在本地先缓存
+					alert(typeof(localId));
 				}
 			});//结束wx.chooseImage接口
 		});
