@@ -35,8 +35,9 @@ public class CBabyAction extends WebService{
 	 * 加载宝宝信息
 	 */
 	public static void loadBabyList(){
-		//String openid = session.get("openid");//从session中获取openid
+		
 		String openid = "ob1R-uIRkLLp6lmmrT4w-2rrZ5jQ";
+//		String openid = session.get("openid");//从session中获取openid
 		String queryString = "select new Baby(b.id,b.userId,b.date,CONCAT(TIMESTAMPDIFF(YEAR,b.date,now()),''),b.headImgUrl,b.sex,b.name) " +
 				" from Baby b where b.userId = ?1";
 		
@@ -59,30 +60,29 @@ public class CBabyAction extends WebService{
 	/**
 	 * 添加宝宝
 	 */
-	public static void addBaby(String name,String sex,String media_id,Date birthday){
-		//String openid = session.get("openid");//从session中获取openid
-		String openid = "ob1R-uIRkLLp6lmmrT4w-2rrZ5jQ";
+	public static void addBaby(String name,String sex,String headImgUrl,Date birthday){
+		String openid = session.get("openid");//从session中获取openid
+//		String openid = "ob1R-uIRkLLp6lmmrT4w-2rrZ5jQ";
 		Baby baby = new Baby();
 		baby.date = birthday;
 		baby.sex = sex;
 		baby.name = name;
 		baby.userId = openid;
+		baby.headImgUrl = headImgUrl;
 		baby.dateStr = "" + DateUtil.getAge(birthday);;	
 		List<Baby> babyList = new ArrayList<Baby>();
 		try{
 			baby.save();
-			String downloadResult = downloadBabyImg(baby.id,media_id);
-			if(downloadResult.equals("error")){
-				downloadResult = downloadBabyImg(baby.id,media_id);//再次调用
-				if(downloadResult.equals("error")){//两次调用失败
-//					wsOk("宝宝添加成功!</tr>头像获取失败,请在宝宝资料重新上传!");
-					babyList.add(baby);
-					wsOk(babyList);
-				}
-			}
-			baby.headImgUrl = downloadResult;
-			baby.save();
-			
+//			String downloadResult = downloadBabyImg(baby.id,media_id);
+//			if(downloadResult.equals("error")){
+//				downloadResult = downloadBabyImg(baby.id,media_id);//再次调用
+//				if(downloadResult.equals("error")){//两次调用失败
+//					babyList.add(baby);
+//					wsOk(babyList);
+//				}
+//			}
+//			baby.headImgUrl = downloadResult;
+//			baby.save();			
 			babyList.add(baby);
 			wsOk(babyList);
 		}catch(Exception e){
@@ -190,12 +190,45 @@ public class CBabyAction extends WebService{
 	/**
 	 * 从微信服务器下载用户上传的宝宝头像
 	 */
-	private static String downloadBabyImg(String babyId,String media_id){
+	public static void downloadBabyImg(String babyId,String media_id){
 		List<WeChat> weChatList = WeChat.all().fetch(1,1);
 		String ACCESS_TOKEN = weChatList.get(0).access_token;
 
 		String MEDIA_ID = media_id;
-		String headImgUrl ="babyimage/" + babyId + media_id + ".jpg";
+		Date now = new Date();
+//		now.getTime()+"";
+		String headImgUrl ="babyimage/" + babyId + now.getTime()+ media_id + ".jpg";
+
+		HttpResponse resp = WS.url("http://file.api.weixin.qq.com/cgi-bin/media/get?access_token=" + ACCESS_TOKEN + "&media_id=" + MEDIA_ID).get();
+		try{
+			File file = new File(headImgUrl);
+			FileOutputStream output = new FileOutputStream(file);
+			InputStream inputStream = resp.getStream();
+			//得到图片的二进制数据，以二进制封装得到数据，具有通用性  
+	        byte[] data = readInputStream(inputStream);  
+			 
+	        output.write(data);
+			output.flush();
+			output.close();
+			headImgUrl = "/" +headImgUrl;
+			wsOk(headImgUrl);
+		}catch(Exception e){
+			wsError("上传头像失败！");
+		}
+		
+		
+	}
+	
+	/**
+	 * 从微信服务器下载用户上传的宝宝头像,内部使用
+	 */
+	private static String downBabyImg(String babyId,String media_id){
+		List<WeChat> weChatList = WeChat.all().fetch(1,1);
+		String ACCESS_TOKEN = weChatList.get(0).access_token;
+
+		String MEDIA_ID = media_id;
+		Date now = new Date();
+		String headImgUrl ="babyimage/" + babyId + now.getTime()+ media_id + ".jpg";
 
 		HttpResponse resp = WS.url("http://file.api.weixin.qq.com/cgi-bin/media/get?access_token=" + ACCESS_TOKEN + "&media_id=" + MEDIA_ID).get();
 		try{
@@ -221,10 +254,10 @@ public class CBabyAction extends WebService{
 	 * 更换宝宝头像
 	 */
 	public static void replaceBabyImg(String babyId,String media_id){
-		String downloadResult = downloadBabyImg(babyId,media_id);
+		String downloadResult = downBabyImg(babyId,media_id);
 		try{
 			if(downloadResult.equals("error")){
-				downloadResult = downloadBabyImg(babyId,media_id);//再次调用
+				downloadResult = downBabyImg(babyId,media_id);//再次调用
 				if(downloadResult.equals("error")){//两次调用失败
 					wsError("头像获取失败,请重新上传!");
 				}
@@ -240,43 +273,6 @@ public class CBabyAction extends WebService{
 			
 	}
 	
-	
-	public static void downloadBabyImg2(){
-		String babyId = "";
-		; 
-		List<WeChat> weChatList = WeChat.all().fetch(1,1);
-		String ACCESS_TOKEN = weChatList.get(0).access_token;
-		String MEDIA_ID = "tFkgoV7R6idCdyHgOrg9jVIKv_7CPU6BBu6nm0UZwiO_jBgjX4F67PTMPHkvR4uc";//media_id;
-		String headImgUrl ="babyimage/" + MEDIA_ID + ".jpg";
-//		wsOk(MEDIA_ID+"---");
-		
-		HttpResponse resp = WS.url("http://file.api.weixin.qq.com/cgi-bin/media/get?access_token=" + ACCESS_TOKEN + "&media_id=" + MEDIA_ID).get();
-	//	HttpResponse resp = WS.url("http://localhost:9001/babyimage/boy.png").get();
-		try{
-			File file = new File(headImgUrl);
-//			wsOk(file.getAbsolutePath());
-			FileOutputStream output = new FileOutputStream(file);
-//			resp.getString();
-			
-			InputStream inputStream = resp.getStream();
-			//得到图片的二进制数据，以二进制封装得到数据，具有通用性  
-	        byte[] data = readInputStream(inputStream);  
-			 
-	        output.write(data);
-			output.flush();
-			output.close();
-			Baby baby = Baby.findById(babyId);
-			baby.headImgUrl = "/" + headImgUrl;
-			baby.save();
-			wsOk(baby);
-//			wsOk(resp.getString());
-		}catch(Exception e){
-			wsError(e.getMessage());
-//			wsError(e.p);
-		}
-		
-		
-	}
 	
 	public static byte[] readInputStream(InputStream inStream) throws Exception{  
         ByteArrayOutputStream outStream = new ByteArrayOutputStream();  
@@ -298,7 +294,7 @@ public class CBabyAction extends WebService{
 	/**
 	 * 增加或修改宝宝身体指标
 	 */
-	public static void addOrMdfBabyIndex(String bodyIndexId,String babyId,double age,double height,double weight){
+	public static void addOrMdfBabyIndex(String bodyIndexId,String babyId,double age,String ageDcb,double height,double weight){
 		BodyIndex bodyIndex;
 		
 		if(!"".equals(bodyIndexId)){//bodyIndexId不为空，表示已经是已经记录过的身体指标，此操作为修改身体指标
@@ -313,18 +309,18 @@ public class CBabyAction extends WebService{
 			}
 			
 		}else{//bodyIndexId为空，表示未级路过的身体指标，此操作为增加身体指标
-			String ageDcb;
-			if(age < 1){//一岁以下
-				ageDcb = (int)age * 10 + "个月";
-			}else{
-				int age_int = (int) Math.floor(age);
-				String age_digit_string = "";
-				if((int)Math.round(age) - age != 0){
-					age_digit_string = "半";
-				}
-				 
-				ageDcb = age_int + "岁" + age_digit_string;
-			}
+//			String ageDcb;
+//			if(age < 1){//一岁以下
+//				ageDcb = (int)age * 10 + "个月";
+//			}else{
+//				int age_int = (int) Math.floor(age);
+//				String age_digit_string = "";
+//				if((int)Math.round(age) - age != 0){
+//					age_digit_string = "半";
+//				}
+//				 
+//				ageDcb = age_int + "岁" + age_digit_string;
+//			}
 			bodyIndex = new BodyIndex();
 			bodyIndex.babyId = babyId;
 			bodyIndex.age = age;
@@ -348,8 +344,17 @@ public class CBabyAction extends WebService{
 	 */
 	public static void loadBabyGrowth(){
 		String babyId = "1BFB8CDDECC24BE49F8D3C5B9528BBB0";
-		List<BodyIndex> bodyIndexList = BodyIndex.find("select new BodyIndex(bi.date,bi.height,bi.weight,bi.babyId,bi.age,bi.ageDcb) from BodyIndex bi where babyId = ? Order by bi.age", babyId).fetch(6);
-		wsOk(bodyIndexList);
+		try{
+			List<BodyIndex> bodyIndexList = BodyIndex.find("select new BodyIndex(bi.date,bi.height,bi.weight,bi.babyId,bi.age,bi.ageDcb) from BodyIndex bi where babyId = ? Order by bi.age", babyId).fetch(6);
+			if(bodyIndexList.size() == 0){
+				wsError("没有记录");
+			}else{
+				wsOk(bodyIndexList);
+			}
+		}catch(Exception e){
+			wsError("加载失败,请重试！");
+		}
+		
 	}
 	
 	public static void test() {

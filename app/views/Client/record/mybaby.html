@@ -85,6 +85,19 @@
 <script type="text/javascript" src = "@{'/public/javascripts/juicer.js'}"></script>
 <script>
 	$(function(){
+
+		mui.init({
+		  gestureConfig:{
+		   tap: true, //默认为true
+		   // doubletap: true, //默认为false
+		   longtap: true, //默认为false
+		   // swipe: true, //默认为true
+		   // drag: true, //默认为true
+		   // hold:false,//默认为false，不监听
+		   // release:false//默认为false，不监听
+		  }
+		});
+
 		/*弹出宝宝添加框*/
 		document.getElementById("newBabyBtn").addEventListener("tap",function(event){
 
@@ -116,10 +129,27 @@
 				var html = juicer($('#babyTpl').html(),{babyList:data.data});
 				
 				$('.child-list').append(html);
+				//点击宝宝头像进入宝宝资料页面
+				// var length = $(".baby-img-link").length;
+				// for(var i = 0; i < length; i++){
+				// 	var dom = $(".item-babyList").get(i);
+				// 	dom.addEventListener("longtap",function(e){
+				// 		alert("long");
+				// 		$(dom).attr("href","babyInf");
+				// 		return true;
+				// 	});
+				// }
+
+				$(".baby-img-link").bind('touchend',function(e){
+					$(this).parent().parent().attr("href","babyInf");
+					e.stopPropagation();
+					return true;
+				});
+
 				$(".item-babyList").bind('touchend',function(){
-					if("psnCenter" == localStorage.lastPage){
-						$(this).attr("href","babyInf");
-					}
+					// if("psnCenter" == localStorage.lastPage){
+					// 	$(this).attr("href","babyInf");
+					// }
 					localStorage.babyId = $(this).children(".babyId").text();
 					// window.location.href="/Cient/babyInf"; 
 					return true;
@@ -151,6 +181,27 @@
 			    	$("#newBaby-HeadImg").addClass("circle-headImg");
 					localStorage.localId =  localId;//把localId在本地先缓存
 					alert(typeof(localId));
+					//上传头像图片
+					wx.uploadImage({
+						localId: localStorage.localId, // 需要上传的图片的本地ID，由chooseImage接口获得
+						isShowProgressTips: 1, // 默认为1，显示进度提示
+						success: function (res) {
+							    var serverId = res.serverId; // 返回图片的服务器端ID
+							    localStorage.serverId = serverId;
+							    $.post("/CBabyAction/downloadBabyImg",{
+							    	babyId:"",
+				 					media_id:serverId 
+							    },function(data){
+							        if(data.result==0){
+							        	localStorage.headImgUrl = data.data;
+							        	$("#newBaby-HeadImg").attr("src",localStorage.headImgUrl);
+							        }else{
+							        	showResTips(data.data)
+							        }
+							        	
+							    });
+							}
+					});//结束uploadImage接口
 				}
 			});//结束wx.chooseImage接口
 		});
@@ -183,13 +234,33 @@
 
 		 	//检查头像
 		 	var headImg = "";
-		 	if(localStorage.localId == null || ""== localStorage.localId){
+		 	if(localStorage.headImgUrl == null || ""== localStorage.headImgUrl){
 				dataComplete = false;
 		 		$(".nb-Tips").text("点击右上角+号上传选择宝宝头像哦！").show();
 				return false;
 		 	}
 		 	headImg = localStorage.localId;
-		 	//上传头像图片
+
+
+		 	$.post("/CBabyAction/addBaby",{
+					    	name:name,
+		 					sex:sex,
+		 					headImgUrl:localStorage.headImgUrl,
+		 					birthday:birthday_string   
+					    },function(data){
+					        if(data.result==0){
+					        	mui('.newBabyBox').popover('toggle');
+					        	// if(data.data[0].headImgUrl == null || ""==data.data[0].headImgUrl){
+					        	// 	showResTips("宝宝添加成功!</tr>头像获取失败,请在宝宝资料重新上传!")
+					        	// }
+					        	var html = juicer($('#babyTpl').html(),{babyList:data.data});
+			 					$('.child-list').append(html);
+					        }else{
+					        	showResTips(data.data)
+					        }
+					      	
+			});
+		 	/*//上传头像图片
 			wx.uploadImage({
 				localId: localStorage.localId, // 需要上传的图片的本地ID，由chooseImage接口获得
 				isShowProgressTips: 1, // 默认为1，显示进度提示
@@ -215,9 +286,14 @@
 					        	
 					    });
 					}
-			});//结束uploadImage接口
+			});
+			//结束uploadImage接口
+			*/
 
 		});
+
+
+		
 	});//结束$(function);
 
 	/*还原添加框内容*/
@@ -225,6 +301,7 @@
 		$("#babyName").val("");
 		$("#radio-male").trigger("click");
 		$("#birthday-input").val("");
+		$("#newBaby-HeadImg").attr("src","/public/images/client/addHeadImg.png");
 		$(".nb-Tips").text("").hide();
 	}
 

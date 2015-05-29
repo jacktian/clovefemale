@@ -14,18 +14,23 @@ $(function(){
 	});
 
 	/*加载宝宝历史数据*/
-	// $.post("/CBabyAction/loadBabyGrowth",{
-	// 	babyId:babyId
-	// },function(data){
-	// 	if(data.result == 0){//成功
-			
-	// 	}else{//失败
-	// 		if(data.data == "没有记录"){
-	// 			$("#nullTips").text("没有找到宝宝的身体指标,<br/>赶紧去添加吧！");
-	// 			$("#nullTips").show();
-	// 		}
-	// 	}
-	// })
+	$.post("/CBabyAction/loadBabyGrowth",{
+		babyId:"1BFB8CDDECC24BE49F8D3C5B9528BBB0"//angela的babyId//babyId
+	},function(data){
+		if(data.result == 0){//成功
+
+			$("#lastData-bi-1").html("<td>" + data.data[0].height+ "</td>" + "<td>" + data.data[0].weight+ "</td>"+"<td>" + data.data[0].ageDcb+ "</td>");
+			$("#lastData-bi-2").html("<td>" + data.data[1].height+ "</td>" + "<td>" + data.data[1].weight+ "</td>"+"<td>" + data.data[1].ageDcb+ "</td>");
+		}else{//失败
+			if(data.data == "没有记录"){
+				$("#nullTips").text("没有找到宝宝的身体指标,<br/>赶紧去添加吧！");
+				$("#nullTips").show();
+			}else{
+				$("#nullTips").text(data.data);
+				$("#nullTips").show();
+			}
+		}
+	})
 	
     //孩子列表
 	document.getElementById("list_children").addEventListener("tap",function(event){
@@ -144,13 +149,14 @@ $(function(){
         onChange:function(valueText,inst){
         	// 
         	var age = parseFloat(valueText);
+        	var ageDcb = "";
         	console.log(valueText);
         	if(age<1){
         		var month = parseInt(age*100);
         		if(month == 0){
-        			console.log("初生儿");
+        			ageDcb = "初生儿";
         		}else{
-        			console.log(parseInt(age*100)+"个月");
+        			ageDcb = parseInt(age*100)+"个月";
         		}
         		
         		// $("#year_unit").text("月")
@@ -158,11 +164,13 @@ $(function(){
         		var ceil  = Math.ceil(age);
         		var floor = Math.floor(age);
         		if(ceil > floor){
-        			console.log(floor+"岁半");
+        			ageDcb = floor+"岁半";
         		}else{
-        			console.log(floor+"岁");
+        			ageDcb = floor+"岁";
         		}
         	}
+        	localStorage.age = age;
+        	localStorage.ageDcb = ageDcb;
         },
         onShow:function(html,valueText,inst){
         	// console.log(valueText);
@@ -205,6 +213,7 @@ $(function(){
     
 	//成长记录添加按钮tap事件
 	document.getElementById("add_babygrow").addEventListener("tap",function(event){
+		console.log(activeTab_grow+"页tab");
  		switch(activeTab_grow){
  			case 0 : mui('.newbodyIndex').popover('toggle'); return false;break;
  			case 1 : mui('.newmark').popover('toggle');return false; break;
@@ -216,22 +225,38 @@ $(function(){
 
 	//身体指标弹出框确定按钮tap事件
 	document.getElementById("abi-confirm-btn").addEventListener("tap",function(event){
- 		var bodyIndexId = localStorage.bodyIndexId;
+ 		var bodyIndexId = localStorage.bodyIndexId==null?"":localStorage.bodyIndexId;
  		var height = $("#baby_height").val();
- 		var weight = $("#baby_height").val();
- 		var age ;
- 		console.log($('#scroller').mobiscroll('getVal',age));
- 		console.log(age)
- 		// $.post("/CBabyAction/addOrMdfBabyIndex",{
- 		// 	bodyIndexId:bodyIndexId,
- 		// 	babyId:babyId,
- 		// 	age:age,
- 		// 	height:height,
- 		// 	weight:weight
- 		// },function(data){//显示操作结果
-			// mui('.newbodyIndex').popover('toggle');	
+ 		var weight = $("#baby_weight").val();
+ 		var age = localStorage.age;
+ 		var ageDcb = localStorage.ageDcb;
+ 		// console.log($('#scroller').mobiscroll('getVal',age));
+ 		console.log(age + "----" + ageDcb);
+ 		if(height==""||height==null){
+ 			$(".nbi-Tips").text("身高不能为空哦!");
+ 			$(".nbi-Tips").show();
+ 			return false;
+ 		}
 
- 		// })
+ 		if(weight==""||weight==null){
+ 			$(".nbi-Tips").text("体重不能为空哦!");
+ 			$(".nbi-Tips").show();
+ 			return false;
+ 		}
+
+ 		var babyId = "1BFB8CDDECC24BE49F8D3C5B9528BBB0";//angela的babyId
+ 		$.post("/CBabyAction/addOrMdfBabyIndex",{
+ 			bodyIndexId:bodyIndexId,
+ 			babyId:babyId,
+ 			age:age,
+ 			ageDcb:ageDcb,
+ 			height:height,
+ 			weight:weight
+ 		},function(data){//显示操作结果
+ 			showResTips(data.data);
+			mui('.newbodyIndex').popover('toggle');	
+
+ 		})
 	});
 
 	//身体指标弹出框取消按钮tap事件
@@ -255,4 +280,17 @@ var changeSubject = function(event){
 			 	$('#subjectArrow').addClass('mui-icon-arrowdown');
 		 	}
 	 	});
+	}
+
+/*展示操作信息*/
+	function showResTips(result){
+		$(".response-tips").text(result);
+		$(".response-tips").show();
+		window.setTimeout("hideTips()",1500);
+	}
+
+	/*隐藏信息提示，并清空*/
+	function hideTips(){
+		$(".response-tips").text("");
+		$(".response-tips").hide();
 	}

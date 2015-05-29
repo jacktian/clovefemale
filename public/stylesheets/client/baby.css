@@ -29,6 +29,13 @@
 li{
 	/*border:1px solid red;*/
 }
+
+/*身体指标样式*/
+.nbi-Tips{
+	font-size: 15px;
+	padding-left:15px;
+}
+
 /*疫苗导航*/
 .vacIconNav{
 	/*border:1px solid red;*/
@@ -88,6 +95,7 @@ li{
 	color: #fff;
 }
 
+
 /*.babyMuiContent .mui-segmented-control.mui-segmented-control-inverted ~ .mui-slider-progress-bar{
 	background-color: #FF9999;
 }*/
@@ -129,7 +137,8 @@ li{
 }
 
 /*宝宝头像*/
-.child-img{
+.child-img:active{
+	opacity: 0.5;
 	/*width:70px;
 	border:1px solid #ccc;
 	border-radius:70px;
@@ -729,7 +738,7 @@ span.mui-icon.mui-icon-plus.test::before{
 }
 
 .newbodyIndex{
-	height: 324px;
+	height: auto;/*324px;*/
 	margin-top: -162px;
 }
 
