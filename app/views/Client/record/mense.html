@@ -1,7 +1,7 @@
 #{extends 'client.html' /}
 #{set title:'助孕记录' /}
 #{set 'moreStyles'}
-<link href="@{'/public/stylesheets/client/pregnant.css'}?v=20150414" rel="stylesheet" />
+<link href="@{'/public/stylesheets/client/pregnant.css'}?v=20150522" rel="stylesheet" />
 <link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.scroller.css'}" rel="stylesheet" type="text/css" />
 <link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.animation.css'}" rel="stylesheet" type="text/css" />
 <link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.frame.css'}" rel="stylesheet" type="text/css" />
@@ -22,12 +22,12 @@
 	<div id="preg-menu">
 		<ul>
 			<li>
-				<a class="pregIcon active" id="mense-menu-btn" href="#" tabNum="1"> <i class="icon iconfont">&#xf0043;</i>
+				<a class="pregIcon active" id="mense-menu-btn" href="#" tabNum="1"> <i class="iconfont">&#xe686;</i>
 				</a>
 				月经
 			</li>
 			<li>
-				<a class="pregIcon" id="temp-menu-btn" href="#" tabNum="2"> <i class="icon iconfont">&#xe613;</i>
+				<a class="pregIcon" id="temp-menu-btn" href="#" tabNum="2"> <i class="icon iconfont">&#xe608;</i>
 				</a>
 				体温
 			</li>
@@ -39,7 +39,7 @@
 			</li>
 			<li>
 				<a class="pregIcon" id="pregm-menu-btn" href="#" tabNum="4">
-					<i class="icon iconfont">&#xf01d4;</i>
+					<i class="icon iconfont">&#xe672;</i>
 				</a>
 				胎动
 			</li>
@@ -262,17 +262,18 @@
 	<div class="form-model mense-model mui-hidden">
 		<header class="mui-bar mui-bar-nav model-header">
 			<button class="mui-btn mui-pull-right model-btn" id="mense-date-btn">日期</button>
+			<input type="hidden" id="mense-date-val" data-val=""/>
 			<h1 class="mui-title model-title">月经记录</h1>
 		</header>
 		<div class="model-content">
 			<div class="model-content-list">
 				<span class="model-content-list-title">颜色:</span>
-				<select class="model-content-list-select">
+				<select class="model-content-list-select" id="mense-color">
 					<option>暗红</option>
 					<option>血红</option>
 				</select>
 				<span class="model-content-list-title">经量:</span>
-				<select class="model-content-list-select">
+				<select class="model-content-list-select" id="mense-num">
 					<option>大</option>
 					<option>中</option>
 					<option>小</option>
@@ -280,26 +281,26 @@
 			</div>
 			<div class="model-content-list">
 				<span class="model-content-list-title">色块:</span>
-				<select class="model-content-list-select">
+				<select class="model-content-list-select" id="mense-liquid">
 					<option>有</option>
 					<option>无</option>
 				</select>
 				<span class="model-content-list-title">痛经:</span>
-				<select class="model-content-list-select">
+				<select class="model-content-list-select" id="mense-hurt">
 					<option>有</option>
 					<option>无</option>
 				</select>
 			</div>
 			<div class="model-content-list model-content-list-bottom">
 				<span class="model-content-list-title">稠度:</span>
-				<select class="model-content-list-select">
+				<select class="model-content-list-select" id="mense-chou">
 					<option>浓</option>
 					<option>稀</option>
 				</select>
 			</div>
 		</div>
 		<div class="model-bottom">
-			<button class="mui-btn mui-btn-negative model-btn-refresh">更新</button>
+			<button class="mui-btn mui-btn-negative model-btn-refresh mense-data-refresh">更新</button>
 		</div>
 		<div class="model-tips">
 			<button class="mui-btn last-btn">上一次</button>
@@ -310,6 +311,7 @@
 	<div class="form-model temp-model mui-hidden">
 		<header class="mui-bar mui-bar-nav model-header">
 			<button class="mui-btn mui-pull-right model-btn" id="temp-date-btn">日期</button>
+			<input type="hidden" id="temp-date-val" data-val=""/>
 			<h1 class="mui-title model-title">体温记录</h1>
 		</header>
 		<div class="model-content">
@@ -317,7 +319,7 @@
 			<div id="temp-scroller"></div>
 		</div>
 		<div class="model-bottom">
-			<button class="mui-btn mui-btn-negative model-btn-refresh">更新</button>
+			<button class="mui-btn mui-btn-negative model-btn-refresh temp-data-refresh">更新</button>
 		</div>
 		<div class="model-tips">
 			<button class="mui-btn last-btn">上一次</button>
@@ -363,13 +365,12 @@
 </div>
 <!-- 添加按钮 -->
 <a href="#" id="mense-add-btn" class="preg-add-btn">
-	<i class="icon iconfont">&#xe64c;</i>
+	<span class="mui-icon mui-icon-plusempty"></span>
 </a>
 <!-- 遮罩层 -->
 <div class="mui-backdrop" id='pregDrop'></div>
 <!-- 加载动画 -->
-<i class="icon iconfont" id="loading-btn">&#xe632;</i>
-
+<i class="icon iconfont" id="loading-btn">&#xe682;</i>
 #{set 'moreScripts'}
 <script type="text/javascript" charset="utf-8">mui.init();</script>
 <script src="@{'/public/javascripts/client/jquery-1.9.1.min.js'}"></script>
@@ -517,9 +518,10 @@
 	                display: 'bottom',
 	                startYear: '2013',
 	                lang: 'zh',
+	                defaultValue:new Date(2012,5,4),
 	                onSelect: function (valueText, inst) {
-	                    var selectedDate = inst.getVal(); // Call the getVal method
-	                    console.log(selectedDate);
+	       				var selectedDate = inst.getVal(); // Call the getVal method
+	                    $('#mense-date-val').attr('data-val',$.mobiscroll.datetime.formatDate('yy-mm-dd', selectedDate));
 	                }
 	            });
 	            $('#temp-date-btn').mobiscroll().date({
@@ -529,7 +531,7 @@
 	                lang: 'zh',
 	                onSelect: function (valueText, inst) {
 	                    var selectedDate = inst.getVal(); // Call the getVal method
-	                    console.log(selectedDate);
+	                	$('#temp-date-val').attr('data-val',$.mobiscroll.datetime.formatDate('yy-mm-dd', selectedDate));
 	                }
 	            });
 	            $('#pregw-date-btn').mobiscroll().date({
@@ -539,7 +541,7 @@
 	                lang: 'zh',
 	                onSelect: function (valueText, inst) {
 	                    var selectedDate = inst.getVal(); // Call the getVal method
-	                    console.log(selectedDate);
+	                    console.log($.mobiscroll.datetime.formatDate('yy-mm-dd', selectedDate));
 	                }
 	            });
 	            $('#pregm-date-btn').mobiscroll().date({
@@ -549,7 +551,7 @@
 	                lang: 'zh',
 	                onSelect: function (valueText, inst) {
 	                    var selectedDate = inst.getVal(); // Call the getVal method
-	                    console.log(selectedDate);
+	                    console.log($.mobiscroll.datetime.formatDate('yy-mm-dd', selectedDate));
 	                }
 	            });
 				/* 表格事件*/
@@ -625,4 +627,38 @@
 			    });
 			});
 		</script>
+		
+<script type="text/javascript">
+	$(function(){
+		/* 月经数据加载与提交*/
+		$('.mense-data-refresh').bind('touchend',function(){
+			var menseColor = $("#mense-color").val();
+			var menseChou = $("#mense-chou").val();
+			var menseHurt = $("#mense-hurt").val();
+			var menseLiquid = $("#mense-liquid").val();
+			var menseNum = $("#mense-num").val();
+			var date = $("#mense-date-val").attr("data-val");
+			$.get('/CPregnant/addMenses?menseColor='+menseColor+"&menseChou="+menseChou+"&menseHurt="+menseHurt+"&menseHurt="+menseHurt+"&menseLiquid="+menseLiquid+"&menseNum="+menseNum+"&date="+date,function(data){
+				if(data.result==0){
+					alert("保存成功!");
+				}
+				else{
+					alert("保存失败！");
+				}
+			});
+		});
+		/* 体温数据提交与修改*/
+		$('.temp-data-refresh').bind('touchend',function(){
+			var date = $("#temp-date-val").attr("data-val");
+			$.get('/CTemperature/addTemperature?date='+date,function(data){
+				if(data.result == 1){
+					alert("提交成功");
+				}
+				else{
+					alert("提交失败");
+				}
+			});
+		});
+	})	
+</script>
 #{/set}
