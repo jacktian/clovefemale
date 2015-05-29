@@ -196,8 +196,8 @@ li{
 	opacity: 1;*/
 	width:80%;
 	position: absolute;
-	top:50%;
-	margin-top:-92px;
+	top:40%;
+	margin-top:-105px;
 	left:10%;
 	background-color: #fff;
 }
@@ -454,6 +454,72 @@ span.mui-icon.mui-icon-plus.test::before{
 	margin-right: 10px;
 }
 
+.new-baby-form{
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+
+.nb-Tips{
+	font-size: 15px;
+	padding-left:15px;
+}
+
+.mui-input-group .mui-input-row.item-headImg{
+	height: 50px;
+	line-height: 50px;
+}
+
+.newBabyBox .mui-input-row.item-headImg label{
+	padding-top: 18px;
+}
+
+.item-headImg-add{
+	/*float:right;*/
+	position: absolute;
+	right:0px;
+	width:46px;
+	height: 46px;
+	overflow: hidden;
+	z-index: 999;
+	padding:0;
+	padding-top:7px;
+	/*border:1px solid red; */
+	text-align: center;
+	/*margin-top: 7px;
+	margin-right: 10px;*/
+}
+
+.item-headImg-add>img{
+	margin-top:7px;
+	height:30px;
+	line-height: 0;
+	margin:0;
+	padding:0;
+	z-index: 999;
+}
+
+.item-headImg-add>img:active{
+	opacity: 0.5;
+}
+
+.circle-headImg{
+	border-radius:30px;
+	/*borde*/
+}
+
+.headImg-title{
+	font-size: 11px;
+	line-height: 0px;
+	position: absolute;
+	top: 25px;
+	/*border:1px solid red;*/
+	text-align: center;
+	width:100%;
+	color:#000;
+	padding:0;
+	margin:0;
+}
+
 .mui-table-view .mui-media-object.mui-pull-left.child-img{
 	max-width: none;
 	margin-right: 10px;
@@ -511,6 +577,7 @@ span.mui-icon.mui-icon-plus.test::before{
 	height: 45px;
 	line-height: 45px;
 	background-color: #EF9D9A;
+	border-bottom: 1px solid #EF9D9A;
 	color:#fff;
 	text-align: center;
 	font-weight: 700;
@@ -559,6 +626,7 @@ span.mui-icon.mui-icon-plus.test::before{
 	padding-left:15px;
 	font-size: 14px;
 }
+
 
 .response-tips{
 	width:80%;

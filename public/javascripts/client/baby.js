@@ -46,7 +46,7 @@ $(function(){
 	$("#bodySimChart").attr("width", $(window).get(0).innerWidth*0.95);
 	var options = {};
 	var data = {
-		labels : ["初生儿","1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","1岁半"],
+		labels : ["初生儿","1个月","2个月","3个月","4个月","5个月","6个月","7个月","8个月","9个月","10个月","11个月","1岁"],
 		datasets : [
 			{
 				fillColor : "rgba(151,187,205,0.5)",
@@ -131,8 +131,8 @@ $(function(){
                 {
                 	label:'岁',
                 	name:'years',
-                    keys: [0,0.01,0.02,0.03, 0.04, 0.05, 0.06,0.07,0.08,0.09,0.10,0.11,0.12,1,2,3, 4, 5, 6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22],
-                    values: ["0月","1月","2月","3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "1岁", "1岁半", "2岁", "2岁半", "3岁", "3岁半", "4岁", "4岁半",  "5岁", "5岁半", "6岁", "6岁半", "7岁", "8岁","9岁","10岁","11岁","12岁","13岁","14岁","15岁", "16岁", "17岁", "18岁", "19岁", "20岁", "21岁", "22岁"]
+                    keys: [0,0.01,0.02,0.03, 0.04, 0.05, 0.06,0.07,0.08,0.09,0.10,0.11,1,1.5,2,2.5,3,3.5, 4,4.5, 5, 5.5,6,6.5,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22],
+                    values: ["初生儿","1个月","2个月","3个月", "4个月", "5个月", "6个月", "7个月", "8个月", "9个月", "10个月", "11个月", "1岁", "1岁半", "2岁", "2岁半", "3岁", "3岁半", "4岁", "4岁半",  "5岁", "5岁半", "6岁", "6岁半", "7岁", "8岁","9岁","10岁","11岁","12岁","13岁","14岁","15岁", "16岁", "17岁", "18岁", "19岁", "20岁", "21岁", "22岁"]
                 }
                 // ,
                 // {
@@ -143,19 +143,29 @@ $(function(){
             ]],
         onChange:function(valueText,inst){
         	// 
-        	var age = parseInt(valueText.split(" ")[0]);
-        	console.log(age);
-        	if(age<=0){
-        		console.log("月");
-        		$("#year_unit").text("月")
+        	var age = parseFloat(valueText);
+        	console.log(valueText);
+        	if(age<1){
+        		var month = parseInt(age*100);
+        		if(month == 0){
+        			console.log("初生儿");
+        		}else{
+        			console.log(parseInt(age*100)+"个月");
+        		}
+        		
+        		// $("#year_unit").text("月")
         	}else{
-        		$("#year_unit").text("岁")
+        		var ceil  = Math.ceil(age);
+        		var floor = Math.floor(age);
+        		if(ceil > floor){
+        			console.log(floor+"岁半");
+        		}else{
+        			console.log(floor+"岁");
+        		}
         	}
-        	// console.log(valueText.split(" ")[0]);
-        	// if()
         },
         onShow:function(html,valueText,inst){
-        	console.log(valueText.split(" ")[0]);
+        	// console.log(valueText);
         }
     });
 

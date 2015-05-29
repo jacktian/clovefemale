@@ -17,6 +17,7 @@ import com.google.gson.JsonObject;
 import play.db.jpa.JPA;
 import play.libs.WS;
 import play.libs.WS.HttpResponse;
+import utils.DateUtil;
 import beans.SimpleNoteBookBean;
 import models.Baby;
 import models.Note;
@@ -58,7 +59,7 @@ public class CBabyAction extends WebService{
 	/**
 	 * 添加宝宝
 	 */
-	public static void addBaby(String name,String sex,Date birthday){
+	public static void addBaby(String name,String sex,String media_id,Date birthday){
 		//String openid = session.get("openid");//从session中获取openid
 		String openid = "ob1R-uIRkLLp6lmmrT4w-2rrZ5jQ";
 		Baby baby = new Baby();
@@ -66,9 +67,22 @@ public class CBabyAction extends WebService{
 		baby.sex = sex;
 		baby.name = name;
 		baby.userId = openid;
+		baby.dateStr = "" + DateUtil.getAge(birthday);;	
 		List<Baby> babyList = new ArrayList<Baby>();
 		try{
 			baby.save();
+			String downloadResult = downloadBabyImg(baby.id,media_id);
+			if(downloadResult.equals("error")){
+				downloadResult = downloadBabyImg(baby.id,media_id);//再次调用
+				if(downloadResult.equals("error")){//两次调用失败
+//					wsOk("宝宝添加成功!</tr>头像获取失败,请在宝宝资料重新上传!");
+					babyList.add(baby);
+					wsOk(babyList);
+				}
+			}
+			baby.headImgUrl = downloadResult;
+			baby.save();
+			
 			babyList.add(baby);
 			wsOk(babyList);
 		}catch(Exception e){
@@ -176,24 +190,17 @@ public class CBabyAction extends WebService{
 	/**
 	 * 从微信服务器下载用户上传的宝宝头像
 	 */
-	public static void downloadBabyImg(String babyId,String media_id){
+	private static String downloadBabyImg(String babyId,String media_id){
 		List<WeChat> weChatList = WeChat.all().fetch(1,1);
 		String ACCESS_TOKEN = weChatList.get(0).access_token;
 
-		String MEDIA_ID = media_id;//"jF6mH0Sk50TVa-8LmDHZm6aAbfLMxB0gi37zVp_LJ9yDUwYBhmDaBz4JW_G2Z8XV";//"qpBC8Kby5ihwwlJKRi5KXLdTB2e_2RwSeCrrGc15KROJfcVTcRFLCw9MxVmpwD9v";//media_id;
-		String headImgUrl ="babyimage/" + MEDIA_ID + ".jpg";
-//		wsOk(MEDIA_ID+"---");
+		String MEDIA_ID = media_id;
+		String headImgUrl ="babyimage/" + babyId + media_id + ".jpg";
+
 		HttpResponse resp = WS.url("http://file.api.weixin.qq.com/cgi-bin/media/get?access_token=" + ACCESS_TOKEN + "&media_id=" + MEDIA_ID).get();
 		try{
 			File file = new File(headImgUrl);
-//			wsOk(file.getAbsolutePath());
 			FileOutputStream output = new FileOutputStream(file);
-//			wsOk(resp.getString());
-//			wsOk(resp.getJson());
-//			JsonElement jsonElement = resp.getJson();
-//			JsonObject json = jsonElement.getAsJsonObject();
-//			String openid = json.get("errcode").getAsString();
-//			System.out.println(json.toString());
 			InputStream inputStream = resp.getStream();
 			//得到图片的二进制数据，以二进制封装得到数据，具有通用性  
 	        byte[] data = readInputStream(inputStream);  
@@ -201,17 +208,36 @@ public class CBabyAction extends WebService{
 	        output.write(data);
 			output.flush();
 			output.close();
-			Baby baby = Baby.findById(babyId);//("1D77F11947684F6E867BA06D68EEC673");
-			baby.headImgUrl = "/" + headImgUrl;
-			baby.save();
-			wsOk(baby);
-//			wsOk(resp.getString());
+			headImgUrl = "/" +headImgUrl;
+			return headImgUrl;
 		}catch(Exception e){
-			wsError(e.getMessage());
-//			wsError(e.p);
+			return "error";
 		}
 		
 		
+	}
+	
+	/**
+	 * 更换宝宝头像
+	 */
+	public static void replaceBabyImg(String babyId,String media_id){
+		String downloadResult = downloadBabyImg(babyId,media_id);
+		try{
+			if(downloadResult.equals("error")){
+				downloadResult = downloadBabyImg(babyId,media_id);//再次调用
+				if(downloadResult.equals("error")){//两次调用失败
+					wsError("头像获取失败,请重新上传!");
+				}
+			}
+			Baby baby = Baby.findById(babyId);
+			baby.headImgUrl = downloadResult ;
+			baby.save();
+			wsOk(baby);
+		}catch(Exception e){
+			wsError("更换头像失败,请重试!");
+//			wsError(e.p);
+		}
+			
 	}
 	
 	
@@ -281,7 +307,7 @@ public class CBabyAction extends WebService{
 				bodyIndex.height = height;
 				bodyIndex.weight = weight;
 				bodyIndex.save();
-				wsOk("修改成功");
+				wsOk("修改记录成功");
 			}catch(Exception e){
 				wsError("修改记录失败");
 			}
@@ -307,7 +333,7 @@ public class CBabyAction extends WebService{
 			bodyIndex.weight = weight;
 			try{
 				bodyIndex.save();
-				wsOk("添加成功");
+				wsOk("添加记录成功");
 			}catch(Exception e){
 				wsError("添加记录失败");
 			}

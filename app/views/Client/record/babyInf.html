@@ -114,7 +114,7 @@ body{
 			    	// alert(localIds.toString());
 			    	var localId = localIds[0];
 			    	alert(localId+"---"+localIds.length);
-			    	$("#baby-headImg").attr("src",localId);
+			    	$("#baby-headImg").attr("src",localId+"");
 
 			    	//上传头像图片
 			    	wx.uploadImage({
@@ -146,7 +146,7 @@ body{
 
 		/*展示修改小名模态框*/
 		document.getElementById("item-baby-name").addEventListener("tap",function(){
-			// mui('.mn-model').popover('toggle');
+			mui('.mn-model').popover('toggle');
 		/*	wx.downloadImage({
 			    serverId: localStorage.serverId, // 需要下载的图片的服务器端ID，由uploadImage接口获得
 			    isShowProgressTips: 1, // 默认为1，显示进度提示
@@ -157,7 +157,7 @@ body{
 			    }
 			});
 		*/
-				$("#baby-headImg").attr("src","/babyimage/jF6mH0Sk50TVa-8LmDHZm6aAbfLMxB0gi37zVp_LJ9yDUwYBhmDaBz4JW_G2Z8XV.jpg");
+				// $("#baby-headImg").attr("src","/babyimage/jF6mH0Sk50TVa-8LmDHZm6aAbfLMxB0gi37zVp_LJ9yDUwYBhmDaBz4JW_G2Z8XV.jpg");
 		});
 
 		/*展示修改性别模态框*/
