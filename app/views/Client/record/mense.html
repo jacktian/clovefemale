@@ -1,7 +1,7 @@
 #{extends 'client.html' /}
 #{set title:'助孕记录' /}
 #{set 'moreStyles'}
-<link href="@{'/public/stylesheets/client/pregnant.css'}?v=20150522" rel="stylesheet" />
+<link href="@{'/public/stylesheets/client/pregnant.css'}?v=20150529" rel="stylesheet" />
 <link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.scroller.css'}" rel="stylesheet" type="text/css" />
 <link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.animation.css'}" rel="stylesheet" type="text/css" />
 <link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.frame.css'}" rel="stylesheet" type="text/css" />
@@ -51,26 +51,26 @@
 	<div class="mui-content danamic-content preg-content mense-content active">
 		<div class="preg-content-section">
 			<a href="#" class="mui-pull-right more-link">更多></a>
-			<div class="preg-title">上一次记录</div>
+			<div class="preg-title">上一次记录<span class="mense-last-date">&nbsp;(2015-05-03)</span></div>
 			<div class="preg-detail">
 				<span class="preg-detail-title">颜色 :</span>
-				<span>血红</span>
+				<span id="lastMenseColor">血红</span>
 			</div>
 			<div class="preg-detail">
 				<span class="preg-detail-title">色块 :</span>
-				<span>大</span>
+				<span id="lastMenseLiquid">大</span>
 			</div>
 			<div class="preg-detail">
 				<span class="preg-detail-title">经量 :</span>
-				<span>略大</span>
+				<span id="lastMenseNum">略大</span>
 			</div>
 			<div class="preg-detail">
 				<span class="preg-detail-title">痛经 :</span>
-				<span>有</span>
+				<span id="lastMenseHurt">有</span>
 			</div>
 			<div class="preg-detail">
 				<span class="preg-detail-title">稠度 :</span>
-				<span>稀</span>
+				<span id="lastMenseChou">稀</span>
 			</div>
 		</div>
 		<div class="preg-content-section">
@@ -304,7 +304,7 @@
 		</div>
 		<div class="model-tips">
 			<button class="mui-btn last-btn">上一次</button>
-			<span class="model-content-list-content">暗红，大经量，有色块，痛经，稠</span>
+			<span class="model-content-list-content model-last-mense-data">暗红，大经量，有色块，痛经，稠</span>
 		</div>
 	</div>
 	<!-- 体温model -->
@@ -387,27 +387,83 @@
 
 <script type="text/javascript">
 			$(function() {
+				/* 当前选项卡 */
 				var curTab = 1;
-				/* 图表分析 */
+				/* 选项卡是否已经点击 */
+				var tabTwo = false;
+				var tabThree = false;
+				var tabFour = false;	
+				/* 首页数据加载 */
+				var menseData;
+				var menseLabel;
+				$.get('/CPregnant/renderMense',function(data){
+					menseData = data.data.data;
+					menseLabel = data.data.label;
+					var loadMenseChart = function(){
+						$(".preg-chart").attr("width",$(window).get(0).innerWidth*0.95);
+						$(".preg-chart").attr("height","150");
+						var ctx = $("#mense-chart").get(0).getContext("2d");
+						var options = {	animation : false};
+						var data = {
+							labels: menseLabel,
+							datasets: [{
+								fillColor: "rgba(242,195,195,0.4)",
+								strokeColor: "rgba(223,116,116,0.4)",
+								pointColor: "rgba(223,116,116,0.4)",
+								pointStrokeColor: "#fff",
+								data: menseData
+							}]
+						}
+						new Chart(ctx).Line(data,options);
+					};
+					loadMenseChart();
+				});	
 				/* 加载月经图表 */
 				var loadMenseChart = function(){
-					$(".preg-chart").attr("width",$(window).get(0).innerWidth*0.95);
-					$(".preg-chart").attr("height","150");
-					var ctx = $("#mense-chart").get(0).getContext("2d");
-					var options = {	animation : false};
-					var data = {
-						labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
-						datasets: [{
-							fillColor: "rgba(242,195,195,0.4)",
-							strokeColor: "rgba(223,116,116,0.4)",
-							pointColor: "rgba(223,116,116,0.4)",
-							pointStrokeColor: "#fff",
-							data: [28, 27, 28, 30, 36, 40, 25]
-						}]
-					}
-					new Chart(ctx).Line(data,options);
+						$(".preg-chart").attr("width",$(window).get(0).innerWidth*0.95);
+						$(".preg-chart").attr("height","150");
+						var ctx = $("#mense-chart").get(0).getContext("2d");
+						var options = {	animation : false};
+						var data = {
+							labels: menseLabel,
+							datasets: [{
+								fillColor: "rgba(242,195,195,0.4)",
+								strokeColor: "rgba(223,116,116,0.4)",
+								pointColor: "rgba(223,116,116,0.4)",
+								pointStrokeColor: "#fff",
+								data: menseData
+							}]
+						}
+						new Chart(ctx).Line(data,options);
 				};
-				loadMenseChart();
+				/* 加载图表数据 */
+				$.get('/CChart/renderMense',function(data){
+					var menseData = data.data.data;
+					var menseLabel = data.data.label;
+					/* 加载月经图表 */
+					var loadMenseChart = function(){
+						$(".preg-chart").attr("width",$(window).get(0).innerWidth*0.95);
+						$(".preg-chart").attr("height","150");
+						var ctx = $("#mense-chart").get(0).getContext("2d");
+						var options = {	animation : false};
+						var data = {
+							labels: menseLabel,
+							datasets: [{
+								fillColor: "rgba(242,195,195,0.4)",
+								strokeColor: "rgba(223,116,116,0.4)",
+								pointColor: "rgba(223,116,116,0.4)",
+								pointStrokeColor: "#fff",
+								data: menseData
+							}]
+						}
+						new Chart(ctx).Line(data,options);
+					};
+					loadMenseChart();
+
+				});	
+				var curTab = 1;
+				/* 图表分析 */
+				
 				/* 加载体温图表 */
 				var loadTempChart = function(){	
 					$(".preg-chart").attr("width",$(window).get(0).innerWidth*.95);
@@ -478,17 +534,26 @@
 					}
 					else if(tabNum == "2"){
 						$('.temp-content').addClass('active');
-						loadTempChart();
+						if(tabTwo == false){
+							loadTempChart();
+							tabTwo = true;
+						}
 						curTab = 2;
 					}
 					else if(tabNum == "3"){
 						$('.pregw-content').addClass('active');
-						loadPregwChart();
+						if(tabThree == false){
+							loadPregwChart();
+							tabThree = true;
+						}
 						curTab = 3;
 					}
 					else{
 						$('.pregm-content').addClass('active');
-						loadPregmChart();
+						if(tabFour == false){
+							loadPregmChart();
+							tabFour = true;
+						}
 						curTab = 4
 					}
 					$('#loading-btn').fadeOut(2000);
@@ -630,7 +695,37 @@
 		
 <script type="text/javascript">
 	$(function(){
-		/* 月经数据加载与提交*/
+		/* 月经数据加载*/
+		$.get('/CPregnant/lastMense',function(data){
+			console.log(data.data);
+			var color,num,liquid,hurt,chou,date;
+			$('#lastMenseColor').text(data.data[0]);
+			color = data.data[0];
+			$('#lastMenseNum').text(data.data[1]);
+			num = data.data[1];
+			if(data.data[2] == true){
+				$('#lastMenseLiquid').text("有");
+				liquid = "有色块"
+			}
+			else{
+				$('#lastMenseLiquid').text("无");
+				liquid = "无色块"
+			}
+			if(data.data[3] == true){
+				$('#lastMenseHurt').text("有");
+				hurt = "痛经";
+			}
+			else{
+				$('#lastMenseHurt').text("无");
+				hurt = "无痛";
+			}
+			$('#lastMenseChou').text(data.data[4]);
+			chou = data.data[4];
+			date = data.data[5];
+			$('.mense-last-date').text(" ("+data.data[5]+")")
+			$('.model-last-mense-data').text(date+" : "+color+","+num+","+liquid+","+hurt+","+chou)
+		})
+		/* 月经数据提交*/
 		$('.mense-data-refresh').bind('touchend',function(){
 			var menseColor = $("#mense-color").val();
 			var menseChou = $("#mense-chou").val();
