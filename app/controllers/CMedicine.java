@@ -215,4 +215,5 @@ public class CMedicine extends WebService{
 		medbox = JPA.em().createNativeQuery(sql).getResultList();
 		wsOk(medbox);
 	}
+
 }

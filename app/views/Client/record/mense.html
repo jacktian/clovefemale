@@ -1,22 +1,23 @@
 #{extends 'client.html' /}
 #{set title:'助孕记录' /}
 #{set 'moreStyles'}
-<link href="@{'/public/stylesheets/client/pregnant.css'}?v=20150529" rel="stylesheet" />
+<link href="@{'/public/stylesheets/client/pregnant.css'}?v=20150531" rel="stylesheet" />
 <link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.scroller.css'}" rel="stylesheet" type="text/css" />
 <link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.animation.css'}" rel="stylesheet" type="text/css" />
 <link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.frame.css'}" rel="stylesheet" type="text/css" />
 #{/set}
+#{output 'Client/record/pregTpl.html'/}
 <header class="mui-bar mui-bar-nav client-bar-nav">
 	<a class="mui-icon mui-icon-left-nav mui-pull-left"></a>
 	<h1 class="mui-title client-title">助孕记录</h1>
-	<a href="#mui-popover" class="mui-icon mui-icon-bars mui-pull-right"></a>
+	<!--a href="#mui-popover" class="mui-icon mui-icon-bars mui-pull-right"></a>
 	<div id="mui-popover" class="mui-popover">
 		<ul class="mui-table-view preg-pop-menu">
 			<li class="mui-table-view-cell">Item1</li>
 			<li class="mui-table-view-cell">Item2</li>
 			<li class="mui-table-view-cell">Item3</li>
 		</ul>
-	</div>
+	</div-->
 </header>
 <div class="mui-content preg-menu-content">
 	<div id="preg-menu">
@@ -50,8 +51,9 @@
 	<!-- 月经记录 -->
 	<div class="mui-content danamic-content preg-content mense-content active">
 		<div class="preg-content-section">
-			<a href="#" class="mui-pull-right more-link">更多></a>
-			<div class="preg-title">上一次记录<span class="mense-last-date">&nbsp;(2015-05-03)</span></div>
+			<a href="/CPregnant/menseDetail" class="mui-pull-right more-link">更多></a>
+			<div class="preg-title">上一次记录</div>
+			
 			<div class="preg-detail">
 				<span class="preg-detail-title">颜色 :</span>
 				<span id="lastMenseColor">血红</span>
@@ -72,19 +74,29 @@
 				<span class="preg-detail-title">稠度 :</span>
 				<span id="lastMenseChou">稀</span>
 			</div>
+			<div class="preg-detail">
+				<span class="preg-detail-title">时长 :</span>
+				<span id="lastMenseTime"></span>
+			</div>
+			<div class="preg-detail">
+				<!--span class="preg-detail-title">日期 :</span-->
+				<span class="mense-last-date"></span>
+			</div>
 		</div>
-		<div class="preg-content-section">
+		<div class="preg-content-section chart-section">
 			<a href="#" class="mui-pull-right more-link">分析></a>
 			<div class="preg-title">月经周期</div>
 			<canvas id="mense-chart" class="preg-chart"></canvas>
+			<div class="mense-chart-empty chart-empty not-shown">图表无数据显示</div>
 		</div>
 	</div>
 	<!-- 体温记录  -->
 	<div class="mui-content danamic-content preg-content temp-content">
 		<div class="preg-content-section">
-			<div class="preg-title">最近记录</div>
-			<a href="#" class="mui-pull-right more-link">更多></a>
-			<table class="preg-record-table">
+
+			<a href="/CPregnant/menseDetail" class="mui-pull-right more-link">更多></a>
+			<div class="preg-title">最近记录</div>			
+			<table class="preg-record-table" id="tempTable">
 				<thead>
 					<tr>
 						<th>记录日期</th>
@@ -124,7 +136,7 @@
 				<tfoot>
 					<tr>
 						<td colspan="2">
-							<a href="#" class="table-more-btn shrink">
+							<a href="#" class="table-more-btn shrink tempTableArrow">
 								<span class="mui-icon table-more-icon mui-icon-arrowdown"></span>
 							</a>
 						</td>
@@ -132,18 +144,19 @@
 				</tfoot>
 			</table>
 		</div>
-		<div class="preg-content-section">
+		<div class="preg-content-section chart-section">
+			<a href="#" class="mui-pull-right more-link">分析></a>			
 			<div class="preg-title">孕妇体温</div>
-			<a href="#" class="mui-pull-right more-link">分析></a>
 			<canvas id="temp-chart" class="preg-chart"></canvas>
+			<div class="temp-chart-empty chart-empty not-shown">图表无数据显示</div>
 		</div>
 	</div>
 	<!-- 孕重记录 -->
 	<div class="mui-content preg-content danamic-content pregw-content">
 		<div class="preg-content-section">
-			<a href="#" class="mui-pull-right more-link">更多></a>
+			<a href="#" class="mui-pull-right more-link">更多></a>			
 			<div class="preg-title">最近记录</div>
-			<table class="preg-record-table">
+			<table class="preg-record-table" id="pregwTable">
 				<thead>
 					<tr>
 						<th>记录日期</th>
@@ -183,7 +196,7 @@
 				<tfoot>
 					<tr>
 						<td colspan="2">
-							<a href="#" class="table-more-btn shrink">
+							<a href="#" class="table-more-btn shrink pregwTableArrow">
 								<span class="mui-icon table-more-icon mui-icon-arrowdown"></span>
 							</a>
 						</td>
@@ -191,18 +204,19 @@
 				</tfoot>
 			</table>
 		</div>
-		<div class="preg-content-section">
+		<div class="preg-content-section chart-section">
+			<a href="#" class="mui-pull-right more-link">分析></a>			
 			<div class="preg-title">孕重分析</div>
-			<a href="#" class="mui-pull-right more-link">分析></a>
 			<canvas id="pregw-chart" class="preg-chart"></canvas>
+			<div class="pregw-chart-empty chart-empty not-shown">图表无数据显示</div>
 		</div>
 	</div>
 	<!-- 胎动记录 -->
 	<div class="mui-content preg-content danamic-content pregm-content">
 		<div class="preg-content-section">
+			<a href="#" class="mui-pull-right more-link">更多></a>			
 			<div class="preg-title">最近记录</div>
-			<a href="#" class="mui-pull-right more-link">更多></a>
-			<table class="preg-record-table">
+			<table class="preg-record-table" id="pregmTable">
 				<thead>
 					<tr>
 						<th>记录日期</th>
@@ -242,7 +256,7 @@
 				<tfoot>
 					<tr>
 						<td colspan="2">
-							<a href="#" class="table-more-btn shrink">
+							<a href="#" class="table-more-btn shrink pregmTableArrow">
 								<span class="mui-icon table-more-icon mui-icon-arrowdown"></span>
 							</a>
 						</td>
@@ -250,10 +264,11 @@
 				</tfoot>
 			</table>
 		</div>
-		<div class="preg-content-section">
+		<div class="preg-content-section chart-section">
+			<a href="#" class="mui-pull-right more-link">分析></a>			
 			<div class="preg-title">胎动统计</div>
-			<a href="#" class="mui-pull-right more-link">分析></a>
 			<canvas id="pregm-chart" class="preg-chart"></canvas>
+			<div class="pregm-chart-empty chart-empty not-shown">图表无数据显示</div>
 		</div>
 	</div>
 
@@ -297,13 +312,34 @@
 					<option>浓</option>
 					<option>稀</option>
 				</select>
+				<span class="model-content-list-title">天数:</span>
+				<select class="model-content-list-select" id="mense-time">
+					<option>1</option>
+					<option>2</option>
+					<option>3</option>
+					<option>4</option>
+					<option>5</option>
+					<option>6</option>
+					<option>7</option>
+					<option>8</option>
+					<option>9</option>
+					<option>10</option>
+					<option>11</option>
+					<option>12</option>
+					<option>13</option>
+					<option>14</option>
+					<option>15</option>
+				</select>
 			</div>
 		</div>
 		<div class="model-bottom">
 			<button class="mui-btn mui-btn-negative model-btn-refresh mense-data-refresh">更新</button>
 		</div>
+		<div class="model-bottom">
+			<button class="mui-btn mui-btn-negative model-btn-delete mense-data-delete" disabled="true">清除</button>
+		</div>
 		<div class="model-tips">
-			<button class="mui-btn last-btn">上一次</button>
+			<button class="mui-btn last-btn" style="display:none">上一次</button>
 			<span class="model-content-list-content model-last-mense-data">暗红，大经量，有色块，痛经，稠</span>
 		</div>
 	</div>
@@ -321,15 +357,19 @@
 		<div class="model-bottom">
 			<button class="mui-btn mui-btn-negative model-btn-refresh temp-data-refresh">更新</button>
 		</div>
+		<div class="model-bottom">
+			<button class="mui-btn mui-btn-negative model-btn-delete temp-data-delete" disabled="true">清除</button>
+		</div>
 		<div class="model-tips">
-			<button class="mui-btn last-btn">上一次</button>
-			<span class="model-content-list-content">38.5℃ (正常)</span>
+			<button class="mui-btn last-btn" id="lastTempViewBtn" disabled>上一次</button>
+			<!--span class="model-content-list-content" id="lastTempContent">38.5℃ (正常)</span-->
 		</div>
 	</div>
 	<!-- 孕重model -->
 	<div class="form-model pregw-model mui-hidden">
 		<header class="mui-bar mui-bar-nav model-header">
 			<button class="mui-btn mui-pull-right model-btn" id="pregw-date-btn">日期</button>
+			<input type="hidden" id="pregw-date-val" data-val=""/>
 			<h1 class="mui-title model-title">孕重记录</h1>
 		</header>
 		<div class="model-content">
@@ -337,17 +377,21 @@
 			<div id="pregw-scroller"></div>
 		</div>
 		<div class="model-bottom">
-			<button class="mui-btn mui-btn-negative model-btn-refresh">更新</button>
+			<button class="mui-btn mui-btn-negative model-btn-refresh pregw-data-refresh">更新</button>
+		</div>
+		<div class="model-bottom">
+			<button class="mui-btn mui-btn-negative model-btn-delete pregw-data-delete" disabled="true">清除</button>
 		</div>
 		<div class="model-tips">
-			<button class="mui-btn last-btn">上一次</button>
-			<span class="model-content-list-content">60.5kg</span>
+			<button class="mui-btn last-btn" id="lastPregwViewBtn" disabled>上一次</button>
+			<!--span class="model-content-list-content">60.5kg</span-->
 		</div>
 	</div>
 	<!-- 胎动model -->
 	<div class="form-model pregm-model mui-hidden">
 		<header class="mui-bar mui-bar-nav model-header">
 			<button class="mui-btn mui-pull-right model-btn" id="pregm-date-btn">日期</button>
+			<input type="hidden" id="pregm-date-val" data-val=""/>
 			<h1 class="mui-title model-title">胎动记录</h1>
 		</header>
 		<div class="model-content">
@@ -355,11 +399,14 @@
 			<div id="pregm-scroller"></div>
 		</div>
 		<div class="model-bottom">
-			<button class="mui-btn mui-btn-negative model-btn-refresh">更新</button>
+			<button class="mui-btn mui-btn-negative model-btn-refresh pregm-data-refresh">更新</button>
+		</div>
+		<div class="model-bottom">
+			<button class="mui-btn mui-btn-negative model-btn-delete pregm-data-delete" disabled="true">清除</button>
 		</div>
 		<div class="model-tips">
-			<button class="mui-btn last-btn">上一次</button>
-			<span class="model-content-list-content">45次</span>
+			<button class="mui-btn last-btn" id="lastPregmViewBtn" disabled>上一次</button>
+			<!--span class="model-content-list-content">45次</span-->
 		</div>
 	</div>
 </div>
@@ -374,8 +421,7 @@
 #{set 'moreScripts'}
 <script type="text/javascript" charset="utf-8">mui.init();</script>
 <script src="@{'/public/javascripts/client/jquery-1.9.1.min.js'}"></script>
-<!--script src="@{'/public/javascripts/client/mobiscroll/mobiscroll-2.14.4-crack.js'}" type="text/javascript">
-</script-->
+<script type="text/javascript" src = "@{'/public/javascripts/juicer.js'}"></script>
 <script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.core.js'}"></script>
 <script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.frame.js'}"></script>
 <script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.scroller.js'}"></script>
@@ -384,376 +430,712 @@
 <script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.datetime.js'}"></script>
 <script src="@{'/public/javascripts/client/mobiscroll/i18n/mobiscroll.i18n.zh.js'}"></script>
 <script src="@{'/public/javascripts/client/Chart.min.js'}" type="text/javascript"></script>
-
 <script type="text/javascript">
-			$(function() {
-				/* 当前选项卡 */
-				var curTab = 1;
-				/* 选项卡是否已经点击 */
-				var tabTwo = false;
-				var tabThree = false;
-				var tabFour = false;	
-				/* 首页数据加载 */
-				var menseData;
-				var menseLabel;
-				$.get('/CPregnant/renderMense',function(data){
-					menseData = data.data.data;
-					menseLabel = data.data.label;
-					var loadMenseChart = function(){
-						$(".preg-chart").attr("width",$(window).get(0).innerWidth*0.95);
-						$(".preg-chart").attr("height","150");
-						var ctx = $("#mense-chart").get(0).getContext("2d");
-						var options = {	animation : false};
-						var data = {
-							labels: menseLabel,
-							datasets: [{
-								fillColor: "rgba(242,195,195,0.4)",
-								strokeColor: "rgba(223,116,116,0.4)",
-								pointColor: "rgba(223,116,116,0.4)",
-								pointStrokeColor: "#fff",
-								data: menseData
-							}]
-						}
-						new Chart(ctx).Line(data,options);
-					};
-					loadMenseChart();
-				});	
-				/* 加载月经图表 */
-				var loadMenseChart = function(){
-						$(".preg-chart").attr("width",$(window).get(0).innerWidth*0.95);
-						$(".preg-chart").attr("height","150");
-						var ctx = $("#mense-chart").get(0).getContext("2d");
-						var options = {	animation : false};
-						var data = {
-							labels: menseLabel,
-							datasets: [{
-								fillColor: "rgba(242,195,195,0.4)",
-								strokeColor: "rgba(223,116,116,0.4)",
-								pointColor: "rgba(223,116,116,0.4)",
-								pointStrokeColor: "#fff",
-								data: menseData
-							}]
-						}
-						new Chart(ctx).Line(data,options);
-				};
-				/* 加载图表数据 */
-				$.get('/CChart/renderMense',function(data){
-					var menseData = data.data.data;
-					var menseLabel = data.data.label;
-					/* 加载月经图表 */
-					var loadMenseChart = function(){
-						$(".preg-chart").attr("width",$(window).get(0).innerWidth*0.95);
-						$(".preg-chart").attr("height","150");
-						var ctx = $("#mense-chart").get(0).getContext("2d");
-						var options = {	animation : false};
-						var data = {
-							labels: menseLabel,
-							datasets: [{
-								fillColor: "rgba(242,195,195,0.4)",
-								strokeColor: "rgba(223,116,116,0.4)",
-								pointColor: "rgba(223,116,116,0.4)",
-								pointStrokeColor: "#fff",
-								data: menseData
-							}]
-						}
-						new Chart(ctx).Line(data,options);
-					};
-					loadMenseChart();
+    $(function() {
+        /* 选项卡 */
+        var curTab = 1,tabTwo = false,tabThree = false, tabFour = false;
 
-				});	
-				var curTab = 1;
-				/* 图表分析 */
-				
-				/* 加载体温图表 */
-				var loadTempChart = function(){	
-					$(".preg-chart").attr("width",$(window).get(0).innerWidth*.95);
-					$(".preg-chart").attr("height","150");
-					var ctx = $("#temp-chart").get(0).getContext("2d");
-					var options = {	animation : false};
-					var data = {
-						labels: ["01/02", "02/04", "02/06", "02/08", "02/12", "02/16", "03/16"],
-						datasets: [{
-							fillColor: "rgba(220,220,220,0.5)",
-							strokeColor: "rgba(220,220,220,1)",
-							pointColor: "rgba(220,220,220,1)",
-							pointStrokeColor: "#fff",
-							data: [36, 36.8, 37, 38.3, 40, 37.5, 36.8]
-						}]
-					}
-					var myNewChart = new Chart(ctx).Line(data,options);
-				};
-				/* 加载孕重图表 */
-				var loadPregwChart = function(){
-					$(".preg-chart").attr("width",$(window).get(0).innerWidth*.95);
-					$(".preg-chart").attr("height","150");
-					var ctx = $("#pregw-chart").get(0).getContext("2d");
-					var options = {	animation : false};
-					//This will get the first returned node in the jQuery collection.
-					var data = {
-						labels: ["January", "February", "March", "April", "May", "June", "July"],
-						datasets: [{
-							fillColor: "rgba(242,195,195,0.4)",
-							strokeColor: "rgba(223,116,116,0.4)",
-							pointColor: "rgba(223,116,116,0.4)",
-							pointStrokeColor: "#fff",
-							data: [50, 49.5, 60, 61, 55, 57, 58]
-						}]
-					}
-					var myNewChart = new Chart(ctx).Line(data,options);
-				};
-				/* 加载胎动图表 */
-				var loadPregmChart = function(){
-					$(".preg-chart").attr("width",$(window).get(0).innerWidth*.95);
-					$(".preg-chart").attr("height","150");
-					var ctx = $("#pregm-chart").get(0).getContext("2d");
-					var options = {	animation : false};
-					//This will get the first returned node in the jQuery collection.
-					var data = {
-						labels: ["January", "February", "March", "April", "May", "June", "July"],
-						datasets: [{
-							fillColor: "rgba(220,220,220,0.5)",
-							strokeColor: "rgba(220,220,220,1)",
-							pointColor: "rgba(220,220,220,1)",
-							pointStrokeColor: "#fff",
-							data: [45, 47, 57, 56, 54, 55, 56]
-						}]
-					}
-					var myNewChart = new Chart(ctx).Line(data,options);
-				};
-				/* 菜单事件 */
-				$('.pregIcon').bind('touchend',function(){
-					$('.pregIcon').removeClass('active');
-					$(this).addClass('active');
-					$('.preg-content').removeClass('active');
-					$('#loading-btn').show();
-					var tabNum = $(this).attr('tabNum');
-					if(tabNum == "1"){
-						$('.mense-content').addClass('active');
-						loadMenseChart();
-						curTab = 1;
-					}
-					else if(tabNum == "2"){
-						$('.temp-content').addClass('active');
-						if(tabTwo == false){
-							loadTempChart();
-							tabTwo = true;
-						}
-						curTab = 2;
-					}
-					else if(tabNum == "3"){
-						$('.pregw-content').addClass('active');
-						if(tabThree == false){
-							loadPregwChart();
-							tabThree = true;
-						}
-						curTab = 3;
-					}
-					else{
-						$('.pregm-content').addClass('active');
-						if(tabFour == false){
-							loadPregmChart();
-							tabFour = true;
-						}
-						curTab = 4
-					}
-					$('#loading-btn').fadeOut(2000);
-					return false;
-				});
+        /* 加载月经记录，从服务器获取数据，更新上一条记录与图表信息 */
+        var menseData,menseLabel;
+        var loadMenseFromServer = function() {
+        	//图表渲染
+		    $.get('/CPregnant/renderMense',
+		    function(data) {
+		        menseData = data.data.data;
+		        menseLabel = data.data.label;
+		        if(menseData.length == 0){
+		        	$('.mense-chart-empty').removeClass('not-shown');
+		        }
+		        else{
+		        	$('.mense-chart-empty').addClass('not-shown');
+			        var loadMenseChart = function() {
+			            $(".preg-chart").attr("width", $(window).get(0).innerWidth);
+			            $(".preg-chart").attr("height", "150");
+			            var ctx = $("#mense-chart").get(0).getContext("2d");
+			            var options = {
+			                animation: false
+			            };
+			            var data = {
+			                labels: menseLabel,
+			                datasets: [{
+			                    fillColor: "rgba(242,195,195,0.4)",
+			                    strokeColor: "rgba(223,116,116,0.4)",
+			                    pointColor: "rgba(223,116,116,0.4)",
+			                    pointStrokeColor: "#fff",
+			                    data: menseData
+			                }]
+			            }
+			            new Chart(ctx).Line(data, options);
+			        };
+			        loadMenseChart();
+		    	}
+		    });
+		    //上一次记录渲染
+		    $.get('/CPregnant/lastMense',
+		    function(data) {
+		        if(data.data != "empty"){
+		        	var color, num, liquid, hurt, chou, date, time;
+			        $('#lastMenseColor').text(data.data[0]);
+			        color = data.data[0];
+			        $('#lastMenseNum').text(data.data[1]);
+			        num = data.data[1];
+			        if (data.data[2] == true) {
+			            $('#lastMenseLiquid').text("有");
+			            liquid = "有色块"
+			        } else {
+			            $('#lastMenseLiquid').text("无");
+			            liquid = "无色块"
+			        }
+			        if (data.data[3] == true) {
+			            $('#lastMenseHurt').text("有");
+			            hurt = "痛经";
+			        } else {
+			            $('#lastMenseHurt').text("无");
+			            hurt = "无痛";
+			        }
+			        $('#lastMenseChou').text(data.data[4]);
+			        chou = data.data[4];
+			        date = data.data[5];
+			        
+			        $('#lastMenseTime').text(data.data[6]+"天");
+			        time = "时长:"+data.data[6]+"天";
 
- 				/*遮罩层*/
-				$('#pregDrop').bind('touchstart',function(){
-					$(this).hide();
-					$('.form-model').addClass('mui-hidden');
-				});
-				$('#mense-add-btn').bind('touchend',function(){
-					if(curTab == "1")
-						$('.mense-model').removeClass('mui-hidden');
-					else if(curTab == "2")
-						$('.temp-model').removeClass('mui-hidden');
-					else if(curTab == "3")
-						$('.pregw-model').removeClass('mui-hidden');
-					else
-						$('.pregm-model').removeClass('mui-hidden');
-					$('#pregDrop').show();
-					return false;
-				});
-				/* mobiscroll 日期控件*/
-				$('#mense-date-btn').mobiscroll().date({
-	                theme: 'mobiscroll',
-	                display: 'bottom',
-	                startYear: '2013',
-	                lang: 'zh',
-	                defaultValue:new Date(2012,5,4),
-	                onSelect: function (valueText, inst) {
-	       				var selectedDate = inst.getVal(); // Call the getVal method
-	                    $('#mense-date-val').attr('data-val',$.mobiscroll.datetime.formatDate('yy-mm-dd', selectedDate));
-	                }
-	            });
-	            $('#temp-date-btn').mobiscroll().date({
-	                theme: 'mobiscroll',
-	                display: 'bottom',
-	                startYear: '2013',
-	                lang: 'zh',
-	                onSelect: function (valueText, inst) {
-	                    var selectedDate = inst.getVal(); // Call the getVal method
-	                	$('#temp-date-val').attr('data-val',$.mobiscroll.datetime.formatDate('yy-mm-dd', selectedDate));
-	                }
-	            });
-	            $('#pregw-date-btn').mobiscroll().date({
-	                theme: 'mobiscroll',
-	                display: 'bottom',
-	                startYear: '2013',
-	                lang: 'zh',
-	                onSelect: function (valueText, inst) {
-	                    var selectedDate = inst.getVal(); // Call the getVal method
-	                    console.log($.mobiscroll.datetime.formatDate('yy-mm-dd', selectedDate));
-	                }
-	            });
-	            $('#pregm-date-btn').mobiscroll().date({
-	                theme: 'mobiscroll',
-	                display: 'bottom',
-	                startYear: '2013',
-	                lang: 'zh',
-	                onSelect: function (valueText, inst) {
-	                    var selectedDate = inst.getVal(); // Call the getVal method
-	                    console.log($.mobiscroll.datetime.formatDate('yy-mm-dd', selectedDate));
-	                }
-	            });
-				/* 表格事件*/
-				$('.table-more-btn').bind('touchend',function(){
-					if ($(this).hasClass("shrink")) {
-						$('.table-more-icon').removeClass('mui-icon-arrowdown');
-						$('.table-more-icon').addClass('mui-icon-arrowup');
-						$('.table-more').removeClass('table-hidden');
-						$(this).removeClass('shrink');
-					} else {
-						$('.table-more-icon').addClass('mui-icon-arrowdown');
-						$('.table-more-icon').removeClass('mui-icon-arrowup');
-						$('.table-more').addClass('table-hidden');
-						$(this).addClass('shrink');
-					}
-					return false;
-				})
-				/* 滚轮控件 */
-				/* 体温滚轮 */
-				$('#temp-scroller').mobiscroll().scroller({
-			        theme: 'mobiscroll',
-			        display: 'inline',
-			        rows:3,
-			        multiline:2,
-			        //showLabel:true,
-			        layout:'liquid',
-			        height:40,
-			         wheels: [[
-			                {
-			                	label:'整数部分',
-			                    values: ["30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45"]
-			                },
-			                {
-			                	label:'小数部分',
-			                    values: ["0℃","1℃","2℃","3℃","4℃","5℃","6℃","7℃","8℃","9℃"]
-			                }
-			            ]]
-			    });
-			    /* 孕重滚轮 */
-				$('#pregw-scroller').mobiscroll().scroller({
-			        theme: 'mobiscroll',
-			        display: 'inline',
-			        rows:3,
-			        multiline:2,
-			        //showLabel:true,
-			        layout:'liquid',
-			        height:40,
-			         wheels: [[
-			                {
-			                	label:'整数部分',
-			                    values: ["50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65"]
-			                },
-			                {
-			                	label:'小数部分',
-			                    values: [".0Kg",".1Kg",".2Kg",".3Kg",".4Kg",".5Kg",".6Kg",".7Kg",".8Kg",".9Kg"]
-			                }
-			            ]]
-			    });
-			    /* 胎动滚轮 */
-				$('#pregm-scroller').mobiscroll().scroller({
-			        theme: 'mobiscroll',
-			        display: 'inline',
-			        rows:3,
-			        showLabel:false,
-			        layout:'liquid',
-			        height:40,
-			         wheels: [[
-			                {
-			                	label:'次数',
-			                    values: ["30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45"]
-			                }
-			            ]]
-			    });
+			        $('.mense-last-date').text(" (" + data.data[5] + ")");
+			        $('.model-last-mense-data').text("上一次("+date + "):" + color + "," + num + "," + liquid + "," + hurt + "," + chou+","+time);
+		        }
+		        else{
+		        	$('#lastMenseColor').text("无记录");
+		        	$('#lastMenseNum').text("无记录");
+		        	$('#lastMenseLiquid').text("无记录");
+		        	$('#lastMenseHurt').text("无记录");
+		        	$('#lastMenseChou').text("无记录");
+		        	$('#lastMenseTime').text("无记录");
+		        	$('.model-last-mense-data').text("暂无记录显示，请点击添加数据");
+		        }
+		        
+		    })
+		}
+		loadMenseFromServer();
+        /* 加载月经图表 */
+        var loadMenseChart = function() {
+            $(".preg-chart").attr("width", $(window).get(0).innerWidth * 0.95);
+            $(".preg-chart").attr("height", "150");
+            var ctx = $("#mense-chart").get(0).getContext("2d");
+            var options = {
+                animation: false
+            };
+            var data = {
+                labels: menseLabel,
+                datasets: [{
+                    fillColor: "rgba(242,195,195,0.4)",
+                    strokeColor: "rgba(223,116,116,0.4)",
+                    pointColor: "rgba(223,116,116,0.4)",
+                    pointStrokeColor: "#fff",
+                    data: menseData
+                }]
+            }
+            new Chart(ctx).Line(data, options);
+        };
+        /* 提交月经数据 */
+        $('.mense-data-refresh').bind('touchend',
+        function() {
+            var menseColor = $("#mense-color").val();
+            var menseChou = $("#mense-chou").val();
+            var menseHurt = $("#mense-hurt").val();
+            var menseLiquid = $("#mense-liquid").val();
+            var menseNum = $("#mense-num").val();
+            var date = $("#mense-date-val").attr("data-val");
+            var time = $('#mense-time').val();
+            $.get('/CPregnant/addMenses?menseColor=' + menseColor + "&menseChou=" + menseChou + "&menseHurt=" + menseHurt + "&menseHurt=" + menseHurt + "&menseLiquid=" + menseLiquid + "&menseNum=" + menseNum + "&date=" + date+"&time="+time,
+            function(data) {
+                if (data.result == 0) {
+                    alert("保存成功!");
+                    loadMenseFromServer();
+                } else {
+                    alert("保存失败！");
+                }
+            });
+        });
+        /* 删除月经数据 */
+        $('.mense-data-delete').bind('touchend',function() {
+	            var date = $("#mense-date-val").attr("data-val");
+	            if($('.mense-data-delete').hasClass('deleted')){
+	            	$.get('/CPregnant/removeMense?date='+date,function(data){
+	            		if(data.result == 0){
+	            			alert("清除成功");
+	            			$('.mense-data-delete').removeClass('deleted');
+            				$('.mense-data-delete').attr('disabled',true);
+            				loadMenseFromServer();
+	            		}
+	            		else{
+	            			alert("清除失败");
+	            		}
+	            	})
+	            }
+	     });
+        
+        /* 加载体温数据,从服务器端提取数据 */
+        var tempData,tempLabel;
+        var loadTempFromServer = function(){
+        	// 加载表格数据
+        	$.get('/CTemperature/lastTemp',function(data){
+        		var html = juicer($('#tempTpl').html(),{tempList:data.data});
+        		$('#tempTable tbody').html(html);
+        		if(data.data.length==0){
+        			$('.tempTableArrow').css("display","none");
+        			var emptyHtml = "<tr><td>暂无数据</td><td>暂无数据</td></tr>";
+        			$('#tempTable tbody').html(emptyHtml);
+        		}
+        		else if(data.data.length<=4){
+        			$('.tempTableArrow').css("display","none");
+        			$('#lastTempViewBtn').html("上一次("+data.data[data.data.length-1].dateStr+"):"+data.data[data.data.length-1].temp+"摄氏度");
+        		}
+        		else{
+        			$('.tempTableArrow').css("display","block");	
+        			$('#lastTempViewBtn').html("上一次("+data.data[data.data.length-1].dateStr+"):"+data.data[data.data.length-1].temp+"摄氏度");
+        		}
+        	})
+        	//加载图表数据
+        	$.get('/CTemperature/lastTempChart',function(data){
+        		tempData = data.data.data;
+        		tempLabel = data.data.label;
+        		var loadTempChart = function() {
+		            $(".preg-chart").attr("width", $(window).get(0).innerWidth * .95);
+		            $(".preg-chart").attr("height", "150");
+		            var ctx = $("#temp-chart").get(0).getContext("2d");
+		            var options = {
+		                animation: false
+		            };
+		            var data = {
+		                labels: tempLabel,
+		                datasets: [{
+		                    fillColor: "rgba(220,220,220,0.5)",
+		                    strokeColor: "rgba(220,220,220,1)",
+		                    pointColor: "rgba(220,220,220,1)",
+		                    pointStrokeColor: "#fff",
+		                    data: tempData
+		                }]
+		            }
+		            var myNewChart = new Chart(ctx).Line(data, options);
+		        };
+		        if(tempData.length == 0){
+		        	$('.temp-chart-empty').removeClass('not-shown');
+		        }
+		        else{
+		        	$('.temp-chart-empty').addClass('not-shown');
+		        	loadTempChart();
+		        }
+        	});
+        };
+        /* 加载体温图表 */
+        var loadTempChart = function() {
+        	if(tempData.length != 0){
+	            $(".preg-chart").attr("width", $(window).get(0).innerWidth * .95);
+	            $(".preg-chart").attr("height", "150");
+	            var ctx = $("#temp-chart").get(0).getContext("2d");
+	            var options = {
+	                animation: false
+	            };
+	            var data = {
+	                labels: tempLabel,
+	                datasets: [{
+	                    fillColor: "rgba(220,220,220,0.5)",
+	                    strokeColor: "rgba(220,220,220,1)",
+	                    pointColor: "rgba(220,220,220,1)",
+	                    pointStrokeColor: "#fff",
+	                    data: tempData
+	                }]
+	            }
+	            var myNewChart = new Chart(ctx).Line(data, options);
+        	}
+        };
+        /* 体温数据提交与修改*/
+        $('.temp-data-refresh').bind('touchend',
+        function() {
+            var date = $("#temp-date-val").attr("data-val");
+            var temp = $('#temp-scroller').mobiscroll('getVal');
+            if(temp == null || typeof(temp) == undefined)
+            	temp = "30 0";
+            var fTemp = temp.split(" ")[0]+"."+temp.split(" ")[1];
+            $.get('/CTemperature/addTemperature?date=' + date+"&temp="+fTemp,
+            function(data) {
+                if (data.result == 0) {
+                    alert("提交成功");
+                    loadTempFromServer();
+                } else {
+                    alert("提交失败");
+                }
+            });
+        });
+        /* 体温数据删除 */
+        $('.temp-data-delete').bind('touchend',function(){
+        	var date = $('#temp-date-val').attr('data-val');
+        	$.get('/CTemperature/removeTemp?date='+date,function(data){
+        		if(data.result==0){
+        			alert('清除成功');
+        			$('.temp-data-delete').removeClass('deleted');
+            		$('.temp-data-delete').attr('disabled',true);
+        			loadTempFromServer();
+        		}
+        		else{
+        			alert("清除失败");
+        		}
+        	});
+        })
+
+		/* 加载孕重数据，从服务器获取数据 */
+		var pregwData,pregwLabel;
+		var loadWeightFromServer = function(){
+			//加载表格数据
+			$.get('/CWeight/findWeight',function(data){
+				var html = juicer($('#pregwTpl').html(),{pregwList:data.data});
+        		$('#pregwTable tbody').html(html);
+        		if(data.data.length==0){
+        			$('.pregwTableArrow').css("display","none");
+        			var emptyHtml = "<tr><td>暂无数据</td><td>暂无数据</td></tr>";
+        			$('#pregwTable tbody').html(emptyHtml);
+        		}
+        		else if(data.data.length<=4){
+        			$('.pregwTableArrow').css("display","none");
+        			$('#lastPregwViewBtn').html("上一次("+data.data[data.data.length-1].dateStr+"):"+data.data[data.data.length-1].weight+"Kg");
+        		}
+        		else{
+        			$('.pregwTableArrow').css("display","block");	
+        			$('#lastPregwViewBtn').html("上一次("+data.data[data.data.length-1].dateStr+"):"+data.data[data.data.length-1].weight+"Kg");
+        		}
 			});
-		</script>
-		
-<script type="text/javascript">
-	$(function(){
-		/* 月经数据加载*/
-		$.get('/CPregnant/lastMense',function(data){
-			console.log(data.data);
-			var color,num,liquid,hurt,chou,date;
-			$('#lastMenseColor').text(data.data[0]);
-			color = data.data[0];
-			$('#lastMenseNum').text(data.data[1]);
-			num = data.data[1];
-			if(data.data[2] == true){
-				$('#lastMenseLiquid').text("有");
-				liquid = "有色块"
-			}
-			else{
-				$('#lastMenseLiquid').text("无");
-				liquid = "无色块"
-			}
-			if(data.data[3] == true){
-				$('#lastMenseHurt').text("有");
-				hurt = "痛经";
-			}
-			else{
-				$('#lastMenseHurt').text("无");
-				hurt = "无痛";
-			}
-			$('#lastMenseChou').text(data.data[4]);
-			chou = data.data[4];
-			date = data.data[5];
-			$('.mense-last-date').text(" ("+data.data[5]+")")
-			$('.model-last-mense-data').text(date+" : "+color+","+num+","+liquid+","+hurt+","+chou)
-		})
-		/* 月经数据提交*/
-		$('.mense-data-refresh').bind('touchend',function(){
-			var menseColor = $("#mense-color").val();
-			var menseChou = $("#mense-chou").val();
-			var menseHurt = $("#mense-hurt").val();
-			var menseLiquid = $("#mense-liquid").val();
-			var menseNum = $("#mense-num").val();
-			var date = $("#mense-date-val").attr("data-val");
-			$.get('/CPregnant/addMenses?menseColor='+menseColor+"&menseChou="+menseChou+"&menseHurt="+menseHurt+"&menseHurt="+menseHurt+"&menseLiquid="+menseLiquid+"&menseNum="+menseNum+"&date="+date,function(data){
-				if(data.result==0){
-					alert("保存成功!");
+			//加载图表数据
+			$.get('/CWeight/lastWeightChart',function(data){
+				pregwData = data.data.data;
+        		pregwLabel = data.data.label;
+        		var loadPregwChart = function() {
+		            $(".preg-chart").attr("width", $(window).get(0).innerWidth * .95);
+		            $(".preg-chart").attr("height", "150");
+		            var ctx = $("#pregw-chart").get(0).getContext("2d");
+		            var options = {
+		                animation: false
+		            };
+		            //This will get the first returned node in the jQuery collection.
+		            var data = {
+		                labels: pregwLabel,
+		                datasets: [{
+		                    fillColor: "rgba(242,195,195,0.4)",
+		                    strokeColor: "rgba(223,116,116,0.4)",
+		                    pointColor: "rgba(223,116,116,0.4)",
+		                    pointStrokeColor: "#fff",
+		                    data: pregwData
+		                }]
+		            }
+		            var myNewChart = new Chart(ctx).Line(data, options);
+		        };
+		        if(pregwData.length == 0){
+		        	$('.pregw-chart-empty').removeClass('not-shown');
+		        }
+		        else{
+		        	$('.pregw-chart-empty').addClass('not-shown');
+		        	loadPregwChart();
 				}
-				else{
-					alert("保存失败！");
-				}
+			})
+		}        
+		/* 孕重数据提交与修改*/
+        $('.pregw-data-refresh').bind('touchend',
+        function() {
+            var date = $("#pregw-date-val").attr("data-val");
+            var pregw = $('#pregw-scroller').mobiscroll('getVal');
+            if(pregw == null || typeof(pregw) == undefined)
+            	pregw = "50 0";
+            var fPregw = pregw.split(" ")[0]+"."+pregw.split(" ")[1];
+            $.get('/CWeight/addWeight?date=' + date+"&pregw="+fPregw,
+            function(data) {
+                if (data.result == 0) {
+                    alert("提交成功");
+                    loadWeightFromServer();
+                } else {
+                    alert("提交失败");
+                }
+            });
+        });
+        /* 孕重数据删除 */
+        $('.pregw-data-delete').bind('touchend',function(){
+        	var date = $('#pregw-date-val').attr('data-val');
+        	$.get('/CWeight/removeWeight?date='+date,function(data){
+        		if(data.result==0){
+        			alert('清除成功');
+        			$('.pregw-data-delete').removeClass('deleted');
+            		$('.pregw-data-delete').attr('disabled',true);
+        			loadWeightFromServer();
+        		}
+        		else{
+        			alert("清除失败");
+        		}
+        	});
+        })
+        /* 加载孕重图表 */
+        var loadPregwChart = function() {
+        	if(pregwData.length == 0){
+        	}
+        	else{
+	            $(".preg-chart").attr("width", $(window).get(0).innerWidth * .95);
+	            $(".preg-chart").attr("height", "150");
+	            var ctx = $("#pregw-chart").get(0).getContext("2d");
+	            var options = {
+	                animation: false
+	            };
+	            //This will get the first returned node in the jQuery collection.
+	            var data = {
+	                labels: pregwLabel,
+	                datasets: [{
+	                    fillColor: "rgba(242,195,195,0.4)",
+	                    strokeColor: "rgba(223,116,116,0.4)",
+	                    pointColor: "rgba(223,116,116,0.4)",
+	                    pointStrokeColor: "#fff",
+	                    data: pregwData
+	                }]
+	            }
+	            var myNewChart = new Chart(ctx).Line(data, options);
+        	}
+        };
+
+
+        /* 加载胎动数据，从服务器获取数据 */
+        var pregmData,pregmLabel;
+        var loadMovementFromServer = function(){
+        	//加载表格数据
+			$.get('/CMove/findMovement',function(data){
+				var html = juicer($('#pregmTpl').html(),{pregmList:data.data});
+        		$('#pregmTable tbody').html(html);
+        		if(data.data.length==0){
+        			$('.pregmTableArrow').css("display","none");
+        			var emptyHtml = "<tr><td>暂无数据</td><td>暂无数据</td></tr>";
+        			$('#pregmTable tbody').html(emptyHtml);
+        		}
+        		else if(data.data.length<=4){
+        			$('.pregmTableArrow').css("display","none");
+        			$('#lastPregmViewBtn').html("上一次("+data.data[data.data.length-1].dateStr+"):"+data.data[data.data.length-1].num+"次");
+        		}
+        		else{
+        			$('.pregwTableArrow').css("display","block");	
+        			$('#lastPregmViewBtn').html("上一次("+data.data[data.data.length-1].dateStr+"):"+data.data[data.data.length-1].num+"次");
+        		}
 			});
-		});
-		/* 体温数据提交与修改*/
-		$('.temp-data-refresh').bind('touchend',function(){
-			var date = $("#temp-date-val").attr("data-val");
-			$.get('/CTemperature/addTemperature?date='+date,function(data){
-				if(data.result == 1){
-					alert("提交成功");
+			//加载图表数据
+			$.get('/CMove/lastMovementChart',function(data){
+				pregmData = data.data.data;
+				pregmLabel = data.data.label;
+				var loadPregmChart = function() {
+		            $(".preg-chart").attr("width", $(window).get(0).innerWidth * .95);
+		            $(".preg-chart").attr("height", "150");
+		            var ctx = $("#pregm-chart").get(0).getContext("2d");
+		            var options = {
+		                animation: false
+		            };
+		            //This will get the first returned node in the jQuery collection.
+		            var data = {
+		                labels: pregmLabel,
+		                datasets: [{
+		                    fillColor: "rgba(220,220,220,0.5)",
+		                    strokeColor: "rgba(220,220,220,1)",
+		                    pointColor: "rgba(220,220,220,1)",
+		                    pointStrokeColor: "#fff",
+		                    data: pregmData
+		                }]
+		            }
+		            var myNewChart = new Chart(ctx).Line(data, options);
+		        };
+		        if(pregwData.length == 0){
+		        	$('.pregm-chart-empty').removeClass('not-shown');
+		        }
+		        else{
+		        	$('.pregm-chart-empty').addClass('not-shown');
+		        	loadPregmChart();
 				}
-				else{
-					alert("提交失败");
-				}
-			});
-		});
-	})	
+			})
+        };
+        /* 加载胎动图表 */
+        var loadPregmChart = function() {
+        	if(pregwData.length == 0){
+		        $('.pregm-chart-empty').removeClass('not-shown');
+		    }
+		    else{
+	            $(".preg-chart").attr("width", $(window).get(0).innerWidth * .95);
+	            $(".preg-chart").attr("height", "150");
+	            var ctx = $("#pregm-chart").get(0).getContext("2d");
+	            var options = {
+	                animation: false
+	            };
+	            //This will get the first returned node in the jQuery collection.
+	            var data = {
+	                labels: pregmLabel,
+	                datasets: [{
+	                    fillColor: "rgba(220,220,220,0.5)",
+	                    strokeColor: "rgba(220,220,220,1)",
+	                    pointColor: "rgba(220,220,220,1)",
+	                    pointStrokeColor: "#fff",
+	                    data: pregmData
+	                }]
+	            }
+	            var myNewChart = new Chart(ctx).Line(data, options);
+        	}
+        };
+        /* 胎动数据提交与修改*/
+        $('.pregm-data-refresh').bind('touchend',
+        function() {
+            var date = $("#pregm-date-val").attr("data-val");
+            var pregm = $('#pregm-scroller').mobiscroll('getVal');
+            if(pregm == null || typeof(pregm) == undefined)
+            	pregm = "30";
+            $.get('/CMove/addMovement?date=' + date+"&pregm="+pregm,
+            function(data) {
+                if (data.result == 0) {
+                    alert("提交成功");
+                    loadMovementFromServer();
+                } else {
+                    alert("提交失败");
+                }
+            });
+        });
+        /* 胎动数据删除 */
+        $('.pregm-data-delete').bind('touchend',function(){
+        	var date = $('#pregm-date-val').attr('data-val');
+        	$.get('/CMove/removeMovement?date='+date,function(data){
+        		if(data.result==0){
+        			alert('清除成功');
+        			$('.pregm-data-delete').removeClass('deleted');
+            		$('.pregm-data-delete').attr('disabled',true);
+        			loadMovementFromServer();
+        		}
+        		else{
+        			alert("清除失败");
+        		}
+        	});
+        })
+
+        /* 菜单事件 */
+        $('.pregIcon').bind('touchend',
+        function() {
+            $('.pregIcon').removeClass('active');
+            $(this).addClass('active');
+            $('.preg-content').removeClass('active');
+            $('#loading-btn').show();
+            var tabNum = $(this).attr('tabNum');
+            if (tabNum == "1") {
+                $('.mense-content').addClass('active');
+                loadMenseChart();
+                curTab = 1;
+            } else if (tabNum == "2") {
+                $('.temp-content').addClass('active');
+                if (tabTwo == false) {
+                    loadTempFromServer();
+                    tabTwo = true;
+                }else{
+                	loadTempChart();
+                }
+                curTab = 2;
+            } else if (tabNum == "3") {
+                $('.pregw-content').addClass('active');
+                if (tabThree == false) {
+                    loadWeightFromServer();
+                    tabThree = true;
+                }
+                else{
+                	loadPregwChart();
+                }
+                curTab = 3;
+            } else {
+                $('.pregm-content').addClass('active');
+                if (tabFour == false) {
+                    loadMovementFromServer();
+                    tabFour = true;
+                }
+                else{
+                	loadPregmChart();
+                }
+                curTab = 4
+            }
+            $('#loading-btn').fadeOut(2000);
+            return false;
+        });
+
+        /*遮罩层*/
+        $('#pregDrop').bind('touchstart',
+        function() {
+            $(this).hide();
+            $('.form-model').addClass('mui-hidden');
+        });
+        /* 弹出模态对话框 */
+        $('#mense-add-btn').bind('touchend',
+	        function() {
+	            if (curTab == "1") {
+	            	$('.mense-model').removeClass('mui-hidden');
+	            	$('.mense-data-delete').removeClass('deleted');
+            		$('.mense-data-delete').attr('disabled',true);
+	            }
+	            else if (curTab == "2") {
+	             $('.temp-model').removeClass('mui-hidden');
+	             $('.temp-data-delete').removeClass('deleted');
+            	 $('.temp-data-delete').attr('disabled',true);
+	         	}
+	            else if (curTab == "3") {
+	            	$('.pregw-model').removeClass('mui-hidden');
+	            	$('.pregw-data-delete').removeClass('deleted');
+            		$('.pregw-data-delete').attr('disabled',true);
+	            }
+	            else {
+	            	$('.pregm-model').removeClass('mui-hidden');
+	            	$('.pregm-data-delete').removeClass('deleted');
+            		$('.pregm-data-delete').attr('disabled',true);
+	            }
+	            $('#pregDrop').show();
+	            return false;
+        });
+
+        /* mobiscroll 日期控件*/
+        $('#mense-date-btn').mobiscroll().date({
+            theme: 'mobiscroll',
+            display: 'bottom',
+            lang: 'zh',
+            onSelect: function(valueText, inst) {
+                var selectedDate = inst.getVal(); // Call the getVal method
+                var date = $.mobiscroll.datetime.formatDate('yy-mm-dd', selectedDate);
+                $('#mense-date-val').attr('data-val', date);
+            	$.get('/CPregnant/findMense?date='+date,function(data){
+            		if(data.result == 0){
+            			$('.mense-data-delete').addClass('deleted');
+            			$('.mense-data-delete').attr('disabled',false);
+            		}
+            		else{
+            			$('.mense-data-delete').removeClass('deleted');
+            			$('.mense-data-delete').attr('disabled',true);	
+            		}
+            	});
+            }
+        });
+        $('#temp-date-btn').mobiscroll().date({
+            theme: 'mobiscroll',
+            display: 'bottom',
+            lang: 'zh',
+            onSelect: function(valueText, inst) {
+                var selectedDate = inst.getVal(); // Call the getVal method
+                var date = $.mobiscroll.datetime.formatDate('yy-mm-dd', selectedDate);
+                $('#temp-date-val').attr('data-val', date);
+                $.get('/CTemperature/findTemp?date='+date,function(data){
+            		if(data.result == 0){
+            			$('.temp-data-delete').addClass('deleted');
+            			$('.temp-data-delete').attr('disabled',false);
+            		}
+            		else{
+            			$('.temp-data-delete').removeClass('deleted');
+            			$('.temp-data-delete').attr('disabled',true);	
+            		}
+            	});
+            }
+        });
+        $('#pregw-date-btn').mobiscroll().date({
+            theme: 'mobiscroll',
+            display: 'bottom',
+            lang: 'zh',
+            onSelect: function(valueText, inst) {
+                var selectedDate = inst.getVal(); // Call the getVal method
+                var date = $.mobiscroll.datetime.formatDate('yy-mm-dd', selectedDate);
+                $('#pregw-date-val').attr('data-val', date);
+                $.get('/CWeight/findWeightByDate?date='+date,function(data){
+            		if(data.result == 0){
+            			$('.pregw-data-delete').addClass('deleted');
+            			$('.pregw-data-delete').attr('disabled',false);
+            		}
+            		else{
+            			$('.pregw-data-delete').removeClass('deleted');
+            			$('.pregw-data-delete').attr('disabled',true);	
+            		}
+            	});
+            }
+        });
+        $('#pregm-date-btn').mobiscroll().date({
+            theme: 'mobiscroll',
+            display: 'bottom',
+            lang: 'zh',
+            onSelect: function(valueText, inst) {
+                var selectedDate = inst.getVal(); // Call the getVal method
+                var date = $.mobiscroll.datetime.formatDate('yy-mm-dd', selectedDate);
+                $('#pregm-date-val').attr('data-val', date);
+                $.get('/CMove/findMove?date='+date,function(data){
+            		if(data.result == 0){
+            			$('.pregm-data-delete').addClass('deleted');
+            			$('.pregm-data-delete').attr('disabled',false);
+            		}
+            		else{
+            			$('.pregm-data-delete').removeClass('deleted');
+            			$('.pregm-data-delete').attr('disabled',true);	
+            		}
+            	});
+            }
+        });
+        /* 表格事件*/
+        $('.table-more-btn').bind('touchend',
+        function() {
+            if ($(this).hasClass("shrink")) {
+                $('.table-more-icon').removeClass('mui-icon-arrowdown');
+                $('.table-more-icon').addClass('mui-icon-arrowup');
+                $('.table-more').removeClass('table-hidden');
+                $(this).removeClass('shrink');
+            } else {
+                $('.table-more-icon').addClass('mui-icon-arrowdown');
+                $('.table-more-icon').removeClass('mui-icon-arrowup');
+                $('.table-more').addClass('table-hidden');
+                $(this).addClass('shrink');
+            }
+            return false;
+        })
+        /* 滚轮控件 */
+        /* 体温滚轮 */
+        $('#temp-scroller').mobiscroll().scroller({
+            theme: 'mobiscroll',
+            display: 'inline',
+            rows: 3,
+            multiline: 2,
+            //showLabel:true,
+            layout: 'liquid',
+            height: 40,
+            wheels: [[{
+                label: '整数部分',
+                values: ["30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45"]
+            },
+            {
+                label: '小数部分',
+                values: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+            }]]
+        });
+        /* 孕重滚轮 */
+        $('#pregw-scroller').mobiscroll().scroller({
+            theme: 'mobiscroll',
+            display: 'inline',
+            rows: 3,
+            multiline: 2,
+            //showLabel:true,
+            layout: 'liquid',
+            height: 40,
+            wheels: [[{
+                label: '整数部分',
+                values: ["50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65"]
+            },
+            {
+                label: '小数部分',
+                values: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+            }]]
+        });
+        /* 胎动滚轮 */
+        $('#pregm-scroller').mobiscroll().scroller({
+            theme: 'mobiscroll',
+            display: 'inline',
+            rows: 3,
+            showLabel: false,
+            layout: 'liquid',
+            height: 40,
+            wheels: [[{
+                label: '次数',
+                values: ["30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45"]
+            }]]
+        });
+    });
 </script>
 #{/set}

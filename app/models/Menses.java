@@ -76,6 +76,13 @@ public class Menses extends BasicModel{
 	@Column(name = "user_id")
 	public String userId;
 	
+	/**
+	 * 阶段
+	 */
+	@Required
+	@Column(name = "time")
+	public String time;
+	
 	public Menses(){}
 	public Menses(String userId, Date mDate,String mColor, String mMeasure, boolean mPiece, boolean isMcramp,String vicidity){
 		this.userId = userId;

@@ -79,7 +79,7 @@
 	font-weight:bold;
 	color:#000;
 	border-left:4px solid #FF9999;
-	padding-left:4px;
+	padding-left:10px;
 	height:20px;
 	line-height:20px;
 }
@@ -230,6 +230,18 @@
 	border:1px solid #DA8F8F;
 	font-size:15px;
 }
+.model-btn-delete{
+	float:left;
+	width:100%;
+	background-color: #E8E8E8;
+	margin-bottom:5px;
+	color:#000;
+	border:1px dashed #000;
+	font-size:15px;	
+}
+.model-btn-delete.deleted{
+	border:1px solid #000;
+}
 .model-btn-cancel{
 	float:right;
 	width:100%;
@@ -291,4 +303,18 @@
 /*mobiscroll样式*/
 .dwwc{
 	background:#FFF;
+}
+
+.chart-section{
+	position:relative;
+}
+.chart-empty{
+	position: absolute;
+	text-align: center;
+	z-index:10;
+	width:100%;
+	top:60px;
+}
+.chart-empty.not-shown{
+	display:none;
 }
