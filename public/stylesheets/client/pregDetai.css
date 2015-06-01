@@ -1,0 +1,55 @@
+.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active{
+	color:#A8183E;
+}
+
+.mui-segmented-control.mui-segmented-control-inverted~.mui-slider-progress-bar{
+	background-color:#EA104A;
+}
+#menseItem,#menseChart{
+	padding-top:20px;
+}
+#menseItem .dateInput,#menseChart .dateInput{
+	width:50%;
+	display: inline-block;
+}
+#menseChart{
+	background:#FFF;
+}
+.chart-empty{
+	text-align: center;
+}
+.chart-empty.not-shown{
+	display:none;
+}
+.mui-table-view-cell{
+	font-size:14px;
+}
+.mui-slider-group{
+	background:#FFF;
+}
+#slider{
+	background: #FFF;
+}
+/* 助孕记录表格 */
+.preg-record-table{
+	width:100%;
+	text-align: center;
+}
+.preg-record-table tbody{
+	background:#FEEFE;
+}
+.preg-record-table .tr-even{
+	background:#FAFAFA;
+}
+.preg-record-table th{
+	color:#E4C293;
+	text-align: left;
+	padding-top:10px;
+	padding-bottom:10px;
+	text-align: center;
+	border-top:1px dashed #D3D3D3;
+	width:50%;
+}
+.preg-record-table td{
+	padding:5px 0px 5px 0px;
+}

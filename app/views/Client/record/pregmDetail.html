@@ -1,5 +1,5 @@
 #{extends 'client.html' /}
-#{set title:'月经分析' /}
+#{set title:'胎动分析' /}
 #{set 'moreStyles'}
 <link href="@{'/public/stylesheets/client/pregDetai.css'}?v=20150531" rel="stylesheet" />
 <link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.scroller.css'}" rel="stylesheet" type="text/css" />
@@ -11,7 +11,7 @@
 <!-- 网页首部 -->
 <header class="mui-bar mui-bar-nav client-bar-nav">
 	<a class="mui-icon mui-icon-left-nav mui-pull-left" href="/"></a>
-	<h1 class="mui-title client-title">月经分析</h1>
+	<h1 class="mui-title client-title">胎动分析</h1>
 </header>
 
 <!-- 日期选择 -->
@@ -21,7 +21,7 @@
 <div class="mui-content">
 	<div id="slider" class="mui-slider">
 	<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
-		<a class="mui-control-item active" href="#menseItem">月经纪录</a>
+		<a class="mui-control-item active" href="#menseItem">胎动纪录</a>
 		<a class="mui-control-item" href="#menseChart">图表统计</a>
 	</div>
 	<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-6 negative"></div>
@@ -30,9 +30,17 @@
 			<!--input type="text" placeholder="开始日期" id="menseStartDate" class="dateInput"/>
 			<input type="text" placeholder="结束日期" id="menseEndDate" class="dateInput"/>
 			<button class="mui-btn mui-btn-block mui-btn-outlined">查找</button-->
-			<ul class="mui-table-view" id="mense-table-view">
+				<table class="preg-record-table" id="tempTable">
+				<thead>
+					<tr>
+						<th>记录日期</th>
+						<th>胎动(次数)</th>
+					</tr>
+				</thead>
+				<tbody>
 					
-				</ul>	
+				</tbody>
+			</table>
 		</div>
 		<div id="menseChart" class="mui-slider-item mui-control-content">
 			<!--input type="text" placeholder="开始日期" id="menseChartStartDate" class="dateInput"/>
@@ -104,26 +112,18 @@
             }
         });
         
-        $.get('/CPregnant/loadAllMense',function(data){
+        $.get('/CMove/loadAllMovement',function(data){
+        	console.log(data);
         	var html = "";
         	if(data.data.length == 0){
-        		html = "暂无数据";
+        		html = "<tr class='tr-even'><td>无记录</td><td>无记录</td></tr>";
         	}
         	else{
 				for(var i=0;i<data.data.length;i++){
-					var hurt,solid;
-					if(data.data[2]==true)
-						solid = "有色块";
-					else
-						solid = "无色块";
-					if(data.data[3]==true)
-						hurt = "痛经";
-					else
-						hurt = "无痛";
-					html+="<li class='mui-table-view-cell'><span class='mense-date'>"+data.data[i][5]+"</span>: "+data.data[i][0]+","+data.data[i][1]+"量, "+data.data[i][4]+","+solid+","+hurt+",持续"+data.data[i][6]+"天</li>";
+					html+="<tr class='tr-even'><td>"+data.data[i].dateStr+"</td><td>"+data.data[i].num+"</td></tr>";
 				}
         	}
-        	$('#mense-table-view').html(html);
+        	$('#tempTable tbody').html(html);
         });
 
         var dataList,labelList;
@@ -132,7 +132,7 @@
         document.querySelector('.mui-slider').addEventListener('slide', function(event) {
           if (event.detail.slideNumber === 1&&!item2Show) {
             console.log("come in 2");
-            $.get('/CPregnant/loadAllMenseChart',function(data){
+            $.get('/CMove/loadAllMovementChart',function(data){
                     dataList = data.data.data;
                     labelList = data.data.label;
                     if(dataList.length != 0){

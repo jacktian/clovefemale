@@ -24,7 +24,7 @@ public class CPregnant extends WebService {
 			String menseHurt, String menseLquid, String menseNum,
 			String menseLiquid, String date,String time) {
 		String openid = session.get("openid");
-		openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 
 		try {
 			if (openid == null) {
@@ -80,7 +80,7 @@ public class CPregnant extends WebService {
 	 */
 	public static void lastMense() {
 		String openid = session.get("openid");
-		openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		String sql = "select m.m_color,m.m_measure,m.m_piece,m.is_mcramp,m.vicidity,date_format(m.m_date,'%Y-%m-%d'),m.time from Menses m where m.m_date in (select max(m_date) from Menses where user_id = '"
 				+ openid + "') and m.user_id = '" + openid + "'";
 		List bean = JPA.em().createNativeQuery(sql).getResultList();
@@ -96,7 +96,7 @@ public class CPregnant extends WebService {
 	 */
 	public static void lastMenseByDate(String date) {
 		String openid = session.get("openid");
-		openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		String sql = "select * from Menses m where m.m_date in (select max(m_date) from Menses where user_id = '"
 				+ openid + "') and m.user_id = '" + openid + "'";
 		List<Menses> bean = JPA.em().createNativeQuery(sql).getResultList();
@@ -108,7 +108,7 @@ public class CPregnant extends WebService {
 	 */
 	public static void renderMense() {
 		String openid = session.get("openid");
-		openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		ChartBean bean = new ChartBean();
 		ArrayList labelList = new ArrayList();
 		ArrayList dataList = new ArrayList();
@@ -131,7 +131,7 @@ public class CPregnant extends WebService {
 	 */
 	public static void findMense(String date){
 		String openid = session.get("openid");
-		openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		Date newDate;
 		String dateStr;
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -163,7 +163,7 @@ public class CPregnant extends WebService {
 	 */
 	public static void removeMense(String date){
 		String openid = session.get("openid");
-		openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		String sql = "select id from Menses m where date_format(m.m_date,'%Y-%m-%d') = '"
 				+ date + "' and m.user_id = '"+ openid +"'";
 		List menseList = JPA.em().createNativeQuery(sql)
@@ -185,6 +185,45 @@ public class CPregnant extends WebService {
 	}
 	
 	/*
+	 * 加载所有数据 
+	 */
+	public static void loadAllMense(){
+		String openid = session.get("openid");
+		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		String sql = "select m.m_color,m.m_measure,m.m_piece,m.is_mcramp,m.vicidity,date_format(m.m_date,'%Y-%m-%d'),m.time from Menses m where m.user_id = '" + openid + "' order by m.m_date";
+		List bean = JPA.em().createNativeQuery(sql).getResultList();
+		if (bean.size() == 0) {
+			bean = new ArrayList();
+			bean.add("empty");
+		}
+		wsOk(bean);
+
+	}
+	
+	/*
+	 * 加载所有图表数据
+	 */
+	public static void loadAllMenseChart(){
+		String openid = session.get("openid");
+		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		ChartBean bean = new ChartBean();
+		ArrayList labelList = new ArrayList();
+		ArrayList dataList = new ArrayList();
+		String sql = "select new beans.MenseBean(m.mDate as mDate,m.time as time) from Menses m where m.userId = '" + openid + "' order by m.mDate";
+		List<MenseBean> resultList = JPA.em().createQuery(sql).getResultList();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		for(int i=0;i<resultList.size();i++){
+			Date date = resultList.get(resultList.size()-1-i).mDate;
+			String dateStr = format.format(date);
+			labelList.add(dateStr);
+			dataList.add(resultList.get(resultList.size()-1-i).time);
+		}
+		bean.label = labelList;
+		bean.data = dataList;
+		wsOk(bean);
+	}
+	
+	/*
 	 * 月经详情 
 	 */
 	public static void menseDetail(){
@@ -196,7 +235,7 @@ public class CPregnant extends WebService {
 	 */
 	public static void test() {
 		String openid = session.get("openid");
-		openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		String sql = "select new beans.MenseBean(m.mDate as mDate,m.time) from Menses m order by m.mDate";
 		List<MenseBean> bean = JPA.em().createQuery(sql).getResultList();
 		wsOk(bean);

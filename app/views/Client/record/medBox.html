@@ -127,7 +127,7 @@
 		$('.del-item').bind('touchstart',function(){
 			var medBox = $("input[name='checkbox']:checked");
 			if(medBox.length == 0){
-				alert("请先选择要删除的药箱");
+				mui.toast('请选择要删除的药箱');
 			}
 			else{
 				var midArr = new Array();
@@ -136,11 +136,11 @@
 				}
 				$.get("/CMedicine/removeMedBox?mid="+midArr,function(data){
 					if(data.result == 0){
-						alert("删除成功")
+						mui.toast('删除成功');
 						loadMedBoxList();
 					}
 					else
-						alert("删除失败");
+						mui.toast('删除失败');
 				});
 				$("input[name='checkbox']:checked").attr("checked",false);
 			}
@@ -151,13 +151,13 @@
 			var mark = $("input[name='medBox-mark']").val();
 			$.get("/CMedicine/addMedBox?name="+name+"&mark="+mark,function(data){
 				if(data.result == 0){
-					alert("创建成功!");
+					mui.toast('创建成功');
 					loadMedBoxList();
 					$('.med-model').hide();
 					$('#pregDrop').hide();
 				}
 				else
-					alert("创建失败!");
+					mui.toast('创建失败');
 			});
 		});
 		/*药品搜索*/

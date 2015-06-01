@@ -23,7 +23,7 @@ public class CWeight extends WebService{
 	 */
 	public static void addWeight(String date,float pregw){
 		String openid = session.get("openid");
-		openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		try {
 			if (openid == null) {
 				wsError("openid过期");
@@ -67,7 +67,7 @@ public class CWeight extends WebService{
 	 */
 	public static void findWeight(){
 		String openid = session.get("openid");
-		openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		String sql = "select new beans.PregwBean(w.wDate,w.wValue) from GestationalWeight w where  w.userId = '" + openid + "' order by w.wDate desc";
 		List<PregwBean> bean = JPA.em().createQuery(sql).setMaxResults(7).getResultList();
 		List<PregwBean> rBean = new ArrayList<PregwBean>();
@@ -82,7 +82,7 @@ public class CWeight extends WebService{
 	 */
 	public static void lastWeightChart(){
 		String openid = session.get("openid");
-		openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		String sql = "select new beans.PregwBean(w.wDate,w.wValue) from GestationalWeight w where  w.userId = '" + openid + "' order by w.wDate desc";
 		List<PregwBean> pregBean = JPA.em().createQuery(sql).setMaxResults(7).getResultList();
 		ChartBean bean = new ChartBean();
@@ -102,7 +102,7 @@ public class CWeight extends WebService{
 	 */
 	public static void findWeightByDate(String date){
 		String openid = session.get("openid");
-		openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		Date newDate;
 		String dateStr;
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -134,7 +134,7 @@ public class CWeight extends WebService{
 	 */
 	public static void removeWeight(String date){
 		String openid = session.get("openid");
-		openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		try{
 			String sql = "select id from GestationalWeight w where date_format(w.w_date,'%Y-%m-%d') = '"
 					+ date + "' and w.user_id = '"+ openid +"'";
@@ -152,5 +152,47 @@ public class CWeight extends WebService{
 		catch(Exception e){
 			wsError("清除失败");
 		}
+	}
+	
+	/*
+	 * 加载所有体重记录
+	 */
+	public static void loadAllWeight(){
+		String openid = session.get("openid");
+		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		String sql = "select new beans.PregwBean(w.wDate,w.wValue) from GestationalWeight w where  w.userId = '" + openid + "' order by w.wDate";
+		List<PregwBean> bean = JPA.em().createQuery(sql).getResultList();
+		List<PregwBean> rBean = new ArrayList<PregwBean>();
+		for(int i=0;i<bean.size();i++){
+			rBean.add(bean.get(bean.size()-1-i));
+		}
+		wsOk(bean);
+	}
+	
+	/*
+	 * 加载所有体重图表记录 
+	 */
+	public static void loadAllWeightChart(){
+		String openid = session.get("openid");
+		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		String sql = "select new beans.PregwBean(w.wDate,w.wValue) from GestationalWeight w where  w.userId = '" + openid + "' order by w.wDate";
+		List<PregwBean> pregBean = JPA.em().createQuery(sql).getResultList();
+		ChartBean bean = new ChartBean();
+		List labelList = new ArrayList();
+		List dataList = new ArrayList();
+		for(int i=0;i<pregBean.size();i++){
+			labelList.add(pregBean.get(pregBean.size()-1-i).dateStr);
+			dataList.add(pregBean.get(pregBean.size()-1-i).weight);
+		}
+		bean.label = labelList;
+		bean.data = dataList;
+		wsOk(bean);
+	}
+	
+	/*
+	 * 体重详情页面
+	 */
+	public static void weightDetail(){
+		render("/Client/record/pregwDetail.html");
 	}
 }

@@ -134,7 +134,7 @@
 			    scanType: ["qrCode","barCode"], // 可以指定扫二维码还是一维码，默认二者都有
 			    success: function (res) {
 			    	var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
-			    	alert("条形码为:"+result.split(",")[1]);
+			    	mui.toast("条形码为:"+result.split(",")[1]);
 			    	$('.med-model').show();
 					$('#pregDrop').show();
 				}
@@ -175,7 +175,7 @@
 		$('.del-item').bind('touchstart',function(){
 			var medBox = $("input[name='checkbox']:checked");
 			if(medBox.length == 0){
-				alert("请先选择要删除的药箱");
+				mui.toast('请选择要删除的药品');
 			}
 			else{
 				var midArr = new Array();
@@ -184,11 +184,11 @@
 				}
 				$.get("/CMedicine/removeMedicine?mid="+midArr,function(data){
 					if(data.result == 0){
-						alert("删除成功");
+						mui.toast('删除成功');
 						loadMedicineList();
 					}
 					else
-						alert("创建失败!");
+						mui.toast('创建失败');
 				});
 				$("input[name='checkbox']:checked").attr("checked",false);
 			}
@@ -218,11 +218,11 @@
 	    	var medEnd = $("input[name='medicine-end']").val();
 	    	$.get('/CMedicine/addMedicine?name='+medName+"&mark="+medDesc+"&prodDate="+medProd+"&endDate="+medEnd,function(data){
 	    		if(data.result == 0){
-	    			alert("创建成功");
+	    			mui.toast('创建成功');
 	    			loadMedicineList();
 	    		}
 	    		else{
-	    			alert("创建失败");
+	    			mui.toast('创建失败');
 	    		}
 	    	})
 	    });
