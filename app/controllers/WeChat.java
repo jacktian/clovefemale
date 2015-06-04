@@ -228,7 +228,7 @@ public class WeChat extends WebService{
 	}
 	
 	/**
-	 * 快速获取access_token
+	 * 获取access_token
 	 */
 	public static void getAccessToken(){
 		/* 从配置文件中获取appKey与appSecret */
@@ -260,13 +260,6 @@ public class WeChat extends WebService{
 		config.nonceStr = nonceStr;
 		config.signature = signature;
 		wsOk(config);
-	}
-	
-	/**
-	 * 发送图文信息
-	 */
-	public static void sendPicMsg(){
-		
 	}
 }
 

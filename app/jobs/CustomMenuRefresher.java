@@ -93,7 +93,7 @@ public class CustomMenuRefresher extends Job {
 		                     "},"+
 		                     "{"+
 		                     	"\"type\":\"click\","+
-		                     	"\"name\":\"常见问题\","+
+		                     	"\"name\":\"常见的问题\","+
 		                     	"\"key\":\"V003_CommonQuestion\""+
 		                     "},"+
 		                     "{"+
