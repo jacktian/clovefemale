@@ -159,8 +159,8 @@ public class WeChat extends WebService{
 						response.createTime = System.currentTimeMillis();
 						PicArticle a1 = new PicArticle();
 						a1.title = "丁香女性资讯平台";
-						a1.picUrl = "http://ec8.images-amazon.com/images/I/71i7rL8F46L._SL500_AA300_.png";
-						a1.url = "http://www.baidu.com/link?url=PQul1MKBtDqPgHh0qaQBv2HKRUeS0k4b2sYuEy2LGdRC9Mycm1Y_Jet2OPALOmyVLrTR6IZzYml1B0GgArokbq";
+						a1.picUrl = "http://dwz.cn/NIiBc";
+						a1.url = "http://www.baidu.com/";
 						a1.desciption = "相关描述可点击链接获得";
 						List<PicArticle> articleList = new ArrayList();
 						articleList.add(a1);
