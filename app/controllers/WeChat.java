@@ -172,6 +172,7 @@ public class WeChat extends WebService{
 						articleList.add(a2);
 						response.articleList = articleList;
 						response.articleCount = articleList.size();
+						System.out.println(response);
 						renderText(response);
 					}
 				}
