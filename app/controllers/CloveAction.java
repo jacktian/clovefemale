@@ -40,6 +40,6 @@ public class CloveAction extends WebService{
 	 * 获得最新资讯 
 	 */
 	public static void getNewMsg(){
-		
+		System.out.println("发送图文消息");
 	}
 }
