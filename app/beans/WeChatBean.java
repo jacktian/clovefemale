@@ -21,4 +21,6 @@ public class WeChatBean {
 	public String content;
 	
 	public String event;
+	
+	public String eventKey;
 }

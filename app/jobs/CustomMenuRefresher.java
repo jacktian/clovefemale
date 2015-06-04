@@ -74,8 +74,8 @@ public class CustomMenuRefresher extends Job {
 		             //记录控结束
 		             //丁香资讯开始
 		             "{\"name\":\"丁香资讯\","+
-		             "\"type\":\"view\","+
-		             "\"url\":\"https://open.weixin.qq.com/connect/oauth2/authorize?appid="+appKey+"&redirect_uri="+cloveUrl+"&response_type=code&scope=snsapi_base&state=123#wechat_redirect\""+
+		             "\"type\":\"click\","+
+		             "\"key\":\"V001_CloveMsg\""+
 		             "},"+
 		             //丁香资讯结束
 		             //丁香会员开始
