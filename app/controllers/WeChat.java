@@ -96,9 +96,8 @@ public class WeChat extends WebService{
 					resp.content = bean.content;
 				}
 				else{
-					resp.content = "测试";
+					resp.content = "欢迎关注丁香女性助手，请点击菜单获取你想要的信息";
 				}
-				System.out.println("开发者微信号:"+bean.toUserName);
 				renderText(resp);
 			}
 			//如果事件响应
