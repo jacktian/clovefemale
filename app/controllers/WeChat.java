@@ -149,26 +149,79 @@ public class WeChat extends WebService{
 				else if(bean.event.equals("CLICK")){
 					Element eventKey = doc.getElementsByTag("EventKey").get(0);
 					String key = eventKey.html();
+					String developId = bean.toUserName;
+					String userId = bean.fromUserName;
+					WeChatPicMsgResponse response = new WeChatPicMsgResponse();
+					response.fromUserName = developId;
+					response.toUserName = userId;
+					response.msgType = "news";
+					response.createTime = System.currentTimeMillis();
+					//丁香咨询
 					if(key.equals("V001_CloveMsg")){
-						String developId = bean.toUserName;
-						String userId = bean.fromUserName;
-						WeChatPicMsgResponse response = new WeChatPicMsgResponse();
-						response.fromUserName = developId;
-						response.toUserName = userId;
-						response.msgType = "news";
-						response.createTime = System.currentTimeMillis();
 						PicArticle a1 = new PicArticle();
 						a1.title = "丁香女性资讯平台";
-						a1.picUrl = "http://dwz.cn/NIiBc";
+						a1.picUrl = "http://dwz.cn/NIxL8";
 						a1.url = "http://www.baidu.com/";
 						a1.desciption = "相关描述可点击链接获得";
 						List<PicArticle> articleList = new ArrayList();
 						articleList.add(a1);
 						response.articleList = articleList;
 						response.articleCount = articleList.size();
-						System.out.println(response);
 						renderText(response);
 					}
+					//会员绑定
+					else if(key.equals("V002_MemberBind")){
+						PicArticle a1 = new PicArticle();
+						a1.title = "会员绑定";
+						a1.picUrl = "http://dwz.cn/NIxL8";
+						a1.url = "http://www.baidu.com/";
+						a1.desciption = "点击链接开始绑定";
+						List<PicArticle> articleList = new ArrayList();
+						articleList.add(a1);
+						response.articleList = articleList;
+						response.articleCount = articleList.size();
+						renderText(response);
+					}
+					//常见问题
+					else if(key.equals("V003_CommonQuestion")){
+						PicArticle a1 = new PicArticle();
+						a1.title = "常见问题";
+						a1.picUrl = "http://dwz.cn/NIxL8";
+						a1.url = "http://www.baidu.com/";
+						a1.desciption = "点击链接了解常见问题";
+						List<PicArticle> articleList = new ArrayList();
+						articleList.add(a1);
+						response.articleList = articleList;
+						response.articleCount = articleList.size();
+						renderText(response);
+					}
+					//联系我们
+					else if(key.equals("V004_ContactUs")){
+						PicArticle a1 = new PicArticle();
+						a1.title = "联系我们";
+						a1.picUrl = "http://dwz.cn/NIxL8";
+						a1.url = "http://www.baidu.com/";
+						a1.desciption = "点击链接联系我们";
+						List<PicArticle> articleList = new ArrayList();
+						articleList.add(a1);
+						response.articleList = articleList;
+						response.articleCount = articleList.size();
+						renderText(response);
+					}
+					//关于我们
+					else if(key.equals("V005_AboutUs")){
+						PicArticle a1 = new PicArticle();
+						a1.title = "关于我们";
+						a1.picUrl = "http://dwz.cn/NIxL8";
+						a1.url = "http://www.baidu.com/";
+						a1.desciption = "点击链接了解我们";
+						List<PicArticle> articleList = new ArrayList();
+						articleList.add(a1);
+						response.articleList = articleList;
+						response.articleCount = articleList.size();
+						renderText(response);
+					}
+					
 				}
 			}
 		}

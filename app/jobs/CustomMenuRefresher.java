@@ -87,24 +87,24 @@ public class CustomMenuRefresher extends Job {
 		                     	"\"url\":\"https://open.weixin.qq.com/connect/oauth2/authorize?appid="+appKey+"&redirect_uri="+psnUrl+"&response_type=code&scope=snsapi_base&state=123#wechat_redirect\""+
 		                     "},"+
 		                     "{"+
-		                     	"\"type\":\"view\","+
+		                     	"\"type\":\"click\","+
 		                     	"\"name\":\"会员绑定\","+
-		                     	"\"url\":\"http://www.baidu.com\""+
+		                     	"\"key\":\"V002_MemberBind\""+
 		                     "},"+
 		                     "{"+
-		                     	"\"type\":\"view\","+
+		                     	"\"type\":\"click\","+
 		                     	"\"name\":\"常见问题\","+
-		                     	"\"url\":\"http://www.baidu.com\""+
+		                     	"\"key\":\"V003_CommonQuestion\""+
 		                     "},"+
 		                     "{"+
-		                     	"\"type\":\"view\","+
+		                     	"\"type\":\"click\","+
 		                     	"\"name\":\"联系我们\","+
-		                     	"\"url\":\"http://www.baidu.com\""+
+		                     	"\"key\":\"V004_ContactUs\""+
 		                     "},"+
 		                     "{"+
-		                     	"\"type\":\"view\","+
+		                     	"\"type\":\"click\","+
 		                     	"\"name\":\"关于我们\","+
-		                     	"\"url\":\"http://www.baidu.com\""+
+		                     	"\"key\":\"V005_AboutUs\""+
 		                     "}"+
 		                  "]"+
 		               "}"+
