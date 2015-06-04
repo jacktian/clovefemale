@@ -146,7 +146,7 @@ public class WeChat extends WebService{
 		
 				}
 				//丁香资讯
-				else if(bean.event.equals("V001_CloveMsg")){
+				else if(bean.event.equals("CLICK")){
 					Element eventKey = doc.getElementsByTag("EventKey").get(0);
 					String key = eventKey.html();
 					if(key.equals("V001_CloveMsg")){
