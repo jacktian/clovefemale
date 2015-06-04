@@ -161,7 +161,7 @@ public class WeChat extends WebService{
 						PicArticle a1 = new PicArticle();
 						a1.title = "丁香女性资讯平台";
 						a1.picUrl = "http://dwz.cn/NIxL8";
-						a1.url = "http://www.baidu.com/";
+						a1.url = "http://dwz.cn/NICAq";
 						a1.desciption = "相关描述可点击链接获得";
 						List<PicArticle> articleList = new ArrayList();
 						articleList.add(a1);
@@ -174,7 +174,7 @@ public class WeChat extends WebService{
 						PicArticle a1 = new PicArticle();
 						a1.title = "会员绑定";
 						a1.picUrl = "http://dwz.cn/NIxL8";
-						a1.url = "http://www.baidu.com/";
+						a1.url = "http://dwz.cn/NICAq";
 						a1.desciption = "点击链接开始绑定";
 						List<PicArticle> articleList = new ArrayList();
 						articleList.add(a1);
@@ -187,7 +187,7 @@ public class WeChat extends WebService{
 						PicArticle a1 = new PicArticle();
 						a1.title = "常见问题";
 						a1.picUrl = "http://dwz.cn/NIxL8";
-						a1.url = "http://www.baidu.com/";
+						a1.url = "http://dwz.cn/NICAq";
 						a1.desciption = "点击链接了解常见问题";
 						List<PicArticle> articleList = new ArrayList();
 						articleList.add(a1);
@@ -200,7 +200,7 @@ public class WeChat extends WebService{
 						PicArticle a1 = new PicArticle();
 						a1.title = "联系我们";
 						a1.picUrl = "http://dwz.cn/NIxL8";
-						a1.url = "http://www.baidu.com/";
+						a1.url = "http://dwz.cn/NICAq";
 						a1.desciption = "点击链接联系我们";
 						List<PicArticle> articleList = new ArrayList();
 						articleList.add(a1);
@@ -213,7 +213,7 @@ public class WeChat extends WebService{
 						PicArticle a1 = new PicArticle();
 						a1.title = "关于我们";
 						a1.picUrl = "http://dwz.cn/NIxL8";
-						a1.url = "http://www.baidu.com/";
+						a1.url = "http://dwz.cn/NICAq";
 						a1.desciption = "点击链接了解我们";
 						List<PicArticle> articleList = new ArrayList();
 						articleList.add(a1);
