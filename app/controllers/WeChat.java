@@ -98,6 +98,7 @@ public class WeChat extends WebService{
 				else{
 					resp.content = "测试";
 				}
+				System.out.println("开发者微信号:"+bean.toUserName);
 				renderText(resp);
 			}
 			//如果事件响应
@@ -165,16 +166,6 @@ public class WeChat extends WebService{
 	}
 	
 	/**
-	 * 控制器测试方法
-	 */
-	public static void test() {
-		//存储xml信息
-		WeChatResponse bean = new WeChatResponse();
-		bean.fromUserName = "boxizen";
-		renderText(bean.toString());
-	}
-	
-	/**
 	 * 获取jsapi_ticket
 	 */
 	public static void jsApiCall(String url){
@@ -188,6 +179,13 @@ public class WeChat extends WebService{
 		config.nonceStr = nonceStr;
 		config.signature = signature;
 		wsOk(config);
+	}
+	
+	/**
+	 * 发送图文信息
+	 */
+	public static void sendPicMsg(){
+		
 	}
 }
 

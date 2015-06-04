@@ -15,6 +15,7 @@ import jobs.AccessTokenRefresher;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import play.Logger;
 import play.Play;
 import play.cache.CacheFor;
 import play.db.jpa.JPA;
@@ -31,7 +32,7 @@ import beans.MedicineBean;
 import beans.UserCenterBean;
 
 /**
- * 客户端控制器
+ * 客户端菜单
  * 
  * @author boxiZen
  * @since 2015/03/23
@@ -39,30 +40,23 @@ import beans.UserCenterBean;
 public class Client extends WebService{
 	
 	/**
-	 * 从配置文件中获取appKey与appSecret
-	 */
-	public static String appKey = Play.configuration.getProperty("wechat_appkey");
-	public static String appSecret = Play.configuration.getProperty("wechat_secret");
-	
-	
-	
-	/**
 	 * 拦截器
 	 */
 	@Before(unless={"record","first","vaccine","remind"})
 	public static void getCrtUser(){
+		String appKey = Play.configuration.getProperty("wechat_appkey");
+		String appSecret = Play.configuration.getProperty("wechat_secret");
 		String code = params.get("code");
 		try{
 			String requestUrl = "https://api.weixin.qq.com/sns/oauth2/access_token?appid="+appKey+"&secret="+appSecret+"&code="+code+"&grant_type=authorization_code";
 			JsonElement jsonElement = WS.url(requestUrl).get().getJson();
 			JsonObject json = jsonElement.getAsJsonObject();
 			String openid = json.get("openid").getAsString();
-			//移除页面的code参数
 			params.remove("code");
 			session.put("openid", openid);
 		}
 		catch(Exception e){
-			//此处做拦截操作
+			Logger.info("Unable to get user's openid");
 		}
 	}
 	

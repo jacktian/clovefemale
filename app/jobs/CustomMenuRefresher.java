@@ -14,14 +14,14 @@ import play.libs.WS.WSRequest;
 
 public class CustomMenuRefresher extends Job {
 	
-	/* 从配置文件中获取appKey与appSecret */
+	/* 从配置文件中获取信息 */
 	public static String appKey = Play.configuration.getProperty("wechat_appkey");
 	public static String appSecret = Play.configuration.getProperty("wechat_secret");
-	/* 返回的Url地址 */
-	public static String pregUrl = "http://clovefemale.boxizen.com/client/pregMense";
-	public static String babyUrl = "http://clovefemale.boxizen.com/client/mybaby";
-	public static String medUrl = "http://clovefemale.boxizen.com/client/medBox";
-	public static String psnUrl = "http://clovefemale.boxizen.com/client/psnCenter";
+	public static String pregUrl = Play.configuration.getProperty("pregUrl");
+	public static String babyUrl = Play.configuration.getProperty("babyUrl");
+	public static String medUrl = Play.configuration.getProperty("medUrl");
+	public static String psnUrl = Play.configuration.getProperty("psnUrl");
+	public static String cloveUrl = Play.configuration.getProperty("cloveUrl");
 	
 	@Override
 	public void doJob(){
@@ -67,7 +67,7 @@ public class CustomMenuRefresher extends Job {
 		                     "{"+
 		                     	"\"type\":\"view\","+
 		                     	"\"name\":\"小工具\","+
-		                     	"\"url\":\"http://www.baidu.com\""+
+		                     	"\"url\":\"http://lama.co/"+
 		                     "}"+
 		                  "]"+
 		               "},"+
@@ -75,7 +75,7 @@ public class CustomMenuRefresher extends Job {
 		             //丁香资讯开始
 		             "{\"name\":\"丁香资讯\","+
 		             "\"type\":\"view\","+
-		             "\"url\":\"http://www.baidu.com\""+
+		             "\"url\":\"https://open.weixin.qq.com/connect/oauth2/authorize?appid="+appKey+"&redirect_uri="+cloveUrl+"&response_type=code&scope=snsapi_base&state=123#wechat_redirect\""+
 		             "},"+
 		             //丁香资讯结束
 		             //丁香会员开始
