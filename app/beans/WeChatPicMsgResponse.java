@@ -49,10 +49,10 @@ public class WeChatPicMsgResponse {
 		strBuilder.append("<Articles>");
 		for(int i=0;i<articleCount;i++){
 			strBuilder.append("<item>");
-			strBuilder.append("<Title><![CDATA["+articleList.get(i).title+"]]</Title>");
-			strBuilder.append("<Description><![CDATA["+articleList.get(i).desciption+"]]</Description>");
-			strBuilder.append("<PicUrl><![CDATA["+articleList.get(i).picUrl+"]]</PicUrl>");
-			strBuilder.append("<Url><![CDATA["+articleList.get(i).url+"]]</Url>");
+			strBuilder.append("<Title><![CDATA["+articleList.get(i).title+"]]></Title>");
+			strBuilder.append("<Description><![CDATA["+articleList.get(i).desciption+"]]></Description>");
+			strBuilder.append("<PicUrl><![CDATA["+articleList.get(i).picUrl+"]]></PicUrl>");
+			strBuilder.append("<Url><![CDATA["+articleList.get(i).url+"]]></Url>");
 			strBuilder.append("</item>");
 		}
 		strBuilder.append("</Articles>");
