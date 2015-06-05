@@ -7,7 +7,9 @@
 }
 #menseItem,#menseChart{
 	padding-top:20px;
+	padding-bottom:20px;
 }
+
 #menseItem .dateInput,#menseChart .dateInput{
 	width:50%;
 	display: inline-block;
@@ -16,10 +18,18 @@
 	background:#FFF;
 }
 .chart-empty{
+	position: absolute;
 	text-align: center;
+	width:100%;
+	height:150px;
+	top: 0;
+	line-height: 150px
 }
 .chart-empty.not-shown{
 	display:none;
+}
+.mui-table-view{
+	text-align:center;
 }
 .mui-table-view-cell{
 	font-size:14px;

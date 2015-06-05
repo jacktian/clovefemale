@@ -192,10 +192,10 @@ public class CPregnant extends WebService {
 		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		String sql = "select m.m_color,m.m_measure,m.m_piece,m.is_mcramp,m.vicidity,date_format(m.m_date,'%Y-%m-%d'),m.time from Menses m where m.user_id = '" + openid + "' order by m.m_date";
 		List bean = JPA.em().createNativeQuery(sql).getResultList();
-		if (bean.size() == 0) {
+		/*if (bean.size() == 0) {
 			bean = new ArrayList();
 			bean.add("empty");
-		}
+		}*/
 		wsOk(bean);
 
 	}

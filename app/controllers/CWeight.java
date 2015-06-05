@@ -74,7 +74,7 @@ public class CWeight extends WebService{
 		for(int i=0;i<bean.size();i++){
 			rBean.add(bean.get(bean.size()-1-i));
 		}
-		wsOk(bean);
+		wsOk(rBean);
 	}
 	
 	/*
