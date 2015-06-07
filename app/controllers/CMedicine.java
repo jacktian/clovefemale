@@ -9,6 +9,7 @@ import javax.persistence.Query;
 import beans.MedboxBean;
 import play.db.jpa.JPA;
 import models.Baby;
+import models.DrugStore;
 import models.Medicine;
 import models.MedicineBox;
 
@@ -215,5 +216,12 @@ public class CMedicine extends WebService{
 		medbox = JPA.em().createNativeQuery(sql).getResultList();
 		wsOk(medbox);
 	}
-
+	
+	/**
+	 * 查询药库
+	 */
+	public static void findDrug(String code){
+		DrugStore drug = DrugStore.find("byCode", code).first();
+		wsOk(drug);
+	}
 }
