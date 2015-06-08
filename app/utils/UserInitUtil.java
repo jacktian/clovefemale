@@ -11,25 +11,6 @@ import models.MedicineBox;
 
 public class UserInitUtil {
 	public static void initMedBox(String openid){
-		MedicineBox medBox = new MedicineBox();
-		medBox.userId = openid;
-		medBox.name = "内服药";
-		medBox.disabled = 1;
-		medBox.save();
-		medBox = new MedicineBox();
-		medBox.userId = openid;
-		medBox.name = "外服药";
-		medBox.disabled = 1;
-		medBox.save();
-		medBox = new MedicineBox();
-		medBox.userId = openid;
-		medBox.name = "儿童小药箱";
-		medBox.disabled = 1;
-		medBox.save();
-		medBox = new MedicineBox();
-		medBox.userId = openid;
-		medBox.name = "医用材料";
-		medBox.disabled = 1;
-		medBox.save();
+
 	}
 }

@@ -71,6 +71,7 @@ public class CMedicine extends WebService{
 	public static void loadMedboxList(){
 		
 		String openid = session.get("openid");
+		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		List<MedicineBox> medboxList = MedicineBox.find("byUserId", openid).fetch(); 
 		List<MedboxBean> medboxBean = new ArrayList<MedboxBean>();
 		for(int i=0;i<medboxList.size();i++){
@@ -79,6 +80,7 @@ public class CMedicine extends WebService{
 			bean.id = medboxList.get(i).id;
 			bean.name = medboxList.get(i).name;
 			bean.count = count;
+			bean.mark = medboxList.get(i).mark;
 			medboxBean.add(bean);
 		}
 		wsOk(medboxBean);
@@ -175,6 +177,7 @@ public class CMedicine extends WebService{
 	 */
 	public static void searchMedbox(String medBoxName){
 		String openid = session.get("openid");
+		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		List<MedicineBox> medbox = null;
 		if(medBoxName.equals("")||medBoxName.equals(" ")){
 			//medicine = Medicine.find("", medboxid).fetch();

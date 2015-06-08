@@ -9,16 +9,18 @@ import beans.ChartBean;
 import beans.TempBean;
 import models.Temperature;
 import play.db.jpa.JPA;
+
 /**
  * 温度控制器
+ * 
  * @author boxiZen
  * @since 2015/05/25
  */
-public class CTemperature extends WebService{
+public class CTemperature extends WebService {
 	/*
 	 * 添加温度记录
 	 */
-	public static void addTemperature(String date,float temp){
+	public static void addTemperature(String date, float temp) {
 		String openid = session.get("openid");
 		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		try {
@@ -36,75 +38,84 @@ public class CTemperature extends WebService{
 					dateStr = date;
 					newDate = format.parse(date);
 				}
-				String sql = "select id from Temperature t where date_format(t.t_date,'%Y-%m-%d') = '"
-						+ dateStr + "' and t.user_id = '"+ openid +"'";
-				List tempList = JPA.em().createNativeQuery(sql)
-						.getResultList();
-				Temperature nTemp = new Temperature();
-				if (tempList.size() > 0) {
-					String tempId = tempList.get(0).toString();
-					nTemp = Temperature.findById(tempId);
+				Date today = new Date();
+				int compare = today.compareTo(newDate);
+				if (compare == -1) {
+					wsError("dateExp");
 				} else {
-					nTemp = new Temperature();
+					String sql = "select id from Temperature t where date_format(t.t_date,'%Y-%m-%d') = '"
+							+ dateStr + "' and t.user_id = '" + openid + "'";
+					List tempList = JPA.em().createNativeQuery(sql)
+							.getResultList();
+					Temperature nTemp = new Temperature();
+					if (tempList.size() > 0) {
+						String tempId = tempList.get(0).toString();
+						nTemp = Temperature.findById(tempId);
+					} else {
+						nTemp = new Temperature();
+					}
+					nTemp.tDate = newDate;
+					nTemp.tValue = temp;
+					nTemp.userId = openid;
+					nTemp.save();
+					wsOk("保存成功");
 				}
-				nTemp.tDate = newDate;
-				nTemp.tValue = temp;
-				nTemp.userId = openid;
-				nTemp.save();
-				wsOk("保存成功");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			wsError("保存失败");
 		}
-	}	
+	}
 
-	
 	/*
 	 * 查找前7条体温
 	 */
-	public static void lastTemp(){
+	public static void lastTemp() {
 		String openid = session.get("openid");
-		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
-		String sql = "select new beans.TempBean(t.tDate,t.tValue) from Temperature t where  t.userId = '" + openid + "' order by t.tDate desc";
-		List<TempBean> bean = JPA.em().createQuery(sql).setMaxResults(7).getResultList();
+		// openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		String sql = "select new beans.TempBean(t.tDate,t.tValue) from Temperature t where  t.userId = '"
+				+ openid + "' order by t.tDate desc";
+		List<TempBean> bean = JPA.em().createQuery(sql).setMaxResults(7)
+				.getResultList();
 		List<TempBean> rBean = new ArrayList<TempBean>();
-		for(int i=0;i<bean.size();i++){
-			rBean.add(bean.get(bean.size()-1-i));
+		for (int i = 0; i < bean.size(); i++) {
+			rBean.add(bean.get(bean.size() - 1 - i));
 		}
 		wsOk(rBean);
 	}
-	
+
 	/*
 	 * 查找前7条体温
 	 */
-	public static void lastTempChart(){
+	public static void lastTempChart() {
 		String openid = session.get("openid");
-		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
-		String sql = "select new beans.TempBean(t.tDate,t.tValue) from Temperature t where  t.userId = '" + openid + "' order by t.tDate desc";
-		List<TempBean> tempList = JPA.em().createQuery(sql).setMaxResults(7).getResultList();
+		// openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		String sql = "select new beans.TempBean(t.tDate,t.tValue) from Temperature t where  t.userId = '"
+				+ openid + "' order by t.tDate desc";
+		List<TempBean> tempList = JPA.em().createQuery(sql).setMaxResults(7)
+				.getResultList();
 		ChartBean bean = new ChartBean();
 		List labelList = new ArrayList();
 		List dataList = new ArrayList();
-		for(int i=0;i<tempList.size();i++){
-			labelList.add(tempList.get(tempList.size()-1-i).dateStr);
-			dataList.add(tempList.get(tempList.size()-1-i).temp);
+		for (int i = 0; i < tempList.size(); i++) {
+			labelList.add(tempList.get(tempList.size() - 1 - i).dateStr);
+			dataList.add(tempList.get(tempList.size() - 1 - i).temp);
 		}
 		bean.label = labelList;
 		bean.data = dataList;
 		wsOk(bean);
 	}
-	
+
 	/*
 	 * 查找体温
 	 */
-	public static void findTemp(String date){
+	public static void findTemp(String date) {
 		String openid = session.get("openid");
-		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		// openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		Date newDate;
 		String dateStr;
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		try{
+		try {
 			if (date == null || date.equals("")) {
 				Date d = new Date();
 				dateStr = format.format(d);
@@ -114,85 +125,82 @@ public class CTemperature extends WebService{
 				newDate = format.parse(date);
 			}
 			String sql = "select id from Temperature t where date_format(t.t_date,'%Y-%m-%d') = '"
-					+ dateStr + "' and t.user_id = '"+ openid +"'";
-			List tempList = JPA.em().createNativeQuery(sql)
-					.getResultList();
-			if(tempList.size()>0)
+					+ dateStr + "' and t.user_id = '" + openid + "'";
+			List tempList = JPA.em().createNativeQuery(sql).getResultList();
+			if (tempList.size() > 0)
 				wsOk(tempList.get(0));
 			else
 				wsError("未找到");
-		}
-		catch(Exception e){
+		} catch (Exception e) {
 			wsError("错误");
 		}
 	}
-	
+
 	/*
 	 * 删除体温数据
 	 */
-	public static void removeTemp(String date){
+	public static void removeTemp(String date) {
 		String openid = session.get("openid");
-		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		// openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		String sql = "select id from Temperature t where date_format(t.t_date,'%Y-%m-%d') = '"
-				+ date + "' and t.user_id = '"+ openid +"'";
-		List tempList = JPA.em().createNativeQuery(sql)
-				.getResultList();
-		try{
-			if(tempList.size()>0){
+				+ date + "' and t.user_id = '" + openid + "'";
+		List tempList = JPA.em().createNativeQuery(sql).getResultList();
+		try {
+			if (tempList.size() > 0) {
 				String id = tempList.get(0).toString();
 				Temperature temp = Temperature.findById(id);
 				temp.delete();
 				wsOk("清除成功");
-			}
-			else{
+			} else {
 				wsError("清除失败");
 			}
-				
-		}
-		catch(Exception e){
+
+		} catch (Exception e) {
 			wsError("失败");
 		}
 	}
-	
+
 	/*
 	 * 加载所有体温记录
 	 */
-	public static void loadAllTemp(){
+	public static void loadAllTemp() {
 		String openid = session.get("openid");
-		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
-		String sql = "select new beans.TempBean(t.tDate,t.tValue) from Temperature t where  t.userId = '" + openid + "' order by t.tDate";
+		// openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		String sql = "select new beans.TempBean(t.tDate,t.tValue) from Temperature t where  t.userId = '"
+				+ openid + "' order by t.tDate";
 		List<TempBean> bean = JPA.em().createQuery(sql).getResultList();
 		List<TempBean> rBean = new ArrayList<TempBean>();
-		for(int i=0;i<bean.size();i++){
-			rBean.add(bean.get(bean.size()-1-i));
+		for (int i = 0; i < bean.size(); i++) {
+			rBean.add(bean.get(bean.size() - 1 - i));
 		}
 		wsOk(rBean);
 	}
-	
+
 	/*
-	 * 加载所有体温图表记录 
+	 * 加载所有体温图表记录
 	 */
-	public static void loadAllTempChart(){
+	public static void loadAllTempChart() {
 		String openid = session.get("openid");
-		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
-		String sql = "select new beans.TempBean(t.tDate,t.tValue) from Temperature t where  t.userId = '" + openid + "' order by t.tDate";
+		// openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		String sql = "select new beans.TempBean(t.tDate,t.tValue) from Temperature t where  t.userId = '"
+				+ openid + "' order by t.tDate";
 		List<TempBean> tempList = JPA.em().createQuery(sql).getResultList();
 		ChartBean bean = new ChartBean();
 		List labelList = new ArrayList();
 		List dataList = new ArrayList();
-		for(int i=0;i<tempList.size();i++){
-			labelList.add(tempList.get(tempList.size()-1-i).dateStr);
-			dataList.add(tempList.get(tempList.size()-1-i).temp);
+		for (int i = 0; i < tempList.size(); i++) {
+			labelList.add(tempList.get(tempList.size() - 1 - i).dateStr);
+			dataList.add(tempList.get(tempList.size() - 1 - i).temp);
 		}
 		bean.label = labelList;
 		bean.data = dataList;
 		wsOk(bean);
 	}
-	
+
 	/*
 	 * 体温详情
 	 */
-	public static void tempDetail(){
+	public static void tempDetail() {
 		render("/Client/record/tempDetail.html");
 	}
 }

@@ -19,6 +19,11 @@ public class MedboxBean {
 	public String name;
 	
 	/**
+     * 备注
+     */
+	public String mark;
+	
+	/**
      * 药品数量
      */
 	public int count;

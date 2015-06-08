@@ -1,7 +1,7 @@
 #{extends 'client.html' /}
 #{set title:'小药箱' /}
 #{set 'moreStyles'}
-<link href="@{'/public/stylesheets/client/medicine.css'}?v=20150522" rel="stylesheet" />
+<link href="@{'/public/stylesheets/client/medicine.css'}?v=20150609" rel="stylesheet" />
 #{/set}
 #{output 'Client/record/medBoxTpl.html'/}
 <header class="mui-bar mui-bar-nav client-bar-nav">
@@ -79,6 +79,7 @@
 		/*加载药箱列表*/
 		var loadMedBoxList = function(){
 			$.get("/CMedicine/loadMedboxList",function(data){
+				console.log(data);
 				var html = juicer($('#medBoxTpl').html(),{medBoxList:data.data});
 				$('.med-box-list').html(html);
 			});
@@ -172,7 +173,7 @@
 	    			newhtml = html.replace(new RegExp(keyWord,"g"),"<span class='key-word'>"+keyWord+"</span>");
 	    		$('.med-box-list').html(newhtml);
 	    	});
-	    });
+	    }); 
 	});
 </script>
 #{/set}

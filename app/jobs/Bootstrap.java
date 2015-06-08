@@ -4,6 +4,7 @@ import models.Medicine;
 import play.jobs.Job;
 import play.jobs.OnApplicationStart;
 import testData.AgendaTestDataGenerator;
+import utils.MedboxInit;
 import utils.PoiUtil;
 
 @OnApplicationStart
@@ -17,6 +18,7 @@ public class Bootstrap extends Job{
 		//JsTicketRefresher.getJsTicket();
 		/*	Medicine med = new Medicine();
 		med.name = "加味藿香正气丸";*/
-		PoiUtil.insertOneMsg();
+		//PoiUtil.insertOneMsg();
+		//MedboxInit.init("");
 	}
 }

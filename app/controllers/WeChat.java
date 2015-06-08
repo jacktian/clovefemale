@@ -12,6 +12,7 @@ import java.util.Map;
 
 
 
+
 import models.Client;
 import models.MedicineBox;
 import models.User;
@@ -40,6 +41,7 @@ import play.libs.WS;
 import play.libs.WS.HttpResponse;
 import play.libs.WS.WSRequest;
 import play.mvc.*;
+import utils.MedboxInit;
 import utils.SignUtil;
 import utils.Sign;
 import utils.UserInitUtil;
@@ -124,7 +126,6 @@ public class WeChat extends WebService{
 					JsonObject json = jsonElement.getAsJsonObject();
 					/*存储用户的信息*/
 					String openid = json.get("openid").getAsString();
-					System.out.println(json.toString());
 					User client = User.find("byOpenid", openid).first();
 					if(client == null){
 						client = new User();
@@ -141,7 +142,7 @@ public class WeChat extends WebService{
 						//client.unionid = json.get("unionid").getAsString();
 						client.save();
 						//新建药箱
-						UserInitUtil.initMedBox(openid);
+						MedboxInit.init(openid);
 					}
 		
 				}
@@ -250,7 +251,6 @@ public class WeChat extends WebService{
 	 * 获取jsapi_ticket
 	 */
 	public static void jsApiCall(String url){
-		System.out.println(url);
 		Map<String,String>ret = Sign.create_sign(url);
 		String timestamp = ret.get("timestamp");
 		String nonceStr = ret.get("nonceStr");
@@ -260,6 +260,21 @@ public class WeChat extends WebService{
 		config.nonceStr = nonceStr;
 		config.signature = signature;
 		wsOk(config);
+	}
+	
+	/**
+	 * 获取当前用户列表
+	 */
+	public static void getCurUserList(){
+		/*首先获取accessToken的值，直接从数据库取出即可*/
+		models.WeChat wxbean = new models.WeChat();
+		wxbean = (models.WeChat) models.WeChat.findAll().get(0);
+		String accessToken = wxbean.access_token;
+		String api = "https://api.weixin.qq.com/cgi-bin/user/get?access_token="+accessToken;
+		HttpResponse resp = WS.url(api).get();
+		JsonElement jsonElement = resp.getJson();
+		JsonObject json = jsonElement.getAsJsonObject();
+		System.out.println(json.getAsJsonObject("data"));
 	}
 }
 

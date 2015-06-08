@@ -481,7 +481,11 @@
                 if (data.result == 0) {
                     mui.toast('保存成功');
                     loadMenseFromServer();
-                } else {
+                } 
+                else if(data.data == "dateExp"){
+                	mui.toast('请选择正确的时间');
+                }
+                else {
                     mui.toast('保存失败');
                 }
             });
@@ -610,7 +614,11 @@
                 if (data.result == 0) {
                     mui.toast('提交成功');
                     loadTempFromServer();
-                } else {
+                } 
+                else if(data.data == "dateExp"){
+                	mui.toast('请选择正确的时间');
+                }
+                else {
                     mui.toast('提交失败');
                 }
             });
@@ -701,7 +709,11 @@
                 if (data.result == 0) {
                     mui.toast('提交成功');
                     loadWeightFromServer();
-                } else {
+                }
+                else if(data.data == "dateExp"){
+                	mui.toast('请选择正确的时间');
+                } 
+                else {
                     mui.toast('提交失败');
                 }
             });
@@ -858,7 +870,11 @@
                 if (data.result == 0) {
                     mui.toast('提交成功');
                     loadMovementFromServer();
-                } else {
+                } 
+                else if(data.data == "dateExp"){
+                	mui.toast('请选择正确的时间');
+                }
+                else {
                     mui.toast('提交失败');
                 }
             });

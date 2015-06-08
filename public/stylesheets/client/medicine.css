@@ -37,6 +37,11 @@
 	font-size:15px;
 	color:#838383;
 }
+.med-box-mark{
+	font-size:13px;
+	color:#A8A2A2;
+	padding-left:20px;
+}
 .med-box-item{
 	background:#FFF;
 }

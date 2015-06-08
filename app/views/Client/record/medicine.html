@@ -56,15 +56,15 @@
 	</header>
 	<div class="model-content">
 		<div class="model-item">
-			<span class="model-item-title" id="drug-name">名称</span>
-			<span class="model-item-content"><input type="text" name="medicine-name" placeholder="输入药品名称"/></span>
+			<span class="model-item-title">名称</span>
+			<span class="model-item-content"><input type="text" id="drug-name" name="medicine-name" placeholder="输入药品名称"/></span>
 		</div>
 		<div class="model-item">
 			<span class="model-item-title">描述</span>
-			<span class="model-item-content"><input type="text" name="medicine-desc" placeholder="输入药品描述"/></span>
+			<span class="model-item-content"><input type="text" id="productor" name="medicine-desc" placeholder="输入药品描述"/></span>
 		</div>
 		<div class="model-item">
-			<span class="model-item-title" id="productor">出产</span>
+			<span class="model-item-title">出产</span>
 			<span class="model-item-content"><input type="text" id="produce-date" name="medicine-produce" placeholder="输入生产日期"/></span>
 		</div>
 		<div class="model-item">
@@ -137,8 +137,11 @@
 			    	var code = result.split(",")[1];
 					$.get('/CMedicine/findDrug?code='+code,function(data){
 						mui.toast(data.data);
-						$('#productor').html(data.data.productor);
-						$('#drug-name').html(data.data.dname);
+						if(typeof(data.data) == "undefined");
+						else{
+							$('#productor').html(data.data.productor);
+							$('#drug-name').html(data.data.dname);
+						}Ï
 						$('.med-model').show();
 						$('#pregDrop').show();
 					})
