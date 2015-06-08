@@ -13,6 +13,7 @@ import java.util.Map;
 
 
 
+
 import models.Client;
 import models.MedicineBox;
 import models.User;
@@ -29,6 +30,7 @@ import beans.WeChatJsConfig;
 import beans.WeChatPicMsgResponse;
 import beans.WeChatResponse;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -274,7 +276,13 @@ public class WeChat extends WebService{
 		HttpResponse resp = WS.url(api).get();
 		JsonElement jsonElement = resp.getJson();
 		JsonObject json = jsonElement.getAsJsonObject();
-		System.out.println(json.getAsJsonObject("data"));
+		JsonObject jObj = json.getAsJsonObject("data");
+		JsonArray openidArr = jObj.get("openid").getAsJsonArray();
+		for(int i=0;i<openidArr.size();i++){
+			String openid = openidArr.get(i).getAsString();
+			System.out.println(openid);
+			MedboxInit.init(openid);
+		}
 	}
 }
 
