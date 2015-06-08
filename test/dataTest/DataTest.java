@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import models.GradeCondition;
+import models.GradeForm;
 
 import org.junit.Test;
 
@@ -31,7 +31,7 @@ public class DataTest {
 	
 	@Test
 	public void test2(){
-		List<GradeCondition> list = GradeCondition.find("select GradeCondition.* from GradeCondition,"+
+		List<GradeForm> list = GradeForm.find("select GradeCondition.* from GradeCondition,"+
                 "(select id,max(date) date, subject from GradeCondition group by id,subject) t1"+
                 " where GradeCondition.date=t1.date and GradeCondition.id=t1.id and"+
                 " mark.subject=t1.subject and GradeCondition.subject=?","语文").fetch();

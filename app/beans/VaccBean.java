@@ -37,17 +37,17 @@ public class VaccBean {
 	/*构建GradeBeanList*/
 	public static List<VaccBean> builList(List<Vaccination> list){
 		List<VaccBean> beanList = new ArrayList();
-		for(int i=0;i<list.size();i++){
-			Baby baby = Baby.findById(list.get(i).babyId);
-			User user = User.findById(baby.userId);
-			VaccBean vBean = new VaccBean();
-			vBean.babyId=list.get(i).babyId;
-			vBean.userName = user.realName;
-			vBean.name = baby.name;
-			vBean.date = list.get(i).date;
-			vBean.content = list.get(i).content;
-			beanList.add(vBean);
-		}
+//		for(int i=0;i<list.size();i++){
+//			Baby baby = Baby.findById(list.get(i).babyId);
+//			User user = User.findById(baby.userId);
+//			VaccBean vBean = new VaccBean();
+//			vBean.babyId=list.get(i).babyId;
+//			vBean.userName = user.realName;
+//			vBean.name = baby.name;
+//			vBean.date = list.get(i).date;
+//			vBean.content = list.get(i).content;
+//			beanList.add(vBean);
+//		}
 		return beanList;
 	}
 }

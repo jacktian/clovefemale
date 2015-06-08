@@ -19,8 +19,8 @@ import com.sudocn.play.BasicModel;
  * @since 12/16/14
  */
 @Entity
-@Table(name = "gradecondition")
-public class GradeCondition extends BasicModel {
+@Table(name = "gradeform")
+public class GradeForm extends BasicModel {
    @Column(name = "date")
 	public Date date;//日期
    
@@ -33,6 +33,12 @@ public class GradeCondition extends BasicModel {
 	
    @Column(name = "grade")
 	public String grade;//年级
+   /**
+    * 年级int形式
+    */
+   @Column(name = "gradeint")
+   public int grade_int;
+   
 	@Required
 	 @Column(name = "subject")
 	public String subject;//科目
@@ -41,14 +47,23 @@ public class GradeCondition extends BasicModel {
 	public double mark;//成绩
 	@Column(name = "baby_Id")
 	public String babyId;
+	
+	/**
+	 * 次数：time
+	 * 表示这门课的第几次考试
+	 */
+	public int time;
 
-	public GradeCondition(){}
-	public GradeCondition(Date date,String grade,String subject,double mark,String babyId){
+	public GradeForm(){}
+	
+	public GradeForm(Date date,String grade,int grade_int,String subject,double mark,int time,String babyId){
 		
 		this.date=date;
 		this.grade=grade;
+		this.grade_int = grade_int;
 		this.subject=subject;
 		this.mark=mark;
+		this.time = time;
 		this.babyId = babyId;
 	}
 	

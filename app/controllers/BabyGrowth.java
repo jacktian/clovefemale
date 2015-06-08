@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import models.BodyIndex;
-import models.GradeCondition;
+import models.GradeForm;
 import models.Vaccination;
 import beans.BIndexBean;
 import beans.GradeBean;
@@ -61,7 +61,7 @@ public class BabyGrowth extends WebService {
     	List<Map<String,String>> gradeList = new ArrayList();
 		Date startDate=null;
 		Date endDate=null;
-		List<GradeCondition> list=null;
+		List<GradeForm> list=null;
 		try{
 		 startDate  = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(sDate+" 00:00:00");
 		 endDate  = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(eDate+" 23:59:59");
@@ -70,10 +70,10 @@ public class BabyGrowth extends WebService {
 		}
 		
 		if(startDate.before(endDate)){
-			list = GradeCondition.find("select g from GradeCondition g where babyId = ? and subject = ? and date between ? and ? order by date", babyId,subject,startDate,endDate).fetch();
+			list = GradeForm.find("select g from GradeCondition g where babyId = ? and subject = ? and date between ? and ? order by date", babyId,subject,startDate,endDate).fetch();
 		
 			if(list !=null){
-				 for(GradeCondition g :list){
+				 for(GradeForm g :list){
 					 Map<String, String> map  = new HashMap<String, String>();
 					 map.put("date", g.date.toString());
 					 map.put("grade",String.valueOf(g.mark));//已改
@@ -90,8 +90,8 @@ public class BabyGrowth extends WebService {
 	
     public static void selectBabyByGrade(String subject,int gradeInterval,int curpage){
     	System.out.println("-----fenshuduan"+":"+gradeInterval+"  curpage:"+curpage);
-    	List<GradeCondition> list=new ArrayList();
-    	List<GradeCondition> gradelist=null;
+    	List<GradeForm> list=new ArrayList();
+    	List<GradeForm> gradelist=null;
     	long count=0;
     	double maxMark=60.0;
     	double minMark=0;
@@ -106,9 +106,9 @@ public class BabyGrowth extends WebService {
     			maxMark = 60.0 +(gradeInterval-1)*10;
     		}
     		
-    		gradelist = GradeCondition.find("select g from GradeCondition g where subject = ? and mark >= ? and mark < ?", subject,minMark,maxMark).fetch();
+    		gradelist = GradeForm.find("select g from GradeCondition g where subject = ? and mark >= ? and mark < ?", subject,minMark,maxMark).fetch();
     	}else{
-    		gradelist =GradeCondition.find("select g from GradeCondition g where subject = ?", subject).fetch();
+    		gradelist =GradeForm.find("select g from GradeCondition g where subject = ?", subject).fetch();
     	}
     	if(gradelist!=null){
     	 count= gradelist.size();//计算总记录条数，以2条一页为基准
@@ -119,9 +119,9 @@ public class BabyGrowth extends WebService {
     		pageNum = count/2;
     	
     	if(gradeInterval > 0){
-    		gradelist = GradeCondition.find("select g from GradeCondition g where subject = ? and mark >= ? and mark < ?", subject,minMark,maxMark).fetch(curpage,2);
+    		gradelist = GradeForm.find("select g from GradeCondition g where subject = ? and mark >= ? and mark < ?", subject,minMark,maxMark).fetch(curpage,2);
     	}else{
-    		gradelist =GradeCondition.find("select g from GradeCondition g where subject = ?", subject).fetch(curpage,2);
+    		gradelist =GradeForm.find("select g from GradeCondition g where subject = ?", subject).fetch(curpage,2);
     	}
     	 
     		System.out.println("-----size"+":"+gradelist.size()+"--count:"+count);
@@ -140,8 +140,8 @@ public class BabyGrowth extends WebService {
      * 根据宝宝名称和科目查询个体成绩
      */
     public static void findMarkByBaby(String babyName,String subject,int curpage){
-    	List<GradeCondition> gradelistAll=GradeCondition.find("select g from GradeCondition g where babyId in (select id from Baby where name = ?) and subject = ?", babyName,subject).fetch();
-    	List<GradeCondition> gradelist=GradeCondition.find("select g from GradeCondition g where babyId in (select id from Baby where name = ?) and subject = ?", babyName,subject).fetch(curpage,2);
+    	List<GradeForm> gradelistAll=GradeForm.find("select g from GradeCondition g where babyId in (select id from Baby where name = ?) and subject = ?", babyName,subject).fetch();
+    	List<GradeForm> gradelist=GradeForm.find("select g from GradeCondition g where babyId in (select id from Baby where name = ?) and subject = ?", babyName,subject).fetch(curpage,2);
     	List<GradeBean> listbean = null;
     	long pageNum = 0;//总页数
     	long count = 0;
@@ -168,7 +168,7 @@ public class BabyGrowth extends WebService {
     	List<Map<String,String>> gradeList = new ArrayList();
 		Date startDate=null;
 		Date endDate=null;
-		List<GradeCondition> list=null;
+		List<GradeForm> list=null;
 		int[] a =new int[5];
 		try{
 		 startDate  = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(sDate+" 00:00:00");
@@ -178,7 +178,7 @@ public class BabyGrowth extends WebService {
 		}
 		
 		if(startDate.before(endDate)){
-			list = GradeCondition.find("select g from GradeCondition g where babyId = ? and subject = ? and date between ? and ? order by date", babyId,subject,startDate,endDate).fetch();
+			list = GradeForm.find("select g from GradeCondition g where babyId = ? and subject = ? and date between ? and ? order by date", babyId,subject,startDate,endDate).fetch();
 		
 			if(list !=null){
 				a=countMarkNum(list);
@@ -200,13 +200,13 @@ public class BabyGrowth extends WebService {
 		
    	}
     
-    public static int[] countMarkNum(List<GradeCondition> list){
+    public static int[] countMarkNum(List<GradeForm> list){
     	int[] a =new int[5];
     	for(int i=0;i<5;i++){
     		a[i]=0;
     	}
     	
-    	for(GradeCondition g :list){
+    	for(GradeForm g :list){
     		
     		try{
     			/*double mark=(Double.parseDouble(g.mark));*/
@@ -249,7 +249,7 @@ public class BabyGrowth extends WebService {
 	 * 返回：满足条件的列表
 	 * */
 	public static void listGradeConditions() {
-		List<GradeCondition> gradelist = GradeCondition.findAll();
+		List<GradeForm> gradelist = GradeForm.findAll();
 		wsOk(gradelist);
 	}
 	/*
@@ -276,8 +276,8 @@ public class BabyGrowth extends WebService {
 	 * 参数：前台传回的实体类，小孩id
 	 * 返回：全部列表
 	 * */
-	public static void addGradeCondition(GradeCondition grade, String babyId) {
-		GradeCondition g = grade.save();
+	public static void addGradeCondition(GradeForm grade, String babyId) {
+		GradeForm g = grade.save();
 		/*GradeCondition.createBtoG(babyId, g.id);*/
 		findGradeByBaby(babyId);
 	}
@@ -297,7 +297,7 @@ public class BabyGrowth extends WebService {
 	 * 返回：对应的成绩单
 	 * */
 	public static void findBySubject(String subject,String babyId) {
-		List<GradeCondition> list = GradeCondition
+		List<GradeForm> list = GradeForm
 				.find("select * from GradeCondition c where c.babyId = ?  and c.subject= ?order by date",babyId,
 						subject).fetch();
 		/*List<GradeCondition> gradeList = findGradeByBaby2(babyId);
@@ -424,7 +424,7 @@ public class BabyGrowth extends WebService {
 	 * 返回：对应的成绩单
 	 * */
 	public static void editGradeCondition(Long id) {
-		GradeCondition gradeCondition = GradeCondition.findById(id);
+		GradeForm gradeCondition = GradeForm.findById(id);
 		wsOk(gradeCondition);
 	}
 	/*
@@ -450,7 +450,7 @@ public class BabyGrowth extends WebService {
 	 * 参数：GradeCondition类
 	 * 返回：全部列表
 	 * */
-	public static void updateGradeCondition(GradeCondition gradeCondition,String babyId) {
+	public static void updateGradeCondition(GradeForm gradeCondition,String babyId) {
 		gradeCondition.save();
 		findGradeByBaby(babyId);
 	}
@@ -484,7 +484,7 @@ public class BabyGrowth extends WebService {
 	public static void deleteGradeCondition(String id,String babyId) {
 
 		/*BabyToGrade.delete("gradeId", id);*/
-		GradeCondition.delete("id = ?", id);
+		GradeForm.delete("id = ?", id);
 		findGradeByBaby(babyId);
 	}
 	/*
@@ -545,18 +545,18 @@ public class BabyGrowth extends WebService {
 			GradeCondition grade = GradeCondition.findById(babyToGrade.gradeId);
 			gradeList.add(grade);
 		}*/
-		List<GradeCondition> gradeList = GradeCondition.find("select gc from GradeCondition gc where gc.babyId = ? ", babyId).fetch();
+		List<GradeForm> gradeList = GradeForm.find("select gc from GradeCondition gc where gc.babyId = ? ", babyId).fetch();
 		wsOk(gradeList);
 	}
 	
-	public static List<GradeCondition> findGradeByBaby2(String babyId){
+	public static List<GradeForm> findGradeByBaby2(String babyId){
 		/*List<BabyToGrade> list = BabyToGrade.findByBaby(babyId);
 		List<GradeCondition> gradeList = new ArrayList<>();
 		for(BabyToGrade babyToGrade : list){
 			GradeCondition grade = GradeCondition.findById(babyToGrade.gradeId);
 			gradeList.add(grade);
 		}*/
-		List<GradeCondition> gradeList = GradeCondition.find("select gc from GradeCondition gc where gc.babyId = ? ", babyId).fetch();
+		List<GradeForm> gradeList = GradeForm.find("select gc from GradeCondition gc where gc.babyId = ? ", babyId).fetch();
 		return gradeList;
 	}
 	

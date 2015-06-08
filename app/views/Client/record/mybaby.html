@@ -119,7 +119,13 @@
 		$(".dateBox_vac").mobiscroll().calendar({
 				theme:'ios',
 				lang:'zh',
-				display:'bottom'
+				display:'bottom',
+				// onSetDate:function(day,inst){
+				// 			console.log(day);
+				// 		},
+				// 		onDayChange:function(day,inst){
+				// 			console.log("changeDay");
+				// 		}
 		});
 
 		/*加载宝宝列表*/
@@ -142,6 +148,7 @@
 
 				$(".baby-img-link").bind('touchend',function(e){
 					$(this).parent().parent().attr("href","babyInf");
+					localStorage.babyId = $(this).parent().parent().children(".babyId").text();
 					e.stopPropagation();
 					return true;
 				});

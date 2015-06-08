@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import models.BodyIndex;
-import models.GradeCondition;
+import models.GradeForm;
 import models.Vaccination;
 import beans.BIndexBean;
 import beans.GradeBean;
@@ -25,7 +25,7 @@ public class FgBabyGrowth extends WebService {
 		FgAction.saveModel(model);
 	}
 
-	public static void addGradeCondition(GradeCondition model) {
+	public static void addGradeCondition(GradeForm model) {
 		FgAction.saveModel(model);
 	}
 

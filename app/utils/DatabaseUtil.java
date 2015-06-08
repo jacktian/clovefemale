@@ -8,7 +8,7 @@ import models.Baby;
 import models.BodyIndex;
 import models.FetalMovement;
 import models.GestationalWeight;
-import models.GradeCondition;
+import models.GradeForm;
 import models.Medicine;
 import models.MedicineBox;
 import models.Menses;
@@ -414,7 +414,7 @@ public class DatabaseUtil {
     	
     	try{
     	/*添加孩子学习成绩*/
-    	GradeCondition grade = new GradeCondition();
+    	GradeForm grade = new GradeForm();
         
     	grade.babyId=b1.id;
     	grade.date = sf.parse("2014-12-25 12:24:30");
@@ -423,7 +423,7 @@ public class DatabaseUtil {
     	grade.grade="一年级";
     	grade.save();
     	
-    	GradeCondition grade1 = new GradeCondition();
+    	GradeForm grade1 = new GradeForm();
     	grade1.babyId=b1.id;
     	grade1.date = sf.parse("2014-12-26 12:24:30");
     	grade1.subject="数学";
@@ -431,7 +431,7 @@ public class DatabaseUtil {
     	grade1.grade="一年级";
     	grade1.save();
     	
-    	GradeCondition grade2 = new GradeCondition();
+    	GradeForm grade2 = new GradeForm();
     	grade2.babyId=b2.id;
     	grade2.date = sf.parse("2015-01-10 12:24:30");
     	grade2.subject="语文";
@@ -439,7 +439,7 @@ public class DatabaseUtil {
     	grade2.grade="一年级";
     	grade2.save();
     	
-    	GradeCondition grade3 = new GradeCondition();
+    	GradeForm grade3 = new GradeForm();
     	grade3.babyId=b2.id;
     	grade3.date = sf.parse("2015-01-15 12:24:30");
     	grade3.subject="数学";
@@ -447,7 +447,7 @@ public class DatabaseUtil {
     	grade3.grade="一年级";
     	grade3.save();
     	
-    	GradeCondition grade4 = new GradeCondition();
+    	GradeForm grade4 = new GradeForm();
     	grade4.babyId=b1.id;
     	grade4.date = sf.parse("2015-01-16 12:24:30");
     	grade4.subject="语文";
@@ -455,7 +455,7 @@ public class DatabaseUtil {
     	grade4.grade="一年级";
     	grade4.save();
     	
-    	GradeCondition grade5 = new GradeCondition();
+    	GradeForm grade5 = new GradeForm();
     	grade5.babyId=b1.id;
     	grade5.date = sf.parse("2015-01-16 12:24:30");;
     	grade5.subject="数学";
@@ -463,7 +463,7 @@ public class DatabaseUtil {
     	grade5.grade="一年级";
     	grade5.save();
     	
-    	GradeCondition grade6 = new GradeCondition();
+    	GradeForm grade6 = new GradeForm();
     	grade6.babyId=b2.id;
     	grade6.date = sf.parse("2015-01-17 12:24:30");
     	grade6.subject="语文";
@@ -474,7 +474,7 @@ public class DatabaseUtil {
     		
     	}
     	String sub="语文";
-    	List<GradeCondition> list = GradeCondition.find("select g from GradeCondition g where subject=?","语文").fetch();
+    	List<GradeForm> list = GradeForm.find("select g from GradeCondition g where subject=?","语文").fetch();
     	/*Query q = JPA.em().createNativeQuery("select g.baby_Id,g.date,g.subject,g.mark from GradeCondition g,"+
                 "(select g1.baby_Id,max(g1.date) as date,g1.subject from GradeCondition g1 group by g1.baby_Id,g1.subject) t1"+
                 " where g.date=t1.date and g.baby_Id=t1.baby_Id and"+
@@ -484,11 +484,11 @@ public class DatabaseUtil {
                 
     	
     	/*List<GradeCondition> list = q.getResultList();*/
-    	for(GradeCondition g :list){
+    	for(GradeForm g :list){
     	System.out.println(g.babyId+" "+g.subject+" "+g.mark+" "+g.date);
     	}
-    	List<GradeCondition> list2 = GradeCondition.find("select g from GradeCondition g where babyId in (select id from Baby where name = ?)", "baby2").fetch();
-    	for(GradeCondition g :list2){
+    	List<GradeForm> list2 = GradeForm.find("select g from GradeCondition g where babyId in (select id from Baby where name = ?)", "baby2").fetch();
+    	for(GradeForm g :list2){
         	System.out.println("test--"+g.babyId+" "+g.subject+" "+g.mark+" "+g.date);
         	}
 			

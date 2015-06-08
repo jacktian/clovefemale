@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import models.Baby;
-import models.GradeCondition;
+import models.GradeForm;
 import models.User;
 
 public class GradeBean {
@@ -45,7 +45,7 @@ public class GradeBean {
 		public double mark;
 		
 		/*构建GradeBeanList*/
-		public static List<GradeBean> builList(List<GradeCondition> gradeList){
+		public static List<GradeBean> builList(List<GradeForm> gradeList){
 			List<GradeBean> beanList = new ArrayList();
 			for(int i=0;i<gradeList.size();i++){
 				Baby baby = Baby.findById(gradeList.get(i).babyId);

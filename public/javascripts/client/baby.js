@@ -1,4 +1,10 @@
-
+var babyAge = ["初生儿","1个月","2个月","3个月", "4个月", "5个月", "6个月", "7个月", "8个月", "9个月", "10个月", "11个月", "1岁", "1岁半", "2岁", "2岁半", "3岁", "3岁半", "4岁", "4岁半",  "5岁", "5岁半", "6岁", "6岁半", "7岁", "8岁","9岁","10岁","11岁","12岁","13岁","14岁","15岁", "16岁", "17岁", "18岁"];
+var standerH_male = [50.4,54.8,58.7,62,64.6,66.7,68.4,69.8,71.2,72.6,74,75.3,76.5,82.7,88.5,93.3,97.5,100.6,104.1,107.7,111.3,114.7,117.7,120.7,124,130,135.4,140.2,145.3,151.9,159.5,165.9,169.8,171.6,172.3,172.7];
+var standerH_female =[49.7,53.7,57.4,60.6,63.1,65.2,66.8,68.2,69.6,71,72.4,73.7,75,81.5,87.2,92.1,96.3,99.4,103.1,106.7,110.2,113.5,116.6,119.4, 122.5,128.5,134.1,140.1,146.6,152.4,156.3,158.6,159.8,160.1,160.3,160.6];
+var standerW_male = [3.32,4.51,5.68,6.7,7.45,8,8.41,8.76,9.05,9.33,9.58,9.83,10.05,11.29,12.54,13.64,14.65,15.63,16.64,17.75,18.98,20.18,21.26,22.45,24.06,27.33,30.46,33.74,37.69,42.49,48.08,53.37,57.08,59.35,60.68,61.40];
+var standerW_female = [3.21,4.2,5.21,6.13,6.83,7.36,7.77,8.11,8.41,8.69,8.94,9.18,9.4,10.65,11.92,13.05,14.13,15.16,16.17,17.22,18.26,19.33,20.37,21.44,22.64,25.25,18.19,31.76,36.10,40.77,44.79,47.83,49.82,50.81,51.20,51.41];
+var activeTab_grow = 0; //当前tab选项卡为第一个
+var item1Show = false,item2Show = false,item3Show = false;//子选项卡是否显示标志
 $(function(){
 	// console.log("你点击了list_children");
 	mui.init({
@@ -13,24 +19,28 @@ $(function(){
 	  }
 	});
 
-	/*加载宝宝历史数据*/
-	$.post("/CBabyAction/loadBabyGrowth",{
-		babyId:"1BFB8CDDECC24BE49F8D3C5B9528BBB0"//angela的babyId//babyId
+	// ctx = document.getElementById("bodySimChart").getContext("2d");
+	// $("#bodySimChart").attr("width", $(window).get(0).innerWidth*0.95);
+	// var babyAge = ["初生儿","1个月","2个月","3个月", "4个月", "5个月", "6个月", "7个月", "8个月", "9个月", "10个月", "11个月", "1岁", "1岁半", "2岁", "2岁半", "3岁", "3岁半", "4岁", "4岁半",  "5岁", "5岁半", "6岁", "6岁半", "7岁", "8岁","9岁","10岁","11岁","12岁","13岁","14岁","15岁", "16岁", "17岁", "18岁", "19岁", "20岁", "21岁", "22岁"];
+	// var standerH_male = [50.4,54.8,58.7,62,64.6,66.7,68.4,69.8,71.2,72.6,74,75.3,76.5,82.7,88.5,93.3,97.5,100.6,104.1,107.7,111.3,114.7,117.7,120.7,124,130,135.4,140.2,145.3,151.9,159.5,165.9,169.8,171.6,172.3,172.7];
+	/*加载宝宝信息*/
+	$.post("/CBabyAction/loadBabyInf",{
+		babyId:localStorage.babyId//"1BFB8CDDECC24BE49F8D3C5B9528BBB0"//angela的babyId//babyId
 	},function(data){
-		if(data.result == 0){//成功
-
-			$("#lastData-bi-1").html("<td>" + data.data[0].height+ "</td>" + "<td>" + data.data[0].weight+ "</td>"+"<td>" + data.data[0].ageDcb+ "</td>");
-			$("#lastData-bi-2").html("<td>" + data.data[1].height+ "</td>" + "<td>" + data.data[1].weight+ "</td>"+"<td>" + data.data[1].ageDcb+ "</td>");
-		}else{//失败
-			if(data.data == "没有记录"){
-				$("#nullTips").text("没有找到宝宝的身体指标,<br/>赶紧去添加吧！");
-				$("#nullTips").show();
-			}else{
-				$("#nullTips").text(data.data);
-				$("#nullTips").show();
-			}
+		if(data.result==0){//成功
+			localStorage.name= data.data.name;
+			$("#title-babyGrowth").text(data.data.name+"的成长记录");
+			localStorage.babyId = data.data.id;
+			localStorage.sex = data.data.sex;
+			// alert(localStorage.babyId);
+			loadHistoryData();
 		}
-	})
+	});
+
+	/*加载宝宝列表*/
+	loadBabyList();
+
+
 	
     //孩子列表
 	document.getElementById("list_children").addEventListener("tap",function(event){
@@ -46,68 +56,53 @@ $(function(){
 	});
 
 
-	//身体指标动态
-	var ctx = document.getElementById("bodySimChart").getContext("2d");
-	$("#bodySimChart").attr("width", $(window).get(0).innerWidth*0.95);
-	var options = {};
-	var data = {
-		labels : ["初生儿","1个月","2个月","3个月","4个月","5个月","6个月","7个月","8个月","9个月","10个月","11个月","1岁"],
-		datasets : [
-			{
-				fillColor : "rgba(151,187,205,0.5)",
-				strokeColor : "rgba(151,187,205,1)",
-				pointColor : "rgba(151,187,205,1)",
-				pointStrokeColor : "#fff",
-				data : [50.4,54.8,58.7,62,64.6,66.7,68.4,69.8,71.2,72.6,74,75.3,79]
-			}
-			,
-			{
-				fillColor : "rgba(255,153,153,0.3)",
-				strokeColor : "rgba(255,153,153,1)",
-				pointColor : "rgba(255,153,153,1)",
-				pointStrokeColor : "#fff",
-				data : [48.4,51.2,56.7,61.8,64.6,66.9,68.9,70.8,72.5,74.6,77,80,84]
-			}
-		]
-	}
-	var myNewChart = new Chart(ctx).Line(data,options);
+	/*科目选择确定按钮tap事件*/
+	document.getElementById("subject-confirm-btn").addEventListener("tap",function(event){
+ 		
+ 		var value = $('#scroller_subject').mobiscroll("getVal",true);
+ 		console.log();
+ 		loadGradeFormData(value);
+ 		$("#subject").text(value);
+ 		mui('.chooseSubject').popover('toggle');
+ 		if($('#subjectArrow').hasClass('mui-icon-arrowup')){
+				$('#subjectArrow').removeClass('mui-icon-arrowup');
+			 	$('#subjectArrow').addClass('mui-icon-arrowdown');
+		 	}
+	});
+
+	/*科目选择取消按钮tap事件*/
+	document.getElementById("subject-cancel-btn").addEventListener("tap",function(event){
+ 		mui('.chooseSubject').popover('toggle');
+ 		if($('#subjectArrow').hasClass('mui-icon-arrowup')){
+				$('#subjectArrow').removeClass('mui-icon-arrowup');
+			 	$('#subjectArrow').addClass('mui-icon-arrowdown');
+		 	}
+	});
+
+
  	 
 
-	var item2Show = false,item3Show = false;//子选项卡是否显示标志
-	var activeTab_grow = 0; //当前tab选项卡为第一个
+	
+	
  	document.querySelector('.babySlider').addEventListener('slide', function(event) {
  		activeTab_grow = event.detail.slideNumber;//当前活跃tab
-		if (event.detail.slideNumber === 1&&!item2Show) {
+ 		if (event.detail.slideNumber === 0&&!item1Show){
+ 			loadHistoryData();
+ 		}
+		else if (event.detail.slideNumber === 1&&!item2Show) {
 		    //切换到第二个选项卡
 		    //根据具体业务，动态获得第二个选项卡内容；
 		   // var content = ....
 		    //显示内容
 		   // document.getElementById("item2").innerHTML = content;
 		    //改变标志位，下次直接显示
-			$("#item2mobile>.mui-loading").hide();//隐藏加载
-		    item2Show = true;
-		    
-
+			
+		    // item2Show = true;
+		    localStorage.gradeFormList = null;
 		    // 成绩表单
 			document.getElementById("subjectBox").addEventListener("tap",changeSubject);
-			document.getElementById("subjectBox").addEventListener("longtap",changeSubject);
-
-			var ctx_mark = document.getElementById("markSimChart").getContext("2d");
-			$("#markSimChart").attr("width", $(window).get(0).innerWidth*0.95);
-			var markOptions = {};
-			var markData = {
-				labels : ["0","1","2","3","4","5","6","7","8","9","10","11"],
-				datasets : [
-					{
-						fillColor : "rgba(151,187,205,0.5)",
-						strokeColor : "rgba(151,187,205,1)",
-						pointColor : "rgba(151,187,205,1)",
-						pointStrokeColor : "#fff",
-						data : [65,73,76,79,82,80,85,80,71.2,72.6,74,75.3]
-					}
-				]
-			}
-			var markChart = new Chart(ctx_mark).Line(markData,markOptions);
+			// document.getElementById("subjectBox").addEventListener("longtap",changeSubject);
+			loadGradeFormData("");
 
 		} else if (event.detail.slideNumber === 2&&!item3Show) {
 		    //切换到第三个选项卡
@@ -116,8 +111,11 @@ $(function(){
 		    //显示内容
 		   // document.getElementById("item3").innerHTML = content;
 		    //改变标志位，下次直接显示
-			$("#item3mobile>.mui-loading").hide();//隐藏加载
-			item3Show = true;
+			// $("#item3mobile>.mui-loading").hide();//隐藏加载
+			// item3Show = true;
+			$(".vaccine-Content").show();
+			loadNextVac();
+			loadVaccinated();
 		}
 	});
 
@@ -136,46 +134,20 @@ $(function(){
                 {
                 	label:'岁',
                 	name:'years',
-                    keys: [0,0.01,0.02,0.03, 0.04, 0.05, 0.06,0.07,0.08,0.09,0.10,0.11,1,1.5,2,2.5,3,3.5, 4,4.5, 5, 5.5,6,6.5,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22],
-                    values: ["初生儿","1个月","2个月","3个月", "4个月", "5个月", "6个月", "7个月", "8个月", "9个月", "10个月", "11个月", "1岁", "1岁半", "2岁", "2岁半", "3岁", "3岁半", "4岁", "4岁半",  "5岁", "5岁半", "6岁", "6岁半", "7岁", "8岁","9岁","10岁","11岁","12岁","13岁","14岁","15岁", "16岁", "17岁", "18岁", "19岁", "20岁", "21岁", "22岁"]
+                    keys: [0,0.01,0.02,0.03, 0.04, 0.05, 0.06,0.07,0.08,0.09,0.10,0.11,1,1.5,2,2.5,3,3.5, 4,4.5, 5, 5.5,6,6.5,7,8,9,10,11,12,13,14,15,16,17,18],
+                    values: ["初生儿","1个月","2个月","3个月", "4个月", "5个月", "6个月", "7个月", "8个月", "9个月", "10个月", "11个月", "1岁", "1岁半", "2岁", "2岁半", "3岁", "3岁半", "4岁", "4岁半",  "5岁", "5岁半", "6岁", "6岁半", "7岁", "8岁","9岁","10岁","11岁","12岁","13岁","14岁","15岁", "16岁", "17岁", "18岁"]
                 }
-                // ,
-                // {
-                // 	label:'月',
-                //     keys: [0,1,2,3, 4, 5, 6,7,8,9,10,11],
-                //     values: ["0","1","2","3", "4", "5", "6", "7", "8", "9", "10", "11"]
-                // }
             ]],
         onChange:function(valueText,inst){
-        	// 
-        	var age = parseFloat(valueText);
-        	var ageDcb = "";
-        	console.log(valueText);
-        	if(age<1){
-        		var month = parseInt(age*100);
-        		if(month == 0){
-        			ageDcb = "初生儿";
-        		}else{
-        			ageDcb = parseInt(age*100)+"个月";
-        		}
-        		
-        		// $("#year_unit").text("月")
-        	}else{
-        		var ceil  = Math.ceil(age);
-        		var floor = Math.floor(age);
-        		if(ceil > floor){
-        			ageDcb = floor+"岁半";
-        		}else{
-        			ageDcb = floor+"岁";
-        		}
-        	}
-        	localStorage.age = age;
-        	localStorage.ageDcb = ageDcb;
+        	calBabyAge(valueText);
         },
         onShow:function(html,valueText,inst){
         	// console.log(valueText);
+        	// loadBodyIndex_age(0);
         }
     });
+
+
 
     /*成绩表单添加滚轮*/
     $('#scroller_mark').mobiscroll().scroller({
@@ -201,12 +173,44 @@ $(function(){
                 {
                 	label:'次数',
                     // keys: [3, 4, 5, 6],
-                    values: ["0","1","2","3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25"]
+                    values: ["1","2","3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25"]
                 }
             ]],
-        onSelect:function(){
-        	// 
-        	console.log("select");
+        onChange:function(valueText,inst){
+        	var value = valueText.split(" ");
+        	console.log("change---"+value[0]+"---"+value[1]+"---"+value[2]);
+        	localStorage.grade = value[0];
+        	localStorage.subject = value[1];
+        	localStorage.time = value[2];
+        	loadMark();
+        }
+    });
+
+
+
+ /*科目选择滚轮*/
+    $('#scroller_subject').mobiscroll().scroller({
+        theme: 'mobiscroll',
+        lang: 'zh',
+        display: 'inline',
+        rows:3,
+        layout:'liquid',
+        height:40,
+        wheels: [[
+                
+                {
+                	// label:'科目',
+                    // keys: [3, 4, 5, 6],
+                    values: ["语文","数学","英语","美术", "音乐", "政治", "物理", "化学", "生物", "地理", "历史"]
+                }
+            ]],
+        onChange:function(valueText,inst){
+        	// var value = valueText.split(" ");
+        	// console.log("change---"+value[0]+"---"+value[1]+"---"+value[2]);
+        	// localStorage.grade = value[0];
+        	// localStorage.subject = value[1];
+        	// localStorage.time = value[2];
+        	// loadMark();
         }
     });
     
@@ -215,8 +219,8 @@ $(function(){
 	document.getElementById("add_babygrow").addEventListener("tap",function(event){
 		console.log(activeTab_grow+"页tab");
  		switch(activeTab_grow){
- 			case 0 : mui('.newbodyIndex').popover('toggle'); return false;break;
- 			case 1 : mui('.newmark').popover('toggle');return false; break;
+ 			case 0 : mui('.newbodyIndex').popover('toggle'); clearBiAddBox(); return false;break;
+ 			case 1 : mui('.newmark').popover('toggle');clearNewGradeFormBox();return false; break;
  			case 2 : return true;break;
  			default:break;
  		}
@@ -225,13 +229,13 @@ $(function(){
 
 	//身体指标弹出框确定按钮tap事件
 	document.getElementById("abi-confirm-btn").addEventListener("tap",function(event){
- 		var bodyIndexId = localStorage.bodyIndexId==null?"":localStorage.bodyIndexId;
+ 		var bodyIndexId = $("#bodyIndexId").text();;
  		var height = $("#baby_height").val();
  		var weight = $("#baby_weight").val();
+ 		calBabyAge($('#scroller').mobiscroll("getVal",true));
  		var age = localStorage.age;
  		var ageDcb = localStorage.ageDcb;
- 		// console.log($('#scroller').mobiscroll('getVal',age));
- 		console.log(age + "----" + ageDcb);
+
  		if(height==""||height==null){
  			$(".nbi-Tips").text("身高不能为空哦!");
  			$(".nbi-Tips").show();
@@ -244,17 +248,33 @@ $(function(){
  			return false;
  		}
 
- 		var babyId = "1BFB8CDDECC24BE49F8D3C5B9528BBB0";//angela的babyId
+ 		//var babyId = "1BFB8CDDECC24BE49F8D3C5B9528BBB0";//angela的babyId
  		$.post("/CBabyAction/addOrMdfBabyIndex",{
  			bodyIndexId:bodyIndexId,
- 			babyId:babyId,
+ 			babyId:localStorage.babyId,
  			age:age,
  			ageDcb:ageDcb,
  			height:height,
  			weight:weight
  		},function(data){//显示操作结果
- 			showResTips(data.data);
+ 			var resultText;
 			mui('.newbodyIndex').popover('toggle');	
+			if(data.result==0){//成功
+				// showHtRecord(data.data);
+				// showBodyIndexChart(data.data);
+				if(bodyIndexId==""||bodyIndexId==null){
+					resultText = "添加记录成功";
+				}else{
+					resultText = "修改记录成功";
+				}
+				$(".bodyIndex-content").show();
+				$("#nullTips-bi").hide();
+				showHtRecord(data.data);//展示历史记录	
+				showBodyIndexChart(data.data);//展示动态图表
+			}else{//失败
+				resultText = data.data;
+			}
+			showResTips(resultText);
 
  		})
 	});
@@ -263,7 +283,44 @@ $(function(){
 	document.getElementById("abi-cancel-btn").addEventListener("tap",function(event){
  		mui('.newbodyIndex').popover('toggle');	
 	});
+
+	//成绩表单弹出框确定按钮tap事件
+	document.getElementById("amark-confirm-btn").addEventListener("tap",function(event){
+ 		addOrMdfMark();
+	});
+
+	//成绩表单弹出框取消按钮tap事件
+	document.getElementById("amark-cancel-btn").addEventListener("tap",function(event){
+ 		mui('.newmark').popover('toggle');	
+	});
 });
+
+/*加载用户宝宝类表*/
+function loadBabyList(){
+	$.post("/CBabyAction/loadBabyList",function(data){
+		if(data.result == 0){
+			var length = data.data.length;
+			for(var i = 0 ; i < length; i++){
+				$("#babylist>ul").append("<li id="+ data.data[i].id+ " class='mui-table-view-cell'>"+data.data[i].name+"</li></div>");
+				document.getElementById(data.data[i].id).addEventListener("tap",function(){
+					localStorage.babyId = $(this).attr("id");
+					localStorage.name = $(this).text();
+					$("#title-babyGrowth").text($(this).text()+"的成长记录");
+					mui(".babylist").popover('toggle');
+					recoverTab();
+					if(activeTab_grow == 0){
+						loadHistoryData();
+					}else if(activeTab_grow == 1){
+						loadGradeFormData();
+					}else{
+
+					}
+				});
+			}
+
+		}
+	});
+}
 
 var changeSubject = function(event){
  		
@@ -271,7 +328,7 @@ var changeSubject = function(event){
 		$('#subjectArrow').removeClass('mui-icon-arrowdown');
 	 	$('#subjectArrow').addClass('mui-icon-arrowup');
 
-	    mui('.subjectlist').popover('toggle');//切换蒙版状态
+	    mui('.chooseSubject').popover('toggle');//切换蒙版状态
 
 	    //点击蒙版时，如果科目选择箭头向上，则改为向下
 	 	document.querySelector('.mui-backdrop').addEventListener("tap",function(event){
@@ -283,14 +340,502 @@ var changeSubject = function(event){
 	}
 
 /*展示操作信息*/
-	function showResTips(result){
+function showResTips(result){
 		$(".response-tips").text(result);
 		$(".response-tips").show();
 		window.setTimeout("hideTips()",1500);
-	}
+}
 
-	/*隐藏信息提示，并清空*/
-	function hideTips(){
+/*隐藏信息提示，并清空*/
+function hideTips(){
 		$(".response-tips").text("");
 		$(".response-tips").hide();
+}
+
+/*加载宝宝历史数据*/
+function loadHistoryData(){
+		// alert(localStorage.babyId);
+		item1Show = true;
+		$("#nullTips").hide();
+		$("#bodyIndex-content").hide();
+		$.post("/CBabyAction/loadBabyGrowth",{
+			babyId:localStorage.babyId//angela的babyId//babyId
+		},function(data){
+			$(".loading-bi").hide();
+			if(data.result == 0){//成功
+				
+				$(".bodyIndex-content").show();
+				$("#nullTips-bi").hide();
+				showHtRecord(data.data);//展示历史记录	
+				showBodyIndexChart(data.data);//展示动态图表
+				localStorage.maxAge = data.data[0].age;
+
+			}else{//失败
+				if(data.data == "没有记录"){
+					$("#nullTips-bi").html("找不到宝宝的身体指标哦,<br/>赶紧去添加吧！");
+					$("#nullTips-bi").show();
+				}else{
+					$("#nullTips-bi").html(data.data);
+					$("#nullTips-bi").show();
+				}
+			}
+		});
+};
+
+/*展示最近两条记录*/
+function showHtRecord(bodyIndexList){
+		$(".data-record-bi").html("");
+		if(bodyIndexList.length>0){
+			$("#nullTips-bi").hide();
+			$("#lastData-bi-1").html("<td>" + bodyIndexList[0].height+ "</td>" + "<td>" + bodyIndexList[0].weight+ "</td>"+"<td>" + bodyIndexList[0].ageDcb+ "</td>");
+		}
+		if(bodyIndexList.length>1){
+			$("#lastData-bi-2").html("<td>" + bodyIndexList[1].height+ "</td>" + "<td>" + bodyIndexList[1].weight+ "</td>"+"<td>" + bodyIndexList[1].ageDcb+ "</td>");
+		}
+		
+}
+
+
+/*展示身体指标图标动态*/
+function showBodyIndexChart(bodyIndexList){
+		console.log("showBodyIndexChart");
+		var count = bodyIndexList.length;
+		var maxAgeIndex = 0;
+
+		var labels = new Array();
+		var data_height = new Array();//宝宝身高数据
+		var stander_height = new Array();//宝宝记录对应年龄的身高标准数据
+		var starderH_all;//标准身高全部数据
+
+		var data_weight = new Array();//宝宝体重数据
+		var stander_weight = new Array();//宝宝记录对应年龄的体重标准数据
+		var starderW_all;//标准身高全部数据
+
+		if(localStorage.sex == "男"){
+			starderH_all = standerH_male;
+			starderW_all = standerW_male;
+		}else{
+			starderH_all = standerH_female;
+			starderW_all = standerW_female;
+		}
+
+		var i = 0,vlen = babyAge.length;
+			// console.log(data.data[count-1].ageDcb);
+		for(var i = 0; i < count; i++){
+			for(j=0 ; j < vlen; j++){ 
+				
+				if(bodyIndexList[count-1-i].ageDcb == babyAge[j]){ 
+					stander_height[i] = starderH_all[j];
+					stander_weight[i] = starderW_all[j];
+					// console.log(stander_height[i]+"---"+j+"--"+babyAge[j]);
+				}
+			}
+				
+		}
+		for(var i = 0;i<count ; i++){
+			labels[i] = bodyIndexList[count-i-1].ageDcb;
+			data_height[i] = bodyIndexList[count-i-1].height;
+			data_weight[i] = bodyIndexList[count-i-1].weight;
+			// stander_height[i] = standerH_male[maxAgeIndex+1-count+i];
+		}
+
+		if(count == 1){
+			$(".oneData-height").show();
+			$("#oneDataVal-age-h").text(bodyIndexList[0].ageDcb);
+			$("#oneDataVal-baby-h").text(data_height[0]);
+			$("#oneDataVal-stander-h").text(stander_height[0]);
+			$("#oneDataVal-age-w").text(bodyIndexList[count-1].ageDcb);
+			$("#oneDataVal-baby-w").text(data_weight[0]);
+			$("#oneDataVal-stander-w").text(stander_weight[0]);
+			$(".oneData-weight").show();
+			$("#chartbox_bi_h").hide();
+			$("#chartbox_bi_w").hide();
+			showResTips("多添加数据，可以展示炫酷的图表哦！");
+			return ;
+		}
+
+		$(".oneData-height").hide();
+		$(".oneData-weight").hide();
+		$("#chartbox_bi_h").show();
+		$("#chartbox_bi_w").show();
+
+		var options = {};
+		var data = {
+			labels : labels,
+			datasets : [
+				{
+					fillColor : "rgba(151,187,205,0.5)",
+					strokeColor : "rgba(151,187,205,1)",
+					pointColor : "rgba(151,187,205,1)",
+					pointStrokeColor : "#fff", 
+					data : stander_height
+				}
+				,
+				{
+					fillColor : "rgba(255,153,153,0.3)",
+					strokeColor : "rgba(255,153,153,1)",
+					pointColor : "rgba(255,153,153,1)",
+					pointStrokeColor : "#fff",
+					data : data_height
+				}
+			]
+		};
+
+		var ctx_height = $("#bodySimChart").get(0).getContext("2d");//.getContext("2d");
+			
+		$("#bodySimChart").attr("width", $(window).get(0).innerWidth*0.95);
+		$("#bodySimChart").attr("height", 150);
+		var chart_h = new Chart(ctx_height).Line(data,options);
+
+		//.getContext("2d");
+			
+		// data.datasets[0].data = stander_weight;
+		// data.datasets[1].data = data_weight;
+		var data_w = {
+			labels : labels,
+			datasets : [
+				{
+					fillColor : "rgba(151,187,205,0.5)",
+					strokeColor : "rgba(151,187,205,1)",
+					pointColor : "rgba(151,187,205,1)",
+					pointStrokeColor : "#fff", 
+					data : stander_weight
+				}
+				,
+				{
+					fillColor : "rgba(255,153,153,0.3)",
+					strokeColor : "rgba(255,153,153,1)",
+					pointColor : "rgba(255,153,153,1)",
+					pointStrokeColor : "#fff",
+					data : data_weight
+				}
+			]
+		};
+		console.log(stander_weight);
+		console.log( data_weight);
+		var ctx_weight = $("#bodyChart-weight").get(0).getContext("2d");
+		$("#bodyChart-weight").attr("width", $(window).get(0).innerWidth*0.95);
+		$("#bodyChart-weight").attr("height", 150);
+		var chart_w = new Chart(ctx_weight).Line(data_w,options);
+		// $("#chartbox_bi").html("");
+};
+
+/*计算宝宝年龄*/
+function calBabyAge(valueText){
+		var age = parseFloat(valueText);
+        var ageDcb = "";
+        console.log(valueText);
+        if(age<1){
+        	var month = parseInt(age*100);
+        	if(month == 0){
+        		ageDcb = "初生儿";
+        	}else{
+        		ageDcb = parseInt(age*100)+"个月";
+        	}
+        		
+        		// $("#year_unit").text("月")
+        }else{
+        	var ceil  = Math.ceil(age);
+        	var floor = Math.floor(age);
+        	if(ceil > floor){
+        		ageDcb = floor+"岁半";
+        	}else{
+        		ageDcb = floor+"岁";
+        	}
+        }
+        localStorage.age = age;
+        localStorage.ageDcb = ageDcb;
+        loadBodyIndex_age(age);
+}
+
+/*加载宝宝某个年龄的身体指标数据*/
+var loadBodyIndex_age = function(age){
+		// alert(localStorage.babyId);
+		$.post("/CBabyAction/loadBodyIndex_age",{
+			babyId:localStorage.babyId,
+			age:age
+		},function(data){
+			if(data.result == 0){
+				$("#baby_height").val(data.data.height);
+				$("#baby_weight").val(data.data.weight);
+				$("#bodyIndexId").text(data.data.id);
+			}else{
+				if(data.data=="null"){//没有该记录
+					
+				}else{
+					showResTips(data.data);
+				}
+				$("#baby_height").val("");
+				$("#baby_weight").val("");
+				$("#bodyIndexId").text("");
+				
+			}
+		});
+};
+
+/*清空身体指标添加输入框*/
+function clearBiAddBox(){
+	$("#baby_height").val("");
+	$("#baby_weight").val("");
+	var maxAge = localStorage.maxAge;
+	console.log(maxAge);
+	if(maxAge!=null){
+		$('#scroller').mobiscroll('setVal', maxAge, true, true, false, 0);
 	}
+}
+
+/*添加或修改成绩记录*/
+function addOrMdfMark(){
+	var value = $('#scroller_mark').mobiscroll("getVal",true).split(" ");
+    localStorage.grade = value[0];
+    localStorage.subject = value[1];
+    localStorage.time = value[2];
+	var gradFormId = $("#gradeFormId").text();;
+ 	var mark = $("#baby_mark").val();
+ 	var time = localStorage.time;
+ 	var subject = localStorage.subject;
+ 	var grade = localStorage.grade;
+ 	var babyId = localStorage.babyId;
+ 	if(babyId==null || "" == babyId){
+ 		babyId = "1BFB8CDDECC24BE49F8D3C5B9528BBB0";//angela的babyId
+ 	}
+
+ 	if(mark==""||mark==null){
+ 		$(".ngf-Tips").text("分数不能为空哦!");
+ 		$(".ngf-Tips").show();
+ 		return false;
+ 	}
+ 	var gradeArray = new Array();
+ 	// gradeArray.
+ 	console.log(gradFormId + "---"+mark+"---"+time+"---"+subject+"---"+grade+"---"+babyId);
+
+ 	$.post("/CBabyAction/addOrMdfGradeForm",{
+		gradeFormId:gradFormId,
+		babyId:babyId,
+		subject:subject,
+		grade:grade,
+		mark:mark,
+		time:time
+	},function(data){
+ 		var resultText;
+		mui('.newmark').popover('toggle');	
+		if(data.result==0){//成功
+			localStorage.grade_last = data.data[0].grade;
+			localStorage.subject_last = data.data[0].subject;
+			localStorage.time_last = data.data[0].time;
+			showHtRecord_mark(data.data);
+			showGradeFormChart(data.data);
+			$(".gradeFormDataBox").show();
+			if(gradFormId==""||gradFormId==null){
+				resultText = "添加记录成功";
+			}else{
+				resultText = "修改记录成功";
+			}
+		}else{//失败
+			resultText = result.data;
+		}
+		showResTips(resultText);
+
+ 	});
+}
+
+/*加载成绩表单历史数据*/
+function loadGradeFormData(subject){
+	item2Show = true;
+	$("#nullTips").hide();
+	$.post("/CBabyAction/loadGradeForm",{
+		babyId:localStorage.babyId,//angela的babyId//babyId
+		subject:subject
+	},function(data){
+		$("#item2mobile>.mui-loading").hide();//隐藏加载
+		if(data.result == 0){//成功
+			$(".gradeFormDataBox").show();
+			localStorage.grade_last = data.data[0].grade;
+			localStorage.subject_last = data.data[0].subject;
+			localStorage.time_last = data.data[0].time;
+			$("#subject").text(data.data[0].subject);
+			showHtRecord_mark(data.data);//展示历史记录	
+			showGradeFormChart(data.data);//展示动态图表
+		}else{//失败
+			$(".gradeFormDataBox").hide();
+				if(data.data == "没有记录"){
+					$("#nullTips-gf").html("找不到成绩记录哦,<br/>赶紧去添加吧！");
+					$("#nullTips-gf").show();
+				}else{
+					$("#nullTips-gf").html(data.data);
+					$("#nullTips-gf").show();
+				}
+		}
+	});
+}
+	
+
+/*展示成绩表单的历史记录*/
+function showHtRecord_mark(gradeFormList){
+	console.log(gradeFormList);
+	$(".data-record-gf").html("");
+	if(gradeFormList.length>0){
+		$("#nullTips-gf").hide();
+			$("#lastData_mark_1").html("<td>" + gradeFormList[0].grade+ "</td>" + "<td>第" + gradeFormList[0].time+ "次</td>"+"<td>" + gradeFormList[0].mark+ "</td>");
+		}
+		if(gradeFormList.length>1){
+			$("#lastData_mark_2").html("<td>" + gradeFormList[1].grade+ "</td>" + "<td>第" + gradeFormList[1].time+ "次</td>"+"<td>" + gradeFormList[1].mark+ "</td>");
+		}
+}
+
+/*展示成绩表单的最近动态*/
+function showGradeFormChart(gradeFormList){
+	var count = gradeFormList.length;
+
+
+	if(count == 1){
+		$(".oneData-gf").show();
+		$("#oneDataVal-grade").text(gradeFormList[0].grade);
+		$("#oneDataVal-time").text(gradeFormList[0].time);
+		$("#oneDataVal-mark").text(gradeFormList[0].mark);
+			
+		$("#chartbox_gf").hide();
+		showResTips("多添加数据，可以展示炫酷的图表哦！");
+		return ;
+	}
+
+	$(".oneData-gf").hide();
+	$("#chartbox_gf").show();
+
+	var maxAgeIndex = 0;
+
+	var labels = new Array();
+	var data_mark = new Array();//宝宝身高数据
+
+	for(var i = 0;i<count ; i++){
+		labels[i] = gradeFormList[count-i-1].grade +"/" + gradeFormList[count-i-1].time;
+		data_mark[i] = gradeFormList[count-i-1].mark;
+	}
+
+	var options = {};
+	var data = {
+		labels : labels,
+		datasets : [
+			{
+				fillColor : "rgba(151,187,205,0.5)",
+				strokeColor : "rgba(151,187,205,1)",
+				pointColor : "rgba(151,187,205,1)",
+				pointStrokeColor : "#fff", 
+				data : data_mark
+			}
+		]
+	};
+
+	var ctx_mark = $("#markSimChart").get(0).getContext("2d");//.getContext("2d");
+			
+	$("#markSimChart").attr("width", $(window).get(0).innerWidth*0.95);
+	$("#markSimChart").attr("height", 150);
+	var chart_m = new Chart(ctx_mark).Line(data,options);
+}
+
+/*展示成绩某一次，滚轮滚动的时候*/
+function loadMark(){
+	$.post("/CBabyAction/loadGrade",{
+		babyId:localStorage.babyId,
+		grade:localStorage.grade,
+		subject:localStorage.subject,
+		time:localStorage.time
+	},function(data){
+		if(data.result == 0){
+			$("#gradeFormId").text(data.data.id);
+			$("#baby_mark").val(data.data.mark);
+		}else{
+			$("#gradeFormId").text("");
+		}
+
+	});
+
+}
+
+/*清空成绩添加框*/
+function clearNewGradeFormBox(){
+	$("#baby_mark").val("");
+	$("#gradeFormId").text("");
+	if(localStorage.grade!=null){
+		var grade = localStorage.grade_last;
+		var subject = localStorage.subject_last;
+		var time = parseInt(localStorage.time_last) + 1;
+		console.log("clear---"+grade+" "+subject+" "+time);
+		$('#scroller_mark').mobiscroll('setVal', grade+" "+subject+" "+time, true, true, false, 0);
+	}
+	
+}
+
+/*-----------------疫苗函数---------------*/
+
+/*加载下次接种疫苗*/
+function loadNextVac(){
+	$.post("/CBabyAction/loadNextVac",{
+		babyId:localStorage.babyId
+	},function(data){
+		$("#item3mobile>.mui-loading").hide();//隐藏加载
+		item3Show = true;
+		if(data.result == 0){
+			$(".nextVacList").show();
+			$(".nullTips-vac-todo").hide();
+			var length = data.data.length;
+			for(var i = 0; i < length; i++){
+				var $list_item = $("<li></li>");
+				$($list_item).html("<div class='item-nextVac item-vacName'><span class='realData'>"+data.data[i].name+"</span></div>"
+						+"<div class='item-nextVac item-age'>"
+							+"<i class='iconfont timeIcon'>&#xe635;</i><span class='timeData'>"+data.data[i].ageDcb+"</span>"
+						+"</div>"); 
+				 $(".nextVacList").append($list_item);
+			}
+		}else{
+			$(".nextVacList").hide();
+			if(data.data == "null"){
+				$(".nullTips-vac-todo").text("恭喜您,宝宝已经接种完全部疫苗哦！");
+			}else{
+				$(".nullTips-vac-todo").text("操作异常,请退出重试！");
+			}
+			$(".nullTips-vac-todo").show();
+		}
+	});
+}
+
+/*加载已接种疫苗*/
+function loadVaccinated(){
+	$.post("/CBabyAction/loadVaccinated",{
+		babyId:localStorage.babyId
+	},function(data){
+		if(data.result == 0){
+			$(".vaccinatedTable").show();
+			$(".nullTips-vac-done").hide();
+			$("#more-vaced").show();
+			var length = data.data.length;
+			for(var i = 0; i < length; i++){
+				var $line = $("<tr></tr>");
+				var date = new Date(data.data[i].date);
+				var dateString =  date.getFullYear()+"-"+(date.getMonth()+1) + "-"+ date.getDate();
+				$($line).html("<td>"+data.data[i].name+"</td>"
+						+"<td>"+dateString+"</td>"); 
+				 $(".vaccinatedTable").append($line);
+			}
+		}else{
+			$("#more-vaced").hide(); 
+			$(".vaccinatedTable").hide();
+			if(data.data == "null"){
+				$(".nullTips-vac-done").text("宝宝还没有接种过疫苗哦！");
+			}else{
+				$(".nullTips-vac-done").text("操作异常,请退出重试！");
+			}
+			$(".nullTips-vac-done").show();
+		}
+	});
+}
+
+/*重置所有选项卡*/
+function recoverTab(){
+	item1Show = false;
+	item2Show = false;
+	item3Show = false;
+	$(".mui-loading").show();
+	$(".tab-Content").hide();
+	$(".nullTips-tab").hide();
+}

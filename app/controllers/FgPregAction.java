@@ -7,7 +7,7 @@ import beans.PregDetailBean;
 
 import models.FetalMovement;
 import models.GestationalWeight;
-import models.GradeCondition;
+import models.GradeForm;
 import models.Menses;
 import models.Temperature;
 import play.mvc.*;

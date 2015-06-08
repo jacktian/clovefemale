@@ -22,18 +22,31 @@ import play.db.jpa.Model;
 @Entity
 @Table(name = "vaccination")
 public class Vaccination extends BasicModel{
+	
    @Column(name = "date")
-	public Date date;//日期
+	public Date date;//实际接种日期
+   
    /**
 	 * 日期字符串
 	 */
 	@Required
 	@Column(name = "dateStr")
 	public String dateStr;
+	
+	
+	/**
+	 * 次数
+	 */
+	@Column(name = "time")
+	public String time;
+	
    @Column(name = "content")
 	public String content;//备注
+   
    @Column(name = "baby_Id")
    public String babyId;
+   
+
    
    public Vaccination(){}
 	public Vaccination(Baby baby,Date date,String content,String babyId){

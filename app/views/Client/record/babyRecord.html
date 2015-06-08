@@ -24,7 +24,7 @@
 <header class="mui-bar mui-bar-nav babyTitle">
   <a class="mui-icon mui-icon-left-nav mui-pull-left" href="/client/first"></a>
   <a id="list_children" class="mui-icon mui-icon-bars mui-pull-right"></a>
-  <h1 id="title-babyGrowth" class="mui-title">天天的成长记录</h1>
+  <h1 id="title-babyGrowth" class="mui-title">成长记录</h1>
 </header>
 
 <div id="slider" class="mui-slider babySlider">
@@ -45,14 +45,20 @@
 	<div class="mui-slider-group">
 		<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
 			<!-- 加载显示 -->
-			<!-- <div class="mui-loading">
+			<div class="mui-loading loading-bi">
 				<div class="mui-spinner">
 				</div>
-			</div> -->
+			</div>
+			
+			<!-- 消息提示 -->
+			<div id="nullTips-bi" class="nullTips-tab">
+				没有找到宝宝的身体指标,<br/>赶紧去添加吧！
+			</div>
+
 			
 			<!-- 身体指标内容模块 -->
-			<div class="bodyIndex-content">
-			<div class="databox">
+			<div id="bodyIndex-content" class="bodyIndex-content tab-Content">
+			<!-- <div class="databox"> -->
 				<div class="objectTitle">
 					<span class="pointSign"></span>
 					&nbsp;历史记录
@@ -64,28 +70,74 @@
 						<td>体重(kg)</td>
 						<td>年龄</td>
 					</tr>
-					<tr id="lastData-bi-1" class="oddLine">
-						<td>90</td>
+					<tr id="lastData-bi-1" class="oddLine data-record-bi">
+						<!-- <td>90</td>
 						<td>23</td> 
-						<td>3岁</td>
+						<td>3岁</td> -->
 					</tr>
-					<tr id="lastData-bi-2" class="evenLine">
-						<td>85</td>
+					<tr id="lastData-bi-2" class="evenLine data-record-bi">
+						<!-- <td>85</td>
 						<td>21</td>
-						<td>2岁</td>
+						<td>2岁</td> -->
 					</tr>
 				</table>
-			</div>
+			<!-- </div> -->
 			<!-- 历史记录结束 -->
+
 			<div class="objectTitle">
 					<span class="pointSign"></span>
-					&nbsp; 动态
+					&nbsp; 身高动态
 					<a class="floatRight-link" href="#">详细分析></a>
 			</div>
+
+			<!-- 只有一条数据的时候显示 -->
+			<div class="oneData oneData-height">
+				<p>年龄:<span id="oneDataVal-age-h"></span> &nbsp;身高:<span id="oneDataVal-baby-h"></span>cm &nbsp;标准:<span id="oneDataVal-stander-h"></span>cm</p>
+			</div>
 			<!-- 身体指标图表模块 -->
-			<div class="charBox">
+			<div id="chartbox_bi_h" class="charBox">
+				<div class="unitDesc">cm</div>
+				<div class="mark_chart">
+					<div class="standerDesc">
+						<div class="line-stander"></div>标准
+						
+					</div>
+					<div class="babyDesc">
+						<div class="line-baby"></div>宝宝
+					</div>
+				</div>
 				<!-- 图表区域，展示最近动态 -->
-				<canvas id="bodySimChart" height="200"></canvas>
+				<canvas id="bodySimChart" height="150"></canvas>
+				
+
+			</div><!-- 身体指标图表模块结束 -->
+			
+
+			<div class="objectTitle">
+					<span class="pointSign"></span>
+					&nbsp; 体重动态
+					<a class="floatRight-link" href="#">详细分析></a>
+			</div>
+
+			<!-- 只有一条数据的时候显示 -->
+			<div class="oneData oneData-weight">
+				<p>年龄:<span id="oneDataVal-age-w">18岁</span> &nbsp;体重:<span id="oneDataVal-baby-w">55</span>kg &nbsp;标准:<span id="oneDataVal-stander-w">56</span>kg</p>
+			</div>
+			<!-- 体重指标图表模块 -->
+			<div id="chartbox_bi_w" class="charBox">
+				<div class="unitDesc">kg</div>
+				<div class="mark_chart">
+					<div class="standerDesc">
+						<div class="line-stander"></div>标准
+						
+					</div>
+					<div class="babyDesc">
+						<div class="line-baby"></div>宝宝
+					</div>
+				</div>
+				<!-- 图表区域，展示最近动态 -->
+				<canvas id="bodyChart-weight" height="150"></canvas>
+				
 			</div><!-- 身体指标图表模块结束 -->
 			</div><!--身体指标内容模块结束-->
 		</div>
@@ -104,11 +156,19 @@
 					<img class="time-img" src="@{'/public/images/client/book.png'}" alt=""/>
 				<span class="subjectTitle">科目</span>
 				<span id="subjectArrow" class="mui-icon mui-icon-arrowdown subjectArrow"></span>
-				<span class="subjectName">语文</span>
+				<span id="subject" class="subjectName">语文</span>
 				</div>			
 			</div>
 			<!-- 科目结束 -->
 
+			<!-- 消息提示 -->
+			<div id="nullTips-gf" class="nullTips-tab">
+				
+			</div>
+			
+			<div class="gradeFormDataBox tab-Content">
+
+			
 			<!-- 历史记录 -->
 			<div class="databox">
 				<div class="objectTitle">
@@ -122,30 +182,39 @@
 						<td>次数</td>
 						<td>成绩</td>
 					</tr>
-					<tr class="oddLine">
-						<td>一年级</td>
-						<td>第3次</td>
-						<td>93</td>
+					<tr id="lastData_mark_1" class="oddLine data-record-gf">
+						<td></td>
+						<td></td>
+						<td></td>
 					</tr>
-					<tr class="evenLine">
-						<td>一年级</td>
-						<td>第2次</td>
-						<td>91</td>
+					<tr id="lastData_mark_2" class="evenLine data-record-gf">
+						<td></td>
+						<td></td>
+						<td></td>
 					</tr>
 				</table>
 			</div>
 			<!-- 历史记录结束 -->
+
 
 			<div class="objectTitle">
 					<span class="pointSign"></span>
 					&nbsp; 动态
 					<a class="floatRight-link" href="#">详细分析></a>
 			</div>
+
+
+			<!-- 只有一条数据的时候显示 -->
+			<div class="oneData oneData-gf">
+				<p>年级:<span id="oneDataVal-grade"></span> &nbsp;次数:第<span id="oneDataVal-time"></span>次 &nbsp;成绩:<span id="oneDataVal-mark"></span>分</p>
+			</div>
+
 			<!-- 身体指标图表模块 -->
-			<div class="charBox">
+			<div id="chartbox_gf" class="charBox">
 				<!-- 图表区域，展示最近动态 -->
 				<canvas id="markSimChart" height="200"></canvas>
 			</div><!-- 身体指标图表模块结束 -->
+			</div>
 		</div>
 
 		<!-- card3 -->
@@ -155,19 +224,16 @@
 				<div class="mui-spinner">
 				</div>
 			</div>
+
+			<div class="vaccine-Content tab-Content">
 			<!-- 上一次记录 -->
 			<div class="databox">
 				<div class="objectTitle">
 					<div class="pointSign"></div>
 					&nbsp;下次接种
 				</div>
+				<div class="nullTips nullTips-vac nullTips-vac-todo">恭喜您，宝宝已经接种完全部疫苗哦！</div>
 				<ul class="datalist nextVacList">
-					<li>
-						<span class="realData">流脑疫苗</span>
-					</li>
-					<li>
-						<i class="iconfont timeIcon">&#xe635;</i><span class="timeData">6月龄</span>
-					</li>
 				</ul>
 			</div>
 			<!-- 上一次记录结束 -->
@@ -177,32 +243,19 @@
 				<div class="objectTitle">
 					<span class="pointSign"></span>
 					&nbsp;已接种疫苗
-					<a class="floatRight-link" href="#">更多></a>
+					<a id="more-vaced" class="floatRight-link" href="#">更多></a>
 				</div>
-				<table class="scoreTable">
+				<div class="nullTips nullTips-vac nullTips-vac-done">宝宝还没有接种过疫苗哦！</div>
+				<table class="scoreTable vaccinatedTable">
 					<tr class="tableTitle">
 						<td>名称</td>
 						<td>接种时间</td>
 					</tr>
-					<tr class="oddLine">
-						<td>无细胞百白破疫苗</td>
-						<td>2000-6-1</td>
-					</tr>
-					<tr class="evenLine">
-						<td>脊灰疫苗</td>
-						<td>2000-5-1</td>
-					</tr>
-					<tr class="evenLine">
-						<td>脊灰疫苗</td>
-						<td>2000-5-1</td>
-					</tr>
-					<tr class="evenLine">
-						<td>脊灰疫苗</td>
-						<td>2000-5-1</td>
-					</tr>
+				
 				</table>
 			</div>
 			<!-- 历史记录结束 -->
+			</div>
 		</div>
 	</div>
 	
@@ -214,7 +267,7 @@
 
 <!-- 操作结果信息 -->
 <div class="infTips response-tips">
-	asdf
+	<!-- asdf -->
 </div>
 
 <nav class="mui-bar mui-bar-tab">
@@ -232,20 +285,8 @@
 <!-- 孩子选择弹出窗 -->
 <div id="babylist" class="mui-popover babylist">
   <ul class="mui-table-view">
-    <li class="mui-table-view-cell">天天</li>
-    <li class="mui-table-view-cell">Kimi</li>
-    <li class="mui-table-view-cell">石头</li>
   </ul>
 </div><!-- 孩子选择弹出窗结束 -->
-
-<!-- 科目选择弹出窗 -->
-<div id="subjectlist" class="mui-popover subjectlist">
-	<ul class="mui-table-view">
-		<li class="mui-table-view-cell">数学</li>
-		<li class="mui-table-view-cell">英语</li>
-		<li class="mui-table-view-cell">美术</li>
-	</ul>
-</div><!-- 科目选择弹出窗结束 -->
 
 <!-- 身体记录添加 -->
 <div class="mui-popover scrollerBox newbodyIndex">
@@ -253,11 +294,6 @@
 		<h1 class="mui-title model-title">身体指标</h1>
 	</header>
 	<input id="scroller" name="scroller" />
-	<!-- <div class="labelunit">
-		<ul>
-			<li class="unit"><span id="year_unit">岁</span></li><li class="unit"><span>月</span></li>
-		</ul>
-	</div> -->
 	<div class="mui-content-padded indexInputBox">
 		<form class="mui-input-group">
 			<div class="mui-input-row">
@@ -268,6 +304,7 @@
 				<label>体重</label>
 				<input id="baby_weight" type="text" class="mui-input-clear" placeholder="单位kg">
 			</div>
+			<div id="bodyIndexId" class="hide_id"></div>
 			<div class="mui-button-row">
 				<button id="abi-confirm-btn" class="mui-btn mui-btn-primary confirm-btn" onclick="return false;">确认</button>&nbsp;&nbsp;
 				<button id="abi-cancel-btn" class="mui-btn mui-btn-primary cancel-btn" onclick="return false;">取消</button>
@@ -279,25 +316,38 @@
 
 <!-- 成绩表单添加 -->
 <div class="mui-popover scrollerBox newmark">
+	<header class="mui-bar mui-bar-nav model-header">
+		<h1 class="mui-title model-title">成绩表单</h1>
+	</header>
 	<input id="scroller_mark" name="scroller" />
-	<!-- <div class="labelunit">
-		<ul>
-			<li class="unit"><span>岁</span></li><li class="unit"><span>月</span></li>
-		</ul>
-	</div> -->
 	<div class="mui-content-padded indexInputBox">
 		<form class="mui-input-group">
 			<div class="mui-input-row">
 				<label>成绩</label>
-				<input type="text" class="mui-input-clear" placeholder="单位(分)">
+				<input id="baby_mark" type="text" class="mui-input-clear" placeholder="单位(分)">
 			</div>
-			<!-- <div class="mui-input-row">
-				<label>体重</label>
-				<input type="text" class="mui-input-clear" placeholder="单位kg">
-			</div> -->
+			<div id="gradeFormId" class="hide_id"></div>
 			<div class="mui-button-row">
-				<button class="mui-btn mui-btn-primary" onclick="return false;">确认</button>&nbsp;&nbsp;
-				<button class="mui-btn mui-btn-primary" onclick="return false;">取消</button>
+				<button id="amark-confirm-btn" class="mui-btn mui-btn-primary confirm-btn" onclick="return false;">确认</button>&nbsp;&nbsp;
+				<button id="amark-cancel-btn" class="mui-btn mui-btn-primary cancel-btn" onclick="return false;">取消</button>
+			</div>
+		</form>
+		<div class="ngf-Tips infTips"></div>
+	</div>
+	
+</div><!-- 成绩表单添加结束 -->
+
+<!-- 科目选择添加 -->
+<div class="mui-popover scrollerBox chooseSubject">
+	<header class="mui-bar mui-bar-nav model-header">
+		<h1 class="mui-title model-title">科目选择</h1>
+	</header>
+	<input id="scroller_subject" name="scroller" />
+	<div class="mui-content-padded indexInputBox">
+		<form class="mui-input-group">
+			<div class="mui-button-row">
+				<button id="subject-confirm-btn" class="mui-btn mui-btn-primary confirm-btn" onclick="return false;">确认</button>&nbsp;&nbsp;
+				<button id="subject-cancel-btn" class="mui-btn mui-btn-primary cancel-btn" onclick="return false;">取消</button>
 			</div>
 		</form>
 	</div>

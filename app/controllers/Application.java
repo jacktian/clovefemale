@@ -7,7 +7,7 @@ import javax.persistence.Query;
 
 import models.Baby;
 import models.BodyIndex;
-import models.GradeCondition;
+import models.GradeForm;
 import models.User;
 import models.Vaccination;
 import play.db.jpa.JPA;
@@ -139,7 +139,7 @@ public class Application extends WebService {
  	 * 返回：对应的列表
  	 * */
  	public static void findGrade(String babyId,int curpage) {
- 		List<GradeCondition> list = GradeCondition.find("babyId = ? order by date",babyId).fetch();
+ 		List<GradeForm> list = GradeForm.find("babyId = ? order by date",babyId).fetch();
  		List<GradeBean> listbean = null;
  		long pageNum = 0;//总页数
      	long count = 0;
@@ -150,7 +150,7 @@ public class Application extends WebService {
      	else
      		pageNum = count/2;
         	
-        	list = GradeCondition.find("babyId = ? order by date",babyId).fetch(curpage,2);
+        	list = GradeForm.find("babyId = ? order by date",babyId).fetch(curpage,2);
      		listbean=GradeBean.builList(list);
          	}
  		

@@ -12,7 +12,7 @@ import java.util.Random;
 
 import javax.persistence.Query;
 
-import models.GradeCondition;
+import models.GradeForm;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.SQLQuery;
@@ -159,7 +159,7 @@ public class FgChartTest extends Controller {
 	}
 
 	public static void test() {
-		List<GradeCondition> list = GradeCondition
+		List<GradeForm> list = GradeForm
 				.find("select g.subject from GradeCondition g,\n"
 						+ "(select g2.id, max(g2.date) as date, g2.subject from GradeCondition g2 group by g2.id, g2.subject) as tt\n"
 						+ " where g.date=tt.date and g.id=tt.id and \n"
@@ -169,7 +169,7 @@ public class FgChartTest extends Controller {
 	}
 
 	public static void test2() {
-		List<GradeCondition> list = GradeCondition.find(
+		List<GradeForm> list = GradeForm.find(
 				"select g.* from GradeCondition g").fetch();
 		renderJSON("hello2");
 	}

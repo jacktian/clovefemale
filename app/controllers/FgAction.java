@@ -7,7 +7,7 @@ import javax.persistence.Query;
 
 import models.Baby;
 import models.BodyIndex;
-import models.GradeCondition;
+import models.GradeForm;
 import models.User;
 import play.db.jpa.JPA;
 import beans.BIndexBean;
