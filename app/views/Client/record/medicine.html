@@ -134,10 +134,14 @@
 			    success: function (res) {
 			    	var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
 			    	var code = result.split(",")[1];
-			   		alert("二维码："+code);
 					$.get('/CMedicine/findDrug?code='+code,function(data){
-						$('#productor').html(data.data.productor);
-						$('#drug-name').html(data.data.dname);Ï
+						if(typeof(data.data)=="undefined"){
+							mui.toast("数据库未找到该药品");
+						}
+						else{
+							$('#productor').html(data.data.productor);
+							$('#drug-name').html(data.data.dname);
+						}
 						$('.med-model').show();
 						$('#pregDrop').show();
 					})
