@@ -97,7 +97,6 @@
 			$.get("/CMedicine/loadMedicineList",function(data){
 				var html = juicer($('#medicineTpl').html(),{medicineList:data.data});
 				$('.med-box-list').html(html);
-				console.log(html);
 			});
 		}
 		loadMedicineList();

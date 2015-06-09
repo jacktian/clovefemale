@@ -189,11 +189,29 @@ public class WeChat extends WebService{
 					else if(key.equals("V003_CommonQuestion")){
 						PicArticle a1 = new PicArticle();
 						a1.title = "常见问题";
-						a1.picUrl = "http://dwz.cn/NIxL8";
-						a1.url = "http://dwz.cn/NICAq";
+						a1.picUrl = "http://t.cn/R2pOJXs";
+						a1.url = "http://t.cn/R2pO5lw";
 						a1.desciption = "点击链接了解常见问题";
+						PicArticle a2 = new PicArticle();
+						a2.title = "助孕记录";
+						a2.picUrl = "http://t.cn/R2pOBaO";
+						a2.url = "http://t.cn/R2pO5lw";
+						a2.desciption = "点击链接了解助孕记录";
+						PicArticle a3 = new PicArticle();
+						a3.title = "宝宝成长";
+						a3.picUrl = "http://t.cn/R2pWvsT";
+						a3.url = "http://t.cn/R2pO5lw";
+						a3.desciption = "点击链接了宝宝成长";
+						PicArticle a4 = new PicArticle();
+						a4.title = "小药箱";
+						a4.picUrl = "http://t.cn/R2pW7jF";
+						a4.url = "http://t.cn/R2pO5lw";
+						a4.desciption = "点击链接了解小药箱";
 						List<PicArticle> articleList = new ArrayList();
 						articleList.add(a1);
+						articleList.add(a2);
+						articleList.add(a3);
+						articleList.add(a4);
 						response.articleList = articleList;
 						response.articleCount = articleList.size();
 						renderText(response);
@@ -215,9 +233,9 @@ public class WeChat extends WebService{
 					else if(key.equals("V005_AboutUs")){
 						PicArticle a1 = new PicArticle();
 						a1.title = "关于我们";
-						a1.picUrl = "http://dwz.cn/NIxL8";
-						a1.url = "http://dwz.cn/NICAq";
-						a1.desciption = "点击链接了解我们";
+						a1.picUrl = "http://t.cn/R2pOCay";
+						a1.url = "http://mp.weixin.qq.com/s?__biz=MzA5NTI4Njg5NQ==&mid=206748257&idx=1&sn=a1cb13f9e3a3a051b818bb745ed5e841&scene=4#wechat_redirect";
+						a1.desciption = "丁香女性助手是酷聚物联网科技有限公司旗下的一款基于母婴的公众号平台";
 						List<PicArticle> articleList = new ArrayList();
 						articleList.add(a1);
 						response.articleList = articleList;
