@@ -19,6 +19,74 @@ $(function(){
 	  }
 	});
 
+
+	//文本框只能输入数字，并屏蔽输入法和粘贴  
+        $.fn.numeral = function() {     
+            $(this).css("ime-mode", "disabled");     
+            this.bind("keypress",function(e) {     
+                var code = (e.keyCode ? e.keyCode : e.which);  //兼容火狐 IE      
+                     //火狐下不能使用退格键   
+                 //    if(!$.browser.msie&&(e.keyCode==0x8))   
+                    // {     
+                 //         return ;     
+                 //    }     
+                 //    return code >= 48 && code<= 57;     
+            });  
+
+            this.bind("blur", function() {     
+                if (this.value.lastIndexOf(".") == (this.value.length - 1)) {     
+                    this.value = this.value.substr(0, this.value.length - 1);     
+                } else if (isNaN(this.value)) {     
+                    this.value = "";     
+                }     
+            });     
+
+            this.bind("paste", function(e) {    
+                // alert(this.value); 
+                 this.value=this.value.replace(/[^1-9]{1}[^0-9]*/g,"");
+                // var s = window.clipboardData.getData('text/plain') 
+
+                // if (!/\D/.test(s));     
+                // value = s.replace(/^0*/, '');     
+                // return false;     
+            });     
+
+            this.bind("dragenter", function() {     
+                return false;     
+            });     
+
+            this.bind("keyup", function(e) {  
+                
+                var char_code = e.charCode ? e.charCode : e.keyCode;  
+                if (!/^[0-9]*$/.test(this.value)) {     
+                    this.value=this.value.replace(/[^1-9]{1}[^0-9]*/g,"");
+                }     
+                var remainder = 11;
+                remainder = 11 - this.value.length;
+                $("#numRemainder").text(remainder);
+                
+            });     
+
+            this.bind("keydown", function(e) {  
+                var char_code = e.charCode ? e.charCode : e.keyCode;
+                console.log(char_code); 
+                if(char_code == 8 || char_code == 46){
+                    return true;
+                }else if(char_code<48 || char_code >57){      
+                    return false;  
+                }else{  
+                    return true;    
+                }   
+                
+            });  
+
+
+        }; //结束文本框限定输入
+
+    $("#baby_height").numeral();
+    $("#baby_weight").numeral();
+    $("#baby_mark").numeral();
+
 	// ctx = document.getElementById("bodySimChart").getContext("2d");
 	// $("#bodySimChart").attr("width", $(window).get(0).innerWidth*0.95);
 	// var babyAge = ["初生儿","1个月","2个月","3个月", "4个月", "5个月", "6个月", "7个月", "8个月", "9个月", "10个月", "11个月", "1岁", "1岁半", "2岁", "2岁半", "3岁", "3岁半", "4岁", "4岁半",  "5岁", "5岁半", "6岁", "6岁半", "7岁", "8岁","9岁","10岁","11岁","12岁","13岁","14岁","15岁", "16岁", "17岁", "18岁", "19岁", "20岁", "21岁", "22岁"];
