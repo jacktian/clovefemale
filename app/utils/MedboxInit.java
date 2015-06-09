@@ -12,7 +12,6 @@ public class MedboxInit {
 	 * 初始化药箱
 	 */
 	public static void init(String openid){
-		openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 			try{
 				// 内服药
 				MedicineBox medBox = new MedicineBox();

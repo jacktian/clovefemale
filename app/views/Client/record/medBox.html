@@ -79,7 +79,6 @@
 		/*加载药箱列表*/
 		var loadMedBoxList = function(){
 			$.get("/CMedicine/loadMedboxList",function(data){
-				console.log(data);
 				var html = juicer($('#medBoxTpl').html(),{medBoxList:data.data});
 				$('.med-box-list').html(html);
 			});

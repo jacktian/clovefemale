@@ -280,7 +280,6 @@ public class WeChat extends WebService{
 		JsonArray openidArr = jObj.get("openid").getAsJsonArray();
 		for(int i=0;i<openidArr.size();i++){
 			String openid = openidArr.get(i).getAsString();
-			System.out.println(openid);
 			MedboxInit.init(openid);
 		}
 	}

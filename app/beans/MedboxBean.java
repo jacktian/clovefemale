@@ -27,4 +27,9 @@ public class MedboxBean {
      * 药品数量
      */
 	public int count;
+	
+	/**
+     * 是否可用
+     */
+	public int disabled;
 }
