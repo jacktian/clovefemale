@@ -1,0 +1,33 @@
+<script id="biTpl" type="text/template">
+	{@each biList as bi,index}
+		{@if index<=3}
+			<tr {@if index%2 == 0}class="tr-even"{@/if}>
+				<td>${temp.dateStr}</td>
+				<td>${temp.temp}</td>
+			</tr>
+		{@else}
+			<tr class="table-hidden table-more {@if index%2 == 0}tr-even{@/if}">
+				<td>${temp.dateStr}</td>
+				<td>${temp.temp}</td>
+			</tr>
+		{@/if}
+		 
+	{@/each}
+</script>	
+
+<script id="gfTpl" type="text/template">
+	{@each gfList as pregw,index}
+		{@if index<=3}
+			<tr {@if index%2 == 0}class="tr-even"{@/if}>
+				<td>${pregw.dateStr}</td>
+				<td>${pregw.weight}</td>
+			</tr>
+		{@else}
+			<tr class="table-hidden table-more {@if index%2 == 0}tr-even{@/if}">
+				<td>${pregw.dateStr}</td>
+				<td>${pregw.weight}</td>
+			</tr>
+		{@/if}
+		 
+	{@/each}
+</script>	

@@ -220,5 +220,18 @@ public class Client extends WebService{
 		render("/Client/personal/first.html");
 	}
 
+	/**
+	*身体指标详细分析
+	*/
+	public static void biDetail(){
+		render("/Client/record/growthBiDetail.html");
+	}
+
+	/**
+	*成绩详细分析
+	*/
+	public static void gfDetail(){
+		render("/Client/record/gradeDetail.html");
+	}
 
 }
