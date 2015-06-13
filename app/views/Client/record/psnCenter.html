@@ -10,32 +10,35 @@
 		<span class="nickname">${user.nickname}</span>
 	</div>
 	
-	<div class="introdction">快乐生活每一天</div>
+	<div id="introdction" class="introdction">${user.signName}</div>
 </div>
 <nav class="navbox">
 	<ul>
 		<li>
-			<a href="#" class="psnnav">
-				<i class="icon-psnNav iconfont">&#xe66b;</i>
-				<div class="psnnavName">个人</div>
+			<a href="/Client/first" class="psnnav">
+				<!-- <i class="icon-psnNav iconfont">&#xe66b;</i> -->
+        <i class="icon-psnNav iconfont">&#x3435;</i>
+				<div class="psnnavName">首页</div>
 			</a>
 		</li>
 		<li>
 			<a id="baby-link" href="myBaby" class="psnnav">
-				<i class="icon-psnNav babyIconFont iconfont">&#xf01d4;</i>
+				<!-- <i class="icon-psnNav babyIconFont iconfont">&#xf01d4;</i> -->
+        <i class="icon-psnNav babyIconFont iconfont">&#xf01d4;</i>
 				<div class="psnnavName">宝宝</div>
 			</a>
 		</li>
 		<li>
 			<a href="/client/remind" class="psnnav">
-				<i class="icon-psnNav clockIconFont iconfont">&#xe660;</i>
+				<!-- <i class="icon-psnNav clockIconFont iconfont">&#xe660;</i> -->
+        <i class="icon-psnNav clockIconFont iconfont">&#xe660;</i>
 				<div class="psnnavName">提醒</div>
 			</a>
 		</li>
 	</ul>
 </nav>
 
-<ul class="mui-table-view navList">
+<!-- <ul class="mui-table-view navList">
   <li class="mui-table-view-cell">
     <a class="mui-navigate-right">
     	<div class="listItemIcon">
@@ -44,26 +47,9 @@
       金币
     </a>
   </li>
-</ul>
+</ul> -->
 
-<ul class="mui-table-view navList">
-  <li class="mui-table-view-cell">
-    <a class="mui-navigate-right psnInfItem">
-    	<div class="listItemIcon">
-    		<i class="icon-psnItem iconfont">&#xf0038;</i>
-    	</div>
-      等级规则
-    </a>
-  </li>
-  <li class="mui-table-view-cell">
-    <a class="mui-navigate-right">
-    	<div class="listItemIcon">
-    		<i class="icon-psnItem iconfont">&#xe643;</i>
-    	</div>
-      会员制度
-    </a>
-  </li>
-</ul>
+
 
 <ul class="mui-table-view navList">
   <li class="mui-table-view-cell" id="cloveIdItem">
@@ -78,16 +64,17 @@
   <li class="mui-table-view-cell" id="phoneItem">
     <a class="mui-navigate-right">
 	    <div class="listItemIcon">
-	    	<i class="icon-psnItem iconfont">&#xe6bb;</i>
+	    	<!-- <i class="icon-psnItem iconfont">&#xe6bb;</i> -->
+        <i class="icon-psnItem iconfont">&#xe65c;</i>
 	    </div>
 	    <div class="listItemText">${user.phoneNum}</div>
       手机号
     </a>
   </li>
-  <li class="mui-table-view-cell" id="emailItem">
+<!--   <li class="mui-table-view-cell" id="emailItem">
     <a class="mui-navigate-right">
 	    <div class="listItemIcon">
-	    	<i class="icon-psnItem iconfont">&#xe838;</i>
+        <i class="icon-psnItem iconfont">&#xe624;</i>
 	    </div>
 	    <div class="listItemText">${user.email}</div>
       邮箱
@@ -110,10 +97,30 @@
     	<div class="listItemText">${user.isAddV}</div>
       加V认证
     </a>
+  </li> -->
+</ul>
+
+<ul class="mui-table-view navList">
+<!--   <li class="mui-table-view-cell">
+    <a class="mui-navigate-right psnInfItem">
+      <div class="listItemIcon">
+        <i class="icon-psnItem iconfont">&#xf0038;</i>
+      </div>
+      等级规则
+    </a>
+  </li> -->
+  <li class="mui-table-view-cell">
+    <a href="/client/rules" class="mui-navigate-right">
+      <div class="listItemIcon">
+        <i class="icon-psnItem iconfont">&#xe643;</i>
+      </div>
+      使用声明
+    </a>
   </li>
 </ul>
 
 <script type="text/javascript">
+
   //丁香号
   document.getElementById("cloveIdItem").addEventListener("tap",function(event){
     localStorage.modifyItem = 1;
@@ -122,15 +129,23 @@
 
   //手机号
   document.getElementById("phoneItem").addEventListener("tap",function(event){
-    localStorage.modifyItem = 2;
-    window.location.href="modifyPhone"; 
+    // localStorage.modifyItem = 2;
+    // window.location.href="modifyPhone"; 
+    alert("等待提供短信服务");
   });
 
-  //邮箱
-  document.getElementById("emailItem").addEventListener("tap",function(event){
-    localStorage.modifyItem = 3;
-    window.location.href="modifyPhone"; 
-  });
+  // //邮箱
+  // document.getElementById("emailItem").addEventListener("tap",function(event){
+  //   localStorage.modifyItem = 3;
+  //   window.location.href="modifyPhone"; 
+  // });
+
+   /*心情设置*/
+    document.getElementById("introdction").addEventListener("tap",function(event){
+      localStorage.modifyItem = 4;
+      window.location.href="modifyPhone"; 
+    });
+
 
   /*我的宝宝*/
   document.getElementById("baby-link").addEventListener("tap",function(event){

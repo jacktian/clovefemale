@@ -140,7 +140,11 @@ public class Client extends WebService{
 	 *会员中心
 	 **/
 	public static void psnCenter(){
-		User userModel = User.find("byOpenid", session.get("openid")).first();
+		String openid = session.get("openid");
+		if(openid == null){
+			openid = "ob1R-uIRkLLp6lmmrT4w-2rrZ5jQ";
+		}
+		User userModel = User.find("byOpenid", openid).first();
 		UserCenterBean user = new UserCenterBean();
 
 		//头像
@@ -158,7 +162,7 @@ public class Client extends WebService{
 
 		//个性签名
 		if(userModel.signName == null || "".equals(userModel.signName)){
-			user.signName = "点击设置";
+			user.signName = "点击设置心情";
 		}else{
 			user.signName = userModel.signName;
 		}
@@ -189,7 +193,14 @@ public class Client extends WebService{
 
 		render("/Client/record/psnCenter.html",user);
 	}
-
+	
+	/**
+	 *会员制度 
+	 */
+	public static void rules(){
+		render("/Client/personal/rules.html");
+	}
+	
 	/**
 	 *提醒
 	 **/

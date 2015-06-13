@@ -392,7 +392,9 @@ function loadBabyList(){
 					}else if(activeTab_grow == 1){
 						loadGradeFormData();
 					}else{
-
+						$(".vaccine-Content").show();
+						loadNextVac();
+						loadVaccinated();
 					}
 				});
 			}
@@ -867,6 +869,7 @@ function loadNextVac(){
 			$(".nextVacList").show();
 			$(".nullTips-vac-todo").hide();
 			var length = data.data.length;
+			 $(".nextVacList").html("");
 			for(var i = 0; i < length; i++){
 				var $list_item = $("<li></li>");
 				$($list_item).html("<div class='item-nextVac item-vacName'><span class='realData'>"+data.data[i].name+"</span></div>"

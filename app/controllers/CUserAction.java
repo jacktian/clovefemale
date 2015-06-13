@@ -51,6 +51,29 @@ public class CUserAction extends WebService{
     }
 	
 	/**
+	 *	加载用户信息 
+	 */
+	public static void loadUserInf(){
+		String openid = session.get("openid");
+		if(openid == null){
+			openid = "ob1R-uIRkLLp6lmmrT4w-2rrZ5jQ";
+		}
+		try{
+			List<User> userList = User.find("openid = ?", openid).fetch();
+			if(userList.size()!=0){
+				User user = userList.get(0);
+				wsOk(user);
+			}else{
+				wsError("null");
+			}
+		}catch(Exception e){
+			wsError("噢噢，出错了！");
+		}
+		
+		
+	}
+	
+	/**
 	 * 修改用户信息
 	 */
 	public static void alterUser(String uId,String userName,String passwd,String realName,String phoneNum,String email,String IDcard){
@@ -97,6 +120,30 @@ public class CUserAction extends WebService{
     	}
     	System.out.println(response.status);
     	wsOk(response);
+    }
+    
+    /**
+     * 修改用户个性签名
+     */
+    public static void modifySignName(String signName){
+    	String openid = session.get("openid");
+		if(openid == null || "".equals(openid)){
+			wsError("获取openid失败,请使用微信公众号进入系统!");
+		}else{
+			try{
+				List<User> userList = User.find("openid = ?", openid).fetch();
+				if(userList.size()!=0){
+					User user = userList.get(0);
+					user.signName = signName;
+					wsOk("设置成功");
+	 			}else{
+	 				wsError("null");
+	 			}
+			}catch(Exception e){
+				wsError("噢噢，出错了！");
+			}
+			
+		}
     }
     
     /**

@@ -129,6 +129,11 @@
 				$("#headTitle").text("绑定邮箱");
 				$("#infTips").text("绑定邮箱，可以保障你的账户安全哦！");
 				break;
+            case '4': 
+                window.document.title = "心情设置"; 
+                $("#headTitle").text("心情设置");
+                $("#infTips").text("时刻展示你的心情，真真实实就是我！");
+                break;
 			default:
                 localStorage.modifyItem = 1;
                 window.document.title = "设置丁香号";
@@ -144,7 +149,6 @@
             var modifyItem = localStorage.modifyItem;
             // window.location.href="modifyPhone"; 
             var inf = $('#infText').val();
-            alert(inf);
             if(modifyItem == "1"){//设置丁香号
                 //先检查格式
                try{
@@ -182,18 +186,36 @@
                 }
             }else if(modifyItem == "2"){//绑定手机号
 
-            }else{//绑定邮箱
+            }else if(modifyItem == "3"){//绑定邮箱
 
+            }else if(modifyItem == "4"){//心情设置
+                modifySignName(inf);
             }
 
             
-        });
+        });//结束保存按钮的操作选择
 
-		 
+		  
 
          
 
-	});
+	});//结束$(function())
+    
+
+    /*修改个性签名*/
+    function modifySignName(signName){
+        $.post("/CUserAction/modifySignName",{
+            signName:signName
+        },function(data){
+            if(data.result == 0){
+                window.location.href="psnCenter"; //修改成功
+                $('#responseInf').text("修改成功");
+            }else{//修改失败
+                $('#responseInf').text(data.data);
+            }
+            $('#responseInf').show();
+        });
+    }
 </script>
 
 

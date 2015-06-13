@@ -1,19 +1,19 @@
 #{extends 'client.html' /}
 #{set title:'首页' /}
-<link rel="stylesheet" href="@{'/public/stylesheets/client/first.css'}">
-<script type="text/javascript" src = "@{'/public/javascripts/jquery-1.8.3.min.js'}"></script>
+
 <header class="mui-bar mui-bar-nav babyTitle">
   <h1 class="mui-title">首页</h1>
 </header>
 
 <!-- 个人信息 -->
 <div class="userBox mui-navigate-right">
-  <!-- <a class="userLink" href="/client/psnCenter"> -->
+  <a class="userLink" href="/client/psnCenter">
     <div class="headImg">
-      <img src="@{'/public/images/client/child-1.jpg'}" alt=""/>
+      <!-- <img src="@{'/public/images/client/child-1.jpg'}" alt=""/> -->
+      <img id="userHeadImg" src="" alt=""/>
     </div>    
-    <span class="nickname">钊哥</span>
-  <!-- </div> -->
+    <span id="nickName" class="nickname"></span>
+  </a>
 </div>
 
 <!-- 菜单 -->
@@ -55,3 +55,16 @@
     </a>
   </li>
 </ul>
+
+<link rel="stylesheet" href="@{'/public/stylesheets/client/first.css'}">
+<script type="text/javascript" src = "@{'/public/javascripts/jquery-1.8.3.min.js'}"></script>
+<script>
+  $(function(){
+    $.post("/CUserAction/loadUserInf",function(data){
+        if(data.result == 0){//成功
+          $("#userHeadImg").attr("src",data.data.headimgurl);
+          $("#nickName").text(data.data.nickname);
+        }
+    });
+  });//结束$(function()
+</script>
