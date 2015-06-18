@@ -13,7 +13,7 @@ public class Bootstrap extends Job{
 		//获取accessToken
 		AccessTokenRefresher.getAccessToken();
 		//创建自定义菜单
-		CustomMenuRefresher.createMenuNow();
+		//CustomMenuRefresher.createMenuNow();
 		//获取js_ticket
 		JsTicketRefresher.getJsTicket();
 		/*	Medicine med = new Medicine();
