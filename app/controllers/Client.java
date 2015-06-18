@@ -53,9 +53,6 @@ public class Client extends WebService{
 			JsonObject json = jsonElement.getAsJsonObject();
 			String openid = json.get("openid").getAsString();
 			session.put("openid", openid);
-			params.remove("code");
-			params.remove("state");
-			System.out.println(params.toString());
 		}
 		catch(Exception e){
 			Logger.info("Unable to get user's openid");
@@ -113,7 +110,6 @@ public class Client extends WebService{
 	 *我的孩子
 	 **/
 	public static void mybaby(){
-		System.out.println(params.all());
 		render("/Client/record/mybaby.html");
 	}
 
