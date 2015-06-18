@@ -53,6 +53,7 @@ public class Client extends WebService{
 			JsonObject json = jsonElement.getAsJsonObject();
 			String openid = json.get("openid").getAsString();
 			params.remove("code");
+			params.remove("state");
 			session.put("openid", openid);
 		}
 		catch(Exception e){
@@ -111,6 +112,9 @@ public class Client extends WebService{
 	 *我的孩子
 	 **/
 	public static void mybaby(){
+		params.remove("code");
+		params.remove("state");
+		System.out.println(params.all());
 		render("/Client/record/mybaby.html");
 	}
 
