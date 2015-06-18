@@ -426,7 +426,7 @@ public class CBabyAction extends WebService{
 			List<GradeForm> gradeFormList;
 			try{
 				if(subject == null || "".equals(subject)){//subject没选定的时候，加载最新记录的一次的科目
-					List<String> subjectList = GradeForm.find("select gf.subject from GradeForm gf where gf.babyId = ?1 order by gf.date desc",babyId).fetch(1);
+					List<String> subjectList = GradeForm.find("select gf.subject from GradeForm gf where gf.babyId = ? order by gf.date desc",babyId).fetch(1);
 					if(subjectList.size()!= 0 ){//有记录
 						subject = subjectList.get(0);
 					}
@@ -451,6 +451,23 @@ public class CBabyAction extends WebService{
 			
 	}
 	
+	
+	/**
+	 * 获取某科目成绩记录数的总页数
+	 */
+	public static void loadPageSizeOfSubject(String babyId,String subject){
+		try{
+			String queryString = "select count(*) from GradeForm gf where and gf.subject = ?1";
+			Query query = JPA.em().createNativeQuery(queryString);
+//			query.setParameter(1, babyId);//给编号为1的参数设值 	
+			query.setParameter(1 , subject);//给编号为1的参数设值 
+			String size = query.getSingleResult().toString();
+			System.out.println(subject+"--"+size);
+			wsOk(Math.ceil(Integer.parseInt(size) / 6));
+		}catch(Exception e){
+			wsError("噢噢，出错了！");
+		}
+	}
 	
 	
 	/**

@@ -690,8 +690,9 @@ function addOrMdfMark(){
  		return false;
  	}
 
- 	var tips = checkMark();
+ 	var tips = checkMark(mark);
  	if(tips!=""){
+ 		console.log("tips不为空"+tips+"---")
  		$(".ngf-Tips").text(tips);
  		$(".ngf-Tips").show();
  		return false;
@@ -933,10 +934,11 @@ function recoverTab(){
 
 /*检查是否为float，返回true/false*/
 function checkFloat(text){
-	if(/^(([0-9]+\\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\\.[0-9]+)|([0-9]*[1-9][0-9]*))$/.test(text)){
+	if(/^\d+\.?\d+$/.test(text)){
 		return true;
+	}else{
+		return false;
 	}
-	return false;
 }
 
 /*检查身高,返回相关提示*/
@@ -944,18 +946,16 @@ function checkHeight(text){
 	var tips = "";
 	if(!checkFloat(text)){
 		tips = "请输入正确格式的身高！";
-		return tips;
 	}else{
 		var height = parseFloat(text);
 		if(height>200){
 			tips = "宝宝真有那么高吗？请输入正确身高！";
-			return tips;
 		}
 		if(height < 30){
 			tips = "宝宝没那么矮吧？请输入正确身高！";
-			return tips;
 		}
 	}
+	return tips;
 }
 
 /*检查体重,返回相关提示*/
@@ -963,18 +963,16 @@ function checkWeight(text){
 	var tips = "";
 	if(!checkFloat(text)){
 		tips = "请输入正确格式的体重！";
-		return tips;
 	}else{
 		var weight = parseFloat(text);
 		if(weight>120){
 			tips = "宝宝真有那么重吗？请输入正确体重！";
-			return tips;
 		}
 		if(weight < 1){
 			tips = "宝宝没那么轻吧？请输入正确体重！";
-			return tips;
 		}
 	}
+	return tips;
 }
 
 
@@ -983,17 +981,15 @@ function checkMark(text){
 	var tips = "";
 	if(!checkFloat(text)){
 		tips = "请输入正确格式的分数！";
-		return tips;
 	}else{
 		var weight = parseFloat(text);
 		if(weight>100){
 			tips = "分数不能超过100分哦！";
-			return tips;
 		}
 		if(weight < 0){
 			tips = "分数不能低于0分哦！";
-			return tips;
 		}
 	}
+	return tips;
 }
 
