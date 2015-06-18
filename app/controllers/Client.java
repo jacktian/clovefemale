@@ -110,9 +110,13 @@ public class Client extends WebService{
 	 *我的孩子
 	 **/
 	public static void mybaby(){
-		render("/Client/record/mybaby.html");
+		redirect("/Client/babyRedirect");
 	}
 
+	public static void babyRedirect(){
+		render("/Client/record/mybaby.html");
+	}
+	
 	/**
 	 *孩子资料
 	 **/
@@ -243,5 +247,4 @@ public class Client extends WebService{
 	public static void gfDetail(){
 		render("/Client/record/gradeDetail.html");
 	}
-
 }
