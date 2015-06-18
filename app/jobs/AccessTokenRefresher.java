@@ -70,7 +70,7 @@ public class AccessTokenRefresher extends Job{
 		JsonElement jsonElement = resp.getJson();
 		JsonObject json = jsonElement.getAsJsonObject();
 		/*打印accessToken的值*/
-		System.out.println("access_token:"+json.get("access_token").getAsString());
+		// System.out.println("access_token:"+json.get("access_token").getAsString());
 		try{
 			if(json.get("access_token") != null){
 				/* 将access_token保存到数据库中 */

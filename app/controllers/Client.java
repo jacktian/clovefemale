@@ -42,7 +42,7 @@ public class Client extends WebService{
 	/**
 	 * 拦截器
 	 */
-	@Before(unless={"record","first","vaccine","remind"})
+	@Before(unless={"record","first","vaccine","remind","medicine"})
 	public static void getCrtUser(){
 		String appKey = Play.configuration.getProperty("wechat_appkey");
 		String appSecret = Play.configuration.getProperty("wechat_secret");

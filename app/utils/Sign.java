@@ -94,6 +94,7 @@ public class Sign {
     	/*获取js_ticket值*/
 		WeChat wechat = (WeChat) WeChat.findAll().get(0);
 		String ticket = wechat.js_ticket;
+        System.out.println("js_ticket:"+ticket);
     	/*生成签名*/
 		try{
 			ret = Sign.process(ticket, url);
