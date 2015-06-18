@@ -1,0 +1,456 @@
+#{extends 'client.html' /}
+#{set title:'记录详情' /}
+
+<header class="mui-bar mui-bar-nav babyTitle">
+  <a class="mui-icon mui-icon-left-nav mui-pull-left" href="/client/babyRecord"></a>
+  <!-- <a id="list_children" class="mui-icon mui-icon-bars mui-pull-right"></a> -->
+  <h1 id="title-babyGrowth" class="mui-title">成绩详情</h1>
+</header>
+
+<!-- 科目 -->
+<div id="subjectBox" class="subjectBox">
+	<div>
+		<img class="book-img" src="@{'/public/images/client/book.png'}" alt=""/>
+		<span class="subjectTitle">科目</span>
+		<span id="subjectArrow" class="mui-icon mui-icon-arrowdown subjectArrow"></span>
+		<span id="subject" class="subjectName">语文</span>
+	</div>			
+</div>
+
+<!-- 选项卡 -->
+<div  class="mui-slider gfSlider ">
+	<!-- <div class="test"> -->
+	<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+		<a class="mui-control-item" href="#biDetailData">
+				历史记录
+			</a>
+		<a class="mui-control-item" href="#biDetailAnaly">
+				图表分析
+			</a>
+	<!-- 	<a class="mui-control-item" href="#item3mobile">
+				建议
+			</a> -->
+	</div>
+	<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-6"></div>
+
+	<div class="mui-slider-group growthDtailContent">
+		<!-- card1历史记录 -->
+		<div id="biDetailData" class="mui-slider-item mui-control-content gdCard mui-active ">
+			<!-- 加载显示 -->
+			<div class="mui-loading loading-bi">
+				<div class="mui-spinner">
+				</div>
+			</div>
+			
+
+			<!-- 科目结束 -->
+			<!-- 历史记录内容区 -->
+			<div class="cardCotent-gd">
+				<table id="biDetailTable" class="growthTable">
+				</table>
+			</div>
+			<!-- 历史记录内容区结束 -->
+
+			<!-- 翻页 -->
+			<div class="mui-content-padded turnPage_gf_h turnPage_fg">
+				<ul class="mui-pager">
+					<li>
+						<a id="lastPage_gf_h" href="#">
+								上一页
+							</a>
+					</li>
+					<li>
+						<a id="nextPage_gf_h" href="#">
+								下一页
+							</a>
+					</li>
+				</ul>
+			</div><!-- 翻页结束 -->
+		</div>
+		<!-- card1历史记录结束 -->
+
+		<!-- card2图表分析 -->
+		<div id="biDetailAnaly" class="mui-slider-item mui-control-content gdCard ">
+			<!-- 加载显示 -->
+			<!-- <div class="mui-loading">
+				<div class="mui-spinner">
+				</div>
+			</div> -->
+
+
+			<!-- 图表分析内容区 -->
+			<div class="cardCotent-gd content-chart">
+				<!-- 只有一条数据的时候显示 -->
+				<div class="oneData oneData-gf">
+					<p>年级:<span id="oneDataVal-grade"></span> &nbsp;次数:第<span id="oneDataVal-time"></span>次 &nbsp;成绩:<span id="oneDataVal-mark"></span>分</p>
+				</div>
+
+				<!-- 成绩表单图表模块 -->
+				<div id="chartbox_gf" class="charBox">
+					<!-- 图表区域，展示最近动态 -->
+					<canvas id="markSimChart" height="200"></canvas>
+				</div><!--成绩表图表模块结束 -->
+			
+			</div>
+			<!-- card2图表分析结束 -->
+
+			<!-- 更换上下记录 -->
+			<div class="changeAge turnPage_fg">
+				<a id="lastPage-gf" href="#" class="lastPage">
+					<span class="mui-icon mui-icon-arrowleft"></span>
+				</a>
+				<a id="nextPage-gf" href="#" class="nextPage">
+					<span class="mui-icon mui-icon-arrowright"></span>
+				</a>
+			</div>
+
+		<!-- card3建议 -->
+		<!-- <div id="item3mobile" class="mui-slider-item mui-control-content">
+			
+			<div class="mui-loading">
+				<div class="mui-spinner">
+				</div>
+			</div>
+
+		</div> -->
+		<!-- card3建议结束 -->
+	</div>
+	
+</div>
+
+<!-- 科目选择添加 -->
+<div class="mui-popover scrollerBox chooseSubject">
+	<header class="mui-bar mui-bar-nav model-header">
+		<h1 class="mui-title model-title">科目选择</h1>
+	</header>
+	<input id="scroller_subject" name="scroller" />
+	<div class="mui-content-padded indexInputBox">
+		<form class="mui-input-group">
+			<div class="mui-button-row">
+				<button id="subject-confirm-btn" class="mui-btn mui-btn-primary confirm-btn" onclick="return false;">确认</button>&nbsp;&nbsp;
+				<button id="subject-cancel-btn" class="mui-btn mui-btn-primary cancel-btn" onclick="return false;">取消</button>
+			</div>
+		</form>
+	</div>
+	
+</div><!-- 科目选择结束 -->
+
+<!-- 操作结果信息 -->
+<div class="infTips response-tips">
+	<!-- asdf -->
+</div>
+<link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.animation.css'}" rel="stylesheet" type="text/css" />
+<link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.frame.css'}" rel="stylesheet" type="text/css" />
+<link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.scroller.css'}" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="@{'/public/stylesheets/client/growthDetail.css'}"/>
+<script src="http://dcloudio.github.io/mui/dist/js/jquery-2.1.1.js"></script>
+<script src="@{'/public/javascripts/Chart.min.js'}"></script>
+<script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.core.js'}"></script>
+<script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.frame.js'}"></script>
+<script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.scroller.js'}"></script>
+
+<script>
+	var item1Show = false;//身体指标历史记录
+	var item2Show = false;//身体指标图标分析
+	var currentTab = 1;
+	var currentPage = 1;//当前页
+
+	var isLoad = false;
+
+	$(function(){
+		/*加载成绩表单历史记录*/
+		loadGfData();
+
+		document.querySelector('.gfSlider').addEventListener('slide', function(event){
+			activeTab_grow = event.detail.slideNumber;//当前活跃tab
+ 			if (event.detail.slideNumber === 0 &&!item1Show){
+ 				currentTab =1;
+ 				/*加载成绩表单历史记录*/
+ 				var subject = $("#subject").text();
+				loadGfData(subject);
+
+ 			}else if(event.detail.slideNumber === 1 &&!item2Show){
+ 				currentTab =2;
+ 				/*加载成绩表单图表*/
+ 				var subject = $("#subject").text();
+ 				loadPageMarkData(subject);
+ 			}
+		});
+
+		document.getElementById("subjectBox").addEventListener("tap",changeSubject);
+
+
+		 /*科目选择滚轮*/
+    	$('#scroller_subject').mobiscroll().scroller({
+	        theme: 'mobiscroll',
+	        lang: 'zh',
+	        display: 'inline',
+	        rows:3,
+	        layout:'liquid',
+	        height:40,
+	        wheels: [[
+	                
+	                {
+	                    values: ["语文","数学","英语","美术", "音乐", "政治", "物理", "化学", "生物", "地理", "历史"]
+	                }
+	            ]]
+	    });
+
+	    /*科目选择确定按钮tap事件*/
+		document.getElementById("subject-confirm-btn").addEventListener("tap",function(event){
+	 		
+	 		var value = $('#scroller_subject').mobiscroll("getVal",true);
+	 		item1Show = false;
+	 		item2Show = false;
+	 		if(currentTab == 1){
+	 			loadGfData(value);
+	 		}else{
+	 			loadPageMarkData(value);
+	 		}
+	 		
+	 		$("#subject").text(value);
+	 		mui('.chooseSubject').popover('toggle');
+	 		if($('#subjectArrow').hasClass('mui-icon-arrowup')){
+					$('#subjectArrow').removeClass('mui-icon-arrowup');
+				 	$('#subjectArrow').addClass('mui-icon-arrowdown');
+			 	}
+		});
+
+		/*科目选择取消按钮tap事件*/
+		document.getElementById("subject-cancel-btn").addEventListener("tap",function(event){
+	 		mui('.chooseSubject').popover('toggle');
+	 		if($('#subjectArrow').hasClass('mui-icon-arrowup')){
+					$('#subjectArrow').removeClass('mui-icon-arrowup');
+				 	$('#subjectArrow').addClass('mui-icon-arrowdown');
+			 	}
+		});
+    
+
+	});
+
+	/*加载历史记录*/
+	function loadGfData(subject){
+		$.post("/CBabyAction/loadSubjectMark",{
+			babyId:localStorage.babyId,
+			subject:subject,
+			pageNum:0
+		},function(data){
+			var htmlData = "";
+			isLoad = true;
+			biData = data;
+			$("#biDetailData .mui-loading").hide();
+			if(data.result == 0){//成功
+				item1Show = true;
+				htmlData = "<tr class='tableTitle'>"
+						+"<td>科目</td>"
+						+"<td>年级</td>"
+						+"<td>次数</td>"
+						+"<td>成绩</td>"
+					+"</tr>";
+				var length = data.data.length;				
+
+				for(var i = 0 ; i < length ; i++){
+					var grade = data.data[i];
+					htmlData += "<tr  class='bi-line'><td>"+grade.subject+"</td><td>"+grade.grade+"</td><td>第"+grade.time+"次</td><td>"+grade.mark+"</td></tr>"
+				}
+				$("#subject").text(data.data[0].subject);
+				currentPage = 1;
+				loadPageSizeOfSize(data.data[0].subject);
+			}else{
+				if(data.data == "null"){
+					item1Show = true;
+					htmlData = "<tr><td>你还没有记录哦！赶快去录入吧！</td></tr>";
+				}else{
+					htmlData = "<tr><td>噢噢，出错了！</td></tr>";
+				}
+			}
+			$("#biDetailTable").html(htmlData);
+		})
+	}
+
+	/*h获取某科目的总记录数的页数*/
+	function loadPageSizeOfSize(subject){
+		$.post("/CBabyAction/loadPageSizeOfSubject",{
+			babyId:localStorage.babyId,
+			subject:subject
+		},function(data){
+			if(data.result == 0){//成功
+				 var page = data.data;
+				 localStorage.page = page;
+				 console.log("成绩记录共"+page+"页");
+				 if(localStorage.page > 1){
+				 	$(".turnPage_gf_h").show();
+				 }else{
+				 	$(".turnPage_gf_h").hide();
+				 }
+			}
+		})
+	}
+
+	/*加载成绩页面数据*/
+	function loadPageMarkData(subject,pageNum){
+
+		$.post("/CBabyAction/loadSubjectMark",{
+			babyId:localStorage.babyId,
+			subject:subject,
+			pageNum:pageNum
+		},function(data){
+			// var htmlData = "";
+			// console.log(data.data);
+			// $("#biDetailData .mui-loading").hide();
+			if(data.result == 0){//成功
+				showChart(data.data)
+				$("#subject").text(data.data[0].subject);
+				item2Show = true;
+				if(pageNum == null&&"" ==pageNum ){
+					currentPage = 1;
+				}else{
+					currentPage = pageNum;
+				}
+			}else{
+				if(data.data == "null"){
+					$("#chartbox_gf").hide();
+					item2Show = true;
+					showResTips("多添加数据，可以展示炫酷的图表哦！");
+
+				}else{
+					$("#chartbox_gf").hide();
+					showResTips("噢噢，出错了！");
+				}
+			}
+		})
+	}
+
+	/*展示成绩图表*/
+	function showChart(gradeFormList){
+		var count = gradeFormList.length;
+
+		console.log(gradeFormList);
+		if(count == 1){
+			$(".oneData-gf").show();
+			$("#oneDataVal-grade").text(gradeFormList[0].grade);
+			$("#oneDataVal-time").text(gradeFormList[0].time);
+			$("#oneDataVal-mark").text(gradeFormList[0].mark);
+				
+			$("#chartbox_gf").hide();
+			showResTips("多添加数据，可以展示炫酷的图表哦！");
+			return ;
+		}
+
+		$(".oneData-gf").hide();
+		$("#chartbox_gf").show();
+
+		var maxAgeIndex = 0;
+
+		var labels = new Array();
+		var data_mark = new Array();//宝宝身高数据
+
+		for(var i = 0;i<count ; i++){
+			labels[i] = gradeFormList[count-i-1].grade +"/" + gradeFormList[count-i-1].time;
+			data_mark[i] = gradeFormList[count-i-1].mark;
+		}
+		var options = {};
+		var data = {
+			labels : labels,
+			datasets : [
+				{
+					fillColor : "rgba(151,187,205,0.5)",
+					strokeColor : "rgba(151,187,205,1)",
+					pointColor : "rgba(151,187,205,1)",
+					pointStrokeColor : "#fff", 
+					data : data_mark
+				}
+			]
+		};
+
+		var ctx_height = $("#markSimChart").get(0).getContext("2d");//.getContext("2d");
+			
+		$("#markSimChart").attr("width", $(window).get(0).innerWidth*0.95);
+		$("#markSimChart").attr("height", 150);
+		var chart_h = new Chart(ctx_height).Line(data,options);
+	}
+
+	/*展示体重图表*/
+	// function showWeightChart(labels,dataList,standerList){
+	// 	var options = {};
+	// 	var data = {
+	// 		labels : labels,
+	// 		datasets : [
+	// 			{
+	// 				fillColor : "rgba(151,187,205,0.5)",
+	// 				strokeColor : "rgba(151,187,205,1)",
+	// 				pointColor : "rgba(151,187,205,1)",
+	// 				pointStrokeColor : "#fff", 
+	// 				data : standerList
+	// 			}
+	// 			,
+	// 			{
+	// 				fillColor : "rgba(255,153,153,0.3)",
+	// 				strokeColor : "rgba(255,153,153,1)",
+	// 				pointColor : "rgba(255,153,153,1)",
+	// 				pointStrokeColor : "#fff",
+	// 				data : dataList
+	// 			}
+	// 		]
+	// 	};
+
+	// 	var ctx_height = $("#bodyDetailWChart").get(0).getContext("2d");
+			
+	// 	$("#bodyDetailWChart").attr("width", $(window).get(0).innerWidth*0.95);
+	// 	$("#bodyDetailWChart").attr("height", 150);
+	// 	var chart_h = new Chart(ctx_height).Line(data,options);
+	// }
+
+/*切换科目*/
+function changeSubject(event){
+ 		
+ 		// 切换科目箭头状态
+		$('#subjectArrow').removeClass('mui-icon-arrowdown');
+	 	$('#subjectArrow').addClass('mui-icon-arrowup');
+
+	    mui('.chooseSubject').popover('toggle');//切换蒙版状态
+
+	    //点击蒙版时，如果科目选择箭头向上，则改为向下
+	 	document.querySelector('.mui-backdrop').addEventListener("tap",function(event){
+	 	 	if($('#subjectArrow').hasClass('mui-icon-arrowup')){
+				$('#subjectArrow').removeClass('mui-icon-arrowup');
+			 	$('#subjectArrow').addClass('mui-icon-arrowdown');
+		 	}
+	 	});
+}
+
+/*展示第pageNum页的成绩图表数据*/
+function showPageNumchart(pageNum){
+	console.log("调用成绩第"+pageNum+"页");
+	var subject = $("#subject").text();//获取当前要显示的科目
+	$.post("/CBabyAction/loadSubjectMark",{
+		babyId:localStorage.babyId,
+		subject:subject,
+		pageNum:pageNum
+	},function(data){
+		if(data.result == 0){//成功
+			showChart(data.data);
+		}
+		
+	})
+}
+
+
+/*展示操作信息*/
+function showResTips(result){
+		$(".response-tips").text(result);
+		$(".response-tips").show();
+		window.setTimeout("hideTips()",1500);
+}
+
+/*隐藏信息提示，并清空*/
+function hideTips(){
+		$(".response-tips").text("");
+		$(".response-tips").hide();
+}
+
+
+</script>
+
+
+

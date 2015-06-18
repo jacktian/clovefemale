@@ -57,20 +57,22 @@ $(function(){
 
             this.bind("keyup", function(e) {  
                 
-                var char_code = e.charCode ? e.charCode : e.keyCode;  
-                if (!/^[0-9]*$/.test(this.value)) {     
-                    this.value=this.value.replace(/[^1-9]{1}[^0-9]*/g,"");
-                }     
-                var remainder = 11;
-                remainder = 11 - this.value.length;
-                $("#numRemainder").text(remainder);
+                // var char_code = e.charCode ? e.charCode : e.keyCode;  
+                // console.log(this.value);
+                // if (!/^[1-9][0-9]*\.?$/.test(this.value)) {     
+                //     this.value=this.value.replace(/[^1-9]{1}[^0-9]*/g,"");
+                //     console.log("false");
+                // }     
+                // var remainder = 11;
+                // remainder = 11 - this.value.length;
+                // $("#numRemainder").text(remainder);
                 
             });     
 
             this.bind("keydown", function(e) {  
                 var char_code = e.charCode ? e.charCode : e.keyCode;
                 console.log(char_code); 
-                if(char_code == 8 || char_code == 46){
+                if(char_code == 8 || char_code == 190){
                     return true;
                 }else if(char_code<48 || char_code >57){      
                     return false;  
@@ -207,7 +209,10 @@ $(function(){
                 }
             ]],
         onChange:function(valueText,inst){
+        	console.log("change");
         	calBabyAge(valueText);
+        	var age = parseFloat(valueText);
+		 	loadBodyIndex_age(age);
         },
         onShow:function(html,valueText,inst){
         	// console.log(valueText);
@@ -246,7 +251,6 @@ $(function(){
             ]],
         onChange:function(valueText,inst){
         	var value = valueText.split(" ");
-        	console.log("change---"+value[0]+"---"+value[1]+"---"+value[2]);
         	localStorage.grade = value[0];
         	localStorage.subject = value[1];
         	localStorage.time = value[2];
@@ -271,15 +275,7 @@ $(function(){
                     // keys: [3, 4, 5, 6],
                     values: ["语文","数学","英语","美术", "音乐", "政治", "物理", "化学", "生物", "地理", "历史"]
                 }
-            ]],
-        onChange:function(valueText,inst){
-        	// var value = valueText.split(" ");
-        	// console.log("change---"+value[0]+"---"+value[1]+"---"+value[2]);
-        	// localStorage.grade = value[0];
-        	// localStorage.subject = value[1];
-        	// localStorage.time = value[2];
-        	// loadMark();
-        }
+            ]]
     });
     
     
@@ -312,6 +308,20 @@ $(function(){
 
  		if(weight==""||weight==null){
  			$(".nbi-Tips").text("体重不能为空哦!");
+ 			$(".nbi-Tips").show();
+ 			return false;
+ 		}
+
+ 		var tips = checkHeight(height);
+ 		if(tips != ""){
+ 			$(".nbi-Tips").text(tips);
+ 			$(".nbi-Tips").show();
+ 			return false;
+ 		}
+
+ 		tips = checkWeight(weight);
+ 		if(tips != ""){
+ 			$(".nbi-Tips").text(tips);
  			$(".nbi-Tips").show();
  			return false;
  		}
@@ -369,10 +379,11 @@ function loadBabyList(){
 		if(data.result == 0){
 			var length = data.data.length;
 			for(var i = 0 ; i < length; i++){
-				$("#babylist>ul").append("<li id="+ data.data[i].id+ " class='mui-table-view-cell'>"+data.data[i].name+"</li></div>");
+				$("#babylist>ul").append("<li id="+ data.data[i].id+ " sex="+data.data[i].sex+" class='mui-table-view-cell'>"+data.data[i].name+"</li></div>");
 				document.getElementById(data.data[i].id).addEventListener("tap",function(){
 					localStorage.babyId = $(this).attr("id");
 					localStorage.name = $(this).text();
+					localStorage.sex = $(this).attr("sex");
 					$("#title-babyGrowth").text($(this).text()+"的成长记录");
 					mui(".babylist").popover('toggle');
 					recoverTab();
@@ -381,7 +392,9 @@ function loadBabyList(){
 					}else if(activeTab_grow == 1){
 						loadGradeFormData();
 					}else{
-
+						$(".vaccine-Content").show();
+						loadNextVac();
+						loadVaccinated();
 					}
 				});
 			}
@@ -591,6 +604,7 @@ function showBodyIndexChart(bodyIndexList){
 /*计算宝宝年龄*/
 function calBabyAge(valueText){
 		var age = parseFloat(valueText);
+
         var ageDcb = "";
         console.log(valueText);
         if(age<1){
@@ -613,7 +627,8 @@ function calBabyAge(valueText){
         }
         localStorage.age = age;
         localStorage.ageDcb = ageDcb;
-        loadBodyIndex_age(age);
+        $(".nbi-Tips").hide();
+       
 }
 
 /*加载宝宝某个年龄的身体指标数据*/
@@ -649,6 +664,7 @@ function clearBiAddBox(){
 	console.log(maxAge);
 	if(maxAge!=null){
 		$('#scroller').mobiscroll('setVal', maxAge, true, true, false, 0);
+		loadBodyIndex_age(maxAge);
 	}
 }
 
@@ -673,9 +689,16 @@ function addOrMdfMark(){
  		$(".ngf-Tips").show();
  		return false;
  	}
+
+ 	var tips = checkMark(mark);
+ 	if(tips!=""){
+ 		console.log("tips不为空"+tips+"---")
+ 		$(".ngf-Tips").text(tips);
+ 		$(".ngf-Tips").show();
+ 		return false;
+ 	}
+ 		
  	var gradeArray = new Array();
- 	// gradeArray.
- 	console.log(gradFormId + "---"+mark+"---"+time+"---"+subject+"---"+grade+"---"+babyId);
 
  	$.post("/CBabyAction/addOrMdfGradeForm",{
 		gradeFormId:gradFormId,
@@ -812,6 +835,7 @@ function loadMark(){
 		if(data.result == 0){
 			$("#gradeFormId").text(data.data.id);
 			$("#baby_mark").val(data.data.mark);
+			$(".ngf-Tips").hide();
 		}else{
 			$("#gradeFormId").text("");
 		}
@@ -828,7 +852,6 @@ function clearNewGradeFormBox(){
 		var grade = localStorage.grade_last;
 		var subject = localStorage.subject_last;
 		var time = parseInt(localStorage.time_last) + 1;
-		console.log("clear---"+grade+" "+subject+" "+time);
 		$('#scroller_mark').mobiscroll('setVal', grade+" "+subject+" "+time, true, true, false, 0);
 	}
 	
@@ -847,6 +870,7 @@ function loadNextVac(){
 			$(".nextVacList").show();
 			$(".nullTips-vac-todo").hide();
 			var length = data.data.length;
+			 $(".nextVacList").html("");
 			for(var i = 0; i < length; i++){
 				var $list_item = $("<li></li>");
 				$($list_item).html("<div class='item-nextVac item-vacName'><span class='realData'>"+data.data[i].name+"</span></div>"
@@ -907,3 +931,65 @@ function recoverTab(){
 	$(".tab-Content").hide();
 	$(".nullTips-tab").hide();
 }
+
+/*检查是否为float，返回true/false*/
+function checkFloat(text){
+	if(/^\d+\.?\d+$/.test(text)){
+		return true;
+	}else{
+		return false;
+	}
+}
+
+/*检查身高,返回相关提示*/
+function checkHeight(text){
+	var tips = "";
+	if(!checkFloat(text)){
+		tips = "请输入正确格式的身高！";
+	}else{
+		var height = parseFloat(text);
+		if(height>200){
+			tips = "宝宝真有那么高吗？请输入正确身高！";
+		}
+		if(height < 30){
+			tips = "宝宝没那么矮吧？请输入正确身高！";
+		}
+	}
+	return tips;
+}
+
+/*检查体重,返回相关提示*/
+function checkWeight(text){
+	var tips = "";
+	if(!checkFloat(text)){
+		tips = "请输入正确格式的体重！";
+	}else{
+		var weight = parseFloat(text);
+		if(weight>120){
+			tips = "宝宝真有那么重吗？请输入正确体重！";
+		}
+		if(weight < 1){
+			tips = "宝宝没那么轻吧？请输入正确体重！";
+		}
+	}
+	return tips;
+}
+
+
+/*检查分数,返回相关提示*/
+function checkMark(text){
+	var tips = "";
+	if(!checkFloat(text)){
+		tips = "请输入正确格式的分数！";
+	}else{
+		var weight = parseFloat(text);
+		if(weight>100){
+			tips = "分数不能超过100分哦！";
+		}
+		if(weight < 0){
+			tips = "分数不能低于0分哦！";
+		}
+	}
+	return tips;
+}
+

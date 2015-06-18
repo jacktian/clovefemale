@@ -70,7 +70,7 @@
 		</div>
 		<div class="mui-button-row">
 			<button id="baby-add-btn" class="mui-btn mui-btn-primary confirm-btn" onclick="return false;">确认</button>&nbsp;&nbsp;
-			<button class="mui-btn mui-btn-primary cancel-btn" onclick="return false;">取消</button>
+			<button id="baby-add-cancel-btn" class="mui-btn mui-btn-primary cancel-btn" onclick="return false;">取消</button>
 		</div>
 	</form>
 	<div class="nb-Tips infTips"></div>
@@ -176,7 +176,7 @@
 		/*添加宝宝头像*/
 		document.getElementById("item-headImg-add").addEventListener("tap",function(event){
 			// $("#newBaby-HeadImg").attr("src","/babyimage/jF6mH0Sk50TVa-8LmDHZm6aAbfLMxB0gi37zVp_LJ9yDUwYBhmDaBz4JW_G2Z8XV.jpg");;
-			
+			console.log("切换头像");
 
 			wx.chooseImage({
 			    success: function (res) {
@@ -297,6 +297,11 @@
 			*/
 
 		});
+		
+		/*添加宝宝弹出框取消按钮*/
+		document.getElementById("baby-add-cancel-btn").addEventListener("tap",function(event){
+			mui('.newBabyBox').popover('toggle');
+		});
 
 
 		
@@ -327,15 +332,19 @@
 
 <script type="text/javascript">
 	$(function(){
+
 		/* ajax调用获得接口信息 */
-		$.get("/WeChat/jsApiCall?url="+location.href.split('#')[0],function(data,status){
+		$.get("/WeChat/jsApiCall?url="+location.href.split('?')[0],function(data,status){
 			/*获取接口配置信息*/
 			var timestamp = data.data.timestamp;
 			var nonceStr = data.data.nonceStr;
 			var signature = data.data.signature;
+
+			alert(location.href.split('?')[0]);
+			alert(signature);
 		    /* 配置微信接口信息 */
 			wx.config({
-			    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+			    debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
 			    appId: 'wx485f2bc0867fe1c2', // 必填，公众号的唯一标识
 			    timestamp: timestamp, // 必填，生成签名的时间戳
 			    nonceStr: nonceStr, // 必填，生成签名的随机串
