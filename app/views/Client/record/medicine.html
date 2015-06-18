@@ -252,7 +252,7 @@
 <script type="text/javascript">
 $(function(){
 	/* ajax调用获得接口信息 */
-	$.get("/WeChat/jsApiCall?url="+location.href.split('#')[0],function(data,status){
+	$.get("/WeChat/jsApiCall?url="+location.href.split('?')[0],function(data,status){
 		/*获取接口配置信息*/
 		var timestamp = data.data.timestamp;
 		var nonceStr = data.data.nonceStr;
