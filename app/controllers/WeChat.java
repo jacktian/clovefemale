@@ -313,10 +313,6 @@ public class WeChat extends WebService{
 			System.out.println(openidArr.get(i).getAsString());
 		}
 		wsOk(openidArr);
-		/*for(int i=0;i<openidArr.size();i++){
-			String openid = openidArr.get(i).getAsString();
-			MedboxInit.init(openid);
-		}*/
 	}
 }
 
