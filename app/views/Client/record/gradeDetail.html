@@ -60,7 +60,7 @@
 							</a>
 					</li>
 					<li>
-						<a id="nextPage_gf_h" href="#">
+						<a id="nextPage_gf_h" class="disablePageBtn" href="#">
 								下一页
 							</a>
 					</li>
@@ -154,6 +154,7 @@
 	var item2Show = false;//身体指标图标分析
 	var currentTab = 1;
 	var currentPage = 1;//当前页
+	var maxPage = 1;//总页数
 
 	var isLoad = false;
 
@@ -224,12 +225,30 @@
 				 	$('#subjectArrow').addClass('mui-icon-arrowdown');
 			 	}
 		});
-    
+    	
+    	/*上一页按钮点击事件*/
+    	document.getElementById("lastPage_gf_h").addEventListener("tap",function(event){
+    		if(!$(this).hasClass("disablePageBtn")){//按钮可用
+    			var subject = $("#subject").text();
+    			loadPageMarkData(subject,currentPage+1);
 
-	});
+    		}
+    	});
+
+    	/*下一页按钮点击事件*/
+    	document.getElementById("nextPage_gf_h").addEventListener("tap",function(event){
+    		if(!$(this).hasClass("disablePageBtn")){//按钮可用
+    			var subject = $("#subject").text();
+    			loadPageMarkData(subject,currentPage-1);
+
+    		}
+    	});
+
+	});//结束$(function())
 
 	/*加载历史记录*/
 	function loadGfData(subject){
+		$(".turnPage_fg").hide();
 		$.post("/CBabyAction/loadSubjectMark",{
 			babyId:localStorage.babyId,
 			subject:subject,
@@ -238,9 +257,12 @@
 			var htmlData = "";
 			isLoad = true;
 			biData = data;
+
 			$("#biDetailData .mui-loading").hide();
 			if(data.result == 0){//成功
 				item1Show = true;
+				showChart(data.data);
+				item2Show = true;
 				htmlData = "<tr class='tableTitle'>"
 						+"<td>科目</td>"
 						+"<td>年级</td>"
@@ -263,6 +285,7 @@
 				}else{
 					htmlData = "<tr><td>噢噢，出错了！</td></tr>";
 				}
+				$(".turnPage_gf_h").hide();
 			}
 			$("#biDetailTable").html(htmlData);
 		})
@@ -276,7 +299,7 @@
 		},function(data){
 			if(data.result == 0){//成功
 				 var page = data.data;
-				 localStorage.page = page;
+				 maxPage = page;
 				 console.log("成绩记录共"+page+"页");
 				 if(localStorage.page > 1){
 				 	$(".turnPage_gf_h").show();
@@ -299,14 +322,39 @@
 			// console.log(data.data);
 			// $("#biDetailData .mui-loading").hide();
 			if(data.result == 0){//成功
-				showChart(data.data)
-				$("#subject").text(data.data[0].subject);
+				// showChart(data.data)
+				// $("#subject").text(data.data[0].subject);
+				// item2Show = true;
+				// if(pageNum == null&&"" ==pageNum ){
+				// 	currentPage = 1;
+				// }else{
+					// currentPage = pageNum;
+				// }
+				showChart(data.data);
+				item1Show = true;
 				item2Show = true;
-				if(pageNum == null&&"" ==pageNum ){
-					currentPage = 1;
-				}else{
-					currentPage = pageNum;
+				htmlData = "<tr class='tableTitle'>"
+						+"<td>科目</td>"
+						+"<td>年级</td>"
+						+"<td>次数</td>"
+						+"<td>成绩</td>"
+					+"</tr>";
+				var length = data.data.length;				
+
+				for(var i = 0 ; i < length ; i++){
+					var grade = data.data[i];
+					htmlData += "<tr  class='bi-line'><td>"+grade.subject+"</td><td>"+grade.grade+"</td><td>第"+grade.time+"次</td><td>"+grade.mark+"</td></tr>"
 				}
+				// $("#subject").text(data.data[0].subject);
+				currentPage = pageNum;
+				$("#lastPage_gf_h").removeClass("disablePageBtn");
+				$("#nextPage_gf_h").removeClass("disablePageBtn");
+				if(currentPage == maxPage){
+					$("#lastPage_gf_h").addClass("disablePageBtn");
+				}else if(currentPage == 1){
+					$("#nextPage_gf_h").addClass("disablePageBtn");
+				}
+				$("#biDetailTable").html(htmlData);
 			}else{
 				if(data.data == "null"){
 					$("#chartbox_gf").hide();

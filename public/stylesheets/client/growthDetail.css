@@ -346,3 +346,13 @@ body{
 .turnPage_fg{
 	display: none;
 }
+
+.disablePageBtn {
+	color:#ccc;
+}
+
+
+.disablePageBtn:active,.disablePageBtn:hover{
+	background-color: #eee;
+	color:#ccc;
+}

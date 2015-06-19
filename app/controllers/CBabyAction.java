@@ -432,7 +432,7 @@ public class CBabyAction extends WebService{
 					}
 				}
 				if(pageNum == 0){
-					gradeFormList = GradeForm.find("select new GradeForm(gc.date,gc.grade,gc.grade_int,gc.subject,gc.mark,gc.time,gc.babyId) from GradeForm gc where gc.babyId = ? and gc.subject=? Order by gc.grade_int desc,gc.time desc", babyId,subject).fetch();
+					gradeFormList = GradeForm.find("select new GradeForm(gc.date,gc.grade,gc.grade_int,gc.subject,gc.mark,gc.time,gc.babyId) from GradeForm gc where gc.babyId = ? and gc.subject=? Order by gc.grade_int desc,gc.time desc", babyId,subject).fetch(6);
 				}else{
 					gradeFormList = GradeForm.find("select new GradeForm(gc.date,gc.grade,gc.grade_int,gc.subject,gc.mark,gc.time,gc.babyId) from GradeForm gc where gc.babyId = ? and gc.subject=? Order by gc.grade_int desc,gc.time desc", babyId,subject).fetch(pageNum,6);
 				}
@@ -457,13 +457,13 @@ public class CBabyAction extends WebService{
 	 */
 	public static void loadPageSizeOfSubject(String babyId,String subject){
 		try{
-			String queryString = "select count(*) from GradeForm gf where and gf.subject = ?1";
+			String queryString = "select count(*) from GradeForm gf where baby_Id = ?1 and subject = ?2";
 			Query query = JPA.em().createNativeQuery(queryString);
-//			query.setParameter(1, babyId);//给编号为1的参数设值 	
-			query.setParameter(1 , subject);//给编号为1的参数设值 
+			query.setParameter(1, babyId);//给编号为1的参数设值 	
+			query.setParameter(2 , subject);//给编号为1的参数设值 
 			String size = query.getSingleResult().toString();
 			System.out.println(subject+"--"+size);
-			wsOk(Math.ceil(Integer.parseInt(size) / 6));
+			wsOk(Math.ceil(Float.parseFloat(size) / 6));
 		}catch(Exception e){
 			wsError("噢噢，出错了！");
 		}
