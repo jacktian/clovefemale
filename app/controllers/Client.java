@@ -52,7 +52,6 @@ public class Client extends WebService{
 			JsonElement jsonElement = WS.url(requestUrl).get().getJson();
 			JsonObject json = jsonElement.getAsJsonObject();
 			String openid = json.get("openid").getAsString();
-			params.remove("code");
 			session.put("openid", openid);
 		}
 		catch(Exception e){
@@ -111,9 +110,13 @@ public class Client extends WebService{
 	 *我的孩子
 	 **/
 	public static void mybaby(){
-		render("/Client/record/mybaby.html");
+		redirect("/Client/babyRedirect");
 	}
 
+	public static void babyRedirect(){
+		render("/Client/record/mybaby.html");
+	}
+	
 	/**
 	 *孩子资料
 	 **/
@@ -244,5 +247,4 @@ public class Client extends WebService{
 	public static void gfDetail(){
 		render("/Client/record/gradeDetail.html");
 	}
-
 }
