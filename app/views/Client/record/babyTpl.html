@@ -3,11 +3,17 @@
 	<li class="mui-table-view-cell mui-media">
 		<a href="babyRecord" class="mui-navigate-right item-babyList">
 			{@if baby.headImgUrl == null || "" == baby.headImgUrl}
+			{@if baby.sex == "男"}
 			<div class="headImgBox">
-				<img class="mui-media-object mui-pull-left child-img baby-img-link" src="http://dcloudio.github.io/mui/assets/img/shuijiao.jpg"/>
+				<img class="mui-media-object mui-pull-left child-img baby-img-link" src="/public/images/client/default-boy.jpg"/>
 			</div>
 			{@else}
 			<div class="headImgBox">
+				<img class="mui-media-object mui-pull-left child-img baby-img-link" src="/public/images/client/default-girl.jpg"/>
+			</div>
+			{@else}
+			<div class="headImgBox">
+					
 					<img class="mui-media-object mui-pull-left child-img baby-img-link" src="${baby.headImgUrl}"/>
 			</div>
 			{@/if}

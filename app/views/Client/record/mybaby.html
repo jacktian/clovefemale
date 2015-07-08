@@ -39,7 +39,7 @@
 	<header class="mui-bar mui-bar-nav model-header">
 		<h1 class="mui-title model-title">宝宝诞生</h1>
 		<div id="item-headImg-add" class="item-headImg-add">
-			<img id="newBaby-HeadImg" class="mui-media-object child-img" src="/public/images/client/addHeadImg.png" alt="添加头像"/>
+			<img id="newBaby-HeadImg" class="mui-media-object child-img circle-headImg" src="/public/images/client/default-boy.jpg" alt="添加头像"/>
 			<!-- <div class="headImg-title">头像</div> -->
 		</div>
 	</header>
@@ -53,10 +53,10 @@
 			<label>性别</label>
 			<ul class="sexSelection">
 				<li class="mui-table-view-cell mui-radio mui-left">
-					<input id="radio-male" name="radio-sex-baby" type="radio" value="男" checked/>男
+					<input id="radio-male" class="radio-sex-baby" name="radio-sex-baby" type="radio" value="男" checked/>男
 				</li>
 				<li class="mui-table-view-cell mui-radio mui-left">
-					<input class="sex-radio" name="radio-sex-baby" type="radio" value="女" />女
+					<input class="sex-radio radio-sex-baby" name="radio-sex-baby" type="radio" value="女" />女
 				</li>
 			</ul>
 		</div>
@@ -185,7 +185,7 @@
 			    	var localId = localIds[0];
 			    	// alert(localId+"---"+localIds.length);
 			    	$("#baby-headImg").attr("src",localId.toString());
-			    	$("#newBaby-HeadImg").addClass("circle-headImg");
+			    	// $("#newBaby-HeadImg").addClass("circle-headImg");
 					localStorage.localId =  localId;//把localId在本地先缓存
 					alert(typeof(localId));
 					//上传头像图片
@@ -239,13 +239,13 @@
 		 	}
 
 		 	//检查头像
-		 	var headImg = "";
-		 	if(localStorage.headImgUrl == null || ""== localStorage.headImgUrl){
-				dataComplete = false;
-		 		$(".nb-Tips").text("点击右上角+号上传选择宝宝头像哦！").show();
-				return false;
-		 	}
-		 	headImg = localStorage.localId;
+		 	// var headImg = "";
+		 	// if(localStorage.headImgUrl == null || ""== localStorage.headImgUrl){
+				// dataComplete = false;
+		 	// 	$(".nb-Tips").text("点击右上角+号上传选择宝宝头像哦！").show();
+				// return false;
+		 	// }
+		 	// headImg = localStorage.localId;
 
 
 		 	$.post("/CBabyAction/addBaby",{
@@ -303,7 +303,9 @@
 			mui('.newBabyBox').popover('toggle');
 		});
 
-
+		$(".radio-sex-baby").click(function(){
+			changeDefaultImg();
+		});
 		
 	});//结束$(function);
 
@@ -312,7 +314,8 @@
 		$("#babyName").val("");
 		$("#radio-male").trigger("click");
 		$("#birthday-input").val("");
-		$("#newBaby-HeadImg").attr("src","/public/images/client/addHeadImg.png");
+		$("#newBaby-HeadImg").attr("src","/public/images/client/default-boy.jpg");
+		localStorage.headImgUrl = ""; //清楚上次录入的头像
 		$(".nb-Tips").text("").hide();
 	}
 
@@ -327,6 +330,20 @@
 	function hideTips(){
 		$(".response-tips").text("");
 		$(".response-tips").hide();
+	}
+
+	/*切换男女头像*/
+	function changeDefaultImg(){
+		if(localStorage.headImgUrl == null || ""== localStorage.headImgUrl){
+			var sex = $('input:radio[name="radio-sex-baby"]:checked').val();
+			if(sex == "男"){
+				$("#newBaby-HeadImg").attr("src","/public/images/client/default-boy.jpg");
+			}else{
+				$("#newBaby-HeadImg").attr("src","/public/images/client/default-girl.jpg");
+			}
+		}
+		
+		
 	}
 </script>
 

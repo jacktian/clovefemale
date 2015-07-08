@@ -93,6 +93,13 @@ public class CBabyAction extends WebService{
 //			baby.headImgUrl = downloadResult;
 //			baby.save();	
 			initBabyVac(baby.date,baby.id);
+			if("".equals(baby.headImgUrl) || baby.headImgUrl == null){//未上传头像
+				if("男".equals(baby.sex)){
+					baby.headImgUrl = "/public/images/client/default-boy.jpg";
+				}else{
+					baby.headImgUrl = "/public/images/client/default-girl.jpg";
+				}
+			}
 			babyList.add(baby);
 			wsOk(babyList);
 		}catch(Exception e){
@@ -114,6 +121,14 @@ public class CBabyAction extends WebService{
 				}catch(Exception e){
 					baby.dateStr = "未设置";
 				}
+				if("".equals(baby.headImgUrl) || baby.headImgUrl == null){//未上传头像
+					if("男".equals(baby.sex)){
+						baby.headImgUrl = "/public/images/client/default-boy.jpg";
+					}else{
+						baby.headImgUrl = "/public/images/client/default-girl.jpg";
+					}
+				}
+				
 				wsOk(baby);
 			}else{
 				wsError("不存在该宝宝哦!");
