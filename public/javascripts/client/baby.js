@@ -128,9 +128,9 @@ $(function(){
 
 	/*科目选择确定按钮tap事件*/
 	document.getElementById("subject-confirm-btn").addEventListener("tap",function(event){
- 		
+ 		console.log("确定科目按钮");
  		var value = $('#scroller_subject').mobiscroll("getVal",true);
- 		console.log();
+ 		console.log(value);
  		loadGradeFormData(value);
  		$("#subject").text(value);
  		mui('.chooseSubject').popover('toggle');
@@ -235,30 +235,55 @@ $(function(){
         wheels: [[
                 {
                 	label:'年级',
-                    // keys: [3, 4, 5, 6],
-                    values: ["小班","中班","大班","一年级", "二年级", "三年级", "四年级", "五年级", "六年级", "初一", "初二", "初三", "高一", "高二", "高三"]
+                    // keys: [3, 4, 5, 6],"小班","中班","大班",
+                    values: ["一年级", "二年级", "三年级", "四年级", "五年级", "六年级", "初一", "初二", "初三", "高一", "高二", "高三"]
                 },
                 {
                 	label:'科目',
                     // keys: [3, 4, 5, 6],
                     values: ["语文","数学","英语","美术", "音乐", "政治", "物理", "化学", "生物", "地理", "历史"]
-                },
-                {
-                	label:'次数',
-                    // keys: [3, 4, 5, 6],
-                    values: ["1","2","3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25"]
                 }
+                // ,
+                // {
+                // 	label:'次数',
+                //     values: ["1","2","3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25"]
+                // }
             ]],
         onChange:function(valueText,inst){
         	var value = valueText.split(" ");
         	localStorage.grade = value[0];
         	localStorage.subject = value[1];
-        	localStorage.time = value[2];
+        	// localStorage.time = value[2];
         	loadMark();
         }
     });
 
+	//日期控件触发
+	// $("#gradeDate_input").mobiscroll().date({
+	// 		theme:'ios',
+	// 		lang:'zh',
+	// 		display:'bottom',
+	// 		onSetDate:function(day,inst){
+	// 						localStorage.date = day.date.getFullYear()+"-"+(day.date.getMonth()+1)+"-"+day.date.getDate(); 
+	// 					}
+	// });
 
+		$('#gradeDate_input').mobiscroll().date({
+            theme: 'mobiscroll',
+            display: 'bottom',
+            lang: 'zh',
+            endYear:new Date().getFullYear(),
+            maxDate:new Date(),
+            dateFormat:'yy-mm-dd',
+            onSelect: function(valueText, inst) {
+            	 var selectedDate = inst.getVal(); 
+                 var date = $.mobiscroll.datetime.formatDate('yy-mm-dd', selectedDate);
+            //      console.log(date);
+            	localStorage.date = date;
+				loadMark();
+
+            }
+        });
 
  /*科目选择滚轮*/
     $('#scroller_subject').mobiscroll().scroller({
@@ -671,15 +696,18 @@ function clearBiAddBox(){
 /*添加或修改成绩记录*/
 function addOrMdfMark(){
 	var value = $('#scroller_mark').mobiscroll("getVal",true).split(" ");
+	console.log(value);
     localStorage.grade = value[0];
     localStorage.subject = value[1];
-    localStorage.time = value[2];
+    // localStorage.time = value[2]; //去掉次数，改为日期
 	var gradFormId = $("#gradeFormId").text();;
  	var mark = $("#baby_mark").val();
- 	var time = localStorage.time;
+ 	// var time = localStorage.time;
+ 	// var date = localStorage.date;
  	var subject = localStorage.subject;
  	var grade = localStorage.grade;
  	var babyId = localStorage.babyId;
+ 	var date = $("#gradeDate_input").val();
  	if(babyId==null || "" == babyId){
  		babyId = "1BFB8CDDECC24BE49F8D3C5B9528BBB0";//angela的babyId
  	}
@@ -706,14 +734,15 @@ function addOrMdfMark(){
 		subject:subject,
 		grade:grade,
 		mark:mark,
-		time:time
+		date:date
+		// time:time//去掉次数，改为日期
 	},function(data){
  		var resultText;
 		mui('.newmark').popover('toggle');	
 		if(data.result==0){//成功
 			localStorage.grade_last = data.data[0].grade;
 			localStorage.subject_last = data.data[0].subject;
-			localStorage.time_last = data.data[0].time;
+			// localStorage.time_last = data.data[0].time;
 			showHtRecord_mark(data.data);
 			showGradeFormChart(data.data);
 			$(".gradeFormDataBox").show();
@@ -766,11 +795,13 @@ function showHtRecord_mark(gradeFormList){
 	console.log(gradeFormList);
 	$(".data-record-gf").html("");
 	if(gradeFormList.length>0){
-		$("#nullTips-gf").hide();
-			$("#lastData_mark_1").html("<td>" + gradeFormList[0].grade+ "</td>" + "<td>第" + gradeFormList[0].time+ "次</td>"+"<td>" + gradeFormList[0].mark+ "</td>");
+			$("#nullTips-gf").hide();
+			var date0 = new Date(gradeFormList[0].date);
+			$("#lastData_mark_1").html("<td>" + gradeFormList[0].grade+ "</td>" + "<td>" + date0.getFullYear()+"-"+(date0.getMonth()+1) + "-"+ date0.getDate() + "</td>"+"<td>" + gradeFormList[0].mark+ "</td>");
 		}
 		if(gradeFormList.length>1){
-			$("#lastData_mark_2").html("<td>" + gradeFormList[1].grade+ "</td>" + "<td>第" + gradeFormList[1].time+ "次</td>"+"<td>" + gradeFormList[1].mark+ "</td>");
+			var date1 = new Date(gradeFormList[1].date);
+			$("#lastData_mark_2").html("<td>" + gradeFormList[1].grade+ "</td>" + "<td>" + date1.getFullYear()+"-"+(date1.getMonth()+1) + "-"+ date1.getDate() + "</td>"+"<td>" + gradeFormList[1].mark+ "</td>");
 		}
 }
 
@@ -782,7 +813,8 @@ function showGradeFormChart(gradeFormList){
 	if(count == 1){
 		$(".oneData-gf").show();
 		$("#oneDataVal-grade").text(gradeFormList[0].grade);
-		$("#oneDataVal-time").text(gradeFormList[0].time);
+		var date0 = new Date(gradeFormList[0].date);
+		$("#oneDataVal-time").text(date0.getFullYear()+"-"+(date0.getMonth()+1) + "-"+ date0.getDate());
 		$("#oneDataVal-mark").text(gradeFormList[0].mark);
 			
 		$("#chartbox_gf").hide();
@@ -799,7 +831,9 @@ function showGradeFormChart(gradeFormList){
 	var data_mark = new Array();//宝宝身高数据
 
 	for(var i = 0;i<count ; i++){
-		labels[i] = gradeFormList[count-i-1].grade +"/" + gradeFormList[count-i-1].time;
+		// labels[i] = gradeFormList[count-i-1].grade +"/" + gradeFormList[count-i-1].time;//去掉次数,改为成绩
+		var datei = new Date(gradeFormList[count-i-1].date);
+		labels[i] = gradeFormList[count-i-1].grade +"/" + (datei.getMonth()+1) + "-"+ datei.getDate();//去掉次数,改为成绩
 		data_mark[i] = gradeFormList[count-i-1].mark;
 	}
 
@@ -820,7 +854,7 @@ function showGradeFormChart(gradeFormList){
 	var ctx_mark = $("#markSimChart").get(0).getContext("2d");//.getContext("2d");
 			
 	$("#markSimChart").attr("width", $(window).get(0).innerWidth*0.95);
-	$("#markSimChart").attr("height", 150);
+	$("#markSimChart").attr("height", 200);
 	var chart_m = new Chart(ctx_mark).Line(data,options);
 }
 
@@ -830,13 +864,15 @@ function loadMark(){
 		babyId:localStorage.babyId,
 		grade:localStorage.grade,
 		subject:localStorage.subject,
-		time:localStorage.time
+		date:localStorage.date
+		// time:localStorage.time
 	},function(data){
 		if(data.result == 0){
 			$("#gradeFormId").text(data.data.id);
 			$("#baby_mark").val(data.data.mark);
 			$(".ngf-Tips").hide();
 		}else{
+			$("#baby_mark").val("");
 			$("#gradeFormId").text("");
 		}
 
@@ -846,13 +882,19 @@ function loadMark(){
 
 /*清空成绩添加框*/
 function clearNewGradeFormBox(){
+	console.log("清空成绩添加框");
+	var date = new Date();
+	var dateString = date.getFullYear()+"-"+(date.getMonth()+1) + "-"+ date.getDate();
+	localStorage.date = dateString;
 	$("#baby_mark").val("");
 	$("#gradeFormId").text("");
+	$("#gradeDate_input").val(dateString);
 	if(localStorage.grade!=null){
 		var grade = localStorage.grade_last;
 		var subject = localStorage.subject_last;
 		var time = parseInt(localStorage.time_last) + 1;
 		$('#scroller_mark').mobiscroll('setVal', grade+" "+subject+" "+time, true, true, false, 0);
+		loadMark();//加载今天该年级科目过录入的成绩
 	}
 	
 }

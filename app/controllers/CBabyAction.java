@@ -447,9 +447,9 @@ public class CBabyAction extends WebService{
 					}
 				}
 				if(pageNum == 0){
-					gradeFormList = GradeForm.find("select new GradeForm(gc.date,gc.grade,gc.grade_int,gc.subject,gc.mark,gc.time,gc.babyId) from GradeForm gc where gc.babyId = ? and gc.subject=? Order by gc.grade_int desc,gc.time desc", babyId,subject).fetch(6);
+					gradeFormList = GradeForm.find("select new GradeForm(gc.date,gc.grade,gc.grade_int,gc.subject,gc.mark,gc.time,gc.babyId) from GradeForm gc where gc.babyId = ? and gc.subject=? Order by gc.grade_int desc,gc.date desc", babyId,subject).fetch(6);
 				}else{
-					gradeFormList = GradeForm.find("select new GradeForm(gc.date,gc.grade,gc.grade_int,gc.subject,gc.mark,gc.time,gc.babyId) from GradeForm gc where gc.babyId = ? and gc.subject=? Order by gc.grade_int desc,gc.time desc", babyId,subject).fetch(pageNum,6);
+					gradeFormList = GradeForm.find("select new GradeForm(gc.date,gc.grade,gc.grade_int,gc.subject,gc.mark,gc.time,gc.babyId) from GradeForm gc where gc.babyId = ? and gc.subject=? Order by gc.grade_int desc,gc.date desc", babyId,subject).fetch(pageNum,6);
 				}
 			//	gradeFormList = GradeForm.find("select new GradeForm(gc.date,gc.grade,gc.grade_int,gc.subject,gc.mark,gc.time,gc.babyId) from GradeForm gc where gc.babyId = ? and gc.subject=? Order by gc.grade_int desc,gc.time desc", babyId,subject).fetch();
 				
@@ -488,10 +488,12 @@ public class CBabyAction extends WebService{
 	/**
 	 * 增加或修改宝宝成绩表单
 	 */
-	public static void addOrMdfGradeForm(String gradeFormId,String babyId,String subject,String grade,double mark,int time){
+	public static void addOrMdfGradeForm(String gradeFormId,String babyId,String subject,String grade,double mark,Date date){
 		GradeForm gradeForm;
-		List gradeStringList = Arrays.asList("小班","中班","大班","一年级", "二年级", "三年级", "四年级", "五年级", "六年级", "初一", "初二", "初三", "高一", "高二", "高三");
-		List<Integer> gradeIntList = Arrays.asList(1,2,3,11, 12, 13, 14, 15, 16, 21, 22, 23, 31, 32, 33);
+//		"小班","中班","大班",
+		List gradeStringList = Arrays.asList("一年级", "二年级", "三年级", "四年级", "五年级", "六年级", "初一", "初二", "初三", "高一", "高二", "高三");
+//		1,2,3,
+		List<Integer> gradeIntList = Arrays.asList(11, 12, 13, 14, 15, 16, 21, 22, 23, 31, 32, 33);
 		int i = gradeStringList.indexOf(grade);
 		int grade_int = 0;
 		if(i >= 0){
@@ -506,7 +508,7 @@ public class CBabyAction extends WebService{
 				gradeForm = GradeForm.findById(gradeFormId);
 				gradeForm.mark = mark;
 				gradeForm.save();
-				List<GradeForm> gradeFormList = GradeForm.find("select new GradeForm(gc.date,gc.grade,gc.grade_int,gc.subject,gc.mark,gc.time,gc.babyId) from GradeForm gc where gc.babyId = ? and gc.subject=? Order by gc.grade_int desc,gc.time desc", babyId,subject).fetch(6);
+				List<GradeForm> gradeFormList = GradeForm.find("select new GradeForm(gc.date,gc.grade,gc.grade_int,gc.subject,gc.mark,gc.time,gc.babyId) from GradeForm gc where gc.babyId = ? and gc.subject=? Order by gc.grade_int desc,gc.date desc", babyId,subject).fetch(6);
 				wsOk(gradeFormList);
 //				wsOk("修改记录成功");
 			}catch(Exception e){
@@ -520,17 +522,17 @@ public class CBabyAction extends WebService{
 			gradeForm.grade = grade;
 			gradeForm.grade_int = grade_int;
 			gradeForm.subject = subject;
-			gradeForm.time = time;
+//			gradeForm.time = time;
 			gradeForm.mark = mark;
-			gradeForm.date = new Date();
+			gradeForm.date = date;
+//			gradeForm.date = new Date();
 			try{
 				gradeForm.save();
-				List<GradeForm> gradeFormList = GradeForm.find("select new GradeForm(gc.date,gc.grade,gc.grade_int,gc.subject,gc.mark,gc.time,gc.babyId) from GradeForm gc where gc.babyId = ? and gc.subject=? Order by gc.grade_int desc,gc.time desc", babyId,subject).fetch(6);
+				List<GradeForm> gradeFormList = GradeForm.find("select new GradeForm(gc.date,gc.grade,gc.grade_int,gc.subject,gc.mark,gc.time,gc.babyId) from GradeForm gc where gc.babyId = ? and gc.subject=? Order by gc.grade_int desc,gc.date desc", babyId,subject).fetch(6);
 				wsOk(gradeFormList);
 			}catch(Exception e){
 				wsError("添加记录失败");
 			}
-			
 			
 		}
 		
@@ -553,7 +555,7 @@ public class CBabyAction extends WebService{
 					subject = subjectList.get(0);
 				}
 			}
-			gradeFormList = GradeForm.find("select new GradeForm(gc.date,gc.grade,gc.grade_int,gc.subject,gc.mark,gc.time,gc.babyId) from GradeForm gc where gc.babyId = ? and gc.subject=? Order by gc.grade_int desc,gc.time desc", babyId,subject).fetch(6);
+			gradeFormList = GradeForm.find("select new GradeForm(gc.date,gc.grade,gc.grade_int,gc.subject,gc.mark,gc.time,gc.babyId) from GradeForm gc where gc.babyId = ? and gc.subject=? Order by gc.grade_int desc,gc.date desc", babyId,subject).fetch(6);
 			
 
 			if(gradeFormList.size() == 0){
@@ -575,25 +577,42 @@ public class CBabyAction extends WebService{
 	 * subject:科目
 	 * grade：年级
 	 */
-	public static void loadGrade(String babyId,String grade, String subject,int time){
+	public static void loadGrade(String babyId,String grade, String subject,Date date){
+		Date testDate  = new Date(115,5,10);
+	
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		String dateStr = format.format(date);
+		
+//		String queryString = "select DATE_FORMAT(date, '%Y-%c-%e') from GradeForm gf where gf.babyId = ?1 and gf.grade = ?2 and gf.subject = ?3 and DATE_FORMAT(date, '%Y-%c-%e') = '2015-6-10'";
+//		
+//		List<Baby> babyList =  new ArrayList<Baby>();
+//			Query query = JPA.em().createQuery(queryString);
+//			query.setParameter(1, babyId);//给编号为1的参数设值 
+//			query.setParameter(2, grade);//给编号为1的参数设值 
+//			query.setParameter(3, subject);//给编号为1的参数设值 
+////			query.setParameter(4, dateStr);//给编号为1的参数设值 
+//			babyList  = query.getResultList();
+////		wsOk(babyList);
+//		wsOk(babyList.get(0)+"---"+dateStr);
 		try{
-			List<GradeForm> gradeFormList = GradeForm.find("babyId=? and grade = ? and subject = ? and time = ?", babyId,grade,subject,time).fetch(1);
+			List<GradeForm> gradeFormList = GradeForm.find("babyId=? and grade = ? and subject = ? and DATE_FORMAT(date, '%Y-%m-%d') = ?", babyId,grade,subject,dateStr).fetch(1);
 			if(gradeFormList.size()!=0){
 				wsOk(gradeFormList.get(0));
 			}else{
+//				wsOk(dateStr);
 				wsError("null");
 			}
 		}catch(Exception e){
 			wsError("异常");
 		}
-		
+//		DATE_FORMAT(date, '%Y-%c-%e')
 	}
 	
 	/**
 	 * 
 	 */
 	public static void modifyGrade(){
-		String babyId = babyId = "1BFB8CDDECC24BE49F8D3C5B9528BBB0";
+		String babyId = "1BFB8CDDECC24BE49F8D3C5B9528BBB0";
 		List<GradeForm> gradeFormList = GradeForm.find("babyId=?", babyId).fetch(6);
 		GradeForm grade;
 		for(int i = 0; i < gradeFormList.size(); i++){
@@ -602,6 +621,7 @@ public class CBabyAction extends WebService{
 			grade.delete();
 		}
 	}
+	
 	
 	
 	/**

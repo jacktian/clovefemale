@@ -673,9 +673,16 @@ span.mui-icon.mui-icon-plus.test::before{
 	color:#fff;
 	text-align: center;
 	font-weight: 700;
+	width:100%;
+	padding:0;
+	margin: 0 auto;
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
+	z-index: 1000;
+	box-shadow: 0 1px 6px #ccc;
+
 }
+
 
 .mui-title.model-title{
 	color:#fff;
@@ -782,7 +789,7 @@ span.mui-icon.mui-icon-plus.test::before{
 
 /*滚轮弹出框样式*/
 .scrollerBox .dwcc{
-	background-color: #fff;
+	/*background-color: #fff;*/
 }
 
 .scrollerBox .mui-input-group input[type=text]{
@@ -809,16 +816,14 @@ span.mui-icon.mui-icon-plus.test::before{
 	width:80%;
 	min-width: 225px;
 	max-width: 600px;
-	
 	margin:0 auto;
-	/*padding:2px 3px 0px;*/
 	position: absolute;
 	top:50%;
 	left:10%;
-	/*border:1px solid #ddd;*/
 	background-color: #fff;
 	border-radius: 5px;
-	overflow: hidden;
+
+	/*overflow: hidden;*/
 }
 
 .newbodyIndex{
@@ -900,7 +905,7 @@ span.mui-icon.mui-icon-plus.test::before{
 
 .newmark{
 	height: auto;
-	margin-top: -139px;
+	margin-top: -178px;/*356*/
 }
 
 @media screen and (min-width: 749px) { 

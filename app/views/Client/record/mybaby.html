@@ -12,7 +12,7 @@
 </header> -->
 
 <header class="mui-bar mui-bar-nav babyTitle">
-  <a href="first" class="mui-icon mui-icon-left-nav mui-pull-left"></a>
+  <a href="first" class="mui-icon mui-icon-home mui-pull-left"></a>
   <a id="newBabyBtn" class="mui-icon mui-icon-plusempty mui-pull-right"></a>
   <h1 class="mui-title">宝宝列表</h1>
 </header>
@@ -129,22 +129,12 @@
 		});
 
 		/*加载宝宝列表*/
-		$.get("/CBabyAction/loadBabyList",function(data){
-			// alert(data);
+		/*$.get("/CBabyAction/loadBabyList",function(data){
 			if(data.result==0){//操作成功
 				var html = juicer($('#babyTpl').html(),{babyList:data.data});
 				
+				console.log(html);
 				$('.child-list').append(html);
-				//点击宝宝头像进入宝宝资料页面
-				// var length = $(".baby-img-link").length;
-				// for(var i = 0; i < length; i++){
-				// 	var dom = $(".item-babyList").get(i);
-				// 	dom.addEventListener("longtap",function(e){
-				// 		alert("long");
-				// 		$(dom).attr("href","babyInf");
-				// 		return true;
-				// 	});
-				// }
 
 				$(".baby-img-link").bind('touchend',function(e){
 					$(this).parent().parent().attr("href","babyInf");
@@ -154,11 +144,8 @@
 				});
 
 				$(".item-babyList").bind('touchend',function(){
-					// if("psnCenter" == localStorage.lastPage){
-					// 	$(this).attr("href","babyInf");
-					// }
+					
 					localStorage.babyId = $(this).children(".babyId").text();
-					// window.location.href="/Cient/babyInf"; 
 					return true;
 				});
 				
@@ -171,13 +158,25 @@
 			}
 			
 		});
+		*/
+		
+		loadBabyList();
 
 
 		/*添加宝宝头像*/
 		document.getElementById("item-headImg-add").addEventListener("tap",function(event){
 			// $("#newBaby-HeadImg").attr("src","/babyimage/jF6mH0Sk50TVa-8LmDHZm6aAbfLMxB0gi37zVp_LJ9yDUwYBhmDaBz4JW_G2Z8XV.jpg");;
-			console.log("切换头像");
 
+			wx.checkJsApi({
+			    jsApiList: ['chooseImage'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
+			    success: function(res) {
+			        // 以键值对的形式返回，可用的api值true，不可用为false
+			        // 如：{"checkResult":{"chooseImage":true},"errMsg":"checkJsApi:ok"}
+			        if(res.checkResult.chooseImage == false){
+			        	showResTips("接口不可用，请升级微信版本");
+			        }
+			    }
+			});
 			wx.chooseImage({
 			    success: function (res) {
 			    	//返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
@@ -259,8 +258,10 @@
 					        	// if(data.data[0].headImgUrl == null || ""==data.data[0].headImgUrl){
 					        	// 	showResTips("宝宝添加成功!</tr>头像获取失败,请在宝宝资料重新上传!")
 					        	// }
-					        	var html = juicer($('#babyTpl').html(),{babyList:data.data});
-			 					$('.child-list').append(html);
+					    //     	var html = juicer($('#babyTpl').html(),{babyList:data.data});
+			 					// $('.child-list').append(html);
+
+			 					loadBabyList();
 					        }else{
 					        	showResTips(data.data)
 					        }
@@ -308,7 +309,41 @@
 		});
 		
 	});//结束$(function);
+	
+	/*加载宝宝列表*/
+		function loadBabyList(){
+			$.get("/CBabyAction/loadBabyList",function(data){
+				if(data.result==0){//操作成功
+					// $('.child-list').
+					var html = juicer($('#babyTpl').html(),{babyList:data.data});
+					$('.child-list').html(html);
+					// $('.child-list').append(html);
 
+					$(".baby-img-link").bind('touchend',function(e){
+						$(this).parent().parent().attr("href","babyInf");
+						localStorage.babyId = $(this).parent().parent().children(".babyId").text();
+						e.stopPropagation();
+						return true;
+					});
+
+					$(".item-babyList").bind('touchend',function(){
+						
+						localStorage.babyId = $(this).children(".babyId").text();
+						return true;
+					});
+					
+				}else{//操作失败
+					if(data.data == "找不到宝宝"){
+						$('.nullTips').show();
+					}else{//操作异常
+
+					}
+				}
+				
+			});
+		};
+
+	
 	/*还原添加框内容*/
 	function recoverAddBox(){
 		$("#babyName").val("");
@@ -357,11 +392,11 @@
 			var nonceStr = data.data.nonceStr;
 			var signature = data.data.signature;
 
-			alert(location.href.split('#')[0]);
-			alert(signature);
+			// alert(location.href.split('#')[0]);
+			// alert(signature);
 		    /* 配置微信接口信息 */
 			wx.config({
-			    debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+			    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
 			    appId: 'wx485f2bc0867fe1c2', // 必填，公众号的唯一标识
 			    timestamp: timestamp, // 必填，生成签名的时间戳
 			    nonceStr: nonceStr, // 必填，生成签名的随机串

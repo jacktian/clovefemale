@@ -175,6 +175,11 @@ body{
 .oneData{
 	text-align: center;
 }
+
+.noData_chart{
+	text-align: center;
+	display: none;
+}
 /*--------------图表分析样式结束-----------------*/
 
 
