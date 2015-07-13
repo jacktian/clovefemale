@@ -9,3 +9,8 @@ server.pid
 .idea
 *.iml
 test
+.DS_Store
+*.iml
+*.ipr
+*.iws
+conf/

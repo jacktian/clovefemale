@@ -5,16 +5,16 @@
 #{/set}
 #{output 'Client/record/medBoxTpl.html'/}
 <header class="mui-bar mui-bar-nav client-bar-nav">
-	<a class="mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<a class="mui-icon mui-icon-left-nav mui-pull-left" href="@{Client.first()}"></a>
 	<h1 class="mui-title client-title">小药箱</h1>
 </header>
 
-<div class="mui-content med-box-search-content">
+<!--div class="mui-content med-box-search-content">
 	<div class="mui-content-padded">
 		<div class="mui-input-row mui-search">
 			<input type="search" id="medbox-search" placeholder="输入药箱名称"></div>
 	</div>
-</div>
+</div-->
 
 <div class="mui-content med-box-content">
 	<ul class="mui-table-view med-box-list">
@@ -75,7 +75,6 @@
 <script type="text/javascript" src = "@{'/public/javascripts/juicer.js'}"></script>
 <script type="text/javascript">
 	$(function(){
-		alert(location.href.split('#')[0]);
 		var delSelect = 0;
 		/*加载药箱列表*/
 		var loadMedBoxList = function(){

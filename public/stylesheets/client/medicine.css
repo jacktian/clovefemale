@@ -24,8 +24,10 @@
 }
 .med-box-content{
 	background:#FFF;
-	margin-top:50px;
 	margin-bottom:50px;
+}
+.medicine-content{
+	margin-top:50px;
 }
 /* 药箱列表  */
 .med-box-list a i{

@@ -8,7 +8,7 @@
 #{/set}
 #{output 'Client/record/pregTpl.html'/}
 <header class="mui-bar mui-bar-nav client-bar-nav">
-	<a class="mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<a class="mui-icon mui-icon-left-nav mui-pull-left" href="@{Client.first()}"></a>
 	<h1 class="mui-title client-title">助孕记录</h1>
 </header>
 <div class="mui-content preg-menu-content">
@@ -110,7 +110,7 @@
 		</div>
 		<div class="preg-content-section chart-section">
 			<a href="/CTemperature/tempDetail" class="mui-pull-right more-link">分析></a>			
-			<div class="preg-title">孕妇体温</div>
+			<div class="preg-title">基础体温</div>
 			<canvas id="temp-chart" class="preg-chart"></canvas>
 			<div class="temp-chart-empty chart-empty not-shown">图表无数据显示</div>
 		</div>
@@ -241,10 +241,10 @@
 			</div>
 		</div>
 		<div class="model-bottom">
-			<button class="mui-btn mui-btn-negative model-btn-refresh mense-data-refresh">更新</button>
+			<button class="mui-btn mui-btn-negative model-btn-refresh mense-data-refresh">添加</button>
 		</div>
 		<div class="model-bottom">
-			<button class="mui-btn mui-btn-negative model-btn-delete mense-data-delete" disabled="true">清除</button>
+			<button class="mui-btn mui-btn-negative model-btn-delete mense-data-delete" disabled="true">删除</button>
 		</div>
 		<div class="model-tips">
 			<button class="mui-btn last-btn" style="display:none">上一次</button>
@@ -263,10 +263,10 @@
 			<div id="temp-scroller"></div>
 		</div>
 		<div class="model-bottom">
-			<button class="mui-btn mui-btn-negative model-btn-refresh temp-data-refresh">更新</button>
+			<button class="mui-btn mui-btn-negative model-btn-refresh temp-data-refresh">添加</button>
 		</div>
 		<div class="model-bottom">
-			<button class="mui-btn mui-btn-negative model-btn-delete temp-data-delete" disabled="true">清除</button>
+			<button class="mui-btn mui-btn-negative model-btn-delete temp-data-delete" disabled="true">删除</button>
 		</div>
 		<div class="model-tips">
 			<button class="mui-btn last-btn" id="lastTempViewBtn" disabled>上一次</button>
@@ -285,10 +285,10 @@
 			<div id="pregw-scroller"></div>
 		</div>
 		<div class="model-bottom">
-			<button class="mui-btn mui-btn-negative model-btn-refresh pregw-data-refresh">更新</button>
+			<button class="mui-btn mui-btn-negative model-btn-refresh pregw-data-refresh">添加</button>
 		</div>
 		<div class="model-bottom">
-			<button class="mui-btn mui-btn-negative model-btn-delete pregw-data-delete" disabled="true">清除</button>
+			<button class="mui-btn mui-btn-negative model-btn-delete pregw-data-delete" disabled="true">删除</button>
 		</div>
 		<div class="model-tips">
 			<button class="mui-btn last-btn" id="lastPregwViewBtn" disabled>上一次</button>
@@ -307,10 +307,10 @@
 			<div id="pregm-scroller"></div>
 		</div>
 		<div class="model-bottom">
-			<button class="mui-btn mui-btn-negative model-btn-refresh pregm-data-refresh">更新</button>
+			<button class="mui-btn mui-btn-negative model-btn-refresh pregm-data-refresh">添加</button>
 		</div>
 		<div class="model-bottom">
-			<button class="mui-btn mui-btn-negative model-btn-delete pregm-data-delete" disabled="true">清除</button>
+			<button class="mui-btn mui-btn-negative model-btn-delete pregm-data-delete" disabled="true">删除</button>
 		</div>
 		<div class="model-tips">
 			<button class="mui-btn last-btn" id="lastPregmViewBtn" disabled>上一次</button>
@@ -481,6 +481,8 @@
                 if (data.result == 0) {
                     mui.toast('保存成功');
                     loadMenseFromServer();
+                    $('#pregDrop').hide();
+                    $('.form-model').addClass('mui-hidden');
                 } 
                 else if(data.data == "dateExp"){
                 	mui.toast('请选择正确的时间');
@@ -496,13 +498,13 @@
 	            if($('.mense-data-delete').hasClass('deleted')){
 	            	$.get('/CPregnant/removeMense?date='+date,function(data){
 	            		if(data.result == 0){
-	            			mui.toast('清除成功');
+	            			mui.toast('删除成功');
 	            			$('.mense-data-delete').removeClass('deleted');
             				$('.mense-data-delete').attr('disabled',true);
             				loadMenseFromServer();
 	            		}
 	            		else{
-	            			mui.toast('清除失败');
+	            			mui.toast('删除失败');
 	            		}
 	            	})
 	            }
@@ -614,6 +616,8 @@
                 if (data.result == 0) {
                     mui.toast('提交成功');
                     loadTempFromServer();
+                    $('#pregDrop').hide();
+                    $('.form-model').addClass('mui-hidden');
                 } 
                 else if(data.data == "dateExp"){
                 	mui.toast('请选择正确的时间');
@@ -628,13 +632,13 @@
         	var date = $('#temp-date-val').attr('data-val');
         	$.get('/CTemperature/removeTemp?date='+date,function(data){
         		if(data.result==0){
-        			mui.toast('清除成功');
+        			mui.toast('删除成功');
         			$('.temp-data-delete').removeClass('deleted');
             		$('.temp-data-delete').attr('disabled',true);
         			loadTempFromServer();
         		}
         		else{
-        			mui.toast('清除失败');
+        			mui.toast('删除失败');
         		}
         	});
         })
@@ -709,6 +713,8 @@
                 if (data.result == 0) {
                     mui.toast('提交成功');
                     loadWeightFromServer();
+                    $('#pregDrop').hide();
+                    $('.form-model').addClass('mui-hidden');
                 }
                 else if(data.data == "dateExp"){
                 	mui.toast('请选择正确的时间');
@@ -723,13 +729,13 @@
         	var date = $('#pregw-date-val').attr('data-val');
         	$.get('/CWeight/removeWeight?date='+date,function(data){
         		if(data.result==0){
-        			mui.toast('清除成功');
+        			mui.toast('删除成功');
         			$('.pregw-data-delete').removeClass('deleted');
             		$('.pregw-data-delete').attr('disabled',true);
         			loadWeightFromServer();
         		}
         		else{
-        			mui.toast('清除失败');
+        			mui.toast('删除失败');
         		}
         	});
         })
@@ -870,6 +876,8 @@
                 if (data.result == 0) {
                     mui.toast('提交成功');
                     loadMovementFromServer();
+                    $('#pregDrop').hide();
+                    $('.form-model').addClass('mui-hidden');
                 } 
                 else if(data.data == "dateExp"){
                 	mui.toast('请选择正确的时间');
@@ -884,13 +892,13 @@
         	var date = $('#pregm-date-val').attr('data-val');
         	$.get('/CMove/removeMovement?date='+date,function(data){
         		if(data.result==0){
-        			mui.toast('清除成功');
+        			mui.toast('删除成功');
         			$('.pregm-data-delete').removeClass('deleted');
             		$('.pregm-data-delete').attr('disabled',true);
         			loadMovementFromServer();
         		}
         		else{
-        			mui.toast('清除失败');
+        			mui.toast('删除失败');
         		}
         	});
         })
