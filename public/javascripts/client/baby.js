@@ -1,8 +1,18 @@
-var babyAge = ["初生儿","1个月","2个月","3个月", "4个月", "5个月", "6个月", "7个月", "8个月", "9个月", "10个月", "11个月", "1岁", "1岁半", "2岁", "2岁半", "3岁", "3岁半", "4岁", "4岁半",  "5岁", "5岁半", "6岁", "6岁半", "7岁", "8岁","9岁","10岁","11岁","12岁","13岁","14岁","15岁", "16岁", "17岁", "18岁"];
+var babyAge = ["初生儿","2月","4月","6月","9月","1岁","1岁3月","1岁半","1岁9月","2岁","2岁半","3岁","3岁半","4岁","4岁半","5岁","5岁半","6岁","6岁半","7岁","7岁半","8岁","8岁半","9岁","9岁半","10岁","10岁半","11岁","11岁半","12岁","12岁半","13岁","13岁半","14岁","14岁半","15岁","15岁半","16岁","16岁半","17岁","18岁"];//["初生儿","1个月","2个月","3个月", "4个月", "5个月", "6个月", "7个月", "8个月", "9个月", "10个月", "11个月", "1岁", "1岁半", "2岁", "2岁半", "3岁", "3岁半", "4岁", "4岁半",  "5岁", "5岁半", "6岁", "6岁半", "7岁", "8岁","9岁","10岁","11岁","12岁","13岁","14岁","15岁", "16岁", "17岁", "18岁"];
 var standerH_male = [50.4,54.8,58.7,62,64.6,66.7,68.4,69.8,71.2,72.6,74,75.3,76.5,82.7,88.5,93.3,97.5,100.6,104.1,107.7,111.3,114.7,117.7,120.7,124,130,135.4,140.2,145.3,151.9,159.5,165.9,169.8,171.6,172.3,172.7];
 var standerH_female =[49.7,53.7,57.4,60.6,63.1,65.2,66.8,68.2,69.6,71,72.4,73.7,75,81.5,87.2,92.1,96.3,99.4,103.1,106.7,110.2,113.5,116.6,119.4, 122.5,128.5,134.1,140.1,146.6,152.4,156.3,158.6,159.8,160.1,160.3,160.6];
 var standerW_male = [3.32,4.51,5.68,6.7,7.45,8,8.41,8.76,9.05,9.33,9.58,9.83,10.05,11.29,12.54,13.64,14.65,15.63,16.64,17.75,18.98,20.18,21.26,22.45,24.06,27.33,30.46,33.74,37.69,42.49,48.08,53.37,57.08,59.35,60.68,61.40];
 var standerW_female = [3.21,4.2,5.21,6.13,6.83,7.36,7.77,8.11,8.41,8.69,8.94,9.18,9.4,10.65,11.92,13.05,14.13,15.16,16.17,17.22,18.26,19.33,20.37,21.44,22.64,25.25,18.19,31.76,36.10,40.77,44.79,47.83,49.82,50.81,51.20,51.41];
+
+var upH_male = [54.0,63.3,69.3,73.3,77.8,82.1,85.8, 89.1,92.4,95.8,101.0,104.6,108.6,112.3,116.2,120.1,123.8,127.2,130.5,134.3,137.8,141.1,144.2,147.2,150.1,152.7,155.7,158.9,162.6,166.9,171.1,175.1,178.1,180.2,181.8,182.8,183.6,184.0,184.3,184.5,184.7];
+var upH_female =[53.2,61.8,67.7,71.5,76.2,80.5,84.3,87.7,91.1,94.3,99.8,103.4,107.2,111.1,115.2,118.9,122.6,126.0,129.2,132.7,136.1,139.4,142.6,145.8,149.2,152.8,156.3,160.0,162.9,165.3,167.1,168.3,169.2,169.9,170.4,170.8,171.1,171.0,171.0,171.0,171.3];
+var lowH_male =[46.9,54.3,60.1,63.7 ,67.6, 71.2, 74.0 ,76.6 ,79.1 ,81.6 ,85.9 ,89.3 ,93.0 ,96.3 ,99.5 ,102.8, 105.9 ,108.6, 111.1, 114.0, 116.8, 119.3, 121.6, 123.9, 126.0, 127.9, 130.0, 132.1, 134.5, 137.2, 140.2, 144.0, 147.9, 151.5, 154.5, 156.7, 158.3, 159.1, 159.7, 160.1, 160.5];
+var lowH_female =[46.4,53.2,58.8,62.3,66.1,69.7,72.9,75.6,78.1,80.5,84.8,88.2,91.9,95.4,98.7,101.8,104.9,107.6,110.1,112.7,115.4,117.9,120.3,122.6,125.0,127.6,130.3,133.4,136.5,139.5,142.1,144.2,146.0,147.2,148.2,148.8,149.2,149.2,149.3,149.5,149.8];
+
+var upW_male =[4.18,7.14,9.32,10.50,11.64,12.54,13.32,14.09,14.90,15.67,17.06,18.37,19.65,20.01,22.57,24.38,26.24,28.03,30.13,33.08,36.24,39.41,42.54,45.52,48.51,51.38,54.37,57.58,60.96,64.68,68.51,72.60,76.16,79.07,81.11,82.45,83.32,83.85,84.21,84.45,84.72];
+var upW_female =[4.10,6.60,8.59,9.73,10.86,11.73,12.50,13.29,14.12,14.92,16.39,17.81,19.17,20.54,22.00,23.50,25.12,26.74,28.46,30.45,32.64,34.94,37.49,40.32,43.54,4.15,50.92,54.78,58.21,61.22,63.44,64.99,66.03,66.77,67.28,67.61,67.82,67.93,68.00,68.04,68.10];
+var lowW_male = [2.58, 4.47, 5.91, 6.70, 7.46, 8.06, 8.57, 9.07, 9.59, 10.09, 10.97, 11.79, 12.57, 13.35, 14.18, 15.06, 15.87, 16.56, 17.27, 18.20, 19.11, 19.97, 20.79, 21.62, 22.50, 23.40, 24.43, 25.64, 26.96, 28.41, 30.01, 32.04, 34.22, 36.54, 38.71, 40.63, 42.26, 43.51, 44.54, 45.28, 46.27];
+var lowW_female =[2.54,4.15,5.48,6.26,7.03,7.61,8.12,8.63,9.15,9.64,10.52,11.36,12.16,12.93,13.71,14.44,15.18,15.87,16.55,17.31,18.10,18.88,19.71,20.56,21.49,22.54,23.74,25.23,26.89,28.77,30.64,32.50,34.23,35.80,37.13,38.16,38.94,39.39,39.72,39.88,40.15];
 var activeTab_grow = 0; //当前tab选项卡为第一个
 var item1Show = false,item2Show = false,item3Show = false;//子选项卡是否显示标志
 $(function(){
@@ -102,6 +112,7 @@ $(function(){
 			$("#title-babyGrowth").text(data.data.name+"的成长记录");
 			localStorage.babyId = data.data.id;
 			localStorage.sex = data.data.sex;
+			localStorage.babyBirthday = data.data.dateStr;
 			// alert(localStorage.babyId);
 			loadHistoryData();
 		}
@@ -185,41 +196,55 @@ $(function(){
 			// item3Show = true;
 			$(".vaccine-Content").show();
 			loadNextVac();
+			// $(".nextVacList").show();
+			// $(".nullTips-vac-todo").hide();
 			loadVaccinated();
 		}
 	});
 
 	
 	/*身体指标添加滚轮*/
-    $('#scroller').mobiscroll().scroller({
-        theme: 'mobiscroll',
-        lang: 'zh',
-        display: 'inline',
-        rows:3,
-        multiline:1,
-        // showLabel:true,
-        layout:'liquid',
-        height:40,
-         wheels: [[
-                {
-                	label:'岁',
-                	name:'years',
-                    keys: [0,0.01,0.02,0.03, 0.04, 0.05, 0.06,0.07,0.08,0.09,0.10,0.11,1,1.5,2,2.5,3,3.5, 4,4.5, 5, 5.5,6,6.5,7,8,9,10,11,12,13,14,15,16,17,18],
-                    values: ["初生儿","1个月","2个月","3个月", "4个月", "5个月", "6个月", "7个月", "8个月", "9个月", "10个月", "11个月", "1岁", "1岁半", "2岁", "2岁半", "3岁", "3岁半", "4岁", "4岁半",  "5岁", "5岁半", "6岁", "6岁半", "7岁", "8岁","9岁","10岁","11岁","12岁","13岁","14岁","15岁", "16岁", "17岁", "18岁"]
-                }
-            ]],
-        onChange:function(valueText,inst){
-        	console.log("change");
-        	calBabyAge(valueText);
-        	var age = parseFloat(valueText);
-		 	loadBodyIndex_age(age);
-        },
-        onShow:function(html,valueText,inst){
-        	// console.log(valueText);
-        	// loadBodyIndex_age(0);
-        }
-    });
+    // $('#scroller').mobiscroll().scroller({
+    //     theme: 'mobiscroll',
+    //     lang: 'zh',
+    //     display: 'inline',
+    //     rows:3,
+    //     multiline:1,
+    //     layout:'liquid',
+    //     height:40,
+    //      wheels: [[
+    //             {
+    //             	label:'岁',
+    //             	name:'years',
+    //                 keys: [0,0.01,0.02,0.03, 0.04, 0.05, 0.06,0.07,0.08,0.09,0.10,0.11,1,1.5,2,2.5,3,3.5, 4,4.5, 5, 5.5,6,6.5,7,8,9,10,11,12,13,14,15,16,17,18],
+    //                 values: ["初生儿","1个月","2个月","3个月", "4个月", "5个月", "6个月", "7个月", "8个月", "9个月", "10个月", "11个月", "1岁", "1岁半", "2岁", "2岁半", "3岁", "3岁半", "4岁", "4岁半",  "5岁", "5岁半", "6岁", "6岁半", "7岁", "8岁","9岁","10岁","11岁","12岁","13岁","14岁","15岁", "16岁", "17岁", "18岁"]
+    //             }
+    //         ]],
+    //     onChange:function(valueText,inst){
+    //     	console.log("change");
+    //     	calBabyAge(valueText);
+    //     	var age = parseFloat(valueText);
+		 	// loadBodyIndex_age(age);
+    //     },
+    //     onShow:function(html,valueText,inst){
+    //     }
+    // });
 
+	/*身体指标促发日期控件*/
+		$('#bodyIndexDate_input').mobiscroll().date({
+            theme: 'mobiscroll',
+            display: 'bottom',
+            lang: 'zh',
+            endYear:new Date().getFullYear(),
+            maxDate:new Date(),
+            dateFormat:'yy-mm-dd',
+            onSelect: function(valueText, inst) {
+            	 var selectedDate = inst.getVal(); 
+                 var date = $.mobiscroll.datetime.formatDate('yy-mm-dd', selectedDate);
+            	 localStorage.date = date;
+            	 loadBodyIndex_age();
+            }
+        });
 
 
     /*成绩表单添加滚轮*/
@@ -267,7 +292,9 @@ $(function(){
 	// 						localStorage.date = day.date.getFullYear()+"-"+(day.date.getMonth()+1)+"-"+day.date.getDate(); 
 	// 					}
 	// });
+	
 
+	/*成绩表单促发日期控件*/
 		$('#gradeDate_input').mobiscroll().date({
             theme: 'mobiscroll',
             display: 'bottom',
@@ -321,9 +348,10 @@ $(function(){
  		var bodyIndexId = $("#bodyIndexId").text();;
  		var height = $("#baby_height").val();
  		var weight = $("#baby_weight").val();
- 		calBabyAge($('#scroller').mobiscroll("getVal",true));
- 		var age = localStorage.age;
- 		var ageDcb = localStorage.ageDcb;
+ 		var recordDate = $("#bodyIndexDate_input").val();
+ 		// calBabyAge($('#scroller').mobiscroll("getVal",true));
+ 		// var age = localStorage.age;
+ 		// var ageDcb = localStorage.ageDcb;
 
  		if(height==""||height==null){
  			$(".nbi-Tips").text("身高不能为空哦!");
@@ -351,12 +379,15 @@ $(function(){
  			return false;
  		}
 
+ 		// alert(localStorage.birthday);
  		//var babyId = "1BFB8CDDECC24BE49F8D3C5B9528BBB0";//angela的babyId
  		$.post("/CBabyAction/addOrMdfBabyIndex",{
  			bodyIndexId:bodyIndexId,
  			babyId:localStorage.babyId,
- 			age:age,
- 			ageDcb:ageDcb,
+ 			date:recordDate,
+ 			birthday:localStorage.babyBirthday,
+ 			// age:age,
+ 			// ageDcb:ageDcb,
  			height:height,
  			weight:weight
  		},function(data){//显示操作结果
@@ -511,18 +542,34 @@ function showBodyIndexChart(bodyIndexList){
 		var labels = new Array();
 		var data_height = new Array();//宝宝身高数据
 		var stander_height = new Array();//宝宝记录对应年龄的身高标准数据
+		var up_height = new Array();//宝宝+2Sd
+		var low_height = new Array();//宝宝-2Sd
 		var starderH_all;//标准身高全部数据
+		var upH_all;
+		var lowH_all;
 
 		var data_weight = new Array();//宝宝体重数据
 		var stander_weight = new Array();//宝宝记录对应年龄的体重标准数据
+		var up_weight = new Array();//宝宝+2Sd
+		var low_weight = new Array();//宝宝-2Sd
 		var starderW_all;//标准身高全部数据
+		var upW_all;
+		var lowW_all;
 
 		if(localStorage.sex == "男"){
 			starderH_all = standerH_male;
 			starderW_all = standerW_male;
+			upH_all = upH_male;
+			lowH_all = lowH_male;
+			upW_all = upW_male;
+			lowW_all = lowW_male;
 		}else{
 			starderH_all = standerH_female;
 			starderW_all = standerW_female;
+			upH_all = upH_female;
+			lowH_all = lowH_female;
+			upW_all = upW_female;
+			lowW_all = lowW_female;
 		}
 
 		var i = 0,vlen = babyAge.length;
@@ -531,8 +578,15 @@ function showBodyIndexChart(bodyIndexList){
 			for(j=0 ; j < vlen; j++){ 
 				
 				if(bodyIndexList[count-1-i].ageDcb == babyAge[j]){ 
-					stander_height[i] = starderH_all[j];
-					stander_weight[i] = starderW_all[j];
+					console.log(bodyIndexList[count-1-i].ageDcb+"--i="+i+"---j="+j);
+					// stander_height[i] = starderH_all[j];
+					// stander_weight[i] = starderW_all[j];
+					up_height[i]  = upH_all[j];
+					low_height[i]  = lowH_all[j];
+
+					up_weight[i]  = upW_all[j];
+					low_weight[i]  = lowW_all[j];
+					// labels[i] = bodyIndexList[count-i-1].ageDcb;
 					// console.log(stander_height[i]+"---"+j+"--"+babyAge[j]);
 				}
 			}
@@ -546,13 +600,16 @@ function showBodyIndexChart(bodyIndexList){
 		}
 
 		if(count == 1){
+			$(".oneData-height").text("只有一条数据哦！");
 			$(".oneData-height").show();
-			$("#oneDataVal-age-h").text(bodyIndexList[0].ageDcb);
-			$("#oneDataVal-baby-h").text(data_height[0]);
-			$("#oneDataVal-stander-h").text(stander_height[0]);
-			$("#oneDataVal-age-w").text(bodyIndexList[count-1].ageDcb);
-			$("#oneDataVal-baby-w").text(data_weight[0]);
-			$("#oneDataVal-stander-w").text(stander_weight[0]);
+
+			// $("#oneDataVal-age-h").text(bodyIndexList[0].ageDcb);
+			// $("#oneDataVal-baby-h").text(data_height[0]);
+			// $("#oneDataVal-stander-h").text(stander_height[0]);
+			// $("#oneDataVal-age-w").text(bodyIndexList[count-1].ageDcb);
+			// $("#oneDataVal-baby-w").text(data_weight[0]);
+			// $("#oneDataVal-stander-w").text(stander_weight[0]);
+			$(".oneData-weight").text("只有一条数据哦！");
 			$(".oneData-weight").show();
 			$("#chartbox_bi_h").hide();
 			$("#chartbox_bi_w").hide();
@@ -574,7 +631,7 @@ function showBodyIndexChart(bodyIndexList){
 					strokeColor : "rgba(151,187,205,1)",
 					pointColor : "rgba(151,187,205,1)",
 					pointStrokeColor : "#fff", 
-					data : stander_height
+					data : up_height//stander_height
 				}
 				,
 				{
@@ -583,6 +640,14 @@ function showBodyIndexChart(bodyIndexList){
 					pointColor : "rgba(255,153,153,1)",
 					pointStrokeColor : "#fff",
 					data : data_height
+				}
+				,
+				{
+					fillColor : "rgba(151,187,205,0.5)",
+					strokeColor : "rgba(151,187,205,1)",
+					pointColor : "rgba(151,187,205,1)",
+					pointStrokeColor : "#fff", 
+					data : low_height//stander_height
 				}
 			]
 		};
@@ -605,7 +670,7 @@ function showBodyIndexChart(bodyIndexList){
 					strokeColor : "rgba(151,187,205,1)",
 					pointColor : "rgba(151,187,205,1)",
 					pointStrokeColor : "#fff", 
-					data : stander_weight
+					data : up_weight
 				}
 				,
 				{
@@ -615,9 +680,17 @@ function showBodyIndexChart(bodyIndexList){
 					pointStrokeColor : "#fff",
 					data : data_weight
 				}
+				,
+				{
+					fillColor : "rgba(151,187,205,0.5)",
+					strokeColor : "rgba(151,187,205,1)",
+					pointColor : "rgba(151,187,205,1)",
+					pointStrokeColor : "#fff", 
+					data : low_weight
+				}
 			]
 		};
-		console.log(stander_weight);
+		// console.log(stander_weight);
 		console.log( data_weight);
 		var ctx_weight = $("#bodyChart-weight").get(0).getContext("2d");
 		$("#bodyChart-weight").attr("width", $(window).get(0).innerWidth*0.95);
@@ -657,11 +730,11 @@ function calBabyAge(valueText){
 }
 
 /*加载宝宝某个年龄的身体指标数据*/
-var loadBodyIndex_age = function(age){
+var loadBodyIndex_age = function(){
 		// alert(localStorage.babyId);
 		$.post("/CBabyAction/loadBodyIndex_age",{
 			babyId:localStorage.babyId,
-			age:age
+			date:$("#bodyIndexDate_input").val()
 		},function(data){
 			if(data.result == 0){
 				$("#baby_height").val(data.data.height);
@@ -685,10 +758,13 @@ var loadBodyIndex_age = function(age){
 function clearBiAddBox(){
 	$("#baby_height").val("");
 	$("#baby_weight").val("");
+	var date = new Date();
+	var dateString = date.getFullYear()+"-"+(date.getMonth()+1) + "-"+ date.getDate();
+	localStorage.date = dateString;
+	$("#bodyIndexDate_input").val(dateString);
 	var maxAge = localStorage.maxAge;
 	console.log(maxAge);
-	if(maxAge!=null){
-		$('#scroller').mobiscroll('setVal', maxAge, true, true, false, 0);
+	if(maxAge!=null){		
 		loadBodyIndex_age(maxAge);
 	}
 }
@@ -912,14 +988,32 @@ function loadNextVac(){
 			$(".nextVacList").show();
 			$(".nullTips-vac-todo").hide();
 			var length = data.data.length;
-			 $(".nextVacList").html("");
+			$(".nextVacList").html("");
+			var $title = $("<tr></tr>");
+			$title.addClass("tableTitle");
+			$title.html("<td>名称</td>"
+						+"<td>预计接种时间</td>"
+						+"<td>年龄</td>");
+			$(".nextVacList").append($title);
 			for(var i = 0; i < length; i++){
 				var $list_item = $("<li></li>");
-				$($list_item).html("<div class='item-nextVac item-vacName'><span class='realData'>"+data.data[i].name+"</span></div>"
-						+"<div class='item-nextVac item-age'>"
-							+"<i class='iconfont timeIcon'>&#xe635;</i><span class='timeData'>"+data.data[i].ageDcb+"</span>"
-						+"</div>"); 
-				 $(".nextVacList").append($list_item);
+				var etmDate = new Date(data.data[i].etmDate);
+				var etmDateStr = etmDate.getFullYear()+"-"+(etmDate.getMonth()+1)+"-"+etmDate.getDate();
+				// $($list_item).html("<div class='item-nextVac item-vacName'><span class='realData'>"+data.data[i].name+"</span></div>"
+				// 		+"<div class='item-nextVac item-vacName'><span class='realData'>"+etmDateStr+"</span></div>"
+				// 		+"<div class='item-nextVac item-age'>"
+				// 			+"<i class='iconfont timeIcon'>&#xe635;</i><span class='timeData'>"+data.data[i].ageDcb+"</span>"
+				// 		+"</div>"); 
+				var $line = $("<tr></tr>");
+				// var date = new Date(data.data[i].date);
+				// var dateString =  date.getFullYear()+"-"+(date.getMonth()+1) + "-"+ date.getDate();
+				$($line).html("<td>"+data.data[i].name+"</td>"
+						+"<td>"+etmDateStr+"</td>"
+						+"<td>"+data.data[i].ageDcb+"</td>"); 
+
+				
+				 // $(".nextVacList").append($list_item);
+				 $(".nextVacList").append($line);
 			}
 		}else{
 			$(".nextVacList").hide();
@@ -943,12 +1037,20 @@ function loadVaccinated(){
 			$(".nullTips-vac-done").hide();
 			$("#more-vaced").show();
 			var length = data.data.length;
+			$(".vaccinatedTable").html("");
+			var $title = $("<tr></tr>");
+			$title.addClass("tableTitle");
+			$title.html("<td>名称</td>"
+						+"<td>接种时间</td>"
+						+"<td>年龄</td>");
+			$(".vaccinatedTable").append($title);
 			for(var i = 0; i < length; i++){
 				var $line = $("<tr></tr>");
 				var date = new Date(data.data[i].date);
 				var dateString =  date.getFullYear()+"-"+(date.getMonth()+1) + "-"+ date.getDate();
 				$($line).html("<td>"+data.data[i].name+"</td>"
-						+"<td>"+dateString+"</td>"); 
+						+"<td>"+dateString+"</td>"
+						+"<td>"+data.data[i].ageDcb+"</td>"); 
 				 $(".vaccinatedTable").append($line);
 			}
 		}else{

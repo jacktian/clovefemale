@@ -247,4 +247,11 @@ public class Client extends WebService{
 	public static void gfDetail(){
 		render("/Client/record/gradeDetail.html");
 	}
+
+	/**
+	 *小工具
+	 */
+	public static void stools(){
+		render("/Client/record/stools.html");
+	}
 }

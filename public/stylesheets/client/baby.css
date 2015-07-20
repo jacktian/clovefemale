@@ -1040,10 +1040,14 @@ span.mui-icon.mui-icon-plus.test::before{
 /*------------------成绩表单结束------------------*/
 
 /*------------------疫苗样式开始------------------*/
+.vacList{
+	font-size: 11px;
+}
 .nextVacList{
 	/*height: 300px;*/
 	margin-bottom: 10px;
 	display: none;
+	font-size: 11px;
 }
 
 /*下次接种*/
@@ -1060,11 +1064,11 @@ span.mui-icon.mui-icon-plus.test::before{
 }
 
 .item-vacName{
-	width:60%;
+	/*width:60%;*/
 }
 
 .item-age{
-	width:40%;
+	/*width:40%;*/
 }
 
 .nullTips-vac{
@@ -1185,6 +1189,10 @@ span.mui-icon.mui-icon-plus.test::before{
 	/*line-height: 41px;*/
 }
 
+.vacName{
+	font-size: 14px;
+}
+
 /*日期icon*/
 .dateImg_vac{
 	position: absolute;
@@ -1257,8 +1265,8 @@ span.mui-icon.mui-icon-plus.test::before{
 } 
 
 .date-todoVac{
-	padding-right: 25px;
-	display: none;
+	/*padding-right: 25px;*/
+	/*display: none;*/
 }
 
 .doteBox-hide{
@@ -1266,4 +1274,9 @@ span.mui-icon.mui-icon-plus.test::before{
 }
 /*------------------疫苗接种页面样式结束------------------*/
 
-
+/*小工具*/
+.intro_stool{
+	font-size:13px;
+	color:#aaa;
+	border-radius:5px;
+}

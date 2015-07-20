@@ -229,8 +229,22 @@
 					&nbsp;下次接种
 				</div>
 				<div class="nullTips nullTips-vac nullTips-vac-todo">恭喜您，宝宝已经接种完全部疫苗哦！</div>
-				<ul class="datalist nextVacList">
-				</ul>
+				<table class="scoreTable nextVacList vacList">
+					<tr class="tableTitle">
+						<td>名称</td>
+						<td>预计接种时间</td>
+						<td>年龄</td>
+					</tr>
+				</table>
+				<!-- <ul class="datalist nextVacList">
+					<li>
+						<div class='item-nextVac item-vacName'><span class='realData'>无细胞百白破疫苗(白破)(加强)</span></div>
+						<div class='item-nextVac item-vacName'><span class='realData'>2015-12-24</span></div>
+						<div class='item-nextVac item-age'>
+							<i class='iconfont timeIcon'>&#xe635;</i><span class='timeData'>出生时</span>
+						</div>
+					</li>
+				</ul> -->
 			</div>
 			<!-- 上一次记录结束 -->
 
@@ -242,10 +256,11 @@
 					<a id="more-vaced" class="floatRight-link" href="#">更多></a>
 				</div>
 				<div class="nullTips nullTips-vac nullTips-vac-done">宝宝还没有接种过疫苗哦！</div>
-				<table class="scoreTable vaccinatedTable">
+				<table class="scoreTable vaccinatedTable vacList">
 					<tr class="tableTitle">
 						<td>名称</td>
 						<td>接种时间</td>
+						<td>年龄</td>
 					</tr>
 				
 				</table>
@@ -294,9 +309,14 @@
 	<header class="mui-bar mui-bar-nav model-header">
 		<h1 class="mui-title model-title">身体指标</h1>
 	</header>
-	<input id="scroller" name="scroller" />
+	<!-- <input id="scroller" name="scroller" /> -->
+	
 	<div class="mui-content-padded indexInputBox">
 		<form class="mui-input-group">
+			<div id="bodyIndexDate" class="mui-input-row">
+				<label>日期</label>
+				<input id="bodyIndexDate_input" type="text" placeholder="日期输入" class="dateBox_vac">
+			</div>
 			<div class="mui-input-row">
 				<label>身高</label>
 				<input id="baby_height" type="text" class="mui-input-clear" placeholder="单位cm">

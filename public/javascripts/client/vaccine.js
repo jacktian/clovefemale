@@ -96,36 +96,35 @@ function loadTodoVac(){
 			todoVacLoad = true;
 			var length = data.data.length;
 			var now = new Date();
+			var nowStr = now.getFullYear()+"-"+(now.getMonth()+1)+"-"+now.getDate();
 			for(var i = 0; i < length; i++){
+				var etmDate = new Date(data.data[i].etmDate);
+				var etmDateStr = etmDate.getFullYear()+"-"+(etmDate.getMonth()+1)+"-"+etmDate.getDate();
 				var vacItemBox = $("<div class='mui-input-row mui-checkbox mui-left'></div>");
 				$(vacItemBox).attr("id",data.data[i].id);
-				$(vacItemBox).html("<label>"+data.data[i].name+"</label>"
+				$(vacItemBox).html("<label class='vacName'>"+data.data[i].name+"</label>"
 				+"<input name='radio1' id='checkbox-"+data.data[i].id+"' class='checkbox-vac-todo' type='checkbox' />"
-				+"<div class='fullVacDate date-todoVac'>"+now.getFullYear()+"-"+(now.getMonth()+1)+"-"+now.getDate()+"</div>"
-				+"<div class='dateBox_vac'>"
-					+"<img  class='dateImg_vac' src='/public/images/client/date.png' alt=''/>"
-					+"<span class='dateNo'></span>"
-				+"</div>");
-				
+				+"<div class='fullVacDate date-todoVac'>"+etmDateStr+"</div>");
+				// +"<div class='dateBox_vac'>"
+				// 	+"<img  class='dateImg_vac' src='/public/images/client/date.png' alt=''/>"
+				// 	+"<span class='dateNo'></span>"
+				// +"</div>");
 				$(".todoVacForm").append(vacItemBox);
 
 				$('.dateNo').text(new Date().getDate());
 				//日期控件触发
-				$(".dateBox_vac").mobiscroll().calendar({
-						theme:'ios',
-						lang:'zh',
-						display:'bottom',
-						onSetDate:function(day,inst){
-							// var date = new Date(day);
-							// console.log();
-							$(this).children(".dateNo").text(day.date.getDate());
-							$(this).siblings(".date-todoVac").text(day.date.getFullYear()+"-"+(day.date.getMonth()+1)+"-"+day.date.getDate());
-							// console.log();
-						},
-						onDayChange:function(day,inst){
-							console.log("changeDay");
-						}
-				});
+				// $(".dateBox_vac").mobiscroll().calendar({
+				// 		theme:'ios',
+				// 		lang:'zh',
+				// 		display:'bottom',
+				// 		onSetDate:function(day,inst){
+				// 			$(this).children(".dateNo").text(day.date.getDate());
+				// 			$(this).siblings(".date-todoVac").text(day.date.getFullYear()+"-"+(day.date.getMonth()+1)+"-"+day.date.getDate());
+				// 		},
+				// 		onDayChange:function(day,inst){
+				// 			console.log("changeDay");
+				// 		}
+				// });
 
 				document.getElementById("checkbox-"+data.data[i].id).addEventListener("tap",function(){
 					var objectId = $(this).parent().attr("id");
@@ -134,9 +133,10 @@ function loadTodoVac(){
 					doneVacLoad = false;
 					allVacLoad = false;
 
+
 					$.post("/CBabyAction/modifyVac",{
 						babyVacId:objectId,
-						date:$(this).siblings(".date-todoVac").text()
+						date:nowStr//$(this).siblings(".date-todoVac").text()
 					},function(data){
 						if(data.result == 0){//成功
 
@@ -244,22 +244,23 @@ function loadAllVac(){
 				var vacItemBox = $("<div class='mui-input-row mui-checkbox mui-left'></div>");
 				$(vacItemBox).attr("id","allVac-"+vac.id);
 				if(vac.isDone == "0"){//未接种疫苗
+					var etmDate = new Date(vac.etmDate);
 					$(vacItemBox).html("<label>"+vac.name+"</label>"
 					+"<input name='radio1' id='checkbox-all-"+vac.id+"' class='checkbox-vac-todo checkbox-todo' type='checkbox'/>"
-					+"<div class='fullVacDate date-todoVac'>"+now.getFullYear()+"-"+(now.getMonth()+1)+"-"+now.getDate()+"</div>"
-					+"<div class='dateBox_vac'>"
-						+"<img  class='dateImg_vac' src='/public/images/client/date.png' alt=''/>"
-						+"<span class='dateNo'></span>"
-					+"</div>");
+					+"<div class='fullVacDate date-todoVac'>"+etmDate.getFullYear()+"-"+(etmDate.getMonth()+1)+"-"+etmDate.getDate()+"</div>");
+					// +"<div class='dateBox_vac'>"
+					// 	+"<img  class='dateImg_vac' src='/public/images/client/date.png' alt=''/>"
+					// 	+"<span class='dateNo'></span>"
+					// +"</div>");
 				}else{
 					var date = new Date(vac.date);
 					$(vacItemBox).html("<label>"+vac.name+"</label>"
 					+"<input name='radio1' id='checkbox-all-"+vac.id+"' class='checkbox-done' type='checkbox' checked/>"
-					+"<div class='fullVacDate'>"+date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()+"</div>"
-					+"<div class='dateBox_vac doteBox-hide'>"
-						+"<img  class='dateImg_vac' src='/public/images/client/date.png' alt=''/>"
-						+"<span class='dateNo'></span>"
-					+"</div>");
+					+"<div class='fullVacDate'>"+date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()+"</div>");
+					// +"<div class='dateBox_vac doteBox-hide'>"
+					// 	+"<img  class='dateImg_vac' src='/public/images/client/date.png' alt=''/>"
+					// 	+"<span class='dateNo'></span>"
+					// +"</div>");
 				}
 				
 				$(".allVacForm").append(vacItemBox);
@@ -282,13 +283,13 @@ function loadAllVac(){
 
 				document.getElementById("checkbox-all-"+data.data[i].id).addEventListener("tap",function(){
 					var objectId = $(this).parent().attr("id");
-					var date;
+					var date = new Date();
 					// window.setTimeout("removeObject('"+objectId+"')",500);
 					todoVacLoad = false;
 					doneVacLoad = false;
 					if($(this).hasClass("checkbox-todo")){//如果是选中,标记为已接种
-						
-						date = $(this).siblings(".fullVacDate").text();
+						var now = new Date();
+						date = now.getFullYear()+"-"+(now.getMonth()+1)+"-"+now.getDate();
 						console.log("已接种-" + date);
 						$(this).removeClass("checkbox-todo");
 						$(this).addClass("checkbox-done");
@@ -344,22 +345,23 @@ function loadSearchResult(searchWord){
 				var vacItemBox = $("<div class='mui-input-row mui-checkbox mui-left'></div>");
 				$(vacItemBox).attr("id","searchVac-"+vac.id);
 				if(vac.isDone == "0"){//未接种疫苗
+					var etmDate = new Date(vac.etmDate);
 					$(vacItemBox).html("<label>"+vac.name+"</label>"
 					+"<input name='radio1' id='checkbox-search-"+vac.id+"' class='checkbox-vac-todo checkbox-todo' type='checkbox'/>"
-					+"<div class='fullVacDate date-todoVac'>"+now.getFullYear()+"-"+(now.getMonth()+1)+"-"+now.getDate()+"</div>"
-					+"<div class='dateBox_vac'>"
-						+"<img  class='dateImg_vac' src='/public/images/client/date.png' alt=''/>"
-						+"<span class='dateNo'></span>"
-					+"</div>");
+					+"<div class='fullVacDate date-todoVac'>"+etmDate.getFullYear()+"-"+(etmDate.getMonth()+1)+"-"+etmDate.getDate()+"</div>");
+					// +"<div class='dateBox_vac'>"
+					// 	+"<img  class='dateImg_vac' src='/public/images/client/date.png' alt=''/>"
+					// 	+"<span class='dateNo'></span>"
+					// +"</div>");
 				}else{
 					var date = new Date(vac.date);
 					$(vacItemBox).html("<label>"+vac.name+"</label>"
 					+"<input name='radio1' id='checkbox-search-"+vac.id+"' class='checkbox-done' type='checkbox' checked/>"
-					+"<div class='fullVacDate'>"+date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()+"</div>"
-					+"<div class='dateBox_vac doteBox-hide'>"
-						+"<img  class='dateImg_vac' src='/public/images/client/date.png' alt=''/>"
-						+"<span class='dateNo'></span>"
-					+"</div>");
+					+"<div class='fullVacDate'>"+date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()+"</div>");
+					// +"<div class='dateBox_vac doteBox-hide'>"
+					// 	+"<img  class='dateImg_vac' src='/public/images/client/date.png' alt=''/>"
+					// 	+"<span class='dateNo'></span>"
+					// +"</div>");
 				}
 				
 				$(".searchVacForm").append(vacItemBox);
@@ -389,7 +391,7 @@ function loadSearchResult(searchWord){
 					allVacLoad = false;
 					if($(this).hasClass("checkbox-todo")){//如果是选中,标记为已接种
 						
-						date = $(this).siblings(".fullVacDate").text();
+						date = now.getFullYear()+"-"+(now.getMonth()+1)+"-"+now.getDate();//$(this).siblings(".fullVacDate").text();
 						console.log("已接种-" + date);
 						$(this).removeClass("checkbox-todo");
 						$(this).addClass("checkbox-done");

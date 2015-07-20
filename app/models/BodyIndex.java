@@ -50,9 +50,27 @@ public class BodyIndex extends BasicModel {
 	 */
 	@Column(name="ageDcb")
 	public String ageDcb;
-
+	
+	/**
+	 * 是否存在标准
+	 */
+	@Column(name="hasStander")
+	public boolean hasStander;
+	
+	/**
+	 * 详细年龄
+	 */
+	@Column(name="detailage")
+	public String detailAge;
+	
+	/**
+	 * 距离标准年龄段的天数
+	 */
+	@Column(name="daycount")
+	public int dayCount;
+	
 	public BodyIndex(){}
-	public BodyIndex(Date date,Double height,Double weight,String babyId,double age,String ageDcb){
+	public BodyIndex(Date date,Double height,Double weight,String babyId,double age,String ageDcb,boolean hasStander,String detailAge,int dayCount){
 		
 		this.date=date;
 		this.height=height;
@@ -60,6 +78,9 @@ public class BodyIndex extends BasicModel {
 		this.babyId = babyId;
 		this.age = age;
 		this.ageDcb = ageDcb;
+		this.hasStander = hasStander;
+		this.detailAge = detailAge;
+		this.dayCount = dayCount;
 	}
 	
 	/*

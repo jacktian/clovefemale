@@ -41,6 +41,30 @@ public class Vaccine extends BasicModel{
 	public int monthAfter;
 	
 	/**
+	  * 是否需要间隔
+	  */
+	@Column(name = "hasinteral")
+	public boolean hasInteral;
+	
+	/**
+	  * 间隔的疫苗名称（一般为本身疫苗）
+	  */
+	@Column(name = "interalvacname")
+	public String interalVacName;
+	
+	/**
+	  * 月份间隔
+	  */
+	@Column(name = "monthinteral")
+	public int monthInteral;
+	   
+	/**
+	  * 天数间隔
+	  */
+	@Column(name = "dayinteral")
+	public int dayInteral;
+	
+	/**
 	 * 年龄描述
 	 */
 	@Column(name = "agedcb")
@@ -54,7 +78,7 @@ public class Vaccine extends BasicModel{
    
    public Vaccine(){}
    
-	public Vaccine(String name,String time,int monthAfter,String ageDcb,String pvDisease){
+	public Vaccine(String name,String time,int monthAfter,int monthInteral,int dayInteral,String ageDcb,String pvDisease){
 		
 		this.name = name;
 		this.time = time;
