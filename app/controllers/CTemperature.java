@@ -181,7 +181,7 @@ public class CTemperature extends WebService {
 	 */
 	public static void loadAllTempChart() {
 		String openid = session.get("openid");
-		// openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		String sql = "select new beans.TempBean(t.tDate,t.tValue) from Temperature t where  t.userId = '"
 				+ openid + "' order by t.tDate";
 		List<TempBean> tempList = JPA.em().createQuery(sql).getResultList();

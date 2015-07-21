@@ -181,7 +181,7 @@ public class CWeight extends WebService {
 	 */
 	public static void loadAllWeightChart() {
 		String openid = session.get("openid");
-		// openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		String sql = "select new beans.PregwBean(w.wDate,w.wValue) from GestationalWeight w where  w.userId = '"
 				+ openid + "' order by w.wDate";
 		List<PregwBean> pregBean = JPA.em().createQuery(sql).getResultList();

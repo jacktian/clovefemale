@@ -208,7 +208,7 @@ public class CPregnant extends WebService {
 	 */
 	public static void loadAllMenseChart() {
 		String openid = session.get("openid");
-		// openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		ChartBean bean = new ChartBean();
 		ArrayList labelList = new ArrayList();
 		ArrayList dataList = new ArrayList();

@@ -17,11 +17,14 @@
 #menseChart{
 	background:#FFF;
 }
+#menseChart.rotate{
+	transform:rotate(90deg);
+}
 .chart-empty{
 	position: absolute;
 	text-align: center;
 	width:100%;
-	height:150px;
+	height:100%;
 	top: 0;
 	line-height: 150px
 }
@@ -62,4 +65,41 @@
 }
 .preg-record-table td{
 	padding:5px 0px 5px 0px;
+}
+/* 旋转按钮 */
+.rotateBtn{
+	display:block;
+	width:40px;
+	height:40px;
+	position:fixed;
+	right:20px;
+	bottom:20px;
+	color:#FFF;
+	background:#DD524D;
+	line-height:40px;
+	text-align:center;
+	border-radius:20px;
+}
+.rotateBtn.hidden{
+	display:none;
+}
+
+/* 旋转效果 */
+header.hidden{
+	display:none;
+}
+.mui-bar-nav~.mui-content.hidden{
+	padding-top:0px;
+}
+#sliderSegmentedControl.hidden{
+	display:none;
+}
+.mui-slider-progress-bar.hidden{
+	height:0px;
+}
+.mui-slider .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-group .mui-slider-item.hidden{
+	border:0px;
+}
+.rotateBtn.rotate{
+	left:20px;
 }
