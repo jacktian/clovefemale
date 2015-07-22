@@ -254,4 +254,25 @@ public class Client extends WebService{
 	public static void stools(){
 		render("/Client/record/stools.html");
 	}
+
+	/**
+	 *产检时间
+	 */
+	public static void checkTime(){
+		render("/Client/record/checkTime.html");
+	}
+
+	/**
+	 *产检项目
+	 */
+	public static void checkList(){
+		render("/Client/record/checkList.html");
+	}
+
+	/*
+	 *单位换算
+	 */
+	public static void unitChange(){
+		render("/Client/record/unitChange.html");
+	}
 }
