@@ -37,19 +37,13 @@ public class MedboxInit {
 				// 医用材料
 				medBox = new MedicineBox();
 				medBox.userId = openid;
-				medBox.name = "医用材料";
+				medBox.name = "医用材料及其他";
 				medBox.mark = "血压计，血糖计，验孕避孕等";
-				medBox.disabled = 1;
-				medBox.save();
-				// 其他
-				medBox = new MedicineBox();
-				medBox.userId = openid;
-				medBox.name = "其他";
 				medBox.disabled = 1;
 				medBox.save();
 			}
 			catch(Exception e){
-				
+
 			}
 		}
 }

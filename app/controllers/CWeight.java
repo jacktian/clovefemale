@@ -14,7 +14,7 @@ import play.db.jpa.JPA;
 
 /**
  * 重量控制器
- * 
+ *
  * @author boxiZen
  * @since 2015/05/25
  */
@@ -24,7 +24,7 @@ public class CWeight extends WebService {
 	 */
 	public static void addWeight(String date, float pregw) {
 		String openid = session.get("openid");
-		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		// openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		try {
 			if (openid == null) {
 				wsError("openid过期");
@@ -113,7 +113,7 @@ public class CWeight extends WebService {
 	 */
 	public static void findWeightByDate(String date) {
 		String openid = session.get("openid");
-		// openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+	  // openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		Date newDate;
 		String dateStr;
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -181,7 +181,7 @@ public class CWeight extends WebService {
 	 */
 	public static void loadAllWeightChart() {
 		String openid = session.get("openid");
-		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		// openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		String sql = "select new beans.PregwBean(w.wDate,w.wValue) from GestationalWeight w where  w.userId = '"
 				+ openid + "' order by w.wDate";
 		List<PregwBean> pregBean = JPA.em().createQuery(sql).getResultList();

@@ -1,11 +1,6 @@
-#{extends 'client.html' /}
-#{set title:'药品信息' /}
-#{set 'moreStyles'}
-<link href="@{'/public/stylesheets/client/medicine.css'}?v=20150522" rel="stylesheet" />
-<link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.scroller.css'}" rel="stylesheet" type="text/css" />
-<link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.animation.css'}" rel="stylesheet" type="text/css" />
-<link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.frame.css'}" rel="stylesheet" type="text/css" />
-#{/set}
+#{extends 'client.html' /} #{set title:'药品信息' /} #{set 'moreStyles'}
+<link href="@{'/public/stylesheets/client/medicine/medicine.css'}?v=20150522" rel="stylesheet" />
+<link href="@{'/public/stylesheets/client/preg/mobiscroll.css'}" rel="stylesheet" type="text/css" /> #{/set}
 
 <header class="mui-bar mui-bar-nav client-bar-nav">
 	<a class="mui-icon mui-icon-left-nav mui-pull-left" href="/client/medicine?medBoxId=${medicine.medicineBoxId}"></a>
@@ -38,49 +33,46 @@
 </div>
 <button class="mui-btn btn-negative medicine-refresh-btn">更新</button>
 #{set 'moreScripts'}
-<script type="text/javascript" charset="utf-8">mui.init();</script>
+<script type="text/javascript" charset="utf-8">
+	mui.init();
+</script>
 <script src="@{'/public/javascripts/client/jquery-1.9.1.min.js'}"></script>
-<script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.core.js'}"></script>
-<script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.frame.js'}"></script>
-<script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.scroller.js'}"></script>
-<script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.util.datetime.js'}"></script>
-<script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.datetimebase.js'}"></script>
-<script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.datetime.js'}"></script>
-<script src="@{'/public/javascripts/client/mobiscroll/i18n/mobiscroll.i18n.zh.js'}"></script>
+<script src="@{'/public/javascripts/client/preg/preg-mobiscroll.js'}"></script>
 <script type="text/javascript">
-	$(function(){
+	$(function() {
 		$('#start-date').mobiscroll().date({
-	        theme: 'mobiscroll',
-	    	display: 'bottom',
-	        startYear: '2013',
-	        lang: 'zh',
-	        onSelect: function (valueText, inst) {
-	            var selectedDate = inst.getVal(); // Call the getVal method
-	        }
-	    });
+			theme: 'mobiscroll',
+			display: 'bottom',
+			endYear: 2030,
+			startYear: 2000,
+			lang: 'zh',
+			onSelect: function(valueText, inst) {
+				var selectedDate = inst.getVal(); // Call the getVal method
+			}
+		});
 		$('#end-date').mobiscroll().date({
-	        theme: 'mobiscroll',
-	    	display: 'bottom',
-	        startYear: '2013',
-	        lang: 'zh',
-	        onSelect: function (valueText, inst) {
-	            var selectedDate = inst.getVal(); // Call the getVal method
-	        }
-	    });
-		$('.medicine-refresh-btn').bind('touchend',function(){
-			var mid = $('#mid').val();
-			var name = $('#mname').val();
-			var desc = $('#mdesc').val();
-			var code = $('#mcode').val();
-			var sdate = $('#start-date').val();
-			var edate = $('#end-date').val();
+			theme: 'mobiscroll',
+			display: 'bottom',
+			endYear: 2030,
+			startYear: 2000,
+			lang: 'zh',
+			onSelect: function(valueText, inst) {
+				var selectedDate = inst.getVal(); // Call the getVal method
+			}
+		});
+		$('.medicine-refresh-btn').bind('touchend', function() {
+			var mid = $('#mid').val(),
+				name = $('#mname').val(),
+				desc = $('#mdesc').val(),
+				code = $('#mcode').val(),
+				sdate = $('#start-date').val(),
+				edate = $('#end-date').val();
 			//altMedicine(String id,String name,String mark,String prodDate,String endDate,String code)
-			$.get("/CMedicine/altMedicine?id="+mid+"&name="+name+"&mark="+desc+"&prodDate="+sdate+"&endDate="+edate+"&code="+code,function(data){
+			$.get("/CMedicine/altMedicine?id=" + mid + "&name=" + name + "&mark=" + desc + "&prodDate=" + sdate + "&endDate=" + edate + "&code=" + code, function(data) {
 				console.log(data);
-				if(data.result==0){
+				if (data.result == 0) {
 					alert("更新成功");
-				}
-				else{
+				} else {
 					alert("更新出錯");
 				}
 			});

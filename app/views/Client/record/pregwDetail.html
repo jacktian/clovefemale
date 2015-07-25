@@ -1,10 +1,8 @@
 #{extends 'client.html' /}
 #{set title:'孕重分析' /}
 #{set 'moreStyles'}
-<link href="@{'/public/stylesheets/client/pregDetai.css'}?v=20150531" rel="stylesheet" />
-<link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.scroller.css'}" rel="stylesheet" type="text/css" />
-<link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.animation.css'}" rel="stylesheet" type="text/css" />
-<link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.frame.css'}" rel="stylesheet" type="text/css" />
+<link href="@{'/public/stylesheets/client/preg/pregDetai.css'}?v=20150531" rel="stylesheet" />
+<link href="@{'/public/stylesheets/client/preg/mobiscroll.css'}" rel="stylesheet" type="text/css" />
 #{/set}
 #{output 'Client/record/pregDetailTpl.html'/}
 
@@ -21,7 +19,7 @@
 <div class="mui-content">
 	<div id="slider" class="mui-slider">
 	<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
-		<a class="mui-control-item active" href="#menseItem">体温纪录</a>
+		<a class="mui-control-item active" href="#menseItem">孕重纪录</a>
 		<a class="mui-control-item" href="#menseChart">图表统计</a>
 	</div>
 	<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-6 negative"></div>
@@ -38,7 +36,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					
+
 				</tbody>
 			</table>
 		</div>
@@ -46,8 +44,11 @@
 			<!--input type="text" placeholder="开始日期" id="menseChartStartDate" class="dateInput"/>
 			<input type="text" placeholder="结束日期" id="menseChartEndDate" class="dateInput"/>
 			<button class="mui-btn mui-btn-block mui-btn-outlined">统计</button-->
-			<canvas id="mense-chart" class="preg-chart"></canvas>
 			<div class="mense-chart-empty chart-empty not-shown">图表无数据显示</div>
+			<!-- echatsjs图表 -->
+			<div id="pregwChart" class="preg-echart" style="height:250px;">
+
+			</div>
 		</div>
 	</div>
         <a class="rotateBtn hidden">
@@ -60,14 +61,8 @@
 <script type="text/javascript" charset="utf-8">mui.init();</script>
 <script src="@{'/public/javascripts/client/jquery-1.9.1.min.js'}"></script>
 <script type="text/javascript" src = "@{'/public/javascripts/juicer.js'}"></script>
-<script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.core.js'}"></script>
-<script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.frame.js'}"></script>
-<script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.scroller.js'}"></script>
-<script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.util.datetime.js'}"></script>
-<script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.datetimebase.js'}"></script>
-<script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.datetime.js'}"></script>
-<script src="@{'/public/javascripts/client/mobiscroll/i18n/mobiscroll.i18n.zh.js'}"></script>
-<script src="@{'/public/javascripts/client/Chart.min.js'}" type="text/javascript"></script>
+<script src="@{'/public/javascripts/client/preg/preg-mobiscroll.js'}"></script>
+<script src="@{'/public/javascripts/client/echarts.js'}"></script>
 <script type="text/javascript">
 	$(function(){
 	    var screenWidth = window.screen.width,screenHeight = window.screen.height;
@@ -115,7 +110,7 @@
            		$('#menseChartEndDate').val(date);
             }
         });
-        
+
         $.get('/CWeight/loadAllWeight',function(data){
         	console.log(data);
         	var html = "";
@@ -134,36 +129,83 @@
 
         var item2Show = false;//子选项卡是否显示标志
 
-        var loadChart = function(cWidth,cHeight){
+        var loadChart = function(){
             $.get('/CWeight/loadAllWeightChart',function(data){
-                    dataList = data.data.data;
-                    labelList = data.data.label;
-                    if(dataList.length != 0){
+                    pregwData = data.data.data;
+                    pregwLabel = data.data.label;
+                    if(pregwData.length != 0){
                         var loadMenseChart = function() {
-                            $(".preg-chart").attr("width", cWidth);
-                            $(".preg-chart").attr("height", cHeight);
-                            var ctx = $("#mense-chart").get(0).getContext("2d");
-                            var options = {
-                                animation: false
-                            };
-                            var data = {
-                                labels: labelList,
-                                datasets: [{
-                                    fillColor: "rgba(242,195,195,0.4)",
-                                    strokeColor: "rgba(223,116,116,0.4)",
-                                    pointColor: "rgba(223,116,116,0.4)",
-                                    pointStrokeColor: "#fff",
-                                    data: dataList
-                                }]
-                            }
-                            //new Chart(ctx).Line(data, options);
-                            new Chart(ctx).Bar(data,null);
+                            // 基于准备好的dom，初始化echarts图表
+									          $('#pregwChart').css("width", $(window).get(0).innerWidth);
+									          var myChart = echarts.init(document.getElementById('pregwChart'));
+
+									          var option = {
+									            color: ['#E79996'],
+									            tooltip: {
+									              show: true,
+									            },
+									            legend: {
+									              x: 'center',
+									              data: ['孕重']
+									            },
+									            title: {
+																text: '孕重曲线图',
+									              subtext: '所有孕重变化'
+									            },
+									            toolbox: {
+									              show: true,
+									              feature: {
+									                restore: {
+									                  show: true
+									                },
+									                saveAsImage: {
+									                  show: false
+									                }
+									              }
+									            },
+									            grid: {
+									              x: 50,
+									              y: 60,
+									              x2: 50,
+									              y2: 50
+									            },
+									            xAxis: [{
+									              type: 'category',
+									              data: pregwLabel
+									            }],
+									            yAxis: [{
+									              type: 'value',
+									              min: 50,
+									              max: 66,
+									              axisLabel: {
+									                formatter: '{value} Kg'
+									              }
+									            }],
+									            series: [{
+									              "name": "孕重",
+									              "type": "line",
+									              "data": pregwData,
+									              smooth: true,
+									              showAllSymbol: true,
+									              markLine: {
+									                data: [{
+									                  type: 'average',
+									                  name: '平均值'
+									                }]
+									              }
+									            }]
+									          };
+									          // 为echarts对象加载数据
+									          myChart.setOption(option);
+
                         };
                         loadMenseChart();
                         $('.mense-chart-empty').addClass('not-shown');
+												$('#pregwChart').removeClass('hidden');
                     }
                     else{
                         $('.mense-chart-empty').removeClass('not-shown');
+												$('#pregwChart').addClass('hidden');
                     }
                 });
             //改变标志位，下次直接显示
@@ -172,13 +214,13 @@
         document.querySelector('.mui-slider').addEventListener('slide', function(event) {
           if (event.detail.slideNumber === 1&&!item2Show) {
             loadChart($(window).get(0).innerWidth,"150");
-            $('.rotateBtn').removeClass('hidden');
+            //$('.rotateBtn').removeClass('hidden');
           }
           else if (event.detail.slideNumber === 1) {
-            $('.rotateBtn').removeClass('hidden');
+            //$('.rotateBtn').removeClass('hidden');
           }
           else if (event.detail.slideNumber === 0) {
-            $('.rotateBtn').addClass('hidden');
+            //$('.rotateBtn').addClass('hidden');
           }
         });
         //初始化样式

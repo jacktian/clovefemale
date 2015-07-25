@@ -12,4 +12,20 @@
 			</tr>
 		{@/if}
 	{@/each}
-</script>	
+</script>
+
+<script id="pregmTpl" type="text/template">
+	{@each tempList as temp,index}
+		{@if index<=3}
+			<tr {@if index%2 == 0}class="tr-even"{@/if}>
+				<td>${temp.dateStr}</td>
+				<td>${temp.temp}</td>
+			</tr>
+		{@else}
+			<tr class="table-hidden table-more {@if index%2 == 0}tr-even{@/if}">
+				<td>${temp.dateStr}</td>
+				<td>${temp.temp}</td>
+			</tr>
+		{@/if}
+	{@/each}
+</script>

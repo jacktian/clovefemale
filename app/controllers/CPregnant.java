@@ -11,7 +11,7 @@ import play.db.jpa.JPA;
 
 /**
  * 助孕记录
- * 
+ *
  * @author boxiZen
  * @since 2015/05/22
  */
@@ -208,7 +208,7 @@ public class CPregnant extends WebService {
 	 */
 	public static void loadAllMenseChart() {
 		String openid = session.get("openid");
-		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		ChartBean bean = new ChartBean();
 		ArrayList labelList = new ArrayList();
 		ArrayList dataList = new ArrayList();

@@ -33,12 +33,12 @@ import beans.UserCenterBean;
 
 /**
  * 客户端菜单
- * 
+ *
  * @author boxiZen
  * @since 2015/03/23
  */
 public class Client extends WebService{
-	
+
 	/**
 	 * 拦截器
 	 */
@@ -58,8 +58,8 @@ public class Client extends WebService{
 			Logger.info("Unable to get user's openid");
 		}
 	}
-	
-	
+
+
 	/**
 	 * 记录控首页
 	 */
@@ -80,7 +80,7 @@ public class Client extends WebService{
 	 */
 	public static void medBox(){
 		render("/Client/record/medBox.html");
-	}	
+	}
 
 	/**
 	 * 药品列表
@@ -89,7 +89,7 @@ public class Client extends WebService{
 		params.remove(medBoxId);
 		session.put("medboxid", medBoxId);
 		render("/Client/record/medicine.html");
-	}		
+	}
 
 	/**
 	 * 药品详情
@@ -99,13 +99,16 @@ public class Client extends WebService{
 		MedicineBean medicine = new MedicineBean();
 		medicine.id = med.id;
 		medicine.name = med.name;
-		medicine.produce = med.produce.toString().split(" ")[0].replaceAll("-", "/");
-		medicine.deadline = med.deadline.toString().split(" ")[0].replaceAll("-", "/");
+		if(med.produce!=null)
+			medicine.produce = med.produce.toString().split(" ")[0].replaceAll("-", "/");
+		if(med.deadline!=null)
+			medicine.deadline = med.deadline.toString().split(" ")[0].replaceAll("-", "/");
 		medicine.code = med.code;
 		medicine.medicineBoxId = med.medicineBoxId;
+		medicine.function = med.function;
 		render("/Client/record/medicineDetail.html",medicine);
-	}		
-	
+	}
+
 	/**
 	 *我的孩子
 	 **/
@@ -116,7 +119,7 @@ public class Client extends WebService{
 	public static void babyRedirect(){
 		render("/Client/record/mybaby.html");
 	}
-	
+
 	/**
 	 *孩子资料
 	 **/
@@ -196,14 +199,14 @@ public class Client extends WebService{
 
 		render("/Client/record/psnCenter.html",user);
 	}
-	
+
 	/**
-	 *会员制度 
+	 *会员制度
 	 */
 	public static void rules(){
 		render("/Client/personal/rules.html");
 	}
-	
+
 	/**
 	 *提醒
 	 **/

@@ -1,10 +1,8 @@
 #{extends 'client.html' /}
 #{set title:'月经分析' /}
 #{set 'moreStyles'}
-<link href="@{'/public/stylesheets/client/pregDetai.css'}?v=20150531" rel="stylesheet" />
-<link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.scroller.css'}" rel="stylesheet" type="text/css" />
-<link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.animation.css'}" rel="stylesheet" type="text/css" />
-<link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.frame.css'}" rel="stylesheet" type="text/css" />
+<link href="@{'/public/stylesheets/client/preg/pregDetai.css'}?v=20150531" rel="stylesheet" />
+<link href="@{'/public/stylesheets/client/preg/mobiscroll.css'}" rel="stylesheet" type="text/css" />
 #{/set}
 #{output 'Client/record/pregDetailTpl.html'/}
 
@@ -28,8 +26,8 @@
 	<div class="mui-slider-group">
 		<div id="menseItem" class="mui-slider-item mui-control-content mui-active">
 			<ul class="mui-table-view" id="mense-table-view">
-					
-				</ul>	
+
+				</ul>
 		</div>
 		<div id="menseChart" class="mui-slider-item mui-control-content">
 			<canvas id="mense-chart" class="preg-chart"></canvas>
@@ -46,13 +44,7 @@
 <script type="text/javascript" charset="utf-8">mui.init();</script>
 <script src="@{'/public/javascripts/client/jquery-1.9.1.min.js'}"></script>
 <script type="text/javascript" src = "@{'/public/javascripts/juicer.js'}"></script>
-<script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.core.js'}"></script>
-<script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.frame.js'}"></script>
-<script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.scroller.js'}"></script>
-<script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.util.datetime.js'}"></script>
-<script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.datetimebase.js'}"></script>
-<script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.datetime.js'}"></script>
-<script src="@{'/public/javascripts/client/mobiscroll/i18n/mobiscroll.i18n.zh.js'}"></script>
+<script src="@{'/public/javascripts/client/preg/preg-mobiscroll.js'}"></script>
 <script src="@{'/public/javascripts/client/Chart.min.js'}" type="text/javascript"></script>
 <script type="text/javascript">
 	$(function(){
@@ -103,7 +95,7 @@
            		$('#menseChartEndDate').val(date);
             }
         });
-        
+
         $.get('/CPregnant/loadAllMense',function(data){
         	var html = "";
             console.log(data);
