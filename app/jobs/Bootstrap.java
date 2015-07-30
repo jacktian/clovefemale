@@ -1,9 +1,7 @@
 package jobs;
 
-import models.Medicine;
 import play.jobs.Job;
 import play.jobs.OnApplicationStart;
-import testData.AgendaTestDataGenerator;
 import utils.MedboxInit;
 import utils.PoiUtil;
 
