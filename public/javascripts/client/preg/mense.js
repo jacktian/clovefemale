@@ -109,7 +109,6 @@ $(function() {
                   $('.mense-chart-empty').html("图表无数据显示");
                   $('.mense-chart-empty').removeClass('not-shown');
                   $('#menseChart').addClass('hidden');
-                  console.log("dsdsdsds");
                 } else {
                   $('#menseChart').removeClass('hidden');
                   $('.mense-chart-empty').addClass('not-shown');

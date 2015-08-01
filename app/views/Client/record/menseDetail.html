@@ -122,7 +122,7 @@
             $.get('/CPregnant/loadAllMenseChart',function(data){
                     dataList = data.data.data;
                     labelList = data.data.label;
-                    if(dataList.length != 0){
+                    if(typeof(dataList)!='undefined'){
 
 
                         var loadMenseChart = function() {
