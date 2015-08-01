@@ -40,7 +40,6 @@ $(function() {
         }*/
                 pregData = data.data.data;
                 pregLabel = data.data.label;
-
                 var loadMenseChart = function() {
                   // 基于准备好的dom，初始化echarts图表
                   $('#menseChart').css("width", $(window).get(0).innerWidth * 0.94);
@@ -110,9 +109,16 @@ $(function() {
                   $('.mense-chart-empty').removeClass('not-shown');
                   $('#menseChart').addClass('hidden');
                 } else {
+                  if(pregData.length == 0){
+                    $('.mense-chart-empty').html("图表无数据显示");
+                                      $('.mense-chart-empty').removeClass('not-shown');
+                                      $('#menseChart').addClass('hidden');
+                  }
+                  else{
                   $('#menseChart').removeClass('hidden');
                   $('.mense-chart-empty').addClass('not-shown');
                   loadMenseChart();
+                  }
                 }
 
 

@@ -24,7 +24,7 @@ public class CPregnant extends WebService {
                                  String menseHurt, String menseLquid, String menseNum,
                                  String menseLiquid, String date) {
         String openid = session.get("openid");
-        //openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+        openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 
         try {
             if (openid == null) {
@@ -79,7 +79,7 @@ public class CPregnant extends WebService {
      */
     public static void lastMense() {
         String openid = session.get("openid");
-        //openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+        openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
         String sql = "select m.m_color,m.m_measure,m.m_piece,m.is_mcramp,date_format(m.m_date,'%Y-%m-%d') from Menses m where m.m_date in (select max(m_date) from Menses where user_id = '"
                 + openid + "') and m.user_id = '" + openid + "'";
         List bean = JPA.em().createNativeQuery(sql).getResultList();
@@ -95,7 +95,7 @@ public class CPregnant extends WebService {
      */
     public static void lastMenseByDate(String date) {
         String openid = session.get("openid");
-        //openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+        openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
         String sql = "select * from Menses m where m.m_date in (select max(m_date) from Menses where user_id = '"
                 + openid + "') and m.user_id = '" + openid + "'";
         List<Menses> bean = JPA.em().createNativeQuery(sql).getResultList();
@@ -107,7 +107,7 @@ public class CPregnant extends WebService {
      */
     public static void renderMense() {
         String openid = session.get("openid");
-        //openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+        openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
         String sql = "select m_date from Menses m where m.user_id = '"
                 + openid + "' order by m.m_date asc";
         List resultList = JPA.em().createNativeQuery(sql).getResultList();
@@ -131,7 +131,6 @@ public class CPregnant extends WebService {
             for(int i = 1;i<dateList.size();i++){
                 long dis = dateList.get(i).getTime() - curTime.getTime();
                 long time = dis/1000/60/60;
-                System.out.println("时间差:"+time+",");
                 if(time>24) {
                     startList.add(dateList.get(i));
                     startStrList.add(dateStrList.get(i));
@@ -146,12 +145,15 @@ public class CPregnant extends WebService {
             for(int i = 1;i<startStrList.size();i++){
                 Date d = format.parse(startStrList.get(i));
                 long timeDis = d.getTime() - curDate.getTime();
-                timeList.add(timeDis/1000/60/60/24);
+                System.out.println(timeDis/1000/60/60/24);
+                timeList.add(timeDis / 1000 / 60 / 60 / 24);
+                curDate = d;
             }
             startStrList.remove(startStrList.size()-1);
             ChartBean bean = new ChartBean();
             bean.label = startStrList;
             bean.data = timeList;
+            System.out.println(startStrList);
             wsOk(bean);
         } catch (Exception e) {
             e.printStackTrace();
@@ -181,7 +183,7 @@ public class CPregnant extends WebService {
      */
     public static void findMense(String date) {
         String openid = session.get("openid");
-        // openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+        openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
         Date newDate;
         String dateStr;
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -211,7 +213,7 @@ public class CPregnant extends WebService {
      */
     public static void removeMense(String date) {
         String openid = session.get("openid");
-        // openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+        openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
         String sql = "select id from Menses m where date_format(m.m_date,'%Y-%m-%d') = '"
                 + date + "' and m.user_id = '" + openid + "'";
         List menseList = JPA.em().createNativeQuery(sql).getResultList();
@@ -234,7 +236,7 @@ public class CPregnant extends WebService {
      */
     public static void loadAllMense() {
         String openid = session.get("openid");
-        //openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+        openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
         String sql = "select m.m_color,m.m_measure,m.m_piece,m.is_mcramp,date_format(m.m_date,'%Y-%m-%d') from Menses m where m.user_id = '"
                 + openid + "' order by m.m_date";
         List bean = JPA.em().createNativeQuery(sql).getResultList();
@@ -250,7 +252,7 @@ public class CPregnant extends WebService {
      */
     public static void loadAllMenseChart() {
         String openid = session.get("openid");
-        //openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+        openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
         String sql = "select m_date from Menses m where m.user_id = '"
                 + openid + "' order by m.m_date asc";
         List resultList = JPA.em().createNativeQuery(sql).getResultList();
@@ -313,7 +315,7 @@ public class CPregnant extends WebService {
      */
     public static void test() {
         String openid = session.get("openid");
-        // openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+        openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
         String sql = "select new beans.MenseBean(m.mDate as mDate,m.time) from Menses m order by m.mDate";
         List<MenseBean> bean = JPA.em().createQuery(sql).getResultList();
         wsOk(bean);

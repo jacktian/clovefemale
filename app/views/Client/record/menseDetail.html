@@ -126,6 +126,9 @@
 
 
                         var loadMenseChart = function() {
+
+
+
                             // 基于准备好的dom，初始化echarts图表
 									          $('#pregMenseChart').css("width", $(window).get(0).innerWidth);
 									          var myChart = echarts.init(document.getElementById('pregMenseChart'));
@@ -186,12 +189,16 @@
 									          };
 									          // 为echarts对象加载数据
 									          myChart.setOption(option);
-
                         };
+
+                        if(dataList.length == 0){
+                            $('.mense-chart-empty').removeClass('not-shown');
+                        }
+                        else{
                         loadMenseChart();
                         $('.mense-chart-empty').addClass('not-shown');
 												$('#pregwChart').removeClass('hidden');
-
+                        }
                     }
                     else{
                         $('.mense-chart-empty').removeClass('not-shown');
