@@ -5,7 +5,7 @@ $(function() {
     //图表渲染
     $.get('/CPregnant/renderMense',
       function(data) {
-        var ctx = $("#mense-chart").get(0).getContext("2d");
+        /*var ctx = $("#mense-chart").get(0).getContext("2d");
         ctx.clearRect(0, 0, $(window).get(0).innerWidth, 150);
         menseData = data.data.data;
         menseLabel = data.data.label;
@@ -37,7 +37,87 @@ $(function() {
             new Chart(ctx).Line(data, options);
           };
           loadMenseChart();
-        }
+        }*/
+        console.log(data);
+        pregData = data.data.data;
+                pregLabel = data.data.label;
+
+                var loadMenseChart = function() {
+                  // 基于准备好的dom，初始化echarts图表
+                  $('#menseChart').css("width", $(window).get(0).innerWidth * 0.94);
+                  var myChart = echarts.init(document.getElementById('menseChart'));
+
+                  var option = {
+                    color: ['#E79996'],
+                    tooltip: {
+                      show: true,
+                    },
+                    legend: {
+                      x: 'center',
+                      data: ['经期']
+                    },
+                    title: {
+                      subtext: '经期图表'
+                    },
+                    toolbox: {
+                      show: true,
+                      feature: {
+                        restore: {
+                          show: true
+                        },
+                        saveAsImage: {
+                          show: false
+                        }
+                      }
+                    },
+                    grid: {
+                      x: 50,
+                      y: 60,
+                      x2: 50,
+                      y2: 50
+                    },
+                    xAxis: [{
+                      type: 'category',
+                      data: pregLabel
+                    }],
+                    yAxis: [{
+                      type: 'value',
+                      /*min: 0,
+                      max: 100,*/
+                      axisLabel: {
+                        formatter: '{value} 天'
+                      }
+                    }],
+                    series: [{
+                      "name": "经期",
+                      "type": "line",
+                      "data": pregData,
+                      smooth: true,
+                      showAllSymbol: true,
+                      markLine: {
+                        data: [{
+                          type: 'average',
+                          name: '平均值'
+                        }]
+                      }
+                    }]
+                  };
+                  // 为echarts对象加载数据
+                  myChart.setOption(option);
+                };
+
+
+                if (pregData.length == 0) {
+                  $('.mense-chart-empty').html("图表无数据显示");
+                  $('.mense-chart-empty').removeClass('not-shown');
+                  $('#menseChart').addClass('hidden');
+                } else {
+                  $('#menseChart').removeClass('hidden');
+                  $('.mense-chart-empty').addClass('not-shown');
+                  loadMenseChart();
+                }
+
+
       });
     //上一次记录渲染
     $.get('/CPregnant/lastMense',
@@ -48,36 +128,19 @@ $(function() {
           color = data.data[0];
           $('#lastMenseNum').text(data.data[1]);
           num = data.data[1];
-          if (data.data[2] == true) {
-            $('#lastMenseLiquid').text("有");
-            liquid = "有色块"
-          } else {
-            $('#lastMenseLiquid').text("无");
-            liquid = "无色块"
-          }
-          if (data.data[3] == true) {
-            $('#lastMenseHurt').text("有");
-            hurt = "痛经";
-          } else {
-            $('#lastMenseHurt').text("无");
-            hurt = "无痛";
-          }
-          $('#lastMenseChou').text(data.data[4]);
-          chou = data.data[4];
-          date = data.data[5];
+           $('#lastMenseHurt').text(data.data[3]);
+           hurt = data.data[3];
+          date = data.data[4];
+           $('#lastMenseLiquid').text(data.data[2]);
+                      liquid = data.data[2];
 
-          $('#lastMenseTime').text(data.data[6] + "天");
-          time = "时长:" + data.data[6] + "天";
-
-          $('.mense-last-date').text(" (" + data.data[5] + ")");
-          $('.model-last-mense-data').text("上一次(" + date + "):" + color + "," + num + "," + liquid + "," + hurt + "," + chou + "," + time);
+          $('.mense-last-date').text(" (" + data.data[4] + ")");
+          $('.model-last-mense-data').text("上一次(" + date + "):" + color + "," + num + "," + liquid + "," + hurt);
         } else {
           $('#lastMenseColor').text("无记录");
           $('#lastMenseNum').text("无记录");
           $('#lastMenseLiquid').text("无记录");
           $('#lastMenseHurt').text("无记录");
-          $('#lastMenseChou').text("无记录");
-          $('#lastMenseTime').text("无记录");
           $('.model-last-mense-data').text("暂无记录显示，请点击添加数据");
         }
 
@@ -121,13 +184,13 @@ $(function() {
   $('.mense-data-refresh').bind('touchend',
     function() {
       var menseColor = $("#mense-color").val();
-      var menseChou = $("#mense-chou").val();
       var menseHurt = $("#mense-hurt").val();
       var menseLiquid = $("#mense-liquid").val();
       var menseNum = $("#mense-num").val();
+      console.log(menseHurt);
       var date = $("#mense-date-val").attr("data-val");
-      var time = $('#mense-time').val();
-      $.get('/CPregnant/addMenses?menseColor=' + menseColor + "&menseChou=" + menseChou + "&menseHurt=" + menseHurt + "&menseHurt=" + menseHurt + "&menseLiquid=" + menseLiquid + "&menseNum=" + menseNum + "&date=" + date + "&time=" + time,
+      console.log(menseColor+","+menseHurt+","+menseLiquid+","+menseNum+","+date);
+      $.get('/CPregnant/addMenses?menseColor=' + menseColor+"&menseHurt=" + menseHurt + "&menseLiquid=" + menseLiquid + "&menseNum=" + menseNum + "&date=" + date,
         function(data) {
           if (data.result == 0) {
             mui.toast('保存成功');
