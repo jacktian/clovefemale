@@ -292,6 +292,7 @@ public class CPregnant extends WebService {
                 Date d = format.parse(startStrList.get(i));
                 long timeDis = d.getTime() - curDate.getTime();
                 timeList.add(timeDis/1000/60/60/24);
+                curDate = d;
             }
             startStrList.remove(startStrList.size()-1);
             ChartBean bean = new ChartBean();
