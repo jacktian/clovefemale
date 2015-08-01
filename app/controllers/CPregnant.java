@@ -154,6 +154,7 @@ public class CPregnant extends WebService {
             bean.data = timeList;
             wsOk(bean);
         } catch (Exception e) {
+            e.printStackTrace();
             wsError("error");
         }
         /*ChartBean bean = new ChartBean();

@@ -38,8 +38,7 @@ $(function() {
           };
           loadMenseChart();
         }*/
-        console.log(data);
-        pregData = data.data.data;
+                pregData = data.data.data;
                 pregLabel = data.data.label;
 
                 var loadMenseChart = function() {
@@ -106,11 +105,11 @@ $(function() {
                   myChart.setOption(option);
                 };
 
-
-                if (pregData.length == 0) {
+                if (typeof(pregData)=='undefined') {
                   $('.mense-chart-empty').html("图表无数据显示");
                   $('.mense-chart-empty').removeClass('not-shown');
                   $('#menseChart').addClass('hidden');
+                  console.log("dsdsdsds");
                 } else {
                   $('#menseChart').removeClass('hidden');
                   $('.mense-chart-empty').addClass('not-shown');

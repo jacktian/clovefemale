@@ -9,7 +9,6 @@ $(function() {
       var tabNum = $(this).attr('tabNum');
       if (tabNum == "1") {
         $('.mense-content').addClass('active');
-        loadMenseChart();
         curTab = 1;
       } else if (tabNum == "2") {
         $('.temp-content').addClass('active');
