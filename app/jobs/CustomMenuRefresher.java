@@ -67,7 +67,7 @@ public class CustomMenuRefresher extends Job {
 		                     "{"+
 		                     	"\"type\":\"view\","+
 		                     	"\"name\":\"小工具\","+
-		                     	"\"url\":\"http://lama.co/\""+
+		                     	"\"url\":\"http://sunyanmi.com/client/stools/\""+
 		                     "}"+
 		                  "]"+
 		               "},"+
