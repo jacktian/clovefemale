@@ -83,14 +83,14 @@ body{
 .headImg>img{
 	width:60px;
 	/*height: 50px;*/
-	
+
 }
 
 /*昵称*/
 .nickname{
 	display: block;
-	padding-top: 35px;
-	padding-left: 65px;
+	padding-top: 21px;
+	padding-left: 70px;
 	font-weight: 500;
 	color:#272822;
 
@@ -121,5 +121,3 @@ body{
 .mui-table-view-cell.mui-media.mui-col-xs-4{
 
 }
-
-
