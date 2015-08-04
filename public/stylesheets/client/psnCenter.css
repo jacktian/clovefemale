@@ -129,14 +129,14 @@ body{
 .headImg>img{
 	width:60px;
 	/*height: 50px;*/
-	
+
 }
 
 /*昵称*/
 .nickname{
 	display: block;
-	padding-top: 35px;
-	padding-left: 65px;
+	padding-top: 21px;
+	padding-left: 70px;
 	font-weight: 500;
 	color:#272822;
 
@@ -253,7 +253,7 @@ body{
 }
 
 .remindList>.mui-table-view-cell{
-	padding:15px 15px; 
+	padding:15px 15px;
 }
 
 .remindList>.mui-table-view-cell:active{
@@ -307,7 +307,7 @@ body{
 	width:60%;
 	min-width: 225px;
 	max-width: 600px;
-	
+
 	margin:0 auto;
 	/*padding:2px 3px 0px;*/
 	position: absolute;
@@ -324,19 +324,19 @@ body{
 	margin-top: -139px;
 }
 
-@media screen and (min-width: 749px) { 
+@media screen and (min-width: 749px) {
 	.modifyRemindDate {
 		left: 50%;
 		margin-left: -300px;
-	}  
-} 
+	}
+}
 
-@media screen and (max-width: 375px) { 
+@media screen and (max-width: 375px) {
 	.modifyRemindDate {
 		left: 50%;
 		margin-left: -112.5px;
-	}  
-} 
+	}
+}
 
 .modifyRemindDate .dw-i{
 	font-size: 16px !important;
@@ -358,7 +358,7 @@ body{
 
 .mui-title.model-title{
 	color:#fff;
-	font-weight: bold; 
+	font-weight: bold;
 }
 
 
@@ -425,7 +425,7 @@ input.infText{
 	text-align: center;
 	border-radius: 5px;
 	margin:20px auto;
-	padding:10px 0; 
+	padding:10px 0;
 	width:80%;
 	color:red;
 	font-size: 16px;

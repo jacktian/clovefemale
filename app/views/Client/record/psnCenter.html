@@ -1,15 +1,15 @@
 #{extends 'client.html' /}
 #{set title:'会员中心' /}
-<link rel="stylesheet" href="@{'/public/stylesheets/client/psnCenter.css'}">
+<link rel="stylesheet" href="@{'/public/stylesheets/client/psnCenter.css'}?v=20150804">
 <script type="text/javascript" src = "@{'/public/javascripts/jquery-1.8.3.min.js'}"></script>
 <div class="psnBox">
 	<div class="imgAndname">
 		<div class="headImg">
 			<img src="${user.headimgurl}" alt="${user.nickname}"/>
-		</div>	
+		</div>
 		<span class="nickname">${user.nickname}</span>
 	</div>
-	
+
 	<div id="introdction" class="introdction">${user.signName}</div>
 </div>
 <nav class="navbox">
@@ -124,26 +124,26 @@
   //丁香号
   document.getElementById("cloveIdItem").addEventListener("tap",function(event){
     localStorage.modifyItem = 1;
-    window.location.href="modifyPhone"; 
+    window.location.href="modifyPhone";
   });
 
   //手机号
   document.getElementById("phoneItem").addEventListener("tap",function(event){
     // localStorage.modifyItem = 2;
-    // window.location.href="modifyPhone"; 
+    // window.location.href="modifyPhone";
     alert("等待提供短信服务");
   });
 
   // //邮箱
   // document.getElementById("emailItem").addEventListener("tap",function(event){
   //   localStorage.modifyItem = 3;
-  //   window.location.href="modifyPhone"; 
+  //   window.location.href="modifyPhone";
   // });
 
    /*心情设置*/
     document.getElementById("introdction").addEventListener("tap",function(event){
       localStorage.modifyItem = 4;
-      window.location.href="modifyPhone"; 
+      window.location.href="modifyPhone";
     });
 
 
@@ -153,5 +153,3 @@
     return true;
   });;
 </script>
-
-
