@@ -109,6 +109,19 @@ public class CBabyAction extends WebService{
 		}
 	}
 	
+	
+	/**
+	 *删除宝宝 
+	 */
+	public static void deleteBaby(String babyId){
+		try{
+			Baby.delete("id = ?",babyId);
+			wsOk("删除成功");
+		}catch(Exception e){
+			wsError("失败");
+		}
+	}
+	
 	/**
 	 *加载宝宝详细资料
 	 *babyId:宝宝id 
@@ -1080,7 +1093,7 @@ public class CBabyAction extends WebService{
 			}
 			
 		}catch(Exception e){
-			return "初始化疫苗列表失败";
+			return e.getMessage();//"初始化疫苗列表失败";
 		}
 		return "成功" + baby.name + "--" + baby.id;
 		
@@ -1207,7 +1220,7 @@ public class CBabyAction extends WebService{
 	 */
 	public static void loadAllVaccine(){
 		List<Vaccine> vaccineList = Vaccine.findAll();
-		wsOk(vaccineList);
+		wsOk(vaccineList); 
 	}
 	
 	/**

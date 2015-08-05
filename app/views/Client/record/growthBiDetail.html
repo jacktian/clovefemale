@@ -1,6 +1,10 @@
 #{extends 'client.html' /}
 #{set title:'记录详情' /}
+#{set 'moreStyles'}
 
+<link rel="stylesheet" href="@{'/public/stylesheets/client/growthDetail.css'}"/>
+
+#{/set}
 <header class="mui-bar mui-bar-nav babyTitle">
   <a class="mui-icon mui-icon-left-nav mui-pull-left" href="/client/babyRecord"></a>
   <!-- <a id="list_children" class="mui-icon mui-icon-bars mui-pull-right"></a> -->
@@ -148,8 +152,6 @@
 <div class="infTips response-tips">
 	<!-- asdf -->
 </div>
-
-<link rel="stylesheet" href="@{'/public/stylesheets/client/growthDetail.css'}"/>
 <script src="http://dcloudio.github.io/mui/dist/js/jquery-2.1.1.js"></script>
 <script src="@{'/public/javascripts/Chart.min.js'}"></script>
 

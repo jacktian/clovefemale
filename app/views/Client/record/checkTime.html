@@ -1,5 +1,8 @@
 #{extends 'client.html' /}
 #{set title:'产检通' /}
+#{set 'moreStyles'}
+<link rel="stylesheet" href="@{'/public/stylesheets/client/stools.css'}">
+#{/set}
 
 <header class="mui-bar mui-bar-nav babyTitle">
   <a class="mui-icon mui-icon-left-nav mui-pull-left" href="stools"></a>
@@ -84,7 +87,7 @@
   </li>
 </ul>
 
-<link rel="stylesheet" href="@{'/public/stylesheets/client/stools.css'}">
+
 <script type="text/javascript" src = "@{'/public/javascripts/jquery-1.8.3.min.js'}"></script>
 <script>
   $(function(){

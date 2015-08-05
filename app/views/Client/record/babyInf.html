@@ -1,5 +1,8 @@
 #{extends 'client.html' /}
 #{set title:'宝宝资料' /}
+#{set 'moreStyles'}
+<link rel="stylesheet" href="@{'/public/stylesheets/client/baby.css'}">
+#{/set}
 <header class="mui-bar mui-bar-nav babyTitle">
   <a class="mui-icon mui-icon-left-nav mui-pull-left" href="/Client/myBaby"></a>
   <h1 class="mui-title">宝宝资料</h1>
@@ -71,7 +74,7 @@
 	
 </div>
 
-<link rel="stylesheet" href="@{'/public/stylesheets/client/baby.css'}">
+
 <style rel="stylesheet">
 body{
 	background:#eee;	
@@ -227,13 +230,14 @@ body{
 				$(".mn-tips ").hide();
         });
 
-        /*修改性别为男*/	
+        /*修改性别*/	
 		$(".item-sex-baby").bind('touchend',function(){
 			var sex = $('input:radio[name="sex-radio"]:checked').val();
 			var tap_sex = $(this).children(".sex-radio").val();
 			if(sex == tap_sex){
 				return 0;
 			}else{
+				// if()
 				if(tap_sex == "男"){
 					modifyBabySex(babyId,"男");
 				}else if(tap_sex == "女"){
@@ -275,6 +279,13 @@ body{
 			if(data.result==0){//修改成功
 				$("#baby-sex").text(sex);
 			}
+			var headImgUrl = $("#baby-headImg").attr("src");
+
+			if(sex == "男"&&"/public/images/client/default-girl.jpg" == headImgUrl){
+				$("#baby-headImg").attr("src","/public/images/client/default-boy.jpg");
+			}else if(sex == "女" &&"/public/images/client/default-boy.jpg" == headImgUrl){
+				$("#baby-headImg").attr("src","/public/images/client/default-girl.jpg");
+			}
 			showResTips(data.data);
 			mui('.ms-model').popover('toggle');
 		});
@@ -291,7 +302,7 @@ body{
 			var signature = data.data.signature;
 		    /* 配置微信接口信息 */
 			wx.config({
-			    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+			    debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
 			    appId: 'wx485f2bc0867fe1c2', // 必填，公众号的唯一标识
 			    timestamp: timestamp, // 必填，生成签名的时间戳
 			    nonceStr: nonceStr, // 必填，生成签名的随机串
