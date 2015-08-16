@@ -29,6 +29,8 @@ $(function(){
 	document.getElementById("todoVacLink").addEventListener("tap",function(event){
 		$(".vacListName").text("未接种疫苗");
  		$(".vacList").removeClass("activeVacList");
+ 		$(this).parent().siblings().children().children(".vacIconNav").removeClass("activeNav");
+ 		$(this).children(".vacIconNav").addClass("activeNav");
  		$("#todoVac").addClass("activeVacList");
  		$("#searchInput").val("");
  		if(todoVacLoad == false){
@@ -41,6 +43,8 @@ $(function(){
 	document.getElementById("doneVacLink").addEventListener("tap",function(event){
 		$(".vacListName").text("已接种疫苗");
  		$(".vacList").removeClass("activeVacList");
+ 		$(this).parent().siblings().children().children(".vacIconNav").removeClass("activeNav");
+ 		$(this).children(".vacIconNav").addClass("activeNav");
  		$("#doneVac").addClass("activeVacList");
  		$("#searchInput").val("");
  		if(doneVacLoad == false){
@@ -51,8 +55,10 @@ $(function(){
 
 	//全部疫苗tap事件
 	document.getElementById("allVacLink").addEventListener("tap",function(event){
-		$(".vacListName").text("全部疫苗");
+		$(".vacListName").text("全部疫苗（按(扩大国家免疫规划实施方案》文件标准)");
  		$(".vacList").removeClass("activeVacList");
+ 		$(this).parent().siblings().children().children(".vacIconNav").removeClass("activeNav");
+ 		$(this).children(".vacIconNav").addClass("activeNav");
  		$("#allVac").addClass("activeVacList");
  		$("#searchInput").val("");
  		if(allVacLoad == false){
@@ -63,6 +69,7 @@ $(function(){
 	// 搜索疫苗的focus事件
 	$("#searchInput").focus(function(){
 		$(".vacListName").text("搜索疫苗结果");
+		$(".vacIconNav").removeClass("activeNav");
  		$(".vacList").removeClass("activeVacList");
  		$("#searchVac").addClass("activeVacList");
  		$(".searchVacForm").html("");

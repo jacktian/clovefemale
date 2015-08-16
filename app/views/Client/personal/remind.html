@@ -8,39 +8,45 @@
 </header>
 
 <ul class="mui-table-view navList remindList">
-  <li id="remindItem_phy" class="mui-table-view-cell">
+  <li  class="mui-table-view-cell">
   <!-- <a class="mui-navigate-right"> -->
+    <div id="remindItem_phy" class="remind-item">
     <div class="listItemIcon">
       <i class="icon-remindItem iconfont">&#xe7af;</i>
     </div>
    <!--  <a href="" class="mui-navigate-right"></a> -->
    生理记录提醒
-   <div id="remindDate_phy" class="remindDate">提前7天</div>
-    <div class="mui-switch mui-switch-mini mui-active">
+   <div class="remindDate">提前<span id="remindDate_phy">7</span>天</div>
+   </div>
+    <div id="toggle-phy" class="mui-switch mui-switch-mini">
       <div class="mui-switch-handle"></div>
     </div>
     <!-- </a> -->
   </li>
-  <li id="remindItem_med" class="mui-table-view-cell">
+  <li class="mui-table-view-cell">
   <!-- <a class="mui-navigate-right"> -->
+    <div id="remindItem_med"  class="remind-item">
     <div class="listItemIcon">
       <i class="icon-remindItem iconfont">&#xe679;</i>
     </div>
     药品到期提醒
-    <div id="remindDate_med" class="remindDate">提前7天</div>
-    <div class="mui-switch mui-switch-mini mui-active">
+    <div class="remindDate">提前<span id="remindDate_med">7</span>天</div>
+    </div>
+    <div id="toggle-med" class="mui-switch mui-switch-mini mui-active">
       <div class="mui-switch-handle"></div>
     </div>
     <!-- </a> -->
   </li>
-  <li id="remindItem_vac" class="mui-table-view-cell">
+  <li class="mui-table-view-cell">
   <!-- <a class="mui-navigate-right"> -->
+    <div id="remindItem_vac" class="remind-item">
     <div class="listItemIcon">
       <i class="icon-remindItem iconfont">&#xe611;</i>
     </div>
     疫苗接种提醒
-    <div id="remindDate_vac" class="remindDate">提前7天</div>
-    <div class="mui-switch mui-switch-mini mui-active">
+    <div class="remindDate">提前<span id="remindDate_vac">7</span>天</div>
+    </div>
+    <div id="toggle-vac" class="mui-switch mui-switch-mini mui-active">
       <div class="mui-switch-handle"></div>
     </div>
     <!-- </a> -->
@@ -68,6 +74,11 @@
   
 </div><!-- 修改提醒时间结束 -->
 
+<!-- 操作结果信息 -->
+<div class="infTips response-tips">
+  asdf
+</div>
+
 <link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.animation.css'}" rel="stylesheet" type="text/css" />
 <link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.frame.css'}" rel="stylesheet" type="text/css" />
 <link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.scroller.css'}" rel="stylesheet" type="text/css" />
@@ -78,23 +89,34 @@
 <script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.scroller.js'}"></script>
 <script>
   var setItem = 0;//0代表生理记录提醒，1代表药品到期提醒，2代表疫苗接种提醒
+  var tapToggle = false; //点击的是toggle控件
   $(function(){
       /*点击生理记录提醒*/
       document.getElementById("remindItem_phy").addEventListener("tap",function(event){
+        if(!tapToggle){
           showRemindBox("生理记录提醒");
           setItem = 0;
+        }
+        tapToggle = false;
       });
 
       /*点击药品到期提醒*/
       document.getElementById("remindItem_med").addEventListener("tap",function(event){
-          showRemindBox("药品到期提醒");
-          setItem = 1;
+          if(!tapToggle){
+            showRemindBox("药品到期提醒");
+            setItem = 1;
+          }
+          
+          tapToggle = false;
       });
 
       /*点击疫苗接种提醒*/
       document.getElementById("remindItem_vac").addEventListener("tap",function(event){
-          showRemindBox("疫苗接种提醒");
-          setItem = 2;
+          if(!tapToggle){
+            showRemindBox("疫苗接种提醒");
+            setItem = 2;  
+          }
+          tapToggle = false;
       });
 
       /*点击取消设置提醒时间*/
@@ -104,13 +126,56 @@
 
       /*点击确定设置提醒时间*/
       document.getElementById("remind-confirm-btn").addEventListener("tap",function(event){
+          var pre_remind_day = $(".stressDate").text();
           switch(setItem){
-            case 0:alert("修改的是生理记录提醒");break;
-            case 1:alert("修改的是药品到期提醒");break;
-            case 2:alert("修改的是疫苗接种提醒");break;
+            case 0: 
+                    $("#remindDate_phy").text(pre_remind_day);
+                    // alert("修改的是生理记录提醒");
+                    break;
+            case 1:
+                    $("#remindDate_med").text(pre_remind_day);
+                    // alert("修改的是药品到期提醒");
+                    break;
+            case 2:
+                    $("#remindDate_vac").text(pre_remind_day);
+                    // alert("修改的是疫苗接种提醒");
+                    break;
             default:break;
           }
+          mui('.modifyRemindDate').popover('toggle');
       });
+
+       /*生理记录开关*/
+      document.getElementById("toggle-phy").addEventListener("toggle",function(event){
+        tapToggle = true;
+        if(event.detail.isActive){
+          showResTips("生理记录提醒已打开")
+        }else{
+           showResTips("生理记录提醒已关闭")
+        }
+      })
+
+
+      /*药品到期开关*/
+      document.getElementById("toggle-med").addEventListener("toggle",function(event){
+        tapToggle = true;
+        if(event.detail.isActive){
+          showResTips("药品到期提醒已打开")
+        }else{
+           showResTips("药品到期提醒已关闭")
+        }
+      })
+
+
+      /*疫苗开关*/
+      document.getElementById("toggle-vac").addEventListener("toggle",function(event){
+        tapToggle = true;
+        if(event.detail.isActive){
+          showResTips("疫苗提醒已打开")
+        }else{
+           showResTips("疫苗提醒已关闭")
+        }
+      })
 
      /*科目选择滚轮*/
       $('#scroller_remind').mobiscroll().scroller({
@@ -137,6 +202,19 @@
       $(".stressDate").text("7");
       mui('.modifyRemindDate').popover('toggle');
       $('#scroller_remind').mobiscroll('setVal', 7, true, true, false, 0);
+  }
+
+  /*展示操作信息*/
+  function showResTips(result){
+    $(".response-tips").text(result);
+    $(".response-tips").show();
+    window.setTimeout("hideTips()",1500);
+  }
+
+  /*隐藏信息提示，并清空*/
+  function hideTips(){
+      $(".response-tips").text("");
+      $(".response-tips").hide();
   }
 </script>
 

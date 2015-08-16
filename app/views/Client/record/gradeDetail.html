@@ -166,8 +166,9 @@
 	var isLoad = false;
 
 	$(function(){
+		var subject = $("#subject").text(localStorage.subject);
 		/*加载成绩表单历史记录*/
-		loadGfData();
+		loadGfData(localStorage.subject);
 
 		document.querySelector('.gfSlider').addEventListener('slide', function(event){
 			activeTab_grow = event.detail.slideNumber;//当前活跃tab

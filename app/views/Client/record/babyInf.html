@@ -33,6 +33,8 @@
       生日
   </li>
 </ul>
+
+<button class="del-btn-baby confirm-btn" ><a href="/client/mybaby" id="del-link-baby">删除宝宝</a></button>
 </div>
 
 <!-- 小名修改模块 -->
@@ -75,6 +77,7 @@
 </div>
 
 
+
 <style rel="stylesheet">
 body{
 	background:#eee;	
@@ -90,7 +93,7 @@ body{
 		var babyId = localStorage.babyId;
 
 
-		// alert(babyId);
+
 		/*加载宝宝详细资料*/
 		$.post("/CBabyAction/loadBabyInf",{
 			babyId: babyId
@@ -114,9 +117,7 @@ body{
 			    success: function (res) {
 			    	//返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
 			    	var localIds = res.localIds; 
-			    	// alert(localIds.toString());
 			    	var localId = localIds[0];
-			    	alert(localId+"---"+localIds.length);
 			    	$("#baby-headImg").attr("src",localId.toString());
 
 			    	//上传头像图片
@@ -126,14 +127,12 @@ body{
 					    success: function (res) {
 					        var serverId = res.serverId; // 返回图片的服务器端ID
 					        localStorage.serverId = serverId;
-					        alert(serverId);
 					        // $("#baby-headImg").attr("src",serverId);
 					        $.post("/CBabyAction/replaceBabyImg",{
 					        	babyId:babyId,
 					        	media_id:serverId
 					        },function(data){
 					        	if(data.result==0){
-					        		// alert(data.data);
 					        		// alert("从微信服务器下载头像成功");
 					        		$("#baby-headImg").attr("src",data.data.headImgUrl);
 					        	}else{
@@ -224,7 +223,27 @@ body{
 			mui('.mn-model').popover('toggle');
 		});
 
-		/*隐藏小名提示*/
+		//弹出删除宝宝确定模态对话框
+		document.getElementById("del-link-baby").addEventListener("tap",function(event){
+			if(window.confirm('你确定要取消交易吗？')){
+                 $.post("/CBabyAction/deleteBaby",{
+					babyId:babyId
+				 },function(data){
+					if(data.result == 0 ){//操作成功
+						showResTips("操作成功！")
+					}else{
+						showResTips("删除失败！")
+					}
+				 });
+				 return true;
+              }else{
+                 return false;
+             }
+ 
+		});
+
+
+		/*隐藏小名提示
 		$("#bn-input").bind("focus", function(e) {  
                 $(".mn-tips ").text("");
 				$(".mn-tips ").hide();
