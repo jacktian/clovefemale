@@ -70,7 +70,7 @@ $(function() {
           yAxis: [{
             type: 'value',
             min: 35,
-            max: 43,
+            max: 41,
             axisLabel: {
               formatter: '{value} °C'
             }
