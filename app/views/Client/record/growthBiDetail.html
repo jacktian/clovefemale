@@ -1,6 +1,10 @@
 #{extends 'client.html' /}
 #{set title:'记录详情' /}
+#{set 'moreStyles'}
 
+<link rel="stylesheet" href="@{'/public/stylesheets/client/growthDetail.css'}"/>
+
+#{/set}
 <header class="mui-bar mui-bar-nav babyTitle">
   <a class="mui-icon mui-icon-left-nav mui-pull-left" href="/client/babyRecord"></a>
   <!-- <a id="list_children" class="mui-icon mui-icon-bars mui-pull-right"></a> -->
@@ -70,15 +74,15 @@
 
 				<!-- 只有一条数据的时候显示 -->
 				<div class="oneData oneData-height">
-					<p>年龄:<span id="oneDataVal-age-h"></span> &nbsp;身高:<span id="oneDataVal-baby-h"></span>cm &nbsp;标准:<span id="oneDataVal-stander-h"></span>cm</p>
-				</div>
+					<!-- <p>年龄:<span id="oneDataVal-age-h"></span> &nbsp;身高:<span id="oneDataVal-baby-h"></span>cm &nbsp;标准:<span id="oneDataVal-stander-h"></span>cm</p>
+ -->				</div>
 
 				<!-- 身体指标图表模块 -->
 				<div id="chartbox_bi_dh" class="charBox">
 					<div class="unitDesc">cm</div>
 					<div class="mark_chart">
 						<div class="standerDesc">
-							<div class="line-stander"></div>标准
+							<div class="line-stander"></div>标准区间
 							
 						</div>
 						<div class="babyDesc">
@@ -96,7 +100,7 @@
 			<div class="cardCotent-gd content-chart">
 				<!-- 只有一条数据的时候显示 -->
 				<div class="oneData oneData-weight">
-					<p>年龄:<span id="oneDataVal-age-w">18岁</span> &nbsp;体重:<span id="oneDataVal-baby-w">55</span>kg &nbsp;标准:<span id="oneDataVal-stander-w">56</span>kg</p>
+				<!-- 	<p>年龄:<span id="oneDataVal-age-w">18岁</span> &nbsp;体重:<span id="oneDataVal-baby-w">55</span>kg &nbsp;标准:<span id="oneDataVal-stander-w">56</span>kg</p> -->
 				</div>
 
 				<!-- 身体指标图表模块 -->
@@ -104,7 +108,7 @@
 					<div class="unitDesc">kg</div>
 					<div class="mark_chart">
 						<div class="standerDesc">
-							<div class="line-stander"></div>标准
+							<div class="line-stander"></div>标准区间
 							
 						</div>
 						<div class="babyDesc">
@@ -148,8 +152,6 @@
 <div class="infTips response-tips">
 	<!-- asdf -->
 </div>
-
-<link rel="stylesheet" href="@{'/public/stylesheets/client/growthDetail.css'}"/>
 <script src="http://dcloudio.github.io/mui/dist/js/jquery-2.1.1.js"></script>
 <script src="@{'/public/javascripts/Chart.min.js'}"></script>
 
@@ -369,10 +371,12 @@ var lowW_female =[2.54,4.15,5.48,6.26,7.03,7.61,8.12,8.63,9.15,9.64,10.52,11.36,
 			var lowW_all;
 
 			if(count == 1 && lastData_c == null){
+				$(".charBox").hide();
+				$(".changeAge").hide();
 				$(".oneData-height").text("只有一条数据哦！");
 				$(".oneData-height").show();
 
-				$(".oneData-weight").text("只有一条数据哦！");
+				$(".oneData-weight").text("多添加数据，可以展示炫酷的图表哦！");
 				$(".oneData-weight").show();
 				$("#chartbox_bi_h").hide();
 				$("#chartbox_bi_w").hide();
@@ -470,6 +474,8 @@ var lowW_female =[2.54,4.15,5.48,6.26,7.03,7.61,8.12,8.63,9.15,9.64,10.52,11.36,
 
 	/*展示身体指标图表*/
 	function showBiChart(labels,up_height,data_height,low_height){
+		$(".charBox").show();
+		$(".changeAge").show();
 		var options = {};
 		// console.log(labels);
 		// console.log(up_height);

@@ -1,6 +1,11 @@
 #{extends 'client.html' /}
 #{set title:'记录详情' /}
-
+#{set 'moreStyles'}
+<link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.animation.css'}" rel="stylesheet" type="text/css" />
+<link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.frame.css'}" rel="stylesheet" type="text/css" />
+<link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.scroller.css'}" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="@{'/public/stylesheets/client/growthDetail.css'}"/>
+#{/set}
 <header class="mui-bar mui-bar-nav babyTitle">
   <a class="mui-icon mui-icon-left-nav mui-pull-left" href="/client/babyRecord"></a>
   <!-- <a id="list_children" class="mui-icon mui-icon-bars mui-pull-right"></a> -->
@@ -143,10 +148,7 @@
 <div class="infTips response-tips">
 	<!-- asdf -->
 </div>
-<link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.animation.css'}" rel="stylesheet" type="text/css" />
-<link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.frame.css'}" rel="stylesheet" type="text/css" />
-<link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.scroller.css'}" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" href="@{'/public/stylesheets/client/growthDetail.css'}"/>
+
 <script src="http://dcloudio.github.io/mui/dist/js/jquery-2.1.1.js"></script>
 <script src="@{'/public/javascripts/Chart.min.js'}"></script>
 <script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.core.js'}"></script>
@@ -164,8 +166,9 @@
 	var isLoad = false;
 
 	$(function(){
+		var subject = $("#subject").text(localStorage.subject);
 		/*加载成绩表单历史记录*/
-		loadGfData();
+		loadGfData(localStorage.subject);
 
 		document.querySelector('.gfSlider').addEventListener('slide', function(event){
 			activeTab_grow = event.detail.slideNumber;//当前活跃tab

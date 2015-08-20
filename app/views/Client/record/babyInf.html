@@ -1,5 +1,8 @@
 #{extends 'client.html' /}
 #{set title:'宝宝资料' /}
+#{set 'moreStyles'}
+<link rel="stylesheet" href="@{'/public/stylesheets/client/baby.css'}">
+#{/set}
 <header class="mui-bar mui-bar-nav babyTitle">
   <a class="mui-icon mui-icon-left-nav mui-pull-left" href="/Client/myBaby"></a>
   <h1 class="mui-title">宝宝资料</h1>
@@ -30,6 +33,8 @@
       生日
   </li>
 </ul>
+
+<button class="del-btn-baby confirm-btn" ><a href="/client/mybaby" id="del-link-baby">删除宝宝</a></button>
 </div>
 
 <!-- 小名修改模块 -->
@@ -71,7 +76,8 @@
 	
 </div>
 
-<link rel="stylesheet" href="@{'/public/stylesheets/client/baby.css'}">
+
+
 <style rel="stylesheet">
 body{
 	background:#eee;	
@@ -87,7 +93,7 @@ body{
 		var babyId = localStorage.babyId;
 
 
-		// alert(babyId);
+
 		/*加载宝宝详细资料*/
 		$.post("/CBabyAction/loadBabyInf",{
 			babyId: babyId
@@ -111,9 +117,7 @@ body{
 			    success: function (res) {
 			    	//返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
 			    	var localIds = res.localIds; 
-			    	// alert(localIds.toString());
 			    	var localId = localIds[0];
-			    	alert(localId+"---"+localIds.length);
 			    	$("#baby-headImg").attr("src",localId.toString());
 
 			    	//上传头像图片
@@ -123,14 +127,12 @@ body{
 					    success: function (res) {
 					        var serverId = res.serverId; // 返回图片的服务器端ID
 					        localStorage.serverId = serverId;
-					        alert(serverId);
 					        // $("#baby-headImg").attr("src",serverId);
 					        $.post("/CBabyAction/replaceBabyImg",{
 					        	babyId:babyId,
 					        	media_id:serverId
 					        },function(data){
 					        	if(data.result==0){
-					        		// alert(data.data);
 					        		// alert("从微信服务器下载头像成功");
 					        		$("#baby-headImg").attr("src",data.data.headImgUrl);
 					        	}else{
@@ -221,19 +223,40 @@ body{
 			mui('.mn-model').popover('toggle');
 		});
 
-		/*隐藏小名提示*/
+		//弹出删除宝宝确定模态对话框
+		document.getElementById("del-link-baby").addEventListener("tap",function(event){
+			if(window.confirm('你确定要取消交易吗？')){
+                 $.post("/CBabyAction/deleteBaby",{
+					babyId:babyId
+				 },function(data){
+					if(data.result == 0 ){//操作成功
+						showResTips("操作成功！")
+					}else{
+						showResTips("删除失败！")
+					}
+				 });
+				 return true;
+              }else{
+                 return false;
+             }
+ 
+		});
+
+
+		/*隐藏小名提示
 		$("#bn-input").bind("focus", function(e) {  
                 $(".mn-tips ").text("");
 				$(".mn-tips ").hide();
         });
 
-        /*修改性别为男*/	
+        /*修改性别*/	
 		$(".item-sex-baby").bind('touchend',function(){
 			var sex = $('input:radio[name="sex-radio"]:checked').val();
 			var tap_sex = $(this).children(".sex-radio").val();
 			if(sex == tap_sex){
 				return 0;
 			}else{
+				// if()
 				if(tap_sex == "男"){
 					modifyBabySex(babyId,"男");
 				}else if(tap_sex == "女"){
@@ -274,6 +297,13 @@ body{
 		},function(data){
 			if(data.result==0){//修改成功
 				$("#baby-sex").text(sex);
+			}
+			var headImgUrl = $("#baby-headImg").attr("src");
+
+			if(sex == "男"&&"/public/images/client/default-girl.jpg" == headImgUrl){
+				$("#baby-headImg").attr("src","/public/images/client/default-boy.jpg");
+			}else if(sex == "女" &&"/public/images/client/default-boy.jpg" == headImgUrl){
+				$("#baby-headImg").attr("src","/public/images/client/default-girl.jpg");
 			}
 			showResTips(data.data);
 			mui('.ms-model').popover('toggle');

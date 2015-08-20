@@ -161,6 +161,16 @@ $(function(){
 	});
 
 
+    /*成绩更多的link点击事件*/
+    document.getElementById("detail-gf-analy").addEventListener("tap",function(event){
+        localStorage.subject = $("#subject").text();
+    });
+
+     /*成绩详细分析的link点击事件*/
+    document.getElementById("detail-gf-more").addEventListener("tap",function(event){
+        localStorage.subject = $("#subject").text();
+    });
+     
  	 
 
 	
@@ -627,7 +637,8 @@ function showBodyIndexChart(bodyIndexList){
 			labels : labels,
 			datasets : [
 				{
-					fillColor : "rgba(151,187,205,0.5)",
+					// fillColor : "rgba(151,187,205,0.5)",
+                    fillColor : "rgba(255,255,255,0.5)",
 					strokeColor : "rgba(151,187,205,1)",
 					pointColor : "rgba(151,187,205,1)",
 					pointStrokeColor : "#fff", 
@@ -635,7 +646,8 @@ function showBodyIndexChart(bodyIndexList){
 				}
 				,
 				{
-					fillColor : "rgba(255,153,153,0.3)",
+					// fillColor : "rgba(255,153,153,0.3)",
+                    fillColor : "rgba(255,255,255,0.5)",
 					strokeColor : "rgba(255,153,153,1)",
 					pointColor : "rgba(255,153,153,1)",
 					pointStrokeColor : "#fff",
@@ -643,7 +655,8 @@ function showBodyIndexChart(bodyIndexList){
 				}
 				,
 				{
-					fillColor : "rgba(151,187,205,0.5)",
+					// fillColor : "rgba(151,187,205,0.5)",
+                    fillColor : "rgba(255,255,255,0.5)",
 					strokeColor : "rgba(151,187,205,1)",
 					pointColor : "rgba(151,187,205,1)",
 					pointStrokeColor : "#fff", 
@@ -666,7 +679,8 @@ function showBodyIndexChart(bodyIndexList){
 			labels : labels,
 			datasets : [
 				{
-					fillColor : "rgba(151,187,205,0.5)",
+					// fillColor : "rgba(151,187,205,0.5)",
+                    fillColor : "rgba(255,255,255,0.5)",
 					strokeColor : "rgba(151,187,205,1)",
 					pointColor : "rgba(151,187,205,1)",
 					pointStrokeColor : "#fff", 
@@ -674,7 +688,8 @@ function showBodyIndexChart(bodyIndexList){
 				}
 				,
 				{
-					fillColor : "rgba(255,153,153,0.3)",
+					// fillColor : "rgba(255,153,153,0.3)",
+                    fillColor : "rgba(255,255,255,0.5)",
 					strokeColor : "rgba(255,153,153,1)",
 					pointColor : "rgba(255,153,153,1)",
 					pointStrokeColor : "#fff",
@@ -682,7 +697,8 @@ function showBodyIndexChart(bodyIndexList){
 				}
 				,
 				{
-					fillColor : "rgba(151,187,205,0.5)",
+					// fillColor : "rgba(151,187,205,0.5)",
+                    fillColor : "rgba(255,255,255,0.5)",
 					strokeColor : "rgba(151,187,205,1)",
 					pointColor : "rgba(151,187,205,1)",
 					pointStrokeColor : "#fff", 
@@ -1078,7 +1094,7 @@ function recoverTab(){
 
 /*检查是否为float，返回true/false*/
 function checkFloat(text){
-	if(/^\d+\.?\d+$/.test(text)){
+	if(/^\d+(\.\d+)?$/.test(text)){
 		return true;
 	}else{
 		return false;
@@ -1127,8 +1143,8 @@ function checkMark(text){
 		tips = "请输入正确格式的分数！";
 	}else{
 		var weight = parseFloat(text);
-		if(weight>100){
-			tips = "分数不能超过100分哦！";
+		if(weight>150){
+			tips = "分数不能超过150分哦！";
 		}
 		if(weight < 0){
 			tips = "分数不能低于0分哦！";

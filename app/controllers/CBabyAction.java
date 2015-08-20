@@ -109,6 +109,22 @@ public class CBabyAction extends WebService{
 		}
 	}
 	
+	
+	/**
+	 *删除宝宝 
+	 */
+	public static void deleteBaby(String babyId){
+		try{
+			BabyVac.delete("babyId=?", babyId);
+			BodyIndex.delete("babyId=?", babyId);
+			GradeForm.delete("babyId=?", babyId);
+			Baby.delete("id = ?",babyId);
+			wsOk("删除成功");
+		}catch(Exception e){
+			wsError("失败");
+		}
+	}
+	
 	/**
 	 *加载宝宝详细资料
 	 *babyId:宝宝id 
@@ -544,7 +560,7 @@ public class CBabyAction extends WebService{
 			}else if(ageString.equals("17岁半")){
 				bodyIndex.hasStander = false;
 			}else{
-				List<BodyIndex> bodyIndexRecordList= BodyIndex.find("ageDcb = ? and hasStander = true", ageString).fetch(1);
+				List<BodyIndex> bodyIndexRecordList= BodyIndex.find("babyId =? and ageDcb = ? and hasStander = true",babyId,ageString).fetch(1);
 				if(bodyIndexRecordList.size() >0 ){//存在
 					BodyIndex bodyIndexRecord = bodyIndexRecordList.get(0);
 					if(bodyIndexRecord.dayCount > bodyIndex.dayCount){//新记录更接近标准
@@ -585,13 +601,14 @@ public class CBabyAction extends WebService{
 		if("".equals(babyId) || babyId == null){
 			babyId = "1BFB8CDDECC24BE49F8D3C5B9528BBB0";
 		}
+//		babyId
 //		50.4,54.8,58.7,62,64.6,66.7,68.4,69.8,71.2,72.6,74,75.3,76.5,82.7,88.5,93.3,97.5,100.6,104.1,107.7,111.3,114.7,117.7,120.7,124,130,135.4,140.2,145.3,151.9,159.5,165.9,169.8,171.6,172.3,172.7
 		
 //		女：
 //		49.7,53.7,57.4,60.6,63.1,65.2,66.8,68.2,69.6,71,72.4,73.7,75,81.5,87.2,92.1,96.3,99.4,103.1,106.7,110.2,113.5,116.6,119.4, 122.5,128.5,134.1,140.1,146.6,152.4,156.3,158.6,159.8,160.1,160.3,160.6
 		try{
 //			List<BodyIndex> bodyIndexList = BodyIndex.find("select new BodyIndex(bi.date,bi.height,bi.weight,bi.babyId,bi.age,bi.ageDcb) from BodyIndex bi where babyId = ? Order by bi.age desc", babyId).fetch(6);
-			List<BodyIndex> bodyIndexList = BodyIndex.find("select new BodyIndex(bi.date,bi.height,bi.weight,bi.babyId,bi.age,bi.ageDcb,bi.hasStander,bi.detailAge,bi.dayCount) from BodyIndex bi where babyId = ? and hasStander = true Order by bi.age desc", babyId).fetch(6);
+			List<BodyIndex> bodyIndexList = BodyIndex.find("select new BodyIndex(bi.date,bi.height,bi.weight,bi.babyId,bi.age,bi.ageDcb,bi.hasStander,bi.detailAge,bi.dayCount) from BodyIndex bi where bi.babyId = ? and bi.hasStander = true Order by bi.age desc", babyId).fetch(6);
 			if(bodyIndexList.size() == 0){
 				wsError("没有记录");
 			}else{
@@ -1080,7 +1097,7 @@ public class CBabyAction extends WebService{
 			}
 			
 		}catch(Exception e){
-			return "初始化疫苗列表失败";
+			return e.getMessage();//"初始化疫苗列表失败";
 		}
 		return "成功" + baby.name + "--" + baby.id;
 		
@@ -1141,6 +1158,24 @@ public class CBabyAction extends WebService{
 					babyVac.etmDate = cld.getTime();
 					babyVac.save();
 				}
+				
+//				for(int i = 0 ; i < length ; i++){
+//					Vaccine vac =  vacList.get(i);
+//					Calendar cld = Calendar.getInstance();
+//					cld.setTime(birthday);
+//					BabyVac babyVac = new BabyVac();
+//					cld.add(Calendar.MONTH,vac.monthAfter);
+//					babyVac.babyId = babyId;
+//					if("乙脑灭活疫苗(第二次)".equals(vac.name)){//如果是乙脑灭活疫苗(第二次)，则从预计接种时间+8天
+//						cld.add(Calendar.DATE,8);
+//					}
+//					babyVac.etmDate = cld.getTime();
+//					babyVac.vacId = vac.id;
+//					babyVac.isDone = "0";//"0"表示未来接种
+//					babyVac.save();
+//				}
+				
+				
 			}
 			wsOk("成功");
 		}catch(Exception e){
@@ -1207,7 +1242,7 @@ public class CBabyAction extends WebService{
 	 */
 	public static void loadAllVaccine(){
 		List<Vaccine> vaccineList = Vaccine.findAll();
-		wsOk(vaccineList);
+		wsOk(vaccineList); 
 	}
 	
 	/**
@@ -1473,7 +1508,7 @@ public class CBabyAction extends WebService{
 		
 		/*-----20-----*/
 		vac = new  Vaccine();
-		vac.name = "麻风腮疫苗";
+		vac.name = "麻腮风疫苗";
 		vac.monthAfter = 18;
 		vac.hasInteral = false;
 		vac.interalVacName = "";

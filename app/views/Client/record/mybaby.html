@@ -7,9 +7,7 @@
 <script src="http://dcloudio.github.io/mui/assets/js/docs.min.js?v=2014-12-30 14:09:32 +0800"></script>
 <link rel="stylesheet" href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.custom-2.14.4.min.css'}"  rel="stylesheet"/>
 <script src="@{'/public/javascripts/client/mobiscroll/mobiscroll-2.14.4-crack.js'}" type="text/javascript"></script>
-<!-- <header class="mui-bar mui-bar-nav client-bar-nav">
-			<h1 class="mui-title client-title">小宝成长</h1>
-</header> -->
+
 
 <header class="mui-bar mui-bar-nav babyTitle">
   <a href="first" class="mui-icon mui-icon-home mui-pull-left"></a>
@@ -120,12 +118,7 @@
 				theme:'ios',
 				lang:'zh',
 				display:'bottom',
-				// onSetDate:function(day,inst){
-				// 			console.log(day);
-				// 		},
-				// 		onDayChange:function(day,inst){
-				// 			console.log("changeDay");
-				// 		}
+
 		});
 
 		/*加载宝宝列表*/
@@ -166,8 +159,8 @@
 		/*添加宝宝头像*/
 		document.getElementById("item-headImg-add").addEventListener("tap",function(event){
 			// $("#newBaby-HeadImg").attr("src","/babyimage/jF6mH0Sk50TVa-8LmDHZm6aAbfLMxB0gi37zVp_LJ9yDUwYBhmDaBz4JW_G2Z8XV.jpg");;
-
-			wx.checkJsApi({
+			// alert("头像");
+		/*	wx.checkJsApi({
 			    jsApiList: ['chooseImage'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
 			    success: function(res) {
 			        // 以键值对的形式返回，可用的api值true，不可用为false
@@ -176,7 +169,7 @@
 			        	showResTips("接口不可用，请升级微信版本");
 			        }
 			    }
-			});
+			});*/
 			wx.chooseImage({
 			    success: function (res) {
 			    	//返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
@@ -186,7 +179,7 @@
 			    	$("#baby-headImg").attr("src",localId.toString());
 			    	// $("#newBaby-HeadImg").addClass("circle-headImg");
 					localStorage.localId =  localId;//把localId在本地先缓存
-					alert(typeof(localId));
+					// alert(typeof(localId));
 					//上传头像图片
 					wx.uploadImage({
 						localId: localStorage.localId, // 需要上传的图片的本地ID，由chooseImage接口获得
@@ -315,6 +308,7 @@
 			$.get("/CBabyAction/loadBabyList",function(data){
 				if(data.result==0){//操作成功
 					// $('.child-list').
+					$('.nullTips').hide();
 					var html = juicer($('#babyTpl').html(),{babyList:data.data});
 					$('.child-list').html(html);
 					// $('.child-list').append(html);

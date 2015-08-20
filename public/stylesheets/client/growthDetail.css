@@ -186,6 +186,14 @@ body{
 	text-align: center;
 	display: none;
 }
+
+.charBox{
+	display: none;
+}
+
+.changeAge{
+	display: none;
+}
 /*--------------图表分析样式结束-----------------*/
 
 
