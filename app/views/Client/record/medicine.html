@@ -180,9 +180,13 @@
 						if (typeof(data.data) == "undefined") {
 							mui.toast("数据库未找到该药品");
 						} else {
-							mui.toast(data.data);
-							$('#productor').val(data.data.productor);
-							$('#drug-name').val(data.data.dname);
+							if(data.data.length == 0){
+								mui.toast("数据库未找到该药品");
+							}
+							else{
+								$('#productor').val(data.data[0][0]);
+								$('#drug-name').val(data.data[0][1]);
+							}
 						}
 						$('.med-model').show();
 						$('#pregDrop').show();
