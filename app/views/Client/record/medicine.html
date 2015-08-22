@@ -184,8 +184,8 @@
 								mui.toast("数据库未找到该药品");
 							}
 							else{
-								$('#productor').val(data.data[0][0]);
-								$('#drug-name').val(data.data[0][1]);
+								$('#productor').val(data.data[0][1]);
+								$('#drug-name').val(data.data[0][0]);
 							}
 						}
 						$('.med-model').show();
