@@ -1,8 +1,10 @@
 package controllers;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Collections;
 
 import javax.persistence.Query;
 
@@ -14,6 +16,8 @@ import models.Medicine;
 import models.MedicineBox;
 
 import utils.MedboxInit;
+import utils.MedSort;
+import utils.MedBoxSort;
 
 /**
  * 药箱控制器
@@ -39,6 +43,7 @@ public class CMedicine extends WebService{
 				medBox.name = name;
 				medBox.mark = mark;
 				medBox.disabled = 0;
+				medBox.weight = 10;
 				medBox.save();
 				wsOk("创建成功");
 			}
@@ -78,8 +83,10 @@ public class CMedicine extends WebService{
 	public static void loadMedboxList(){
 
 		String openid = session.get("openid");
-		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		List<MedicineBox> medboxList = MedicineBox.find("byUserId", openid).fetch();
+		MedBoxSort sort = new MedBoxSort();
+		Collections.sort(medboxList,sort);
 		List<MedboxBean> medboxBean = new ArrayList<MedboxBean>();
 		for(int i=0;i<medboxList.size();i++){
 			MedboxBean bean = new MedboxBean();
@@ -101,6 +108,9 @@ public class CMedicine extends WebService{
 		String medboxid = session.get("medboxid");
 		List<Medicine> medicineList = Medicine.find("byMedicineBoxId", medboxid).fetch();
 		//List<MedicineBox> medboxList = MedicineBox.findAll();
+		System.out.println(medicineList.get(0).deadline);
+		MedSort sort = new MedSort();
+		Collections.sort(medicineList,sort);
 		wsOk(medicineList);
 	}
 

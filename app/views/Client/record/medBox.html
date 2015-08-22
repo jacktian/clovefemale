@@ -1,5 +1,5 @@
 #{extends 'client.html' /} #{set title:'小药箱' /} #{set 'moreStyles'}
-<link href="@{'/public/stylesheets/client/medicine/medicine.css'}?v=20150609" rel="stylesheet" /> #{/set} #{output 'Client/record/medBoxTpl.html'/}
+<link href="@{'/public/stylesheets/client/medicine/medicine.css'}?v=20150822" rel="stylesheet" /> #{/set} #{output 'Client/record/medBoxTpl.html'/}
 <header class="mui-bar mui-bar-nav client-bar-nav">
 	<a class="mui-icon mui-icon-home mui-pull-left" href="@{Client.first()}"></a>
 	<h1 class="mui-title client-title">小药箱</h1>
@@ -113,7 +113,8 @@
 		};
 		$(document).on('click', '.med-box-item a', clickListItem);
 		/* 点击折叠菜单 */
-		var clickCollapseMenu = function() {
+		var clickCollapseMenu = function(e) {
+			e.stopPropagation();
 			if ($('#mui-popover').css('display') == "block") {
 				closePopover();
 			} else {
@@ -121,6 +122,7 @@
 			}
 		}
 		$('.medbox-collapse-menu').bind('touchstart', clickCollapseMenu);
+		$(document).bind('touchstart',closePopover);
 		/* 点击药箱菜单 */
 		var clickMenuItem = function() {
 			if (delSelect == 1) {
@@ -133,7 +135,8 @@
 		};
 		$('.medbox-item').bind('touchstart', clickMenuItem);
 		/* 点击添加药箱菜单 */
-		var clickAddMenu = function() {
+		var clickAddMenu = function(e) {
+			e.stopPropagation();
 			showAddModel();
 			showMask();
 			closePopover();
@@ -208,6 +211,7 @@
 				$('.med-box-list').html(newhtml);
 			});
 		});
+
 	});
 </script>
 #{/set}

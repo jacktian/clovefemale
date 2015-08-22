@@ -10,7 +10,7 @@ $(function() {
         $('#tempTable tbody').html(html);
         if (data.data.length == 0) {
           $('.tempTableArrow').css("display", "none");
-          var emptyHtml = "<tr><td>暂无数据</td><td>暂无数据</td></tr>";
+          var emptyHtml = "<tr><td>暂无数据</td><td>暂无数据</td><td>暂无数据</td></tr>";
           $('#tempTable tbody').html(emptyHtml);
         } else if (data.data.length <= 4) {
           $('.tempTableArrow').css("display", "none");

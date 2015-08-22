@@ -1,5 +1,5 @@
 #{extends 'client.html' /} #{set title:'药品详情' /} #{set 'moreStyles'}
-<link href="@{'/public/stylesheets/client/medicine/medicine.css'}?v=20150522" rel="stylesheet" />
+<link href="@{'/public/stylesheets/client/medicine/medicine.css'}?v=20150822" rel="stylesheet" />
 <link href="@{'/public/stylesheets/client/preg/mobiscroll.css'}" rel="stylesheet" type="text/css" /> #{/set} #{output 'Client/record/medicineTpl.html'/}
 <header class="mui-bar mui-bar-nav client-bar-nav">
 	<a class="mui-icon mui-icon-left-nav mui-pull-left" href="/client/medbox"></a>
@@ -34,7 +34,7 @@
 	</a>
 	<a class="mui-tab-item medicine-item scanner-add-btn" href="#tabbar-with-chat">
 		<span class="mui-icon mui-icon-checkmarkempty"></span>
-		<span class="mui-tab-label">扫描添加</span>
+		<span class="mui-tab-label">扫描条码添加</span>
 	</a>
 </nav>
 <!-- 遮罩层 -->
@@ -66,6 +66,7 @@
 	</div>
 	<div class="model-bottom">
 		<button class="mui-btn mui-btn-negative model-btn-refresh">添加</button>
+		<a class="mui-btn mui-btn-negative" href="/client/medBox" style="width:100%">返回</a>
 	</div>
 </div>
 #{set 'moreScripts'}
@@ -103,6 +104,7 @@
 		/*加载药品列表*/
 		var loadMedicineList = function() {
 			$.get("/CMedicine/loadMedicineList", function(data) {
+				console.log(data.data);
 				var targetData = data.data;
 				for (var i = 0; i < targetData.length; i++) {
 					var dateStr = Date.parse(targetData[i].deadline);
@@ -142,7 +144,8 @@
 			hideMedModel();
 		});
 		/*弹出菜单*/
-		$('.add-menu').bind('touchstart', function() {
+		$('.add-menu').bind('touchstart', function(e) {
+			e.stopPropagation();
 			if (popMenu == 0) {
 				popMenu = 1;
 				showPopover();
@@ -151,6 +154,9 @@
 				hidePopover();
 			}
 			return false;
+		});
+		$(document).bind('touchstart',function(){
+			hidePopover();
 		});
 		/* 手动添加 */
 		var manAdd = function() {
@@ -177,6 +183,8 @@
 							$('#productor').val(data.data.productor);
 							$('#drug-name').val(data.data.dname);
 						}
+						alert("扫描结果为:");
+						alert(data.data);
 						$('.med-model').show();
 						$('#pregDrop').show();
 					})
@@ -292,7 +300,11 @@
 					} else {
 						mui.toast('创建失败');
 					}
-				})
+				});
+				$("input[name='medicine-name']").val('');
+				$("input[name='medicine-desc']").val('');
+				$("input[name='medicine-produce']").val('');
+				$("input[name='medicine-end']").val('');
 			}
 		}
 		$('.model-btn-refresh').bind('touchstart', clickAddBtn);

@@ -1,5 +1,5 @@
 #{extends 'client.html' /} #{set title:'助孕记录' /} #{set 'moreStyles'}
-<link href="@{'/public/stylesheets/client/preg/pregnant.css'}?v=20150531" rel="stylesheet" type="text/css"/>
+<link href="@{'/public/stylesheets/client/preg/pregnant.css'}?v=20150822" rel="stylesheet" type="text/css"/>
 <link href="@{'/public/stylesheets/client/preg/mobiscroll.css'}" rel="stylesheet" type="text/css" />
 #{/set} #{output 'Client/record/pregTpl.html'/}
 <header class="mui-bar mui-bar-nav client-bar-nav">
@@ -92,13 +92,14 @@
 					<tr>
 						<th>记录日期</th>
 						<th>体温(℃)</th>
+						<th>同房</th>
 					</tr>
 				</thead>
 				<tbody>
 				</tbody>
 				<tfoot>
 					<tr>
-						<td colspan="2">
+						<td colspan="3">
 							<a href="#" class="table-more-btn shrink tempTableArrow">
 								<span class="mui-icon table-more-icon mui-icon-arrowdown"></span>
 							</a>

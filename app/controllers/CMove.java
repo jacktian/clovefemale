@@ -113,24 +113,36 @@ public class CMove extends WebService {
 	 */
 	public static void findMovement() {
 		String openid = session.get("openid");
-		// openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		String sql = "select new beans.PregmBean(m.fDate,m.num,m.time) from FetalMovement m where  m.userId = '"
 				+ openid + "' order by m.fDate desc";
 		List<PregmBean> bean = JPA.em().createQuery(sql).setMaxResults(21)
 				.getResultList();
 		List<PregmBean> rBean = new ArrayList<PregmBean>();
-		int sum=0;
+		int sum=0,count = 0;
 		for (int i = 0; i < bean.size(); i++) {
 			int num = bean.get(bean.size() - 1 - i).num;
 			sum += num;
+			if(num == 0) {
+				count++;
+			}
 			if((i+1)%3==0){
 				PregmBean fbean = new PregmBean();
 				fbean.date = bean.get(bean.size() - 1 - i).date;
 				fbean.dateStr = bean.get(bean.size() - 1 - i).dateStr;
 				System.out.println(fbean.dateStr);
-				fbean.num = sum/3;
+				if(count == 0) {
+					fbean.num = sum*4;
+				}
+				else if(count == 1){
+					fbean.num = sum * 6;
+				}
+				else {
+					fbean.num = sum * 12;
+				}
 				sum = 0;
 				rBean.add(fbean);
+				count = 0;
 			}
 		}
 
@@ -142,7 +154,7 @@ public class CMove extends WebService {
 	 */
 	public static void lastMovementChart() {
 		String openid = session.get("openid");
-		// openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		String sql = "select new beans.PregmBean(m.fDate,m.num,m.time) from FetalMovement m where  m.userId = '"
 				+ openid + "' order by m.fDate desc";
 		List<PregmBean> pregBean = JPA.em().createQuery(sql).setMaxResults(21)
@@ -234,7 +246,7 @@ public class CMove extends WebService {
 	 */
 	public static void loadAllMovement() {
 		String openid = session.get("openid");
-	  //openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+	  	//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		String sql = "select new beans.PregmBean(m.fDate,m.num,m.time) from FetalMovement m where  m.userId = '"
 				+ openid + "' order by m.fDate";
 		List<PregmBean> bean = JPA.em().createQuery(sql).getResultList();
@@ -260,6 +272,7 @@ public class CMove extends WebService {
 		List morning = new ArrayList();
 		List afternoon = new ArrayList();
 		List evening = new ArrayList();
+
 		for (int i = 0; i < pregBean.size(); i++) {
 			if((i+1)%3==0){
 				labelList.add(pregBean.get(pregBean.size() - 1 - i).dateStr);

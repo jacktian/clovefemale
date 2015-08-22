@@ -5,14 +5,20 @@
 .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-progress-bar{
 	background-color:#EA104A;
 }
-#menseItem,#menseChart{
+#menseChart{
 	padding-top:20px;
 	padding-bottom:20px;
 }
-
+#menseItem {
+	padding-top:20px;
+}
 #menseItem .dateInput,#menseChart .dateInput{
 	width:50%;
 	display: inline-block;
+}
+#tableWrapper{
+	height:75px;
+    overflow: hidden;
 }
 #menseChart{
 	background:#FFF;
@@ -45,6 +51,7 @@
 }
 /* 助孕记录表格 */
 .preg-record-table{
+	overflow:hidden;
 	width:100%;
 	text-align: center;
 }
@@ -84,6 +91,19 @@
 	display:none;
 }
 
+#mense-table-view {
+	overflow:hidden;
+	height:0px;
+}
+.more-data {
+	display: block;
+	color: #8A898E;
+	text-align: center;
+	padding: 20px;
+}
+#more-data.hidden{
+	display:none;
+}
 /* 旋转效果 */
 header.hidden{
 	display:none;

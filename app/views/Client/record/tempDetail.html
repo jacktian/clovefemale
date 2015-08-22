@@ -1,7 +1,7 @@
 #{extends 'client.html' /}
 #{set title:'体温分析' /}
 #{set 'moreStyles'}
-<link href="@{'/public/stylesheets/client/preg/pregDetai.css'}?v=20150531" rel="stylesheet" />
+<link href="@{'/public/stylesheets/client/preg/pregDetai.css'}?v=20150822" rel="stylesheet" />
 <link href="@{'/public/stylesheets/client/preg/mobiscroll.css'}" rel="stylesheet" type="text/css" />
 #{/set}
 #{output 'Client/record/pregDetailTpl.html'/}
@@ -28,17 +28,21 @@
 			<!--input type="text" placeholder="开始日期" id="menseStartDate" class="dateInput"/>
 			<input type="text" placeholder="结束日期" id="menseEndDate" class="dateInput"/>
 			<button class="mui-btn mui-btn-block mui-btn-outlined">查找</button-->
-				<table class="preg-record-table" id="tempTable">
+			<div id="tableWrapper">
+            <table class="preg-record-table" id="tempTable">
 				<thead>
 					<tr>
 						<th>记录日期</th>
 						<th>体温(℃)</th>
+                        <th>同房</th>
 					</tr>
 				</thead>
 				<tbody>
 
 				</tbody>
 			</table>
+            </div>
+            <a href="#" class="more-data hidden" id="more-data">点击显示更多</a>
 		</div>
 		<div id="menseChart" class="mui-slider-item mui-control-content">
 			<div class="mense-chart-empty chart-empty not-shown">图表无数据显示</div>
@@ -64,6 +68,8 @@
 	$(function(){
 
 	    var screenWidth = window.screen.width,screenHeight = window.screen.height;
+
+	    var listNum = 0,curlist = 0;
 
 		$('#menseStartDate').mobiscroll().date({
             theme: 'mobiscroll',
@@ -111,17 +117,51 @@
         });
 
         $.get('/CTemperature/loadAllTemp',function(data){
-        	console.log(data);
+            // 总共这么多行
+        	listNum = data.data.length;
+        	console.log(data.data.length);
+        	if(data.data.length>0) {
+        	    $('#more-data').removeClass('hidden');
+        	}
+        	if(data.data.length<=5&&data.data.length>0) {
+                curList = listNum;
+                $('#tableWrapper').css('height',parseInt(31)*curList+parseInt(42)+'px');
+                $('.more-data').addClass('hidden');
+        	}
+        	else{
+        	    curList = 5;
+                $('#tableWrapper').css('height',parseInt(31)*curList+parseInt(42)+'px');
+        	}
         	var html = "";
         	if(data.data.length == 0){
-        		html = "<tr class='tr-even'><td>无记录</td><td>无记录</td></tr>";
+        		html = "<tr class='tr-even'><td>无记录</td><td>无记录</td><td>无记录</td></tr>";
         	}
         	else{
 				for(var i=0;i<data.data.length;i++){
-					html+="<tr class='tr-even'><td>"+data.data[i].dateStr+"</td><td>"+data.data[i].temp+"℃</td></tr>";
+				    var sex = '是';
+				    if(data.data[i].sex==1)
+				        sex = '是';
+				    else
+				        sex = '否';
+					html+="<tr class='tr-even'><td>"+data.data[i].dateStr+"</td><td>"+data.data[i].temp+"℃</td><td>"+sex+"</td></tr>";
 				}
         	}
         	$('#tempTable tbody').html(html);
+        });
+
+        $('.more-data').click(function(){
+            console.log(curList);
+            console.log(listNum);
+            if(curList<listNum) {
+                if((curList+5)>=listNum) {
+                    $('#tableWrapper').css('height',parseInt(31)*listNum+parseInt(42)+'px');
+                    $('.more-data').addClass('hidden');
+                }
+                else{
+                    curList += 5;
+                    $('#tableWrapper').css('height',parseInt(31)*curList+parseInt(42)+'px');
+                }
+            }
         });
 
         var dataList,labelList;

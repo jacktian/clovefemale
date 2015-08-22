@@ -1,7 +1,7 @@
 #{extends 'client.html' /}
 #{set title:'月经分析' /}
 #{set 'moreStyles'}
-<link href="@{'/public/stylesheets/client/preg/pregDetai.css'}?v=20150531" rel="stylesheet" />
+<link href="@{'/public/stylesheets/client/preg/pregDetai.css'}?v=20150822" rel="stylesheet" />
 <link href="@{'/public/stylesheets/client/preg/mobiscroll.css'}" rel="stylesheet" type="text/css" />
 #{/set}
 #{output 'Client/record/pregDetailTpl.html'/}
@@ -28,6 +28,7 @@
 			<ul class="mui-table-view" id="mense-table-view">
 
 				</ul>
+            <a href="#" class="more-data hidden" id="more-data">点击显示更多</a>
 		</div>
 		<div id="menseChart" class="mui-slider-item mui-control-content">
 			<!--canvas id="mense-chart" class="preg-chart"></canvas-->
@@ -54,6 +55,8 @@
 	$(function(){
 
 	    var screenWidth = window.screen.width,screenHeight = window.screen.height;
+
+	    var listNum = 0,curlist = 0;
 
 		$('#menseStartDate').mobiscroll().date({
             theme: 'mobiscroll',
@@ -105,14 +108,38 @@
             console.log(data);
         	if(data.data.length == 0){
         		html = "暂无数据";
+        		$('#mense-table-view').css('height','43px');
         	}
         	else{
+        	    listNum = data.data.length;
 				for(var i=0;i<data.data.length;i++){
 					var time = data.data[i][4],color = data.data[i][0],hurt = data.data[i][3],liang = data.data[i][1],xue = data.data[i][2];
 					html+="<li class='mui-table-view-cell'><span class='mense-date'>"+time+"</span>, 经量:"+liang +", 血块:"+xue+", 颜色:"+color+", 痛经:"+hurt+"</li>";
 				}
+				if(listNum <=5&&listNum>0) {
+				    $('#mense-table-view').css('height',listNum*43+'px');
+				    curList = listNum;
+				}
+				else {
+				    $('#mense-table-view').css('height','215px');
+				    $('.more-data').removeClass('hidden');
+				    curList = 5;
+				}
         	}
         	$('#mense-table-view').html(html);
+        });
+
+        $('.more-data').click(function(){
+            if(curList<listNum) {
+                if((curList+5)>listNum) {
+                    $('#mense-table-view').css('height',listNum*43+'px');
+                    $('.more-data').addClass('hidden');
+                }
+                else {
+                    $('#mense-table-view').css('height',(curList+5)*43+'px');
+                    curList += 5;
+                }
+            }
         });
 
         var dataList,labelList;

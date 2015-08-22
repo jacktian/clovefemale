@@ -256,6 +256,7 @@ public class CPregnant extends WebService {
         String sql = "select m_date from Menses m where m.user_id = '"
                 + openid + "' order by m.m_date asc";
         List resultList = JPA.em().createNativeQuery(sql).getResultList();
+        System.out.println("mense num:"+resultList.size());
         List<String> dateStrList = new ArrayList<String>();
         List<Date> dateList = new ArrayList<Date>();
         List startList = new ArrayList();

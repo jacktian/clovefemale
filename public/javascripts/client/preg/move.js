@@ -7,6 +7,14 @@ $(function() {
       var html = juicer($('#pregmTpl').html(), {
         pregmList: data.data
       });
+      for(var i = 0; i<data.data.length; i++) {
+        if(data.data[i].num <10) {
+          alert(data.data[i].dateStr+': 胎动次数过少，请及时联系医生检查');
+        }
+        else if(data.data[i].num <20) {
+          alert(data.data[i].dateStr+': 胎动次数偏少，留意胎动变化');
+        }
+      }
       $('#pregmTable tbody').html(html);
       if (data.data.length == 0) {
         $('.pregmTableArrow').css("display", "none");

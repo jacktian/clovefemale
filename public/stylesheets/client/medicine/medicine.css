@@ -33,11 +33,14 @@
 .med-box-list a i{
 	font-size:25px;
 	margin-right:10px;
+	color:green;
+}
+.med-box-list a i.delnot {
 	color:#ED7878;
 }
 .med-box-name{
 	font-size:15px;
-	color:#838383;
+	color:#000;
 }
 .med-box-mark{
 	font-size:13px;

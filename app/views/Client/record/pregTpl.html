@@ -4,11 +4,23 @@
 			<tr {@if index%2 == 0}class="tr-even"{@/if}>
 				<td>${temp.dateStr}</td>
 				<td>${temp.temp}</td>
+				<td>
+					{@if temp.sex == 1}是
+					{@else}
+					否
+					{@/if}
+				</td>
 			</tr>
 		{@else}
 			<tr class="table-hidden table-more {@if index%2 == 0}tr-even{@/if}">
 				<td>${temp.dateStr}</td>
 				<td>${temp.temp}</td>
+				<td>
+					{@if temp.sex == 1}是
+					{@else}
+					否
+					{@/if}
+				</td>
 			</tr>
 		{@/if}
 
