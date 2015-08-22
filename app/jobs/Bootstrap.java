@@ -14,9 +14,5 @@ public class Bootstrap extends Job{
 		CustomMenuRefresher.createMenuNow();
 		//获取js_ticket
 		JsTicketRefresher.getJsTicket();
-		/*	Medicine med = new Medicine();
-		// med.name = "加味藿香正气丸";*/
-		//PoiUtil.insertOneMsg();
-		//MedboxInit.init("");
 	}
 }

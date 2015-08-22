@@ -75,6 +75,7 @@ public class WeChat extends WebService{
 			for(String s : lines){
 				strBuilder.append(s);
 			}
+
 			//System.out.println(strBuilder.toString());
 			//解析XML信息
 			Document doc = Jsoup.parse(strBuilder.toString());

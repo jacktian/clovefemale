@@ -61,12 +61,12 @@ public class CustomMenuRefresher extends Job {
 		                     "},"+
 		                     "{"+
 		                     	"\"type\":\"view\","+
-		                     	"\"name\":\"小药箱\","+
+		                     	"\"name\":\"家庭药箱\","+
 		                     	"\"url\":\"https://open.weixin.qq.com/connect/oauth2/authorize?appid="+appKey+"&redirect_uri="+medUrl+"&response_type=code&scope=snsapi_base&state=123#wechat_redirect\""+
 		                     "},"+
 		                     "{"+
 		                     	"\"type\":\"view\","+
-		                     	"\"name\":\"小工具\","+
+		                     	"\"name\":\"常用工具\","+
 		                     	"\"url\":\"http://sunyanmi.com/client/stools\""+
 		                     "}"+
 		                  "]"+
@@ -79,35 +79,10 @@ public class CustomMenuRefresher extends Job {
 		             "},"+
 		             //丁香资讯结束
 		             //丁香会员开始
-		             "{\"name\":\"丁香会员\","+
-	                     "\"sub_button\":["+
-		                     "{"+
-		                     	"\"type\":\"view\","+
-		                     	"\"name\":\"会员中心\","+
-		                     	"\"url\":\"https://open.weixin.qq.com/connect/oauth2/authorize?appid="+appKey+"&redirect_uri="+psnUrl+"&response_type=code&scope=snsapi_base&state=123#wechat_redirect\""+
-		                     "},"+
-		                     "{"+
-		                     	"\"type\":\"click\","+
-		                     	"\"name\":\"会员绑定\","+
-		                     	"\"key\":\"V002_MemberBind\""+
-		                     "},"+
-		                     "{"+
-		                     	"\"type\":\"click\","+
-		                     	"\"name\":\"常见问题\","+
-		                     	"\"key\":\"V003_CommonQuestion\""+
-		                     "},"+
-		                     "{"+
-		                     	"\"type\":\"click\","+
-		                     	"\"name\":\"联系我们\","+
-		                     	"\"key\":\"V004_ContactUs\""+
-		                     "},"+
-		                     "{"+
-		                     	"\"type\":\"click\","+
-		                     	"\"name\":\"关于我们\","+
-		                     	"\"key\":\"V005_AboutUs\""+
-		                     "}"+
-		                  "]"+
-		               "}"+
+				 	"{\"name\":\"个人中心\","+
+				 	 "\"type\":\"view\","+
+				 	 "\"url\":\"https://open.weixin.qq.com/connect/oauth2/authorize?appid="+appKey+"&redirect_uri="+psnUrl+"&response_type=code&scope=snsapi_base&state=123#wechat_redirect\""+
+				 	"}"+
                  "]"+
              "}";
 		request.body = responeJsonStr;
