@@ -83,7 +83,7 @@ public class CMedicine extends WebService{
 	public static void loadMedboxList(){
 
 		String openid = session.get("openid");
-		openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		List<MedicineBox> medboxList = MedicineBox.find("byUserId", openid).fetch();
 		MedBoxSort sort = new MedBoxSort();
 		Collections.sort(medboxList,sort);
@@ -223,12 +223,12 @@ public class CMedicine extends WebService{
 		String medboxid = session.get("medboxid");
 		if(medName.equals("")||medName.equals(" ")||medName==null){
 			System.out.println("走到这里来了");
-			String sql = "select m.id,m.name,m.function,m.deadline from Medicine m where m.medicineBox_Id = '" +medboxid+"'";
+			String sql = "select m.id,m.name,m.function,m.deadline from medicine m where m.medicineBox_Id = '" +medboxid+"'";
 			medicine = JPA.em().createNativeQuery(sql).getResultList();
 			System.out.println(medicine.size());
 		}
 		else{
-			String sql = "select m.id,m.name,m.function,m.deadline from Medicine m where m.name like '%"+medName+"%' and m.medicineBox_Id ='"+medboxid+"'";
+			String sql = "select m.id,m.name,m.function,m.deadline from medicine m where m.name like '%"+medName+"%' and m.medicineBox_Id ='"+medboxid+"'";
 			medicine = JPA.em().createNativeQuery(sql).getResultList();
 		}
 		wsOk(medicine);
