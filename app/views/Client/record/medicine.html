@@ -176,15 +176,14 @@
 					var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
 					var code = result.split(",")[1];
 					$.get('/CMedicine/findDrug?code=' + code, function(data) {
+						console.log(data);
 						if (typeof(data.data) == "undefined") {
 							mui.toast("数据库未找到该药品");
 						} else {
-							mui.toast(data.data.dname);
+							mui.toast(data.data);
 							$('#productor').val(data.data.productor);
 							$('#drug-name').val(data.data.dname);
 						}
-						alert("扫描结果为:");
-						alert(data.data);
 						$('.med-model').show();
 						$('#pregDrop').show();
 					})

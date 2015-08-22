@@ -249,8 +249,8 @@ public class CMedicine extends WebService{
 	 * 查询药库
 	 */
 	public static void findDrug(String code){
-		DrugStore drug = DrugStore.find("byCode", code).first();
-		wsOk(drug);
+		Query query = JPA.em().createNativeQuery("select medicinename,indication from medProd where barcode = \""+code+"\"");
+		wsOk(query.getResultList());
 	}
 
 	/**
