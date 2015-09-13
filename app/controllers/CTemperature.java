@@ -23,7 +23,7 @@ public class CTemperature extends WebService {
 	 */
 	public static void addTemperature(String date, float temp, int sex) {
 		String openid = session.get("openid");
-		openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		try {
 			if (openid == null) {
 				wsError("openid过期");
@@ -74,7 +74,7 @@ public class CTemperature extends WebService {
 	 */
 	public static void lastTemp() {
 		String openid = session.get("openid");
-		openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		String sql = "select new beans.TempBean(t.tDate,t.tValue,t.haveSex) from Temperature t where  t.userId = '"
 				+ openid + "' order by t.tDate desc";
 		List<TempBean> bean = JPA.em().createQuery(sql).setMaxResults(7)
@@ -91,7 +91,7 @@ public class CTemperature extends WebService {
 	 */
 	public static void lastTempChart() {
 		String openid = session.get("openid");
-		openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		String sql = "select new beans.TempBean(t.tDate,t.tValue,t.haveSex) from Temperature t where  t.userId = '"
 				+ openid + "' order by t.tDate desc";
 		List<TempBean> tempList = JPA.em().createQuery(sql).setMaxResults(7)
@@ -121,7 +121,7 @@ public class CTemperature extends WebService {
 	 */
 	public static void findTemp(String date) {
 		String openid = session.get("openid");
-		openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		Date newDate;
 		String dateStr;
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -151,7 +151,7 @@ public class CTemperature extends WebService {
 	 */
 	public static void removeTemp(String date) {
 		String openid = session.get("openid");
-		openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		String sql = "select id from Temperature t where date_format(t.t_date,'%Y-%m-%d') = '"
 				+ date + "' and t.user_id = '" + openid + "'";
 		List tempList = JPA.em().createNativeQuery(sql).getResultList();
@@ -177,7 +177,7 @@ public class CTemperature extends WebService {
 	 */
 	public static void loadAllTemp() {
 		String openid = session.get("openid");
-		openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		String sql = "select new beans.TempBean(t.tDate,t.tValue,t.haveSex) from Temperature t where  t.userId = '"
 				+ openid + "' order by t.tDate desc";
 		List<TempBean> bean = JPA.em().createQuery(sql).getResultList();
@@ -194,7 +194,7 @@ public class CTemperature extends WebService {
 	 */
 	public static void loadAllTempChart() {
 		String openid = session.get("openid");
-		openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		String sql = "select new beans.TempBean(t.tDate,t.tValue,t.haveSex) from Temperature t where  t.userId = '"
 				+ openid + "' order by t.tDate desc";
 		List<TempBean> tempList = JPA.em().createQuery(sql)
