@@ -167,12 +167,12 @@ public class CWeight extends WebService {
 		String openid = session.get("openid");
 		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		String sql = "select new beans.PregwBean(w.wDate,w.wValue) from GestationalWeight w where  w.userId = '"
-				+ openid + "' order by w.wDate";
+				+ openid + "' order by w.wDate desc";
 		List<PregwBean> bean = JPA.em().createQuery(sql).getResultList();
-		List<PregwBean> rBean = new ArrayList<PregwBean>();
+		/*List<PregwBean> rBean = new ArrayList<PregwBean>();
 		for (int i = 0; i < bean.size(); i++) {
 			rBean.add(bean.get(bean.size() - 1 - i));
-		}
+		}*/
 		wsOk(bean);
 	}
 

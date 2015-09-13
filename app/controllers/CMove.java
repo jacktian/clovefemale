@@ -248,12 +248,12 @@ public class CMove extends WebService {
 		String openid = session.get("openid");
 	  	//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		String sql = "select new beans.PregmBean(m.fDate,m.num,m.time) from FetalMovement m where  m.userId = '"
-				+ openid + "' order by m.fDate";
+				+ openid + "' order by m.fDate desc";
 		List<PregmBean> bean = JPA.em().createQuery(sql).getResultList();
-		List<PregmBean> rBean = new ArrayList<PregmBean>();
+		/*List<PregmBean> rBean = new ArrayList<PregmBean>();
 		for (int i = 0; i < bean.size(); i++) {
 			rBean.add(bean.get(bean.size() - 1 - i));
-		}
+		}*/
 		wsOk(bean);
 	}
 
