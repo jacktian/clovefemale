@@ -45,31 +45,34 @@ public class CustomMenuRefresher extends Job {
 		/* 调用微信接口创建菜单 */
 		WSRequest request = WS.url("https://api.weixin.qq.com/cgi-bin/menu/create?access_token="+accessToken);
 		 String responeJsonStr = "{"+
-                 "\"button\":["+
+                 "\"button\":" +
+                 "["+
 				 	 //记录控开始
-                     "{\"name\":\"记录控\","+
-	                     "\"sub_button\":["+
-		                     "{"+
-		                     	"\"type\":\"view\","+
-		                     	"\"name\":\"助孕记录\","+  
-		                     	"\"url\":\"https://open.weixin.qq.com/connect/oauth2/authorize?appid="+appKey+"&redirect_uri="+pregUrl+"&response_type=code&scope=snsapi_base&state=123#wechat_redirect\""+
-		                     "},"+
-		                     "{"+
-		                     	"\"type\":\"view\","+
-		                     	"\"name\":\"宝宝成长\","+
-		                     	"\"url\":\"https://open.weixin.qq.com/connect/oauth2/authorize?appid="+appKey+"&redirect_uri="+babyUrl+"&response_type=code&scope=snsapi_base&state=123#wechat_redirect\""+
-		                     "},"+
-		                     "{"+
-		                     	"\"type\":\"view\","+
-		                     	"\"name\":\"家庭药箱\","+
-		                     	"\"url\":\"https://open.weixin.qq.com/connect/oauth2/authorize?appid="+appKey+"&redirect_uri="+medUrl+"&response_type=code&scope=snsapi_base&state=123#wechat_redirect\""+
-		                     "},"+
-		                     "{"+
-		                     	"\"type\":\"view\","+
-		                     	"\"name\":\"常用工具\","+
-		                     	"\"url\":\"http://sunyanmi.com/client/stools\""+
-		                     "}"+
-		                  "]"+
+                     "{" +
+                     	"\"name\":\"记录控\","+
+	                     	"\"sub_button\":" +
+	                     	"["+
+		                     	"{"+
+		                     		"\"type\":\"view\","+
+		                     		"\"name\":\"助孕记录\","+  
+		                     		"\"url\":\"https://open.weixin.qq.com/connect/oauth2/authorize?appid="+appKey+"&redirect_uri="+pregUrl+"&response_type=code&scope=snsapi_base&state=123#wechat_redirect\""+
+		                     	"},"+
+		                     	"{"+
+		                     		"\"type\":\"view\","+
+		                     		"\"name\":\"宝宝成长\","+
+		                     		"\"url\":\"https://open.weixin.qq.com/connect/oauth2/authorize?appid="+appKey+"&redirect_uri="+babyUrl+"&response_type=code&scope=snsapi_base&state=123#wechat_redirect\""+
+		                     	"},"+
+		                     	"{"+
+		                     		"\"type\":\"view\","+
+		                     		"\"name\":\"家庭药箱\","+
+		                     		"\"url\":\"https://open.weixin.qq.com/connect/oauth2/authorize?appid="+appKey+"&redirect_uri="+medUrl+"&response_type=code&scope=snsapi_base&state=123#wechat_redirect\""+
+		                     	"},"+
+		                     	"{"+
+		                     		"\"type\":\"view\","+
+		                     		"\"name\":\"常用工具\","+
+		                     		"\"url\":\"http://sunyanmi.com/client/stools\""+
+		                     	"}"+
+		                     "]"+
 		               "},"+
 		             //记录控结束
 		             //丁香资讯开始
@@ -80,20 +83,22 @@ public class CustomMenuRefresher extends Job {
 		             "\"key\":\"V001_CloveMsg\""+
 		             "},"+
 		             */
-                     "{\"name\":\"资讯\","+
-	                     "\"sub_button\":["+
-		                     "{"+
-				             "\"name\":\"实用资讯\","+
-				             "\"type\":\"click\","+
-				             "\"key\":\"V001_CloveMsg\""+
-				             "},"+
-		                     "{"+
-				             "\"name\":\"博士观点\","+
-				             "\"type\":\"click\","+
-				             "\"key\":\"V002_CloveMsg\""+
-				             "},"+
-		                  "]"+
-		               "},"+
+                     "{" +
+                     	"\"name\":\"资讯\","+
+                     	"\"sub_button\":" +
+                     		"["+
+                     			"{"+
+                     				"\"name\":\"实用资讯\","+
+                     				"\"type\":\"click\","+
+                     				"\"key\":\"V001_CloveMsg\""+
+                     			"},"+
+                     			"{"+
+                     				"\"name\":\"博士观点\","+
+                     				"\"type\":\"click\","+
+                     				"\"key\":\"V002_CloveMsg\""+
+                     			"}"+
+                     		"]"+
+		              "},"+
 		             //丁香资讯结束
 		             //丁香会员开始
 				 	"{\"name\":\"个人中心\","+
