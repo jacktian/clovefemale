@@ -79,11 +79,12 @@ public class CTemperature extends WebService {
 				+ openid + "' order by t.tDate desc";
 		List<TempBean> bean = JPA.em().createQuery(sql).setMaxResults(7)
 				.getResultList();
-		List<TempBean> rBean = new ArrayList<TempBean>();
+		/*List<TempBean> rBean = new ArrayList<TempBean>();
 		for (int i = 0; i < bean.size(); i++) {
 			rBean.add(bean.get(bean.size() - 1 - i));
 		}
-		wsOk(rBean);
+		wsOk(rBean);*/
+		wsOk(bean);
 	}
 
 	/*
