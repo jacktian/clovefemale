@@ -1,8 +1,8 @@
-#{extends 'client.html' /} #{set title:'小药箱' /} #{set 'moreStyles'}
+#{extends 'client.html' /} #{set title:'家庭药箱' /} #{set 'moreStyles'}
 <link href="@{'/public/stylesheets/client/medicine/medicine.css'}?v=20150822" rel="stylesheet" /> #{/set} #{output 'Client/record/medBoxTpl.html'/}
 <header class="mui-bar mui-bar-nav client-bar-nav">
 	<a class="mui-icon mui-icon-home mui-pull-left" href="@{Client.first()}"></a>
-	<h1 class="mui-title client-title">小药箱</h1>
+	<h1 class="mui-title client-title">家庭药箱</h1>
 	<a href="#mui-popover" class="mui-icon mui-icon-bars mui-pull-right medbox-collapse-menu"></a>
 	<div id="mui-popover" class="med-popover">
 		<ul class="mui-table-view mui-table-view-chevron mui-table-view-inverted">
