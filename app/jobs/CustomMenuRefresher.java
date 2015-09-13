@@ -73,10 +73,27 @@ public class CustomMenuRefresher extends Job {
 		               "},"+
 		             //记录控结束
 		             //丁香资讯开始
-		             "{\"name\":\"丁香资讯\","+
+		             /*
+		             "{" +
+		             "\"name\":\"丁香资讯\","+
 		             "\"type\":\"click\","+
 		             "\"key\":\"V001_CloveMsg\""+
 		             "},"+
+		             */
+                     "{\"name\":\"资讯\","+
+	                     "\"sub_button\":["+
+		                     "{"+
+				             "\"name\":\"实用资讯\","+
+				             "\"type\":\"click\","+
+				             "\"key\":\"V001_CloveMsg\""+
+				             "},"+
+		                     "{"+
+				             "\"name\":\"博士观点\","+
+				             "\"type\":\"click\","+
+				             "\"key\":\"V002_CloveMsg\""+
+				             "},"+
+		                  "]"+
+		               "},"+
 		             //丁香资讯结束
 		             //丁香会员开始
 				 	"{\"name\":\"个人中心\","+
