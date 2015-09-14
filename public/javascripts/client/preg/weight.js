@@ -25,6 +25,18 @@ $(function() {
         pregwData = data.data.data;
         pregwLabel = data.data.label;
 
+        //获取数据的最大最小值作为图标的上下限
+        var max_pregw = -1;
+        var min_pregw = 100;
+        for(var i = 0; i < pregwData.length; i++){
+          if(max_pregw < pregwData[i]) max_pregw = pregwData[i];
+          if(min_pregw > pregwData[i]) min_pregw = pregwData[i];
+        }
+        var max_pregw_int = Math.floor(max_pregw) + 1;
+        var min_pregw_int = Math.ceil(min_pregw) - 1;
+        
+
+
         var loadWeightChart = function() {
           // 基于准备好的dom，初始化echarts图表
           $('#pregwChart').css("width", $(window).get(0).innerWidth * 0.94);
@@ -65,8 +77,8 @@ $(function() {
             }],
             yAxis: [{
               type: 'value',
-              min: 50,
-              max: 66,
+              min: min_pregw_int,
+              max: max_pregw_int,
               axisLabel: {
                 formatter: '{value} Kg'
               }
@@ -107,7 +119,7 @@ $(function() {
       var date = $("#pregw-date-val").attr("data-val");
       var pregw = $('#pregw-scroller').mobiscroll('getVal');
       if (pregw == null || typeof(pregw) == undefined)
-        pregw = "50 0";
+        pregw = "40 0";
       var fPregw = pregw.split(" ")[0] + "." + pregw.split(" ")[1];
       $.get('/CWeight/addWeight?date=' + date + "&pregw=" + fPregw,
         function(data) {

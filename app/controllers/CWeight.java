@@ -24,7 +24,7 @@ public class CWeight extends WebService {
 	 */
 	public static void addWeight(String date, float pregw) {
 		String openid = session.get("openid");
-		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		try {
 			if (openid == null) {
 				wsError("openid过期");
@@ -74,7 +74,7 @@ public class CWeight extends WebService {
 	 */
 	public static void findWeight() {
 		String openid = session.get("openid");
-		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		String sql = "select new beans.PregwBean(w.wDate,w.wValue) from GestationalWeight w where  w.userId = '"
 				+ openid + "' order by w.wDate desc";
 		List<PregwBean> bean = JPA.em().createQuery(sql).setMaxResults(7)
@@ -92,7 +92,7 @@ public class CWeight extends WebService {
 	 */
 	public static void lastWeightChart() {
 		String openid = session.get("openid");
-		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		String sql = "select new beans.PregwBean(w.wDate,w.wValue) from GestationalWeight w where  w.userId = '"
 				+ openid + "' order by w.wDate desc";
 		List<PregwBean> pregBean = JPA.em().createQuery(sql).setMaxResults(7)
@@ -114,7 +114,7 @@ public class CWeight extends WebService {
 	 */
 	public static void findWeightByDate(String date) {
 		String openid = session.get("openid");
-	  	//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+	  	openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		Date newDate;
 		String dateStr;
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -144,7 +144,7 @@ public class CWeight extends WebService {
 	 */
 	public static void removeWeight(String date) {
 		String openid = session.get("openid");
-		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		try {
 			String sql = "select id from GestationalWeight w where date_format(w.w_date,'%Y-%m-%d') = '"
 					+ date + "' and w.user_id = '" + openid + "'";
@@ -166,7 +166,7 @@ public class CWeight extends WebService {
 	 */
 	public static void loadAllWeight() {
 		String openid = session.get("openid");
-		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		String sql = "select new beans.PregwBean(w.wDate,w.wValue) from GestationalWeight w where  w.userId = '"
 				+ openid + "' order by w.wDate desc";
 		List<PregwBean> bean = JPA.em().createQuery(sql).getResultList();
@@ -182,7 +182,7 @@ public class CWeight extends WebService {
 	 */
 	public static void loadAllWeightChart() {
 		String openid = session.get("openid");
-		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		String sql = "select new beans.PregwBean(w.wDate,w.wValue) from GestationalWeight w where  w.userId = '"
 				+ openid + "' order by w.wDate desc";
 		List<PregwBean> pregBean = JPA.em().createQuery(sql).getResultList();
