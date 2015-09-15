@@ -25,6 +25,15 @@ $(function() {
       tempData = data.data.data;
       tempLabel = data.data.label;
       sexData = data.data.sex;
+
+        //获取数据的最大最小值作为图标的上下限
+
+       var max_temp = -1;
+       for(var i = 0; i < tempData.length; i++){
+          if(max_temp < tempData[i]) max_temp = tempData[i];
+       }
+       var max_temp_int = Math.floor(max_temp) + 1;
+
       var loadTempChart = function() {
         // 基于准备好的dom，初始化echarts图表
         $('#tempChart').css("width", $(window).get(0).innerWidth * 0.94);
@@ -69,8 +78,9 @@ $(function() {
           }],
           yAxis: [{
             type: 'value',
-            min: 35,
-            max: 41,
+            min: 35.5,
+            /*max: 37.5,*/
+            max: max_temp_int,
             axisLabel: {
               formatter: '{value} °C'
             }
