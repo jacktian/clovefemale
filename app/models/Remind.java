@@ -23,16 +23,35 @@ public class Remind  extends BasicModel {
      */
     @Column(name = "medremind")
     public int medremind;
+    
+    /**
+     * 	药箱提醒-提醒天数
+     */
+    @Column(name = "med_adv_day")
+    public int med_adv_day;
 
     /**
      * 	生理提醒
      */
     @Column(name = "healremind")
     public int healremind;
+    
+    /**
+     * 	生理提醒-提醒天数
+     */
+    @Column(name = "heal_adv_day")
+    public int heal_adv_day;
+
 
     /**
      * 	疫苗提醒
      */
     @Column(name = "yiremind")
     public int yiremind;
+    
+    /**
+     * 	疫苗提醒-提醒天数
+     */
+    @Column(name = "yi_adv_day")
+    public int yi_adv_day;
 }

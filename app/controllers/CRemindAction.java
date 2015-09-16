@@ -76,6 +76,7 @@ public class CRemindAction extends WebService {
 			remind.heal_adv_day = day;
 		}else{//疫苗提醒
 			remind.yi_adv_day = day;
+			                    //修改疫苗接种提醒时间
 		}
 		
 		try{
