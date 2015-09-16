@@ -129,17 +129,25 @@ body{
 .headImg>img{
 	width:60px;
 	/*height: 50px;*/
-
 }
 
 /*昵称*/
 .nickname{
-	display: block;
-	padding-top: 21px;
+	padding-top: 16px;
 	padding-left: 70px;
+	margin:0;
 	font-weight: 500;
 	color:#272822;
+}
 
+/*账号*/
+.account{
+	padding-left: 70px;
+	line-height: 13px;
+	color:#888;
+	font-size:13px;
+	font-weight: 300;
+	/*display: none;*/
 }
 
 /*心情*/

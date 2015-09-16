@@ -3,47 +3,48 @@
 <link rel="stylesheet" href="@{'/public/stylesheets/client/psnCenter.css'}?v=20150804">
 <script type="text/javascript" src = "@{'/public/javascripts/jquery-1.8.3.min.js'}"></script>
 <div class="psnBox">
-	<div class="imgAndname">
-		<div class="headImg">
-			<img src="${user.headimgurl}" alt="${user.nickname}"/>
-		</div>
-		<span class="nickname">${user.nickname}</span>
-	</div>
+  <div class="imgAndname">
+    <div class="headImg">
+      <img src="" alt=""/>
+    </div>
+    <p class="nickname"></p>
+    <p class="account"></p>
+  </div>
 
-	<div id="introdction" class="introdction">${user.signName}</div>
+  <div id="introdction" class="introdction"></div>
 </div>
 <nav class="navbox">
-	<ul>
-		<li>
-			<a href="/Client/first" class="psnnav">
-				<!-- <i class="icon-psnNav iconfont">&#xe66b;</i> -->
+  <ul>
+    <li>
+      <a href="/Client/first" class="psnnav">
+        <!-- <i class="icon-psnNav iconfont">&#xe66b;</i> -->
         <i class="icon-psnNav iconfont">&#x3435;</i>
-				<div class="psnnavName">首页</div>
-			</a>
-		</li>
-		<li>
-			<a id="baby-link" href="myBaby" class="psnnav">
-				<!-- <i class="icon-psnNav babyIconFont iconfont">&#xf01d4;</i> -->
+        <div class="psnnavName">首页</div>
+      </a>
+    </li>
+    <li>
+      <a id="baby-link" href="myBaby" class="psnnav">
+        <!-- <i class="icon-psnNav babyIconFont iconfont">&#xf01d4;</i> -->
         <i class="icon-psnNav babyIconFont iconfont">&#xf01d4;</i>
-				<div class="psnnavName">宝宝</div>
-			</a>
-		</li>
-		<li>
-			<a href="/client/remind" class="psnnav">
-				<!-- <i class="icon-psnNav clockIconFont iconfont">&#xe660;</i> -->
+        <div class="psnnavName">宝宝</div>
+      </a>
+    </li>
+    <li>
+      <a href="/client/remind" class="psnnav">
+        <!-- <i class="icon-psnNav clockIconFont iconfont">&#xe660;</i> -->
         <i class="icon-psnNav clockIconFont iconfont">&#xe660;</i>
-				<div class="psnnavName">提醒</div>
-			</a>
-		</li>
-	</ul>
+        <div class="psnnavName">提醒</div>
+      </a>
+    </li>
+  </ul>
 </nav>
 
 <!-- <ul class="mui-table-view navList">
   <li class="mui-table-view-cell">
     <a class="mui-navigate-right">
-    	<div class="listItemIcon">
-    		<i class="icon-psnItem coinIcon iconfont">&#xe61f;</i>
-    	</div>
+      <div class="listItemIcon">
+        <i class="icon-psnItem coinIcon iconfont">&#xe61f;</i>
+      </div>
       金币
     </a>
   </li>
@@ -54,46 +55,46 @@
 <ul class="mui-table-view navList">
   <li class="mui-table-view-cell" id="cloveIdItem">
     <a class="mui-navigate-right ">
-	    <div class="listItemIcon">
-	    	<i class="icon-psnItem idIcon iconfont">&#xe63e;</i>
-	    </div>
-	    <div class="listItemText">${user.cloveId}</div>
+      <div class="listItemIcon">
+        <i class="icon-psnItem idIcon iconfont">&#xe63e;</i>
+      </div>
+      <div class="listItemText"></div>
       用户号
     </a>
   </li>
 <!--   <li class="mui-table-view-cell" id="phoneItem">
     <a class="mui-navigate-right">
-	    <div class="listItemIcon">
+      <div class="listItemIcon">
         <i class="icon-psnItem iconfont">&#xe65c;</i>
-	    </div>
-	    <div class="listItemText">${user.phoneNum}</div>
+      </div>
+      <div class="listItemText"></div>
       手机号
     </a>
   </li> -->
 <!--   <li class="mui-table-view-cell" id="emailItem">
     <a class="mui-navigate-right">
-	    <div class="listItemIcon">
+      <div class="listItemIcon">
         <i class="icon-psnItem iconfont">&#xe624;</i>
-	    </div>
-	    <div class="listItemText">${user.email}</div>
+      </div>
+      <div class="listItemText"></div>
       邮箱
     </a>
   </li>
   <li class="mui-table-view-cell">
     <a class="mui-navigate-right">
-	    <div class="listItemIcon">
-	    	<i class="icon-psnItem iconfont">&#xe619;</i>
-	    </div>
-	    <div class="listItemText">${user.userGrade}</div>
+      <div class="listItemIcon">
+        <i class="icon-psnItem iconfont">&#xe619;</i>
+      </div>
+      <div class="listItemText"></div>
       用户等级
     </a>
   </li>
   <li class="mui-table-view-cell">
     <a class="mui-navigate-right">
-    	<div class="listItemIcon">
-    		<i id="icontest" class="icon-psnItem addVIcon iconfont">&#xe6d9;</i>
-    	</div>
-    	<div class="listItemText">${user.isAddV}</div>
+      <div class="listItemIcon">
+        <i id="icontest" class="icon-psnItem addVIcon iconfont">&#xe6d9;</i>
+      </div>
+      <div class="listItemText"></div>
       加V认证
     </a>
   </li> -->
@@ -108,7 +109,6 @@
       等级规则
     </a>
   </li> -->
-  <!--
   <li class="mui-table-view-cell">
     <a href="/client/rules" class="mui-navigate-right">
       <div class="listItemIcon">
@@ -116,21 +116,12 @@
       </div>
       使用声明
     </a>
-  </li>  -->
-  <li class="mui-table-view-cell">
-    <a href="http://mp.weixin.qq.com/s?__biz=MzIyNTAxNDc2NA==&mid=210816926&idx=2&sn=7b8256392bbf1533241ccf62de8dd391&scene=0#rd" class="mui-navigate-right">
-      <div class="listItemIcon">
-        <i class="icon-psnItem iconfont">&#xe643;</i>
-      </div>
-      使用声明
-    </a>
   </li>
-
 </ul>
 
 <ul class="mui-table-view navList">
   <li class="mui-table-view-cell" id="cloveIdItem">
-    <a href="http://mp.weixin.qq.com/s?__biz=MzIyNTAxNDc2NA==&mid=210816926&idx=3&sn=6a6aa7497d4f021a2100f40025837685&scene=0#rd" class="mui-navigate-right">
+    <a href="http://mp.weixin.qq.com/s?__biz=MzA5NTI4Njg5NQ==&mid=206742364&idx=1&sn=1a59b5e9d185367ed4096aa0c74d0cb6#wechat_redirect" class="mui-navigate-right">
      <!--  <div class="listItemIcon">
         <i class="icon-psnItem iconfont">&#xe643;</i>
       </div> -->
@@ -139,7 +130,7 @@
   </li>
 
   <li class="mui-table-view-cell" id="cloveIdItem">
-    <a href="http://mp.weixin.qq.com/s?__biz=MzIyNTAxNDc2NA==&mid=210816926&idx=1&sn=20688487f8433411bf450df091f9b602#rd#wechat_redirect" class="mui-navigate-right">
+    <a href="http://mp.weixin.qq.com/s?__biz=MzA5NTI4Njg5NQ==&mid=206747746&idx=1&sn=515810bdb9f8e83524e1487f092b87ae#wechat_redirect" class="mui-navigate-right">
       <!-- <div class="listItemIcon">
         <i class="icon-psnItem iconfont">&#xe643;</i>
       </div> -->
@@ -150,6 +141,9 @@
 </ul>
 
 <script type="text/javascript">
+  $(function(){
+    loadUserInfo();//加载用户信息
+  })
 
   //丁香号
   document.getElementById("cloveIdItem").addEventListener("tap",function(event){
@@ -182,5 +176,22 @@
   document.getElementById("baby-link").addEventListener("tap",function(event){
     localStorage.lastPage = "psnCenter";
     return true;
-  });;
+  });
+
+  /*加载用户信息*/
+  function loadUserInfo(){
+     $.post("/CUserAction/loadUserInf",function(data){
+        if(data.result == 0){//成功
+          $(".headImg>img").attr("src",data.data.headimgurl);
+          $(".headImg>img").attr("alt",data.data.nickname);
+          $(".nickname").text(data.data.nickname);
+          if("未设置"!=data.data.cloveId){
+            $(".account").text(data.data.cloveId);
+          }
+          $("#introdction").text(data.data.signName);
+          $(".listItemText").text(data.data.cloveId);
+          // headImg nickname account introdction listItemText
+        }
+    });
+  }
 </script>

@@ -1,6 +1,6 @@
 #{extends 'client.html' /}
 #{set title:'家庭助理，助力家庭' /}
-
+<link rel="stylesheet" href="@{'/public/stylesheets/client/first.css'}?v=20150804">
 <header class="mui-bar mui-bar-nav babyTitle">
   <h1 class="mui-title">首页</h1>
 </header>
@@ -12,7 +12,8 @@
       <!-- <img src="@{'/public/images/client/child-1.jpg'}" alt=""/> -->
       <img id="userHeadImg" src="" alt=""/>
     </div>
-    <span id="nickName" class="nickname"></span>
+    <p id="nickName" class="nickname"></p>
+    <p class="account"></p>
   </a>
 </div>
 
@@ -56,7 +57,7 @@
   </li>
 </ul>
 
-<link rel="stylesheet" href="@{'/public/stylesheets/client/first.css'}?v=20150804">
+
 <script type="text/javascript" src = "@{'/public/javascripts/jquery-1.8.3.min.js'}"></script>
 <script>
   $(function(){
@@ -64,6 +65,9 @@
         if(data.result == 0){//成功
           $("#userHeadImg").attr("src",data.data.headimgurl);
           $("#nickName").text(data.data.nickname);
+          if("未设置"!=data.data.cloveId){
+            $(".account").text(data.data.cloveId);
+          }
         }
     });
   });//结束$(function()
