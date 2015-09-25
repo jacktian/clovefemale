@@ -104,6 +104,7 @@ $(function() {
             smooth: true,
             showAllSymbol: true,
             markPoint: {
+              symbolSize: 5,
               data: sexData
             },
           }]
