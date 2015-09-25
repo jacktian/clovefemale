@@ -85,8 +85,6 @@ http.port=9001
 #  db=mem
 #
 # To connect to a local MySQL5 database, use:
-# db=mysql://boxizen:19911024@boxizendb.mysql.rds.aliyuncs.com:3306/clovefemale
- db=mysql://root:clovefemale123@55b9c553362d2.gz.cdb.myqcloud.com:16869/clovefemale
 #db=mysql://root:root@localhost:3306/clovefemale
 #
 # To connect to a local PostgreSQL9 database, use:
@@ -218,8 +216,8 @@ mail.smtp=mock
 %test.mail.smtp=mock
 
 # WeChat appkey and appsecret
-wechat_appkey = wx485f2bc0867fe1c2
-wechat_secret = c3e24c02aa4ca9300cb1c3e9d6229b27
+wechat_appkey = wx6a7d29fed00fb4b4
+wechat_secret = d4e12404174ae895eea742b850a11415
 # Client url
 pregUrl = http://sunyanmi.com/client/pregMense
 babyUrl = http://sunyanmi.com/client/mybaby
