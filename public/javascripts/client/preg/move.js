@@ -34,6 +34,29 @@ $(function() {
       pregmMor = data.data.morning;
       pregmAfter = data.data.afternoon;
       pregmEven = data.data.evening;
+
+                //获取数据的最大最小值作为图标的上下限
+      var max_pregm = -1;
+      var min_pregm = pregmMor[0];
+
+      for(var i = 0; i < pregmMor.length; i++){
+        if(max_pregm < pregmMor[i]) max_pregm = pregmMor[i];
+        if(min_pregm > pregmMor[i]) min_pregm = pregmMor[i];
+      }
+      for(var i = 0; i < pregmAfter.length; i++){
+        if(max_pregm < pregmAfter[i]) max_pregm = pregmAfter[i];
+        if(min_pregm > pregmAfter[i]) min_pregm = pregmAfter[i];
+      }
+      for(var i = 0; i < pregmEven.length; i++){
+        if(max_pregm < pregmEven[i]) max_pregm = pregmEven[i];
+        if(min_pregm > pregmEven[i]) min_pregm = pregmEven[i];
+      }
+
+      var max_pregm_int = Math.floor(max_pregm) + 1;
+      var min_pregm_int = Math.ceil(min_pregm) - 1;
+      if(min_pregm_int < 0) min_pregm_int = 0;
+
+
       var loadMoveChart = function() {
         // 基于准备好的dom，初始化echarts图表
         $('#pregmChart').css("width", $(window).get(0).innerWidth * 0.94);
@@ -74,8 +97,10 @@ $(function() {
           }],
           yAxis: [{
             type: 'value',
-            min: 0,
-            max: 45,
+            /*min: 0,
+            max: 45,*/
+            min: min_pregm_int,
+            max: max_pregm_int,
             axisLabel: {
               formatter: '{value} 次'
             }
