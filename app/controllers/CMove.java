@@ -121,15 +121,16 @@ public class CMove extends WebService {
 		List<PregmBean> rBean = new ArrayList<PregmBean>();
 		int sum=0,count = 0;
 		for (int i = 0; i < bean.size(); i++) {
-			int num = bean.get(bean.size() - 1 - i).num;
+			//int num = bean.get(bean.size() - 1 - i).num;
+			int num = bean.get(i).num;
 			sum += num;
 			if(num == 0) {
 				count++;
 			}
 			if((i+1)%3==0){
 				PregmBean fbean = new PregmBean();
-				fbean.date = bean.get(bean.size() - 1 - i).date;
-				fbean.dateStr = bean.get(bean.size() - 1 - i).dateStr;
+				fbean.date = bean.get(i).date;
+				fbean.dateStr = bean.get(i).dateStr;
 				System.out.println(fbean.dateStr);
 				if(count == 0) {
 					fbean.num = sum*4;
