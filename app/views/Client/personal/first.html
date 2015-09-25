@@ -1,6 +1,6 @@
 #{extends 'client.html' /}
-#{set title:'首页' /}
-
+#{set title:'家庭助理，助力家庭' /}
+<link rel="stylesheet" href="@{'/public/stylesheets/client/first.css'}?v=20150804">
 <header class="mui-bar mui-bar-nav babyTitle">
   <h1 class="mui-title">首页</h1>
 </header>
@@ -11,8 +11,9 @@
     <div class="headImg">
       <!-- <img src="@{'/public/images/client/child-1.jpg'}" alt=""/> -->
       <img id="userHeadImg" src="" alt=""/>
-    </div>    
-    <span id="nickName" class="nickname"></span>
+    </div>
+    <p id="nickName" class="nickname"></p>
+    <p class="account"></p>
   </a>
 </div>
 
@@ -33,30 +34,30 @@
   <li class="mui-table-view-cell mui-media mui-col-xs-4">
     <a href="/client/medBox">
       <i class="icon-first iconfont">&#xe626;</i>
-      <div class="mui-media-body">小药箱</div>
+      <div class="mui-media-body">家庭药箱</div>
     </a>
   </li>
   <li class="mui-table-view-cell mui-media mui-col-xs-4">
     <a href="/client/psnCenter">
       <i class="icon-first iconfont">&#xe60b;</i>
-      <div class="mui-media-body">会员中心</div>
+      <div class="mui-media-body">个人中心</div>
     </a>
   </li>
   <li class="mui-table-view-cell mui-media mui-col-xs-4">
-    <a href="#">
+    <a href="/client/stools">
       <i class="icon-first iconfont">&#xe616;</i>
-      <div class="mui-media-body">小工具</div>
+      <div class="mui-media-body">常用工具</div>
     </a>
   </li>
   <li class="mui-table-view-cell mui-media mui-col-xs-4">
-    <a href="#">
+    <a href="http://mp.weixin.qq.com/s?__biz=MzA5NTI4Njg5NQ==&mid=206742364&idx=1&sn=1a59b5e9d185367ed4096aa0c74d0cb6#wechat_redirect">
       <i class="icon-first iconfont">&#xe61e;</i>
       <div class="mui-media-body">常见问题</div>
     </a>
   </li>
 </ul>
 
-<link rel="stylesheet" href="@{'/public/stylesheets/client/first.css'}">
+
 <script type="text/javascript" src = "@{'/public/javascripts/jquery-1.8.3.min.js'}"></script>
 <script>
   $(function(){
@@ -64,6 +65,9 @@
         if(data.result == 0){//成功
           $("#userHeadImg").attr("src",data.data.headimgurl);
           $("#nickName").text(data.data.nickname);
+          if("未设置"!=data.data.cloveId){
+            $(".account").text(data.data.cloveId);
+          }
         }
     });
   });//结束$(function()

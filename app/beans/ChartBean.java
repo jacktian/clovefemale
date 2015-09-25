@@ -13,4 +13,11 @@ public class ChartBean {
 
     public List data;
 
+    public List sex;
+
+    public List morning;
+
+    public List afternoon;
+
+    public List evening;
 }

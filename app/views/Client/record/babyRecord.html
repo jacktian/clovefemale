@@ -7,6 +7,7 @@
 <link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.scroller.css'}" rel="stylesheet" type="text/css" />
 
 <link rel="stylesheet" href="@{'/public/stylesheets/client/baby.css'}"/>
+
 <script src="http://dcloudio.github.io/mui/dist/js/jquery-2.1.1.js"></script>
 
 
@@ -18,11 +19,10 @@
 <script src="@{'/public/javascripts/client/baby.js'}"></script>
 <script src="@{'/public/javascripts/Chart.min.js'}"></script>
 
-
 <!-- <script src="js/mobiscroll-2.14.4-crack.js"></script> -->
 
 <header class="mui-bar mui-bar-nav babyTitle">
-  <a class="mui-icon mui-icon-left-nav mui-pull-left" href="/client/first"></a>
+  <a class="mui-icon mui-icon-home mui-pull-left" href="/client/first"></a>
   <a id="list_children" class="mui-icon mui-icon-bars mui-pull-right"></a>
   <h1 id="title-babyGrowth" class="mui-title">成长记录</h1>
 </header>
@@ -95,7 +95,7 @@
 				<div class="unitDesc">cm</div>
 				<div class="mark_chart">
 					<div class="standerDesc">
-						<div class="line-stander"></div>标准
+						<div class="line-stander"></div>标准区间
 						
 					</div>
 					<div class="babyDesc">
@@ -124,7 +124,7 @@
 				<div class="unitDesc">kg</div>
 				<div class="mark_chart">
 					<div class="standerDesc">
-						<div class="line-stander"></div>标准
+						<div class="line-stander"></div>标准区间
 						
 					</div>
 					<div class="babyDesc">
@@ -170,12 +170,12 @@
 				<div class="objectTitle">
 					<span class="pointSign"></span>
 					&nbsp;历史记录
-					<a class="floatRight-link" href="/Client/gfDetail">更多></a>
+					<a id="detail-gf-more" class="floatRight-link" href="/Client/gfDetail">更多></a>
 				</div>
 				<table class="scoreTable">
 					<tr class="tableTitle">
 						<td>年级</td>
-						<td>次数</td>
+						<td>日期</td>
 						<td>成绩</td>
 					</tr>
 					<tr id="lastData_mark_1" class="oddLine data-record-gf">
@@ -196,13 +196,13 @@
 			<div class="objectTitle">
 					<span class="pointSign"></span>
 					&nbsp; 动态
-					<a class="floatRight-link" href="/Client/gfDetail">详细分析></a>
+					<a id="detail-gf-analy" class="floatRight-link" href="/Client/gfDetail">详细分析></a>
 			</div>
 
 
 			<!-- 只有一条数据的时候显示 -->
 			<div class="oneData oneData-gf">
-				<p>年级:<span id="oneDataVal-grade"></span> &nbsp;次数:第<span id="oneDataVal-time"></span>次 &nbsp;成绩:<span id="oneDataVal-mark"></span>分</p>
+				<p>年级:<span id="oneDataVal-grade"></span> &nbsp;日期:<span id="oneDataVal-time"></span> &nbsp;成绩:<span id="oneDataVal-mark"></span>分</p>
 			</div>
 
 			<!-- 身体指标图表模块 -->
@@ -229,8 +229,22 @@
 					&nbsp;下次接种
 				</div>
 				<div class="nullTips nullTips-vac nullTips-vac-todo">恭喜您，宝宝已经接种完全部疫苗哦！</div>
-				<ul class="datalist nextVacList">
-				</ul>
+				<table class="scoreTable nextVacList vacList">
+					<tr class="tableTitle">
+						<td>名称</td>
+						<td>预计接种时间</td>
+						<td>年龄</td>
+					</tr>
+				</table>
+				<!-- <ul class="datalist nextVacList">
+					<li>
+						<div class='item-nextVac item-vacName'><span class='realData'>无细胞百白破疫苗(白破)(加强)</span></div>
+						<div class='item-nextVac item-vacName'><span class='realData'>2015-12-24</span></div>
+						<div class='item-nextVac item-age'>
+							<i class='iconfont timeIcon'>&#xe635;</i><span class='timeData'>出生时</span>
+						</div>
+					</li>
+				</ul> -->
 			</div>
 			<!-- 上一次记录结束 -->
 
@@ -242,10 +256,11 @@
 					<a id="more-vaced" class="floatRight-link" href="#">更多></a>
 				</div>
 				<div class="nullTips nullTips-vac nullTips-vac-done">宝宝还没有接种过疫苗哦！</div>
-				<table class="scoreTable vaccinatedTable">
+				<table class="scoreTable vaccinatedTable vacList">
 					<tr class="tableTitle">
 						<td>名称</td>
 						<td>接种时间</td>
+						<td>年龄</td>
 					</tr>
 				
 				</table>
@@ -294,9 +309,14 @@
 	<header class="mui-bar mui-bar-nav model-header">
 		<h1 class="mui-title model-title">身体指标</h1>
 	</header>
-	<input id="scroller" name="scroller" />
+	<!-- <input id="scroller" name="scroller" /> -->
+	
 	<div class="mui-content-padded indexInputBox">
 		<form class="mui-input-group">
+			<div id="bodyIndexDate" class="mui-input-row">
+				<label>日期</label>
+				<input id="bodyIndexDate_input" type="text" placeholder="日期输入" class="dateBox_vac">
+			</div>
 			<div class="mui-input-row">
 				<label>身高</label>
 				<input id="baby_height" type="text" class="mui-input-clear" placeholder="单位cm">
@@ -316,13 +336,21 @@
 </div><!-- 身体记录添加结束 -->
 
 <!-- 成绩表单添加 -->
-<div class="mui-popover scrollerBox newmark">
+<div id="newMark" class="mui-popover scrollerBox newmark">
 	<header class="mui-bar mui-bar-nav model-header">
 		<h1 class="mui-title model-title">成绩表单</h1>
 	</header>
 	<input id="scroller_mark" name="scroller" />
 	<div class="mui-content-padded indexInputBox">
 		<form class="mui-input-group">
+			<div id="gradeDate" class="mui-input-row">
+				<!-- <div id="dateVacBox" class="dateBox_vac">
+						<img  class="dateImg_vac popover_date_img" src="@{'/public/images/client/date.png'}" alt=""/>
+						<span class="dateNo popover_dateNo"></span>
+				</div> -->
+				<label>日期</label>
+				<input id="gradeDate_input" type="text" placeholder="日期输入" class="dateBox_vac">
+			</div>
 			<div class="mui-input-row">
 				<label>成绩</label>
 				<input id="baby_mark" type="text" class="mui-input-clear" placeholder="单位(分)">
@@ -354,3 +382,8 @@
 	</div>
 	
 </div><!-- 科目选择结束 -->
+
+<script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.util.datetime.js'}"></script>
+<script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.datetimebase.js'}"></script>
+<script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.datetime.js'}"></script>
+<script src="@{'/public/javascripts/client/mobiscroll/i18n/mobiscroll.i18n.zh.js'}"></script>

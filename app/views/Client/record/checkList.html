@@ -1,0 +1,268 @@
+#{extends 'client.html' /}
+#{set title:'产检项目' /}
+#{set 'moreStyles'}
+<link rel="stylesheet" href="@{'/public/stylesheets/client/stools.css'}">
+#{/set}
+
+<header class="mui-bar mui-bar-nav babyTitle">
+  <a class="mui-icon mui-icon-left-nav mui-pull-left" href="checkTime"></a>
+  <h1 class="mui-title">产检项目</h1>
+</header>
+
+<ul class="mui-table-view checkItemList-big">
+  <li class="mui-table-view-cell checkItem-big">
+    <span class="mui-icon mui-icon-arrowdown arrow"></span>
+    <a class="checkItemLink" href="#">常规检查及保健</a>
+   
+    <ul class="checkItemList-small normalList">
+      <li>建立妊娠期保健手册</li>
+      <li>确定孕期、推算预产期</li>
+      <li>评估妊娠期高危因素</li>
+      <li>血压、体重指数、胎心率</li>
+      <li>血常规、尿常规、血型（ABO和Rh）、空腹血糖、肝功能和肾功能、乙型肝炎病毒表面抗原、梅毒螺旋体和HIV筛查、心电图等</li>
+    </ul>
+  </li>
+  <li class="mui-table-view-cell checkItem-big">
+    <span class="mui-icon mui-icon-arrowdown arrow"></span>
+    <a href="#">备查项目</a>
+    <ul class="checkItemList-small backupList">
+      <li>建立妊娠期保健手册</li>
+      <li>确定孕期、推算预产期</li>
+      <li>评估妊娠期高危因素</li>
+      <li>血压、体重指数、胎心率</li>
+      <li>血常规、尿常规、血型（ABO和Rh）、空腹血糖、肝功能和肾功能、乙型肝炎病毒表面抗原、梅毒螺旋体和HIV筛查、心电图等</li>
+    </ul>
+  </li>
+  <li class="mui-table-view-cell checkItem-big">
+    <span class="mui-icon mui-icon-arrowdown arrow"></span>
+    <a href="#">健康教育</a>
+    <ul class="checkItemList-small educationList">
+      <li>营养和生活方式的指导</li>
+      <li>避免接触有毒有害物质和宠物</li>
+      <li>慎用药物和疫苗</li>
+      <li>改变不良生活方式；避免高强度、高噪音环境和家庭暴力</li>
+      <li>继续补充叶酸（0.4~0.8）mg/d至3个月，有条件者可继续服用叶酸的复合维生素-13+6周B型超声测量胎儿NT厚度</li>
+    </ul>
+  </li>
+</ul>
+
+
+<script type="text/javascript" src = "@{'/public/javascripts/jquery-1.8.3.min.js'}"></script>
+<script>
+  $(function(){
+    //加载项目内容
+    var checkContent = {
+
+      check:[
+      {//1检
+        normal:[
+          {item:"建立妊娠期保健手册"},
+          {item:"确定孕期、推算预产期"},
+          {item:"评估妊娠期高危因素"},
+          {item:"血压、体重指数、胎心率"},
+          {item:"血常规、尿常规、血型（ABO和Rh）、空腹血糖、肝功能和肾功能、乙型肝炎病毒表面抗原、梅毒螺旋体和HIV筛查、心电图等"}
+        ],
+        backupcheck:[
+          {item:"HCV筛查"},
+          {item:"地中海贫血和甲状腺功能筛查"},
+          {item:"宫颈细胞学检查"},
+          {item:"宫颈分泌物检测淋球菌、沙眼衣原体和细菌性阴道病的检测"},
+          {item:"妊娠早期B型超声检查，妊娠11-13+6周B型超声测量胎儿NT厚度"},
+          {item:"妊娠10~12周绒毛活检"}
+        ],
+        education:[
+          {item:"营养和生活方式的指导"},
+          {item:"避免接触有毒有害物质和宠物"},
+          {item:"慎用药物和疫苗"},
+          {item:"改变不良生活方式；避免高强度、高噪音环境和家庭暴力"},
+          {item:"继续补充叶酸（0.4~0.8）mg/d至3个月，有条件者可继续服用叶酸的复合维生素"}
+        ]
+      },
+      {//2检
+        normal:[
+          {item:"分析首次产前检查的结果"},
+          {item:"血压、体重、宫底高度、腹围、胎心率"},
+          {item:"妊娠中期非整倍体母体血清学筛查（15~20+6周）"},
+        ],
+        backupcheck:[
+          {item:"羊膜腔穿刺检查胎儿染色体"}
+        ],
+        education:[
+          {item:"妊娠中期胎儿非整倍体筛查的意义"},
+          {item:"Hb＜105g/L，补充元素铁60~100mg/d"},
+          {item:"开始补充钙剂，600mg/d"}
+        ]
+      },
+      {//3检
+        normal:[
+          {item:"血压、体重、宫底高度、腹围、胎心率"},
+          {item:"胎儿系统B型超声筛查（18~24周）"},
+          {item:"血常规、尿常规"},
+        ],
+        backupcheck:[
+          {item:"宫颈评估（B型超声测量宫颈长度，早产高危者）"}
+        ],
+        education:[
+          {item:"早产的认识和预防"},
+          {item:"营养和生活方式的指导"},
+          {item:"胎儿系统B型超声筛查的意义"}
+        ]
+      },
+      {//4检
+        normal:[
+          {item:"血压、体重、宫底高度、腹围、胎心率"},
+          {item:"2.75g OGTT"},
+          {item:"血常规、尿常规"},
+        ],
+        backupcheck:[
+          {item:"抗D滴度复查（Rh阴性者）"},
+          {item:"宫颈阴道分泌物fFN检测（早产高危者）"}
+        ],
+        education:[
+          {item:"早产的认识和预防"},
+          {item:"营养和生活方式的指导"},
+          {item:"妊娠期糖尿病筛查的意义"}
+        ]
+      },
+      {//5检
+        normal:[
+          {item:"血压、体重、宫底高度、腹围、胎心率、胎位"},
+          {item:"产科B型超声检查"},
+          {item:"血常规、尿常规"},
+        ],
+        backupcheck:[
+          {item:"B型超声测量宫颈长度或宫颈阴道分泌物fFN检测"}
+        ],
+        education:[
+          {item:"分娩方式指导"},
+          {item:"开始注意胎动"},
+          {item:"母乳喂养指导"},
+          {item:"母乳喂养指导"}
+        ]
+      },
+      {//6检
+        normal:[
+          {item:"血压、体重、宫底高度、腹围、胎心率、胎位"},
+          {item:"血常规、尿常规"}
+        ],
+        backupcheck:[
+          {item:"GBS筛查（35~37周）"},
+          {item:"肝功能、血清胆汁酸检测（32~34周，怀疑ICP孕妇）"},
+          {item:"NST检查（34周开始）"},
+          {item:"心电图复查（高危者）"}
+        ],
+        education:[
+          {item:"分娩前生活方式的指导"},
+          {item:"分娩相关知识"},
+          {item:"新生儿疾病筛查"},
+          {item:"抑郁症的预防"}
+        ]
+      },
+      {//7检
+        normal:[
+          {item:"血压、体重、宫底高度、腹围、胎心率、胎位、宫颈检查（Bishop）评分"},
+          {item:"血常规、尿常规"},
+          {item:"NST检查（每周1次）"},
+        ],
+        backupcheck:[
+          {item:"产科B型超声检查"},
+          {item:"评估分娩方式"}
+        ],
+        education:[
+          {item:"新生儿免疫接种"},
+          {item:"产褥期指导"},
+          {item:"胎儿宫内情况的监护"},
+          {item:"超过41周，住院并引产"}
+        ]
+      }
+      ]
+    }
+
+
+    var checkTime = parseInt(localStorage.checkTime);
+    var normalCheck = "";
+    console.log(checkContent);
+    var normal_length = checkContent.check[checkTime-1].normal.length;
+    $(".normalList").html("");
+    for(var i = 0 ; i < normal_length; i++){
+       var list = $("<li></li>");
+       $(list).html(checkContent.check[checkTime-1].normal[i].item);
+       console.log($(list));
+       $(".normalList").append($(list));
+    }
+    
+    
+
+    var backupcheck_length = checkContent.check[checkTime-1].backupcheck.length;
+    $(".backupList").html("");
+    for(var i = 0 ; i < backupcheck_length; i++){
+       var list = $("<li></li>");
+       $(list).html(checkContent.check[checkTime-1].backupcheck[i].item);
+       $(".backupList").append($(list));
+    }
+    
+
+    var education_length = checkContent.check[checkTime-1].education.length;
+    $(".educationList").html("");
+    for(var i = 0 ; i < education_length; i++){
+       var list = $("<li></li>");
+       $(list).html(checkContent.check[checkTime-1].education[i].item);
+       $(".educationList").append($(list));
+    }
+    
+    
+
+    //展开关闭产检项目详情
+    $(".checkItem-big").toggle(function(){
+      // console.log("1");
+      $(this).children(".checkItemList-small").show();
+      $(this).children(".arrow").removeClass("mui-icon-arrowdown").addClass("mui-icon-arrowup");
+    },function(){
+      // console.log("2");
+      $(this).children(".checkItemList-small").hide();
+       $(this).children(".arrow").removeClass("mui-icon-arrowup").addClass("mui-icon-arrowdown");
+    });   
+  });
+</script>
+<!-- 
+,
+      third:[
+        normal:[
+        ],
+        backupcheck:[
+        ],
+        education:[
+        ]
+      ],
+      fourth:[
+        normal:[
+        ],
+        backupcheck:[
+        ],
+        education:[
+        ]
+      ],
+      fifth:[
+        normal:[
+        ],
+        backupcheck:[
+        ],
+        education:[
+        ]
+      ],
+      sixth:[
+        normal:[
+        ],
+        backupcheck:[
+        ],
+        education:[
+        ]
+      ],
+      seventh:[
+        normal:[
+        ],
+        backupcheck:[
+        ],
+        education:[
+        ]
+      ] -->

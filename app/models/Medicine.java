@@ -36,6 +36,9 @@ public class Medicine extends BasicModel{
 	public String applicability ;//适用性
 	@Column(name = "medicineBox_Id")
 	public String medicineBoxId;//药箱编号
+
+	@Column(name = "openid")
+	public String openid;//用户编号
 	
 	/**
 	 * 	规格

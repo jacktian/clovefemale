@@ -68,10 +68,15 @@ li{
 	padding-top: 16px;
 	font-size: 45px;
 	margin:0 auto;
+	opacity: 0.6;
+}
+
+.activeNav{
+	opacity: 1;
 }
 
 .vacIconNav:active{
-	opacity: 0.5;
+	opacity: 0.4;
 }
 
 .todoIcon{
@@ -653,6 +658,22 @@ span.mui-icon.mui-icon-plus.test::before{
 	display: none;
 }
 
+.del-btn-baby{
+	width:100%;
+	height: 40px;
+	border-radius: 0px;
+	margin:10px auto;
+	padding:0;
+	line-height: 35px;
+}
+
+.del-btn-baby>a{
+	display: inline-block;
+	color:#fff;
+	width:100%;
+	height: 40px;
+}
+
 .form-model{
 	position: fixed;
 	width:80%;
@@ -673,9 +694,16 @@ span.mui-icon.mui-icon-plus.test::before{
 	color:#fff;
 	text-align: center;
 	font-weight: 700;
+	width:100%;
+	padding:0;
+	margin: 0 auto;
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
+	z-index: 1000;
+	box-shadow: 0 1px 6px #ccc;
+
 }
+
 
 .mui-title.model-title{
 	color:#fff;
@@ -685,6 +713,17 @@ span.mui-icon.mui-icon-plus.test::before{
 .form-model>form{
 	border-radius:5px;
 	padding-top: 5px;
+}
+
+.confirm-btn{
+	background-color: #DA8F8F;
+	color:#fff;
+	border:1px solid #DA8F8F;
+}
+
+.confirm-btn:active{
+	background-color: #DD524D;
+	border:1px solid #DD524D;
 }
 
 .mui-btn.mui-btn-primary.confirm-btn{
@@ -782,7 +821,7 @@ span.mui-icon.mui-icon-plus.test::before{
 
 /*滚轮弹出框样式*/
 .scrollerBox .dwcc{
-	background-color: #fff;
+	/*background-color: #fff;*/
 }
 
 .scrollerBox .mui-input-group input[type=text]{
@@ -809,16 +848,14 @@ span.mui-icon.mui-icon-plus.test::before{
 	width:80%;
 	min-width: 225px;
 	max-width: 600px;
-	
 	margin:0 auto;
-	/*padding:2px 3px 0px;*/
 	position: absolute;
 	top:50%;
 	left:10%;
-	/*border:1px solid #ddd;*/
 	background-color: #fff;
 	border-radius: 5px;
-	overflow: hidden;
+
+	/*overflow: hidden;*/
 }
 
 .newbodyIndex{
@@ -900,7 +937,7 @@ span.mui-icon.mui-icon-plus.test::before{
 
 .newmark{
 	height: auto;
-	margin-top: -139px;
+	margin-top: -178px;/*356*/
 }
 
 @media screen and (min-width: 749px) { 
@@ -1035,10 +1072,14 @@ span.mui-icon.mui-icon-plus.test::before{
 /*------------------成绩表单结束------------------*/
 
 /*------------------疫苗样式开始------------------*/
+.vacList{
+	font-size: 11px;
+}
 .nextVacList{
 	/*height: 300px;*/
 	margin-bottom: 10px;
 	display: none;
+	font-size: 11px;
 }
 
 /*下次接种*/
@@ -1055,11 +1096,11 @@ span.mui-icon.mui-icon-plus.test::before{
 }
 
 .item-vacName{
-	width:60%;
+	/*width:60%;*/
 }
 
 .item-age{
-	width:40%;
+	/*width:40%;*/
 }
 
 .nullTips-vac{
@@ -1180,6 +1221,10 @@ span.mui-icon.mui-icon-plus.test::before{
 	/*line-height: 41px;*/
 }
 
+.vacName{
+	font-size: 14px;
+}
+
 /*日期icon*/
 .dateImg_vac{
 	position: absolute;
@@ -1252,8 +1297,8 @@ span.mui-icon.mui-icon-plus.test::before{
 } 
 
 .date-todoVac{
-	padding-right: 25px;
-	display: none;
+	/*padding-right: 25px;*/
+	/*display: none;*/
 }
 
 .doteBox-hide{
@@ -1261,4 +1306,9 @@ span.mui-icon.mui-icon-plus.test::before{
 }
 /*------------------疫苗接种页面样式结束------------------*/
 
-
+/*小工具*/
+.intro_stool{
+	font-size:13px;
+	color:#aaa;
+	border-radius:5px;
+}

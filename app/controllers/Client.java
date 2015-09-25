@@ -33,12 +33,12 @@ import beans.UserCenterBean;
 
 /**
  * 客户端菜单
- * 
+ *
  * @author boxiZen
  * @since 2015/03/23
  */
 public class Client extends WebService{
-	
+
 	/**
 	 * 拦截器
 	 */
@@ -58,8 +58,8 @@ public class Client extends WebService{
 			Logger.info("Unable to get user's openid");
 		}
 	}
-	
-	
+
+
 	/**
 	 * 记录控首页
 	 */
@@ -80,7 +80,7 @@ public class Client extends WebService{
 	 */
 	public static void medBox(){
 		render("/Client/record/medBox.html");
-	}	
+	}
 
 	/**
 	 * 药品列表
@@ -89,7 +89,7 @@ public class Client extends WebService{
 		params.remove(medBoxId);
 		session.put("medboxid", medBoxId);
 		render("/Client/record/medicine.html");
-	}		
+	}
 
 	/**
 	 * 药品详情
@@ -99,13 +99,16 @@ public class Client extends WebService{
 		MedicineBean medicine = new MedicineBean();
 		medicine.id = med.id;
 		medicine.name = med.name;
-		medicine.produce = med.produce.toString().split(" ")[0].replaceAll("-", "/");
-		medicine.deadline = med.deadline.toString().split(" ")[0].replaceAll("-", "/");
+		if(med.produce!=null)
+			medicine.produce = med.produce.toString().split(" ")[0].replaceAll("-", "/");
+		if(med.deadline!=null)
+			medicine.deadline = med.deadline.toString().split(" ")[0].replaceAll("-", "/");
 		medicine.code = med.code;
 		medicine.medicineBoxId = med.medicineBoxId;
+		medicine.function = med.function;
 		render("/Client/record/medicineDetail.html",medicine);
-	}		
-	
+	}
+
 	/**
 	 *我的孩子
 	 **/
@@ -116,7 +119,7 @@ public class Client extends WebService{
 	public static void babyRedirect(){
 		render("/Client/record/mybaby.html");
 	}
-	
+
 	/**
 	 *孩子资料
 	 **/
@@ -143,67 +146,16 @@ public class Client extends WebService{
 	 *会员中心
 	 **/
 	public static void psnCenter(){
-		String openid = session.get("openid");
-		if(openid == null){
-			openid = "ob1R-uIRkLLp6lmmrT4w-2rrZ5jQ";
-		}
-		User userModel = User.find("byOpenid", openid).first();
-		UserCenterBean user = new UserCenterBean();
-
-		//头像
-		user.headimgurl = userModel.headimgurl ;
-
-		//昵称
-		user.nickname = userModel.nickname;
-
-		//丁香号
-		if(userModel.cloveId == null || "".equals(userModel.cloveId)){
-			user.cloveId = "未设置";
-		}else{
-			user.cloveId = userModel.cloveId;
-		}
-
-		//个性签名
-		if(userModel.signName == null || "".equals(userModel.signName)){
-			user.signName = "点击设置心情";
-		}else{
-			user.signName = userModel.signName;
-		}
-
-		//加V
-		if(userModel.isAddV == null || userModel.isAddV == false){
-			user.isAddV = "未加V";
-		}else{
-			user.isAddV = "已加V";
-		}
-
-		//用户等级
-		user.userGrade = userModel.userGrade;
-
-		//手机
-		if(userModel.phoneNum == null || "".equals(userModel.phoneNum)){
-			user.phoneNum = "未绑定";
-		}else{
-			user.phoneNum = userModel.phoneNum;
-		}
-
-		//邮箱
-		if(userModel.email == null || "".equals(userModel.email)){
-			user.email = "未绑定";
-		}else{
-			user.email = userModel.phoneNum;
-		}
-
-		render("/Client/record/psnCenter.html",user);
+		render("/Client/record/psnCenter.html");
 	}
-	
+
 	/**
-	 *会员制度 
+	 *会员制度
 	 */
 	public static void rules(){
 		render("/Client/personal/rules.html");
 	}
-	
+
 	/**
 	 *提醒
 	 **/
@@ -246,5 +198,33 @@ public class Client extends WebService{
 	*/
 	public static void gfDetail(){
 		render("/Client/record/gradeDetail.html");
+	}
+
+	/**
+	 *小工具
+	 */
+	public static void stools(){
+		render("/Client/record/stools.html");
+	}
+
+	/**
+	 *产检时间
+	 */
+	public static void checkTime(){
+		render("/Client/record/checkTime.html");
+	}
+
+	/**
+	 *产检项目
+	 */
+	public static void checkList(){
+		render("/Client/record/checkList.html");
+	}
+
+	/*
+	 *单位换算
+	 */
+	public static void unitChange(){
+		render("/Client/record/unitChange.html");
 	}
 }

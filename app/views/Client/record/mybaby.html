@@ -7,12 +7,10 @@
 <script src="http://dcloudio.github.io/mui/assets/js/docs.min.js?v=2014-12-30 14:09:32 +0800"></script>
 <link rel="stylesheet" href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.custom-2.14.4.min.css'}"  rel="stylesheet"/>
 <script src="@{'/public/javascripts/client/mobiscroll/mobiscroll-2.14.4-crack.js'}" type="text/javascript"></script>
-<!-- <header class="mui-bar mui-bar-nav client-bar-nav">
-			<h1 class="mui-title client-title">小宝成长</h1>
-</header> -->
+
 
 <header class="mui-bar mui-bar-nav babyTitle">
-  <a href="first" class="mui-icon mui-icon-left-nav mui-pull-left"></a>
+  <a href="first" class="mui-icon mui-icon-home mui-pull-left"></a>
   <a id="newBabyBtn" class="mui-icon mui-icon-plusempty mui-pull-right"></a>
   <h1 class="mui-title">宝宝列表</h1>
 </header>
@@ -39,7 +37,7 @@
 	<header class="mui-bar mui-bar-nav model-header">
 		<h1 class="mui-title model-title">宝宝诞生</h1>
 		<div id="item-headImg-add" class="item-headImg-add">
-			<img id="newBaby-HeadImg" class="mui-media-object child-img" src="/public/images/client/addHeadImg.png" alt="添加头像"/>
+			<img id="newBaby-HeadImg" class="mui-media-object child-img circle-headImg" src="/public/images/client/default-boy.jpg" alt="添加头像"/>
 			<!-- <div class="headImg-title">头像</div> -->
 		</div>
 	</header>
@@ -53,10 +51,10 @@
 			<label>性别</label>
 			<ul class="sexSelection">
 				<li class="mui-table-view-cell mui-radio mui-left">
-					<input id="radio-male" name="radio-sex-baby" type="radio" value="男" checked/>男
+					<input id="radio-male" class="radio-sex-baby" name="radio-sex-baby" type="radio" value="男" checked/>男
 				</li>
 				<li class="mui-table-view-cell mui-radio mui-left">
-					<input class="sex-radio" name="radio-sex-baby" type="radio" value="女" />女
+					<input class="sex-radio radio-sex-baby" name="radio-sex-baby" type="radio" value="女" />女
 				</li>
 			</ul>
 		</div>
@@ -120,31 +118,16 @@
 				theme:'ios',
 				lang:'zh',
 				display:'bottom',
-				// onSetDate:function(day,inst){
-				// 			console.log(day);
-				// 		},
-				// 		onDayChange:function(day,inst){
-				// 			console.log("changeDay");
-				// 		}
+
 		});
 
 		/*加载宝宝列表*/
-		$.get("/CBabyAction/loadBabyList",function(data){
-			// alert(data);
+		/*$.get("/CBabyAction/loadBabyList",function(data){
 			if(data.result==0){//操作成功
 				var html = juicer($('#babyTpl').html(),{babyList:data.data});
 				
+				console.log(html);
 				$('.child-list').append(html);
-				//点击宝宝头像进入宝宝资料页面
-				// var length = $(".baby-img-link").length;
-				// for(var i = 0; i < length; i++){
-				// 	var dom = $(".item-babyList").get(i);
-				// 	dom.addEventListener("longtap",function(e){
-				// 		alert("long");
-				// 		$(dom).attr("href","babyInf");
-				// 		return true;
-				// 	});
-				// }
 
 				$(".baby-img-link").bind('touchend',function(e){
 					$(this).parent().parent().attr("href","babyInf");
@@ -154,11 +137,8 @@
 				});
 
 				$(".item-babyList").bind('touchend',function(){
-					// if("psnCenter" == localStorage.lastPage){
-					// 	$(this).attr("href","babyInf");
-					// }
+					
 					localStorage.babyId = $(this).children(".babyId").text();
-					// window.location.href="/Cient/babyInf"; 
 					return true;
 				});
 				
@@ -171,13 +151,25 @@
 			}
 			
 		});
+		*/
+		
+		loadBabyList();
 
 
 		/*添加宝宝头像*/
 		document.getElementById("item-headImg-add").addEventListener("tap",function(event){
 			// $("#newBaby-HeadImg").attr("src","/babyimage/jF6mH0Sk50TVa-8LmDHZm6aAbfLMxB0gi37zVp_LJ9yDUwYBhmDaBz4JW_G2Z8XV.jpg");;
-			console.log("切换头像");
-
+			// alert("头像");
+		/*	wx.checkJsApi({
+			    jsApiList: ['chooseImage'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
+			    success: function(res) {
+			        // 以键值对的形式返回，可用的api值true，不可用为false
+			        // 如：{"checkResult":{"chooseImage":true},"errMsg":"checkJsApi:ok"}
+			        if(res.checkResult.chooseImage == false){
+			        	showResTips("接口不可用，请升级微信版本");
+			        }
+			    }
+			});*/
 			wx.chooseImage({
 			    success: function (res) {
 			    	//返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
@@ -185,9 +177,9 @@
 			    	var localId = localIds[0];
 			    	// alert(localId+"---"+localIds.length);
 			    	$("#baby-headImg").attr("src",localId.toString());
-			    	$("#newBaby-HeadImg").addClass("circle-headImg");
+			    	// $("#newBaby-HeadImg").addClass("circle-headImg");
 					localStorage.localId =  localId;//把localId在本地先缓存
-					alert(typeof(localId));
+					// alert(typeof(localId));
 					//上传头像图片
 					wx.uploadImage({
 						localId: localStorage.localId, // 需要上传的图片的本地ID，由chooseImage接口获得
@@ -239,13 +231,13 @@
 		 	}
 
 		 	//检查头像
-		 	var headImg = "";
-		 	if(localStorage.headImgUrl == null || ""== localStorage.headImgUrl){
-				dataComplete = false;
-		 		$(".nb-Tips").text("点击右上角+号上传选择宝宝头像哦！").show();
-				return false;
-		 	}
-		 	headImg = localStorage.localId;
+		 	// var headImg = "";
+		 	// if(localStorage.headImgUrl == null || ""== localStorage.headImgUrl){
+				// dataComplete = false;
+		 	// 	$(".nb-Tips").text("点击右上角+号上传选择宝宝头像哦！").show();
+				// return false;
+		 	// }
+		 	// headImg = localStorage.localId;
 
 
 		 	$.post("/CBabyAction/addBaby",{
@@ -259,8 +251,10 @@
 					        	// if(data.data[0].headImgUrl == null || ""==data.data[0].headImgUrl){
 					        	// 	showResTips("宝宝添加成功!</tr>头像获取失败,请在宝宝资料重新上传!")
 					        	// }
-					        	var html = juicer($('#babyTpl').html(),{babyList:data.data});
-			 					$('.child-list').append(html);
+					    //     	var html = juicer($('#babyTpl').html(),{babyList:data.data});
+			 					// $('.child-list').append(html);
+
+			 					loadBabyList();
 					        }else{
 					        	showResTips(data.data)
 					        }
@@ -303,16 +297,54 @@
 			mui('.newBabyBox').popover('toggle');
 		});
 
-
+		$(".radio-sex-baby").click(function(){
+			changeDefaultImg();
+		});
 		
 	});//结束$(function);
+	
+	/*加载宝宝列表*/
+		function loadBabyList(){
+			$.get("/CBabyAction/loadBabyList",function(data){
+				if(data.result==0){//操作成功
+					// $('.child-list').
+					$('.nullTips').hide();
+					var html = juicer($('#babyTpl').html(),{babyList:data.data});
+					$('.child-list').html(html);
+					// $('.child-list').append(html);
 
+					$(".baby-img-link").bind('touchend',function(e){
+						$(this).parent().parent().attr("href","babyInf");
+						localStorage.babyId = $(this).parent().parent().children(".babyId").text();
+						e.stopPropagation();
+						return true;
+					});
+
+					$(".item-babyList").bind('touchend',function(){
+						
+						localStorage.babyId = $(this).children(".babyId").text();
+						return true;
+					});
+					
+				}else{//操作失败
+					if(data.data == "找不到宝宝"){
+						$('.nullTips').show();
+					}else{//操作异常
+
+					}
+				}
+				
+			});
+		};
+
+	
 	/*还原添加框内容*/
 	function recoverAddBox(){
 		$("#babyName").val("");
 		$("#radio-male").trigger("click");
 		$("#birthday-input").val("");
-		$("#newBaby-HeadImg").attr("src","/public/images/client/addHeadImg.png");
+		$("#newBaby-HeadImg").attr("src","/public/images/client/default-boy.jpg");
+		localStorage.headImgUrl = ""; //清楚上次录入的头像
 		$(".nb-Tips").text("").hide();
 	}
 
@@ -328,6 +360,20 @@
 		$(".response-tips").text("");
 		$(".response-tips").hide();
 	}
+
+	/*切换男女头像*/
+	function changeDefaultImg(){
+		if(localStorage.headImgUrl == null || ""== localStorage.headImgUrl){
+			var sex = $('input:radio[name="radio-sex-baby"]:checked').val();
+			if(sex == "男"){
+				$("#newBaby-HeadImg").attr("src","/public/images/client/default-boy.jpg");
+			}else{
+				$("#newBaby-HeadImg").attr("src","/public/images/client/default-girl.jpg");
+			}
+		}
+		
+		
+	}
 </script>
 
 <script type="text/javascript">
@@ -340,12 +386,21 @@
 			var nonceStr = data.data.nonceStr;
 			var signature = data.data.signature;
 
+//<<<<<<< HEAD
 			//alert(location.href.split('#')[0]);
 			//alert(signature);
 		    /* 配置微信接口信息 */
+//			wx.config({
+//			    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+//			    appId: 'wx485f2bc0867fe1c2', // 必填，公众号的唯一标识
+//=======
+			// alert(location.href.split('#')[0]);
+			// alert(signature);
+		    /* 配置微信接口信息 */
 			wx.config({
 			    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-			    appId: 'wx485f2bc0867fe1c2', // 必填，公众号的唯一标识
+			    appId: 'wx6a7d29fed00fb4b4', // 必填，公众号的唯一标识
+//>>>>>>> 5ead0f23a57d04868cb50d44cb6573517df23c05
 			    timestamp: timestamp, // 必填，生成签名的时间戳
 			    nonceStr: nonceStr, // 必填，生成签名的随机串
 			    signature: signature,// 必填，签名，见附录1

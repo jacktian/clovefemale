@@ -1,20 +1,15 @@
-#{extends 'client.html' /}
-#{set title:'药品详情' /}
-#{set 'moreStyles'}
-<link href="@{'/public/stylesheets/client/medicine.css'}?v=20150522" rel="stylesheet" />
-<link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.scroller.css'}" rel="stylesheet" type="text/css" />
-<link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.animation.css'}" rel="stylesheet" type="text/css" />
-<link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.frame.css'}" rel="stylesheet" type="text/css" />
-#{/set}
-#{output 'Client/record/medicineTpl.html'/}
+#{extends 'client.html' /} #{set title:'药品详情' /} #{set 'moreStyles'}
+<link href="@{'/public/stylesheets/client/medicine/medicine.css'}?v=20150822" rel="stylesheet" />
+<link href="@{'/public/stylesheets/client/preg/mobiscroll.css'}" rel="stylesheet" type="text/css" /> #{/set} #{output 'Client/record/medicineTpl.html'/}
 <header class="mui-bar mui-bar-nav client-bar-nav">
 	<a class="mui-icon mui-icon-left-nav mui-pull-left" href="/client/medbox"></a>
 	<h1 class="mui-title client-title">药品详情</h1>
 	<a href="#mui-popover" class="mui-icon mui-icon-bars mui-pull-right add-menu"></a>
 	<div id="mui-popover" class="med-popover">
-		<ul class="mui-table-view med-pop-menu">
-			<li class="mui-table-view-cell man-add-btn"><a href="#">手动添加</a></li>
-			<li class="mui-table-view-cell scanner-add-btn"><a href="#">扫描添加</a></li>
+		<ul class="mui-table-view med-pop-menu mui-table-view-inverted">
+			<li class="mui-table-view-cell select-item"><a href="#">选择</a></li>
+			<li class="mui-table-view-cell del-item"><a href="#">删除</a></li>
+			<li class="mui-table-view-cell cancel-item"><a href="#">取消</a></li>
 		</ul>
 	</div>
 </header>
@@ -22,29 +17,24 @@
 <div class="mui-content med-box-search-content">
 	<div class="mui-content-padded">
 		<div class="mui-input-row mui-search">
-			<input type="search" id="medicine-search" placeholder="输入药品名称"></div>
+			<input type="search" id="medicine-search" placeholder="输入药品名称">
+		</div>
 	</div>
 </div>
 
-<div class="mui-content med-box-content">
+<div class="mui-content med-box-content medicine-content">
 	<ul class="mui-table-view medicine-list mui-table-view-chevron med-box-list">
 	</ul>
 </div>
 <nav class="mui-bar mui-bar-tab med-bar-tab">
-	<a class="mui-tab-item medicine-item mui-active alert-item" href="#tabbar">
+	<a class="mui-tab-item medicine-item mui-active alert-item man-add-btn" href="#tabbar">
 		<span class="mui-icon"> <i class="iconfont">&#xe636;</i>
 		</span>
-		<span class="mui-tab-label">提示</span>
+		<span class="mui-tab-label">手动添加</span>
 	</a>
-	<a class="mui-tab-item medicine-item select-item" href="#tabbar-with-chat">
+	<a class="mui-tab-item medicine-item scanner-add-btn" href="#tabbar-with-chat">
 		<span class="mui-icon mui-icon-checkmarkempty"></span>
-		<span class="mui-tab-label">选择</span>
-	</a> 
-	<a class="mui-tab-item medicine-item del-item" href="#tabbar-with-sms">
-		<span class="mui-icon">
-			<i class="iconfont">&#xf008b;</i>
-		</span>
-		<span class="mui-tab-label">删除</span>
+		<span class="mui-tab-label">扫描条码添加</span>
 	</a>
 </nav>
 <!-- 遮罩层 -->
@@ -57,91 +47,146 @@
 	<div class="model-content">
 		<div class="model-item">
 			<span class="model-item-title">名称</span>
-			<span class="model-item-content"><input type="text" id="drug-name" name="medicine-name" placeholder="输入药品名称"/></span>
-		</div>
-		<div class="model-item">
-			<span class="model-item-title">描述</span>
-			<span class="model-item-content"><input type="text" id="productor" name="medicine-desc" placeholder="输入药品描述"/></span>
-		</div>
-		<div class="model-item">
-			<span class="model-item-title">出产</span>
-			<span class="model-item-content"><input type="text" id="produce-date" name="medicine-produce" placeholder="输入生产日期"/></span>
+			<span class="model-item-content">
+				<input type="text" id="drug-name" name="medicine-name" placeholder="输入药品名称(必填)" />
+			</span>
 		</div>
 		<div class="model-item">
 			<span class="model-item-title">到期</span>
-			<span class="model-item-content"><input type="text" id="end-date" name="medicine-end" placeholder="输入保质期"/></span>
+			<span class="model-item-content">
+				<input type="text" id="end-date" name="medicine-end" placeholder="输入到期日期(必填)" />
+			</span>
+		</div>
+		<div class="model-item">
+			<span class="model-item-title">描述</span>
+			<span class="model-item-content">
+				<input type="text" id="productor" name="medicine-desc" placeholder="输入药品描述(非必填)" />
+			</span>
 		</div>
 	</div>
 	<div class="model-bottom">
 		<button class="mui-btn mui-btn-negative model-btn-refresh">添加</button>
+		<a class="mui-btn mui-btn-negative" href="/client/medBox" style="width:100%">返回</a>
 	</div>
 </div>
 #{set 'moreScripts'}
-<script type="text/javascript" charset="utf-8">mui.init();</script>
+<script type="text/javascript" charset="utf-8">
+	mui.init();
+</script>
 <script src="@{'/public/javascripts/client/jquery-1.9.1.min.js'}"></script>\
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
-<script type="text/javascript" src = "@{'/public/javascripts/juicer.js'}"></script>
-<script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.core.js'}"></script>
-<script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.frame.js'}"></script>
-<script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.scroller.js'}"></script>
-<script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.util.datetime.js'}"></script>
-<script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.datetimebase.js'}"></script>
-<script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.datetime.js'}"></script>
-<script src="@{'/public/javascripts/client/mobiscroll/i18n/mobiscroll.i18n.zh.js'}"></script>
+<script type="text/javascript" src="@{'/public/javascripts/juicer.js'}"></script>
+<script src="@{'/public/javascripts/client/preg/preg-mobiscroll.js'}"></script>
 <script type="text/javascript">
-	$(function(){
+	$(function() {
+		/* 格式化日期 */
+		Date.prototype.format = function(format) {
+			var o = {
+				"M+": this.getMonth() + 1, //month
+				"d+": this.getDate(), //day
+				"h+": this.getHours(), //hour
+				"m+": this.getMinutes(), //minute
+				"s+": this.getSeconds(), //second
+				"q+": Math.floor((this.getMonth() + 3) / 3), //quarter
+				"S": this.getMilliseconds() //millisecond
+			}
+			if (/(y+)/.test(format)) format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+			for (var k in o)
+				if (new RegExp("(" + k + ")").test(format))
+					format = format.replace(RegExp.$1,
+						RegExp.$1.length == 1 ? o[k] :
+						("00" + o[k]).substr(("" + o[k]).length));
+			return format;
+		}
+
 		var delSelect = 0;
 		var popMenu = 0;
 		/*加载药品列表*/
-		var loadMedicineList = function(){
-			$.get("/CMedicine/loadMedicineList",function(data){
-				var html = juicer($('#medicineTpl').html(),{medicineList:data.data});
+		var loadMedicineList = function() {
+			$.get("/CMedicine/loadMedicineList", function(data) {
+				console.log(data.data);
+				var targetData = data.data;
+				for (var i = 0; i < targetData.length; i++) {
+					var dateStr = Date.parse(targetData[i].deadline);
+					var date = new Date(dateStr);
+					var deadline = date.format("yyyy-MM-dd");
+					targetData[i].deadline = deadline;
+				}
+				var html = juicer($('#medicineTpl').html(), {
+					medicineList: targetData
+				});
 				$('.med-box-list').html(html);
 			});
 		}
 		loadMedicineList();
-		/*遮罩层*/
-		$('#pregDrop').bind('touchstart',function(){
-			$('.med-model').hide();
-			$(this).hide();
+		/* 窗口显示与隐藏 */
+		var hideMask = function() {
+				$('#pregDrop').hide();
+			},
+			hideMedModel = function() {
+				$('.med-model').hide();
+			},
+			hidePopover = function() {
+				$('#mui-popover').hide();
+			},
+			showPopover = function() {
+				$('#mui-popover').show();
+			},
+			showMedModel = function() {
+				$('.med-model').show();
+			},
+			showMask = function() {
+				$('#pregDrop').show();
+			};
+		/* 点击遮罩层*/
+		$('#pregDrop').bind('touchstart', function() {
+			hideMask();
+			hideMedModel();
 		});
 		/*弹出菜单*/
-		$('.add-menu').bind('touchstart',function(){
-			if(popMenu == 0){
+		$('.add-menu').bind('touchstart', function(e) {
+			e.stopPropagation();
+			if (popMenu == 0) {
 				popMenu = 1;
-				$('#mui-popover').show();
-			}
-			else{
+				showPopover();
+			} else {
 				popMenu = 0;
-				$('#mui-popover').hide();
+				hidePopover();
 			}
 			return false;
 		});
-		$('.man-add-btn a').bind('touchstart',function(){
-			popMenu = 0;
-			$(this).parents('.med-popover').hide();
-			$('.med-model').show();
-			$('#pregDrop').show();
-			return false;
+		$(document).bind('touchstart',function(){
+			hidePopover();
 		});
-		/*微信扫描*/
-		$('.scanner-add-btn a').bind('touchstart',function(){
+		/* 手动添加 */
+		var manAdd = function() {
 			popMenu = 0;
-			$('.med-popover').hide();
+			showMedModel();
+			showMask();
+			return false;
+		};
+		$('.man-add-btn').bind('touchstart', manAdd);
+		/*微信扫描*/
+		var scannerAdd = function() {
+			popMenu = 0;
 			wx.scanQRCode({
-			    needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
-			    scanType: ["qrCode","barCode"], // 可以指定扫二维码还是一维码，默认二者都有
-			    success: function (res) {
-			    	var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
-			    	var code = result.split(",")[1];
-					$.get('/CMedicine/findDrug?code='+code,function(data){
-						if(typeof(data.data)=="undefined"){
+				needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+				scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+				success: function(res) {
+					var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+					var code = result.split(",")[1];
+					$.get('/CMedicine/findDrug?code=' + code, function(data) {
+						console.log(data);
+						if (typeof(data.data) == "undefined") {
 							mui.toast("数据库未找到该药品");
-						}
-						else{
-							mui.toast(data.data.dname);
-							$('#productor').val(data.data.productor);
-							$('#drug-name').val(data.data.dname);
+						} else {
+							if(data.data.length == 0){
+								mui.toast("数据库未找到该药品");
+							}
+							else{
+								$('#productor').val(data.data[0][1]);
+								$('#drug-name').val(data.data[0][0]);
+							}
 						}
 						$('.med-model').show();
 						$('#pregDrop').show();
@@ -149,19 +194,20 @@
 				}
 			});
 			return false;
-		});
-		/* 药品列表 */
-		$(document).on('click', '.med-box-item a', function() {
-		   if(delSelect == 1){
+		};
+		$('.scanner-add-btn').bind('touchstart', scannerAdd);
+		/* 点击药品列表 */
+		var clickMedItem = function() {
+			if (delSelect == 1) {
 				return false;
-			}
-			else{
+			} else {
 				return true;
 			}
-		});
-		/* 底部菜单 */
-		$('.mui-tab-item').bind('touchstart',function(){
-			if(delSelect == 1){
+		};
+		$(document).on('click', '.med-box-item a', clickMedItem);
+		/* 点击菜单选项 */
+		var clickMenuItem = function() {
+			if (delSelect == 1) {
 				delSelect = 0;
 				$('.med-box-item').removeClass('mui-checkbox');
 				$('.med-box-item').removeClass('mui-left');
@@ -169,9 +215,11 @@
 				$('.med-box-item a').removeClass('medicine-select-item');
 				$('.medbox-item-iconfont').removeClass('hidden');
 			}
-		});
-		$('.select-item').bind('touchstart',function(){
-			if(delSelect == 0){
+		};
+		$('.mui-tab-item').bind('touchstart', clickMenuItem);
+		/* 选择药品列表 */
+		var selectMedItem = function() {
+			if (delSelect == 0) {
 				delSelect = 1;
 				$('.med-box-item').addClass('mui-checkbox');
 				$('.med-box-item').addClass('mui-left');
@@ -179,103 +227,153 @@
 				$('.med-box-item a').addClass('medicine-select-item');
 				$('.medbox-item-iconfont').addClass('hidden');
 			}
-		});
-		/* 删除药品 */
-		$('.del-item').bind('touchstart',function(){
+			hidePopover();
+		};
+		$('.select-item').bind('touchstart', selectMedItem);
+		/* 点击删除药品 */
+		var delMenuItem = function() {
 			var medBox = $("input[name='checkbox']:checked");
-			if(medBox.length == 0){
+			if (medBox.length == 0) {
 				mui.toast('请选择要删除的药品');
-			}
-			else{
+			} else {
 				var midArr = new Array();
-				for(var i=0;i<medBox.length;i++){
+				for (var i = 0; i < medBox.length; i++) {
 					midArr[i] = medBox[i].getAttribute('data-mid');
 				}
-				$.get("/CMedicine/removeMedicine?mid="+midArr,function(data){
-					if(data.result == 0){
+				$.get("/CMedicine/removeMedicine?mid=" + midArr, function(data) {
+					if (data.result == 0) {
 						mui.toast('删除成功');
 						loadMedicineList();
-					}
-					else
+					} else
 						mui.toast('创建失败');
 				});
-				$("input[name='checkbox']:checked").attr("checked",false);
+				$("input[name='checkbox']:checked").attr("checked", false);
 			}
-		});
+			hidePopover();
+		};
+		$('.del-item').bind('touchstart', delMenuItem);
+		/* 取消选择 */
+		var cancelSelect = function() {
+			if (delSelect == 1) {
+				delSelect = 0;
+				$('.med-box-item').removeClass('mui-checkbox');
+				$('.med-box-item').removeClass('mui-left');
+				$('.med-box-check').removeClass('show');
+				$('.med-box-item a').removeClass('medicine-select-item');
+				$('.medbox-item-iconfont').removeClass('hidden');
+			}
+		}
+		$('.cancel-item').bind('touchstart', cancelSelect);
 		/* 日期控件 */
 		$('#produce-date').mobiscroll().date({
-	        theme: 'mobiscroll',
-	    	display: 'bottom',
-	        lang: 'zh',
-	        onSelect: function (valueText, inst) {
-	            var selectedDate = inst.getVal(); // Call the getVal method
-	        }
-	    });
-	    $('#end-date').mobiscroll().date({
-	        theme: 'mobiscroll',
-	    	display: 'bottom',
-	        lang: 'zh',
-	        onSelect: function (valueText, inst) {
-	            var selectedDate = inst.getVal(); // Call the getVal method
-	        }
-	    });
-	    /* 添加药品 */
-	    $('.model-btn-refresh').bind('touchstart',function(){
-	    	var medName = $("input[name='medicine-name']").val();
-	    	var medDesc = $("input[name='medicine-desc']").val();
-	    	var medProd = $("input[name='medicine-produce']").val();
-	    	var medEnd = $("input[name='medicine-end']").val();
-	    	$.get('/CMedicine/addMedicine?name='+medName+"&mark="+medDesc+"&prodDate="+medProd+"&endDate="+medEnd,function(data){
-	    		if(data.result == 0){
-	    			mui.toast('创建成功');
-	    			loadMedicineList();
-	    		}
-	    		else{
-	    			mui.toast('创建失败');
-	    		}
-	    	})
-	    });
-	    /*药品搜索*/
-	    $('#medicine-search').change(function(){
-	    	var keyWord = $.trim($(this).val());
-	    	$.get('/CMedicine/searchMedicine?medName='+keyWord,function(data){
-	    		var html = juicer($('#medicineSearchTpl').html(),{medicineList:data.data});
-	    		var newhtml = "";
-	    		if(keyWord == '')
-	    			newhtml = html;
-	    		else
-	    			newhtml = html.replace(new RegExp(keyWord,"g"),"<span class='key-word'>"+keyWord+"</span>");
-	    		$('.med-box-list').html(newhtml);
-	    	});
-	    });
+			theme: 'mobiscroll',
+			display: 'bottom',
+			endYear: 2030,
+			startYear: 2000,
+			lang: 'zh',
+			onSelect: function(valueText, inst) {
+				var selectedDate = inst.getVal(); // Call the getVal method
+			}
+		});
+		$('#end-date').mobiscroll().date({
+			theme: 'mobiscroll',
+			display: 'bottom',
+			endYear: 2030,
+			startYear: 2000,
+			lang: 'zh',
+			onSelect: function(valueText, inst) {
+				var selectedDate = inst.getVal(); // Call the getVal method
+			}
+		});
+		/* 添加药品 */
+		var clickAddBtn = function() {
+			var medName = $("input[name='medicine-name']").val();
+			var medDesc = $("input[name='medicine-desc']").val();
+			var medProd = $("input[name='medicine-produce']").val();
+			var medEnd = $("input[name='medicine-end']").val();
+			if (medName == "" || medEnd == "") {
+				alert("请填写必填项");
+			} else {
+				$.get('/CMedicine/addMedicine?name=' + medName + "&mark=" + medDesc + "&prodDate=" + medProd + "&endDate=" + medEnd, function(data) {
+					if (data.result == 0) {
+						mui.toast('创建成功');
+						loadMedicineList();
+						hideMask();
+						hideMedModel();
+					} else {
+						mui.toast('创建失败');
+					}
+				});
+				$("input[name='medicine-name']").val('');
+				$("input[name='medicine-desc']").val('');
+				$("input[name='medicine-produce']").val('');
+				$("input[name='medicine-end']").val('');
+			}
+		}
+		$('.model-btn-refresh').bind('touchstart', clickAddBtn);
+		/*药品搜索*/
+		var now = '';
+		var keyWord = '';
+		var getRealWord = function(){
+				now = $.trim($('#medicine-search').val());
+    	  if(now!=keyWord){
+					searchKeyWord(now);
+				}
+				keyWord = now;
+		}
+		var getWord = function(){
+			var time = setInterval(getRealWord, 100);
+			$(this).bind('blur',function(){
+					clearInterval(time);
+					now = '';
+					keyWord = '';
+			});
+		}
+		$('#medicine-search').bind('focus',getWord);
+
+		var searchKeyWord = function(key){
+			console.log("现在搜索:"+key);
+			$.get('/CMedicine/searchMedicine?medName=' + key, function(data) {
+				console.log(data.data);
+
+				for(var i=0;i<data.data.length;i++){
+					var dateStr = Date.parse(data.data[i][3]);
+					var date = new Date(dateStr);
+					var deadline = date.format("yyyy-MM-dd");
+					data.data[i][3] = deadline;
+				}
+				var html = juicer($('#medicineSearchTpl').html(), {
+					medicineList: data.data
+				});
+				$('.med-box-list').html(html);
+			});
+		}
 	});
 </script>
 <script type="text/javascript">
-$(function(){
-	/* ajax调用获得接口信息 */
-	$.get("/WeChat/jsApiCall?url="+location.href.split('#')[0],function(data,status){
-		/*获取接口配置信息*/
-		var timestamp = data.data.timestamp;
-		var nonceStr = data.data.nonceStr;
-		var signature = data.data.signature;
-	    /* 配置微信接口信息 */
-		wx.config({
-		    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-		    appId: 'wx485f2bc0867fe1c2', // 必填，公众号的唯一标识
-		    timestamp: timestamp, // 必填，生成签名的时间戳
-		    nonceStr: nonceStr, // 必填，生成签名的随机串
-		    signature: signature,// 必填，签名，见附录1
-		    jsApiList: ['scanQRCode','onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareWeibo'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+	$(function() {
+		/* ajax调用获得接口信息 */
+		$.get("/WeChat/jsApiCall?url=" + location.href.split('#')[0], function(data, status) {
+			/*获取接口配置信息*/
+			var timestamp = data.data.timestamp;
+			var nonceStr = data.data.nonceStr;
+			var signature = data.data.signature;
+			/* 配置微信接口信息 */
+			wx.config({
+				debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+				appId: 'wx6a7d29fed00fb4b4', // 必填，公众号的唯一标识
+				timestamp: timestamp, // 必填，生成签名的时间戳
+				nonceStr: nonceStr, // 必填，生成签名的随机串
+				signature: signature, // 必填，签名，见附录1
+				jsApiList: ['scanQRCode', 'onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+			});
 		});
-	});
-	
-	wx.ready(function(){
-    // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
-	});
-
-	wx.error(function(res){
-    // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
-	});
-})
+		wx.ready(function() {
+			// config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
+		});
+		wx.error(function(res) {
+			// config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+		});
+	})
 </script>
 #{/set}

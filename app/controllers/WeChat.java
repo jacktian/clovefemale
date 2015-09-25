@@ -75,6 +75,7 @@ public class WeChat extends WebService{
 			for(String s : lines){
 				strBuilder.append(s);
 			}
+
 			//System.out.println(strBuilder.toString());
 			//解析XML信息
 			Document doc = Jsoup.parse(strBuilder.toString());
@@ -161,6 +162,29 @@ public class WeChat extends WebService{
 					response.createTime = System.currentTimeMillis();
 					//丁香咨询
 					if(key.equals("V001_CloveMsg")){
+						PicArticle a1 = new PicArticle();
+						a1.title = "超重准妈妈的胎儿更易缺氧";
+						a1.picUrl = "http://t.im/hypoxia";
+						a1.url = "http://t.im/mev2";
+						a1.desciption = "";
+						PicArticle a2 = new PicArticle();
+						a2.title = "宝宝夏季出游去海边带点什么好呢?";
+						a2.picUrl = "http://t.im/tourismimg";
+						a2.url = "http://t.im/tourism";
+						a2.desciption = "";
+						PicArticle a3 = new PicArticle();
+						a3.title = "父母近视真的会遗传给孩子吗？快来看看真相...";
+						a3.picUrl = "http://t.im/myopiaimg";
+						a3.url = "http://t.im/myopia";
+						a3.desciption = "";
+						List<PicArticle> articleList = new ArrayList();
+						articleList.add(a1);
+						articleList.add(a2);
+						articleList.add(a3);
+						response.articleList = articleList;
+						response.articleCount = articleList.size();
+						renderText(response);
+					}else if(key.equals("V002_CloveMsg")){
 						PicArticle a1 = new PicArticle();
 						a1.title = "超重准妈妈的胎儿更易缺氧";
 						a1.picUrl = "http://t.im/hypoxia";

@@ -4,16 +4,28 @@
 			<tr {@if index%2 == 0}class="tr-even"{@/if}>
 				<td>${temp.dateStr}</td>
 				<td>${temp.temp}</td>
+				<td>
+					{@if temp.sex == 1}是
+					{@else}
+					否
+					{@/if}
+				</td>
 			</tr>
 		{@else}
 			<tr class="table-hidden table-more {@if index%2 == 0}tr-even{@/if}">
 				<td>${temp.dateStr}</td>
 				<td>${temp.temp}</td>
+				<td>
+					{@if temp.sex == 1}是
+					{@else}
+					否
+					{@/if}
+				</td>
 			</tr>
 		{@/if}
-		 
+
 	{@/each}
-</script>	
+</script>
 
 <script id="pregwTpl" type="text/template">
 	{@each pregwList as pregw,index}
@@ -28,9 +40,9 @@
 				<td>${pregw.weight}</td>
 			</tr>
 		{@/if}
-		 
+
 	{@/each}
-</script>	
+</script>
 
 <script id="pregmTpl" type="text/template">
 	{@each pregmList as pregm,index}
@@ -45,6 +57,6 @@
 				<td>${pregm.num}</td>
 			</tr>
 		{@/if}
-		 
+
 	{@/each}
-</script>	
+</script>

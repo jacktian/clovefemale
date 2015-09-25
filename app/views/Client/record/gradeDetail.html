@@ -1,6 +1,11 @@
 #{extends 'client.html' /}
 #{set title:'记录详情' /}
-
+#{set 'moreStyles'}
+<link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.animation.css'}" rel="stylesheet" type="text/css" />
+<link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.frame.css'}" rel="stylesheet" type="text/css" />
+<link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.scroller.css'}" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="@{'/public/stylesheets/client/growthDetail.css'}"/>
+#{/set}
 <header class="mui-bar mui-bar-nav babyTitle">
   <a class="mui-icon mui-icon-left-nav mui-pull-left" href="/client/babyRecord"></a>
   <!-- <a id="list_children" class="mui-icon mui-icon-bars mui-pull-right"></a> -->
@@ -18,7 +23,7 @@
 </div>
 
 <!-- 选项卡 -->
-<div  class="mui-slider gfSlider ">
+<div  class="mui-slider gfSlider">
 	<!-- <div class="test"> -->
 	<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
 		<a class="mui-control-item" href="#biDetailData">
@@ -27,7 +32,7 @@
 		<a class="mui-control-item" href="#biDetailAnaly">
 				图表分析
 			</a>
-	<!-- 	<a class="mui-control-item" href="#item3mobile">
+		<!-- <a class="mui-control-item" href="#item3mobile">
 				建议
 			</a> -->
 	</div>
@@ -60,7 +65,7 @@
 							</a>
 					</li>
 					<li>
-						<a id="nextPage_gf_h" href="#">
+						<a id="nextPage_gf_h" class="disablePageBtn" href="#">
 								下一页
 							</a>
 					</li>
@@ -82,7 +87,11 @@
 			<div class="cardCotent-gd content-chart">
 				<!-- 只有一条数据的时候显示 -->
 				<div class="oneData oneData-gf">
-					<p>年级:<span id="oneDataVal-grade"></span> &nbsp;次数:第<span id="oneDataVal-time"></span>次 &nbsp;成绩:<span id="oneDataVal-mark"></span>分</p>
+					<p>年级:<span id="oneDataVal-grade"></span> &nbsp;日期:<span id="oneDataVal-time"></span> &nbsp;成绩:<span id="oneDataVal-mark"></span>分</p>
+				</div>
+				<!-- 无数据显示 -->
+				<div class="noData_chart">
+					添加数据才能显示炫酷图表哦！
 				</div>
 
 				<!-- 成绩表单图表模块 -->
@@ -96,10 +105,10 @@
 
 			<!-- 更换上下记录 -->
 			<div class="changeAge turnPage_fg">
-				<a id="lastPage-gf" href="#" class="lastPage">
+				<a id="lastPage_gf" href="#" class="lastPage">
 					<span class="mui-icon mui-icon-arrowleft"></span>
 				</a>
-				<a id="nextPage-gf" href="#" class="nextPage">
+				<a id="nextPage_gf" href="#" class="nextPage disablePage">
 					<span class="mui-icon mui-icon-arrowright"></span>
 				</a>
 			</div>
@@ -139,10 +148,7 @@
 <div class="infTips response-tips">
 	<!-- asdf -->
 </div>
-<link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.animation.css'}" rel="stylesheet" type="text/css" />
-<link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.frame.css'}" rel="stylesheet" type="text/css" />
-<link href="@{'/public/stylesheets/client/mobiscroll/mobiscroll.scroller.css'}" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" href="@{'/public/stylesheets/client/growthDetail.css'}"/>
+
 <script src="http://dcloudio.github.io/mui/dist/js/jquery-2.1.1.js"></script>
 <script src="@{'/public/javascripts/Chart.min.js'}"></script>
 <script src="@{'/public/javascripts/client/mobiscroll/mobiscroll.core.js'}"></script>
@@ -154,23 +160,30 @@
 	var item2Show = false;//身体指标图标分析
 	var currentTab = 1;
 	var currentPage = 1;//当前页
+	var maxPage = 1;//总页数
+	var lastData = null;//上一页的数据
 
 	var isLoad = false;
 
 	$(function(){
+		var subject = $("#subject").text(localStorage.subject);
 		/*加载成绩表单历史记录*/
-		loadGfData();
+		loadGfData(localStorage.subject);
 
 		document.querySelector('.gfSlider').addEventListener('slide', function(event){
 			activeTab_grow = event.detail.slideNumber;//当前活跃tab
+			console.log("slide");
+			currentTab = event.detail.slideNumber+1;
+			console.log("tab=="+currentTab);
  			if (event.detail.slideNumber === 0 &&!item1Show){
- 				currentTab =1;
+ 				
+ 				
  				/*加载成绩表单历史记录*/
  				var subject = $("#subject").text();
 				loadGfData(subject);
 
  			}else if(event.detail.slideNumber === 1 &&!item2Show){
- 				currentTab =2;
+
  				/*加载成绩表单图表*/
  				var subject = $("#subject").text();
  				loadPageMarkData(subject);
@@ -202,12 +215,10 @@
 	 		var value = $('#scroller_subject').mobiscroll("getVal",true);
 	 		item1Show = false;
 	 		item2Show = false;
-	 		if(currentTab == 1){
-	 			loadGfData(value);
-	 		}else{
-	 			loadPageMarkData(value);
-	 		}
+	 		lastData = null;
+	 		console.log(currentTab);
 	 		
+	 		loadGfData(value);//加载数据，并加载总记录页数
 	 		$("#subject").text(value);
 	 		mui('.chooseSubject').popover('toggle');
 	 		if($('#subjectArrow').hasClass('mui-icon-arrowup')){
@@ -224,45 +235,94 @@
 				 	$('#subjectArrow').addClass('mui-icon-arrowdown');
 			 	}
 		});
-    
+    	
+    	/*上一页按钮点击事件*/
+    	document.getElementById("lastPage_gf_h").addEventListener("tap",function(event){
+    		if(!$(this).hasClass("disablePageBtn")){//按钮可用
+    			var subject = $("#subject").text();
+    			loadPageMarkData(subject,currentPage+1);
 
-	});
+    		}
+    	});
+
+    	/*上一页按钮点击事件--图表*/
+    	document.getElementById("lastPage_gf").addEventListener("tap",function(event){
+    		if(!$(this).hasClass("disablePage")){//按钮可用
+    			var subject = $("#subject").text();
+    			loadPageMarkData(subject,currentPage+1);
+
+    		}
+    	});
+
+    	/*下一页按钮点击事件*/
+    	document.getElementById("nextPage_gf_h").addEventListener("tap",function(event){
+    		if(!$(this).hasClass("disablePageBtn")){//按钮可用
+    			var subject = $("#subject").text();
+    			loadPageMarkData(subject,currentPage-1);
+
+    		}
+    	});
+
+    	/*下一页按钮点击事件--图表*/
+    	document.getElementById("nextPage_gf").addEventListener("tap",function(event){
+    		if(!$(this).hasClass("disablePage")){//按钮可用
+    			var subject = $("#subject").text();
+    			loadPageMarkData(subject,currentPage-1);
+
+    		}
+    	});
+
+	});//结束$(function())
 
 	/*加载历史记录*/
 	function loadGfData(subject){
+		console.log("loadGfData");
+		$(".turnPage_fg").hide();
 		$.post("/CBabyAction/loadSubjectMark",{
 			babyId:localStorage.babyId,
 			subject:subject,
 			pageNum:0
 		},function(data){
+			$(".noData_chart").hide();//隐藏无数据显示图表提示
 			var htmlData = "";
 			isLoad = true;
 			biData = data;
+
 			$("#biDetailData .mui-loading").hide();
 			if(data.result == 0){//成功
 				item1Show = true;
+				showChart(data.data);
+				item2Show = true;
 				htmlData = "<tr class='tableTitle'>"
 						+"<td>科目</td>"
 						+"<td>年级</td>"
-						+"<td>次数</td>"
+						+"<td>日期</td>"
 						+"<td>成绩</td>"
 					+"</tr>";
-				var length = data.data.length;				
+				var length = data.data.length;	
+				lastData = data.data;	//记录好获取的数据，供下一次使用
 
 				for(var i = 0 ; i < length ; i++){
 					var grade = data.data[i];
-					htmlData += "<tr  class='bi-line'><td>"+grade.subject+"</td><td>"+grade.grade+"</td><td>第"+grade.time+"次</td><td>"+grade.mark+"</td></tr>"
+					var markDate = new Date(grade.date);
+					var dateStr = markDate.getFullYear()+"-"+(markDate.getMonth()+1)+"-"+markDate.getDate(); 
+					htmlData += "<tr  class='bi-line'><td>"+grade.subject+"</td><td>"+grade.grade+"</td><td>"+dateStr+"</td><td>"+grade.mark+"</td></tr>"
 				}
 				$("#subject").text(data.data[0].subject);
 				currentPage = 1;
+				
 				loadPageSizeOfSize(data.data[0].subject);
 			}else{
 				if(data.data == "null"){
 					item1Show = true;
 					htmlData = "<tr><td>你还没有记录哦！赶快去录入吧！</td></tr>";
+					$("#chartbox_gf").hide();
+					$(".noData_chart").show();
 				}else{
 					htmlData = "<tr><td>噢噢，出错了！</td></tr>";
 				}
+				// $(".turnPage_gf_h").hide();
+				$(".turnPage_fg").hide();
 			}
 			$("#biDetailTable").html(htmlData);
 		})
@@ -276,12 +336,15 @@
 		},function(data){
 			if(data.result == 0){//成功
 				 var page = data.data;
-				 localStorage.page = page;
+				 maxPage = page;
 				 console.log("成绩记录共"+page+"页");
-				 if(localStorage.page > 1){
-				 	$(".turnPage_gf_h").show();
+				 if(maxPage > 1){
+				 	// $(".turnPage_gf_h").show();
+				 	$(".turnPage_fg").show();
 				 }else{
-				 	$(".turnPage_gf_h").hide();
+				 	lastData = null;
+				 	// $(".turnPage_gf_h").hide();
+				 	$(".turnPage_fg").hide();
 				 }
 			}
 		})
@@ -289,7 +352,7 @@
 
 	/*加载成绩页面数据*/
 	function loadPageMarkData(subject,pageNum){
-
+		console.log(subject);
 		$.post("/CBabyAction/loadSubjectMark",{
 			babyId:localStorage.babyId,
 			subject:subject,
@@ -299,15 +362,51 @@
 			// console.log(data.data);
 			// $("#biDetailData .mui-loading").hide();
 			if(data.result == 0){//成功
-				showChart(data.data)
-				$("#subject").text(data.data[0].subject);
+				// showChart(data.data)
+				// $("#subject").text(data.data[0].subject);
+				// item2Show = true;
+				// if(pageNum == null&&"" ==pageNum ){
+				// 	currentPage = 1;
+				// }else{
+					// currentPage = pageNum;
+				// }
+				showChart(data.data);
+				item1Show = true;
 				item2Show = true;
-				if(pageNum == null&&"" ==pageNum ){
-					currentPage = 1;
-				}else{
-					currentPage = pageNum;
+				htmlData = "<tr class='tableTitle'>"
+						+"<td>科目</td>"
+						+"<td>年级</td>"
+						+"<td>日期</td>"
+						+"<td>成绩</td>"
+					+"</tr>";
+				var length = data.data.length;		
+				if(length == 6){
+					lastData = data.data;
+				}		
+
+				for(var i = 0 ; i < length ; i++){
+					var grade = data.data[i];
+					var markDate = new Date(grade.date);
+					var dateStr = markDate.getFullYear()+"-"+(markDate.getMonth()+1)+"-"+markDate.getDate();
+					htmlData += "<tr  class='bi-line'><td>"+grade.subject+"</td><td>"+grade.grade+"</td><td>"+dateStr+"</td><td>"+grade.mark+"</td></tr>"
 				}
+				// $("#subject").text(data.data[0].subject);
+				currentPage = pageNum;
+				$("#lastPage_gf_h").removeClass("disablePageBtn");
+				$("#nextPage_gf_h").removeClass("disablePageBtn");
+
+				$("#lastPage_gf").removeClass("disablePage");
+				$("#nextPage_gf").removeClass("disablePage");
+				if(currentPage == maxPage){
+					$("#lastPage_gf_h").addClass("disablePageBtn");
+					$("#lastPage_gf").addClass("disablePage");
+				}else if(currentPage == 1){
+					$("#nextPage_gf_h").addClass("disablePageBtn");
+					$("#nextPage_gf").addClass("disablePage");
+				}
+				$("#biDetailTable").html(htmlData);
 			}else{
+				console.log("loadPageMarkData---result!=0");
 				if(data.data == "null"){
 					$("#chartbox_gf").hide();
 					item2Show = true;
@@ -324,17 +423,40 @@
 	/*展示成绩图表*/
 	function showChart(gradeFormList){
 		var count = gradeFormList.length;
-
+		// console.log(lastPageData);
 		console.log(gradeFormList);
-		if(count == 1){
+		if(count == 1 && lastData == null){
 			$(".oneData-gf").show();
 			$("#oneDataVal-grade").text(gradeFormList[0].grade);
-			$("#oneDataVal-time").text(gradeFormList[0].time);
+			var markDate = new Date(gradeFormList[0].date);
+			var dateStr = markDate.getFullYear()+"-"+(markDate.getMonth()+1)+"-"+markDate.getDate();
+			$("#oneDataVal-time").text(dateStr);
 			$("#oneDataVal-mark").text(gradeFormList[0].mark);
 				
 			$("#chartbox_gf").hide();
 			showResTips("多添加数据，可以展示炫酷的图表哦！");
 			return ;
+		}else if(lastData != null && maxPage != currentPage){
+			console.log(maxPage +"---"+ currentPage);
+			var addNum = 6 - count;
+			console.log("要拼接" + addNum + "条数据");
+			var temp = new Array();// = lastData;
+			console.log(lastData[0].date);
+			for(var i = 0; i < addNum; i++){
+				console.log(lastData[i]);
+				console.log();
+				temp.push(lastData[count+i]);
+				// temp[5-i] = gradeFormList[i];
+
+				
+			}
+			for(var i = 0 ; i < count; i++){
+				temp.push(gradeFormList[i]);
+			}
+			gradeFormList = temp;
+			console.log("拼接完成");
+			console.log(gradeFormList);
+			count = 6;
 		}
 
 		$(".oneData-gf").hide();
@@ -346,7 +468,9 @@
 		var data_mark = new Array();//宝宝身高数据
 
 		for(var i = 0;i<count ; i++){
-			labels[i] = gradeFormList[count-i-1].grade +"/" + gradeFormList[count-i-1].time;
+			var markDatei = new Date(gradeFormList[count-i-1].date);
+			var dateStri = (markDatei.getMonth()+1)+"-"+markDatei.getDate();
+			labels[i] = gradeFormList[count-i-1].grade +"/" + dateStri;
 			data_mark[i] = gradeFormList[count-i-1].mark;
 		}
 		var options = {};
@@ -449,6 +573,15 @@ function hideTips(){
 		$(".response-tips").hide();
 }
 
+
+function saveLastData(data){
+	// lastPageData = data;
+	console.log("save last data");
+	console.log(data[0]);
+
+	// lastPageData = data;
+	// lastPageData = data[0];
+}
 
 </script>
 

@@ -13,13 +13,13 @@
 </header>
 
 <div class="settingModular">
-	<div class="numRemainder" id="numRemainder">11</div>
-	<input id="infText" type="text" class="infText" placeholder="">
-	<h6 class="infTips" id="infTips"></h6>
+    <div class="numRemainder" id="numRemainder">11</div>
+    <input id="infText" type="text" class="infText" placeholder="">
+    <h6 class="infTips" id="infTips"></h6>
 </div>
 <div class="responseInf" id="responseInf"></div>
 <script type="text/javascript">
-	$(function(){
+    $(function(){
         //文本框只能输入数字，并屏蔽输入法和粘贴  
         $.fn.numeral = function() {     
             $(this).css("ime-mode", "disabled");     
@@ -109,41 +109,41 @@
             });  
         };
 
-		switch(localStorage.modifyItem){
-			case '1':
-				window.document.title = "设置丁香号";
-				$("#headTitle").text("设置丁香号");
-				$("#infTips").text("丁香号可以作为系统的唯一性凭证，只能设置一次哦！");
+        switch(localStorage.modifyItem){
+            case '1':
+                window.document.title = "设置用户号";
+                $("#headTitle").text("设置用户号");
+                $("#infTips").text("用户号可以作为系统的唯一性凭证，只能设置一次哦！");
                  $("#infText").idRule();
-				break;
-			case '2': 
-				window.document.title = "绑定手机号";
-				$("#headTitle").text("绑定手机号");
-				$("#infTips").text("绑定手机号，可以保障你的账户安全哦！");
+                break;
+            case '2': 
+                window.document.title = "绑定手机号";
+                $("#headTitle").text("绑定手机号");
+                $("#infTips").text("绑定手机号，可以保障你的账户安全哦！");
                 $("#numRemainder").show();//显示数字提示
                  //调用文本框的id  
                 $("#infText").numeral();
-				break;
-			case '3': 
-				window.document.title = "绑定邮箱"; 
-				$("#headTitle").text("绑定邮箱");
-				$("#infTips").text("绑定邮箱，可以保障你的账户安全哦！");
-				break;
+                break;
+            case '3': 
+                window.document.title = "绑定邮箱"; 
+                $("#headTitle").text("绑定邮箱");
+                $("#infTips").text("绑定邮箱，可以保障你的账户安全哦！");
+                break;
             case '4': 
                 window.document.title = "心情设置"; 
                 $("#headTitle").text("心情设置");
                 $("#infTips").text("时刻展示你的心情，真真实实就是我！");
                 break;
-			default:
+            default:
                 localStorage.modifyItem = 1;
-                window.document.title = "设置丁香号";
-                $("#headTitle").text("设置丁香号");
-                $("#infTips").text("丁香号可以作为系统的唯一性凭证，只能设置一次哦！");
+                window.document.title = "设置用户号";
+                $("#headTitle").text("设置用户号");
+                $("#infTips").text("用户号可以作为系统的唯一性凭证，只能设置一次哦！");
                  $("#infText").idRule();
                 break;
-		}
+        }
 
-		//保存
+        //保存
         document.getElementById("saveInfBtn").addEventListener("tap",function(event){
             // localStorage.modifyItem = 3;
             var modifyItem = localStorage.modifyItem;
@@ -195,11 +195,11 @@
             
         });//结束保存按钮的操作选择
 
-		  
+          
 
          
 
-	});//结束$(function())
+    });//结束$(function())
     
 
     /*修改个性签名*/

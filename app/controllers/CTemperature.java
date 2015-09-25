@@ -6,13 +6,14 @@ import java.util.Date;
 import java.util.List;
 
 import beans.ChartBean;
+import beans.XAxisBean;
 import beans.TempBean;
 import models.Temperature;
 import play.db.jpa.JPA;
 
 /**
  * 温度控制器
- * 
+ *
  * @author boxiZen
  * @since 2015/05/25
  */
@@ -20,7 +21,7 @@ public class CTemperature extends WebService {
 	/*
 	 * 添加温度记录
 	 */
-	public static void addTemperature(String date, float temp) {
+	public static void addTemperature(String date, float temp, int sex) {
 		String openid = session.get("openid");
 		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		try {
@@ -57,6 +58,7 @@ public class CTemperature extends WebService {
 					nTemp.tDate = newDate;
 					nTemp.tValue = temp;
 					nTemp.userId = openid;
+					nTemp.haveSex = sex;
 					nTemp.save();
 					wsOk("保存成功");
 				}
@@ -72,16 +74,17 @@ public class CTemperature extends WebService {
 	 */
 	public static void lastTemp() {
 		String openid = session.get("openid");
-		// openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
-		String sql = "select new beans.TempBean(t.tDate,t.tValue) from Temperature t where  t.userId = '"
+		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		String sql = "select new beans.TempBean(t.tDate,t.tValue,t.haveSex) from Temperature t where  t.userId = '"
 				+ openid + "' order by t.tDate desc";
 		List<TempBean> bean = JPA.em().createQuery(sql).setMaxResults(7)
 				.getResultList();
-		List<TempBean> rBean = new ArrayList<TempBean>();
+		/*List<TempBean> rBean = new ArrayList<TempBean>();
 		for (int i = 0; i < bean.size(); i++) {
 			rBean.add(bean.get(bean.size() - 1 - i));
 		}
-		wsOk(rBean);
+		wsOk(rBean);*/
+		wsOk(bean);
 	}
 
 	/*
@@ -89,20 +92,28 @@ public class CTemperature extends WebService {
 	 */
 	public static void lastTempChart() {
 		String openid = session.get("openid");
-		// openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
-		String sql = "select new beans.TempBean(t.tDate,t.tValue) from Temperature t where  t.userId = '"
+		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		String sql = "select new beans.TempBean(t.tDate,t.tValue,t.haveSex) from Temperature t where  t.userId = '"
 				+ openid + "' order by t.tDate desc";
 		List<TempBean> tempList = JPA.em().createQuery(sql).setMaxResults(7)
 				.getResultList();
 		ChartBean bean = new ChartBean();
 		List labelList = new ArrayList();
 		List dataList = new ArrayList();
+		List <XAxisBean>sexList = new ArrayList<XAxisBean>();
 		for (int i = 0; i < tempList.size(); i++) {
 			labelList.add(tempList.get(tempList.size() - 1 - i).dateStr);
 			dataList.add(tempList.get(tempList.size() - 1 - i).temp);
+			XAxisBean xbean = new XAxisBean();
+			int sexValue = tempList.get(tempList.size() - 1 - i).sex;
+			if(sexValue == 1){
+				xbean.xAxis = i;
+				sexList.add(xbean);
+			}
 		}
 		bean.label = labelList;
 		bean.data = dataList;
+		bean.sex = sexList;
 		wsOk(bean);
 	}
 
@@ -111,7 +122,7 @@ public class CTemperature extends WebService {
 	 */
 	public static void findTemp(String date) {
 		String openid = session.get("openid");
-		// openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		Date newDate;
 		String dateStr;
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -141,7 +152,7 @@ public class CTemperature extends WebService {
 	 */
 	public static void removeTemp(String date) {
 		String openid = session.get("openid");
-		// openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		String sql = "select id from Temperature t where date_format(t.t_date,'%Y-%m-%d') = '"
 				+ date + "' and t.user_id = '" + openid + "'";
 		List tempList = JPA.em().createNativeQuery(sql).getResultList();
@@ -156,6 +167,8 @@ public class CTemperature extends WebService {
 			}
 
 		} catch (Exception e) {
+			System.out.println("e");
+			e.printStackTrace();
 			wsError("失败");
 		}
 	}
@@ -165,15 +178,16 @@ public class CTemperature extends WebService {
 	 */
 	public static void loadAllTemp() {
 		String openid = session.get("openid");
-		// openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
-		String sql = "select new beans.TempBean(t.tDate,t.tValue) from Temperature t where  t.userId = '"
-				+ openid + "' order by t.tDate";
+		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		String sql = "select new beans.TempBean(t.tDate,t.tValue,t.haveSex) from Temperature t where  t.userId = '"
+				+ openid + "' order by t.tDate desc";
 		List<TempBean> bean = JPA.em().createQuery(sql).getResultList();
-		List<TempBean> rBean = new ArrayList<TempBean>();
+		/*List<TempBean> rBean = new ArrayList<TempBean>();
 		for (int i = 0; i < bean.size(); i++) {
 			rBean.add(bean.get(bean.size() - 1 - i));
 		}
-		wsOk(rBean);
+		wsOk(rBean);*/
+		wsOk(bean);
 	}
 
 	/*
@@ -181,19 +195,28 @@ public class CTemperature extends WebService {
 	 */
 	public static void loadAllTempChart() {
 		String openid = session.get("openid");
-		// openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
-		String sql = "select new beans.TempBean(t.tDate,t.tValue) from Temperature t where  t.userId = '"
-				+ openid + "' order by t.tDate";
-		List<TempBean> tempList = JPA.em().createQuery(sql).getResultList();
+		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		String sql = "select new beans.TempBean(t.tDate,t.tValue,t.haveSex) from Temperature t where  t.userId = '"
+				+ openid + "' order by t.tDate desc";
+		List<TempBean> tempList = JPA.em().createQuery(sql)
+				.getResultList();
 		ChartBean bean = new ChartBean();
 		List labelList = new ArrayList();
 		List dataList = new ArrayList();
+		List <XAxisBean>sexList = new ArrayList<XAxisBean>();
 		for (int i = 0; i < tempList.size(); i++) {
 			labelList.add(tempList.get(tempList.size() - 1 - i).dateStr);
 			dataList.add(tempList.get(tempList.size() - 1 - i).temp);
+			XAxisBean xbean = new XAxisBean();
+			int sexValue = tempList.get(tempList.size() - 1 - i).sex;
+			if(sexValue == 1){
+				xbean.xAxis = i;
+				sexList.add(xbean);
+			}
 		}
 		bean.label = labelList;
 		bean.data = dataList;
+		bean.sex = sexList;
 		wsOk(bean);
 	}
 

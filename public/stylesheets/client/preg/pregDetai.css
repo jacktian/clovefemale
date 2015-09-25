@@ -5,23 +5,32 @@
 .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-progress-bar{
 	background-color:#EA104A;
 }
-#menseItem,#menseChart{
+#menseChart{
 	padding-top:20px;
 	padding-bottom:20px;
 }
-
+#menseItem {
+	padding-top:20px;
+}
 #menseItem .dateInput,#menseChart .dateInput{
 	width:50%;
 	display: inline-block;
 }
+#tableWrapper{
+	height:75px;
+    overflow: hidden;
+}
 #menseChart{
 	background:#FFF;
+}
+#menseChart.rotate{
+	transform:rotate(90deg);
 }
 .chart-empty{
 	position: absolute;
 	text-align: center;
 	width:100%;
-	height:150px;
+	height:100%;
 	top: 0;
 	line-height: 150px
 }
@@ -42,6 +51,7 @@
 }
 /* 助孕记录表格 */
 .preg-record-table{
+	overflow:hidden;
 	width:100%;
 	text-align: center;
 }
@@ -58,8 +68,58 @@
 	padding-bottom:10px;
 	text-align: center;
 	border-top:1px dashed #D3D3D3;
-	width:50%;
+	width:30%;
 }
 .preg-record-table td{
 	padding:5px 0px 5px 0px;
+}
+/* 旋转按钮 */
+.rotateBtn{
+	display:block;
+	width:40px;
+	height:40px;
+	position:fixed;
+	right:20px;
+	bottom:20px;
+	color:#FFF;
+	background:#DD524D;
+	line-height:40px;
+	text-align:center;
+	border-radius:20px;
+}
+.rotateBtn.hidden{
+	display:none;
+}
+
+#mense-table-view {
+	overflow:hidden;
+	height:0px;
+}
+.more-data {
+	display: block;
+	color: #8A898E;
+	text-align: center;
+	padding: 20px;
+}
+#more-data.hidden{
+	display:none;
+}
+/* 旋转效果 */
+header.hidden{
+	display:none;
+}
+.mui-bar-nav~.mui-content.hidden{
+	padding-top:0px;
+}
+#sliderSegmentedControl.hidden{
+	display:none;
+}
+.mui-slider-progress-bar.hidden{
+	height:0px;
+}
+.mui-slider .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-group .mui-slider-item.hidden{
+	border:0px;
+}
+.rotateBtn.rotate{
+	left:20px;
 }

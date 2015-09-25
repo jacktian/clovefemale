@@ -1,8 +1,10 @@
 package controllers;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Collections;
 
 import javax.persistence.Query;
 
@@ -13,19 +15,24 @@ import models.DrugStore;
 import models.Medicine;
 import models.MedicineBox;
 
+import utils.MedboxInit;
+import utils.MedSort;
+import utils.MedBoxSort;
+
 /**
  * 药箱控制器
- * 
+ *
  * @author boxiZen
  * @since 2015/05/12
  */
 public class CMedicine extends WebService{
-	
+
 	/**
 	 * 添加药箱
 	 */
 	public static void addMedBox(String name,String mark){
 		String openid = session.get("openid");
+		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		if(openid == null){
 			wsError("创建失败");
 		}
@@ -36,6 +43,7 @@ public class CMedicine extends WebService{
 				medBox.name = name;
 				medBox.mark = mark;
 				medBox.disabled = 0;
+				medBox.weight = 10;
 				medBox.save();
 				wsOk("创建成功");
 			}
@@ -44,7 +52,7 @@ public class CMedicine extends WebService{
 			}
 		}
 	}
-	
+
 	/**
 	 * 删除药箱
 	 */
@@ -56,6 +64,10 @@ public class CMedicine extends WebService{
 				medBox = MedicineBox.findById(medBoxId[i]);
 				if(medBox!=null){
 					medBox.delete();
+					List<Medicine> medList = Medicine.find("byMedicineBoxId",medBoxId[i]).fetch();
+					for(int j=0;j<medList.size();j++){
+						medList.get(j).delete();
+					}
 				}
 			}
 			wsOk("删除成功");
@@ -64,15 +76,17 @@ public class CMedicine extends WebService{
 			wsError("删除失败");
 		}
 	}
-	
+
 	/**
 	 * 加载药箱
 	 */
 	public static void loadMedboxList(){
-		
+
 		String openid = session.get("openid");
-		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
-		List<MedicineBox> medboxList = MedicineBox.find("byUserId", openid).fetch(); 
+		// openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		List<MedicineBox> medboxList = MedicineBox.find("byUserId", openid).fetch();
+		MedBoxSort sort = new MedBoxSort();
+		Collections.sort(medboxList,sort);
 		List<MedboxBean> medboxBean = new ArrayList<MedboxBean>();
 		for(int i=0;i<medboxList.size();i++){
 			MedboxBean bean = new MedboxBean();
@@ -86,26 +100,29 @@ public class CMedicine extends WebService{
 		}
 		wsOk(medboxBean);
 	}
-	
+
 	/**
 	 * 加载药品
 	 */
 	public static void loadMedicineList(){
 		String medboxid = session.get("medboxid");
-		List<Medicine> medicineList = Medicine.find("byMedicineBoxId", medboxid).fetch(); 
+		List<Medicine> medicineList = Medicine.find("byMedicineBoxId", medboxid).fetch();
 		//List<MedicineBox> medboxList = MedicineBox.findAll();
+		System.out.println(medicineList.get(0).deadline);
+		MedSort sort = new MedSort();
+		Collections.sort(medicineList,sort);
 		wsOk(medicineList);
 	}
-	
+
 	/**
 	 * 加载所有药品
 	 */
 	public static void loadAllMedicine(){
-		List<Medicine> medicineList = Medicine.findAll(); 
+		List<Medicine> medicineList = Medicine.findAll();
 		//List<MedicineBox> medboxList = MedicineBox.findAll();
 		wsOk(medicineList);
 	}
-	
+
 	/**
 	 * 添加药品
 	 */
@@ -119,30 +136,36 @@ public class CMedicine extends WebService{
 				Medicine med = new Medicine();
 				med.name = name;
 				med.function = mark;
-				med.produce = new Date(prodDate);
+				if(prodDate!=null&&!prodDate.equals("undefined")&&!prodDate.equals(""))
+					med.produce = new Date(prodDate);
 				med.deadline = new Date(endDate);
 				med.medicineBoxId = medboxid;
 				med.save();
 				wsOk("创建成功");
 			}
 			catch(Exception e){
+				e.printStackTrace();
 				wsError("创建失败");
 			}
 		}
 	}
-	
+
 	/**
 	 * 修改药品
 	 */
 	public static void altMedicine(String id,String name,String mark,String prodDate,String endDate,String code){
-		System.out.println("enter");
 		Medicine medicine = Medicine.findById(id);
-		System.out.println(medicine.name);
 		try{
 			medicine.name = name;
 			medicine.function = mark;
-			medicine.produce = new Date(prodDate);
-			medicine.deadline = new Date(endDate);
+			if(prodDate!=null&&!prodDate.equals("undefined")&&!prodDate.equals(""))
+				medicine.produce = new Date(prodDate);
+			else
+				medicine.produce = null;
+			if(endDate!=null&&!endDate.equals("undefined")&&!endDate.equals(""))
+				medicine.deadline = new Date(endDate);
+			else
+				medicine.deadline = null;
 			medicine.code = code;
 			medicine.save();
 			wsOk("更新成功");
@@ -152,7 +175,7 @@ public class CMedicine extends WebService{
 			wsError("更新错误");
 		}
 	}
-	
+
 	/**
 	 * 删除药品
 	 */
@@ -172,7 +195,7 @@ public class CMedicine extends WebService{
 			wsError("删除失败");
 		}
 	}
-	
+
 	/**
 	 * 搜索药箱
 	 */
@@ -191,25 +214,26 @@ public class CMedicine extends WebService{
 		}
 		wsOk(medbox);
 	}
-	
+
 	/**
 	 * 搜索药品
 	 */
 	public static void searchMedicine(String medName){
 		List<Medicine> medicine = null;
 		String medboxid = session.get("medboxid");
-		if(medName.equals("")||medName.equals(" ")){
-			//medicine = Medicine.find("", medboxid).fetch();
-			String sql = "select m.id,m.name,m.function from Medicine m where m.id = " +medboxid;
+		if(medName.equals("")||medName.equals(" ")||medName==null){
+			System.out.println("走到这里来了");
+			String sql = "select m.id,m.name,m.function,m.deadline from medicine m where m.medicineBox_Id = '" +medboxid+"'";
 			medicine = JPA.em().createNativeQuery(sql).getResultList();
+			System.out.println(medicine.size());
 		}
 		else{
-			String sql = "select m.id,m.name,m.function from Medicine m where m.name like '%"+medName+"%'";
+			String sql = "select m.id,m.name,m.function,m.deadline from medicine m where m.name like '%"+medName+"%' and m.medicineBox_Id ='"+medboxid+"'";
 			medicine = JPA.em().createNativeQuery(sql).getResultList();
 		}
 		wsOk(medicine);
 	}
-	
+
 	/**
 	 * 测试
 	 */
@@ -220,12 +244,26 @@ public class CMedicine extends WebService{
 		medbox = JPA.em().createNativeQuery(sql).getResultList();
 		wsOk(medbox);
 	}
-	
+
 	/**
 	 * 查询药库
 	 */
 	public static void findDrug(String code){
-		DrugStore drug = DrugStore.find("byCode", code).first();
-		wsOk(drug);
+		Query query = JPA.em().createNativeQuery("select medicinename,indication from medProd where barcode = \""+code+"\"");
+		wsOk(query.getResultList());
 	}
+
+	/**
+	 * 初始化药箱
+	 */
+	 public static void initMedbox(String openid){
+		 try{
+		 	MedboxInit.init(openid);
+	 			wsOk("成功");
+			}
+			catch(Exception e){
+				wsError("出错");
+			}
+
+	 }
 }

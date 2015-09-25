@@ -53,14 +53,14 @@ public class Menses extends BasicModel{
 	 */
 	@Required
 	@Column(name = "m_piece")
-	public boolean mPiece; 
+	public String mPiece;
 	
 	/**
 	 * 是否痛经
 	 */
 	@Required
 	@Column(name = "is_mcramp")
-	public boolean isMcramp;
+	public String isMcramp;
 	
 	/**
 	 * 稠度（稠、稀）
@@ -84,7 +84,7 @@ public class Menses extends BasicModel{
 	public String time;
 	
 	public Menses(){}
-	public Menses(String userId, Date mDate,String mColor, String mMeasure, boolean mPiece, boolean isMcramp,String vicidity){
+	public Menses(String userId, Date mDate,String mColor, String mMeasure, String mPiece, String isMcramp,String vicidity){
 		this.userId = userId;
 		this.mDate = mDate;
 		this.mColor = mColor;

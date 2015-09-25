@@ -1,11 +1,11 @@
 /* 阿里图标 */
 @font-face {
 	font-family: 'iconfont';
-    src: url('../../fonts/iconfont-preg.eot'); /* IE9*/
-    src: url('../../fonts/iconfont-preg.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-    url('../../fonts/iconfont-preg.woff') format('woff'), /* chrome、firefox */
-    url('../../fonts/iconfont-preg.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
-    url('../../fonts/iconfont-preg.svg#iconfont') format('svg'); /* iOS 4.1- */
+    src: url('../../../fonts/iconfont-preg.eot'); /* IE9*/
+    src: url('../../../fonts/iconfont-preg.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('../../../fonts/iconfont-preg.woff') format('woff'), /* chrome、firefox */
+    url('../../../fonts/iconfont-preg.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+    url('../../../fonts/iconfont-preg.svg#iconfont') format('svg'); /* iOS 4.1- */
 }
 .iconfont{
     font-family:"iconfont" !important;
@@ -111,7 +111,7 @@
 	text-align: center;
 	color:#FFF;
 	line-height:35px;
-	font-size:30px;
+	font-size:35px;
 	bottom:20px;
 	right:20px;
 	font-weight: bold;
@@ -237,7 +237,7 @@
 	margin-bottom:5px;
 	color:#000;
 	border:1px dashed #000;
-	font-size:15px;	
+	font-size:15px;
 }
 .model-btn-delete.deleted{
 	border:1px solid #000;
@@ -285,7 +285,7 @@
 	padding-bottom:10px;
 	text-align: center;
 	border-top:1px dashed #D3D3D3;
-	width:50%;
+	width:30%;
 }
 .preg-record-table td{
 	padding:5px 0px 5px 0px;
@@ -318,6 +318,24 @@
 .chart-empty.not-shown{
 	display:none;
 }
-
-
-
+/* 同房纪录 */
+.sexLabel{
+	display: inline-block;
+  font-size: 12px;
+  padding-left: 10px;
+  color: #7B7676;
+  width: 50%;
+  text-align: center;
+}
+.sexRadio{
+	display: inline-block;
+	font-size: 12px;
+}
+/* 胎动记录 */
+.moveRadio{
+	text-align: center;
+}
+/* echarts图表 */
+.preg-echart.hidden{
+	opacity: 0;
+}

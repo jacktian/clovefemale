@@ -33,36 +33,24 @@ public class BabyVac extends BasicModel{
    @Column(name = "date")
 	public Date date;
    
+   /**
+    * 提醒时间
+    */
+   @Column(name = "remindtime")
+    public Date remindTime;
    
-	/**
-	 * 疫苗名称
-	 */
-	@Column(name = "name")
-	public String name;
-	
-	/**
-	 * 出生多少月后接种
-	 */
-	@Column(name = "monthafter")
-	public int monthAfter;
-	
-	/**
-	 * 年龄描述
-	 */
-	@Column(name = "agedcb")
-	public String ageDcb;
-	
+   /**
+    * 疫苗Id
+    */
+   @Column(name = "vacid")
+    public String vacId;
+  
 	/*
 	 * 宝宝Id
 	 */
    @Column(name = "baby_Id")
    public String babyId;
    
-   /**
-    * 可预防疾病
-    */
-   @Column(name = "pvdisease")
-   public String pvDisease;
    
    /**
     * 是否已经接种
@@ -75,27 +63,23 @@ public class BabyVac extends BasicModel{
    
    public BabyVac(){}
    
-	public BabyVac(Date etmDate,Date date,String name,int monthAfter,String ageDcb, String babyId,String pvDisease,String isDone){
+	public BabyVac(Date etmDate,Date date,Date remindTime,String vacId,String babyId,String isDone){
 		
 		this.etmDate=etmDate;
 		this.date = date;
-		this.name = name;
-		this.monthAfter = monthAfter;
-		this.ageDcb = ageDcb;
+		this.remindTime = remindTime;
+		this.vacId = vacId;
 		this.babyId=babyId;
-		this.pvDisease = pvDisease;
 		this.isDone  = isDone;
 	}
 	
-	public BabyVac(String id,Date etmDate,Date date,String name,int monthAfter,String ageDcb, String babyId,String pvDisease,String isDone){
+	public BabyVac(String id,Date etmDate,Date date,Date remindTime,String vacId,String babyId,String isDone){
 		this.id = id;
 		this.etmDate=etmDate;
 		this.date = date;
-		this.name = name;
-		this.monthAfter = monthAfter;
-		this.ageDcb = ageDcb;
+		this.remindTime = remindTime;
+		this.vacId = vacId;
 		this.babyId=babyId;
-		this.pvDisease = pvDisease;
 		this.isDone  = isDone;
 	}
 

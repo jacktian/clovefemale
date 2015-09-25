@@ -96,6 +96,12 @@ body{
 	color:#D26911;
 	border-bottom: 1px solid #eee;
 }
+
+/*换页*/
+.turnPage_bi{
+	display: none;
+}
+
 /*--------------身高体重历史记录样式结束---------------*/
 
 /*--------------图表分析样式开始-----------------*/
@@ -174,6 +180,19 @@ body{
 
 .oneData{
 	text-align: center;
+}
+
+.noData_chart{
+	text-align: center;
+	display: none;
+}
+
+.charBox{
+	display: none;
+}
+
+.changeAge{
+	display: none;
 }
 /*--------------图表分析样式结束-----------------*/
 
@@ -345,4 +364,14 @@ body{
 /*换页*/
 .turnPage_fg{
 	display: none;
+}
+
+.disablePageBtn {
+	color:#ccc;
+}
+
+
+.disablePageBtn:active,.disablePageBtn:hover{
+	background-color: #eee;
+	color:#ccc;
 }

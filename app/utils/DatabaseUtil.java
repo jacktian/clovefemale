@@ -176,7 +176,7 @@ public class DatabaseUtil {
 		}
 		
 		/*月经测试数据*/
-    	Menses menses = new Menses(u1.id, new Date(),"暗红", "多", true, true,"稠");
+    	/*Menses menses = new Menses(u1.id, new Date(),"暗红", "多", true, true,"稠");
     	menses.mMeasure="适度";
     	menses.save();
     	Menses menses2 = new Menses(u1.id, new Date(),"鲜红", "少", true, true,"稀");
@@ -184,7 +184,7 @@ public class DatabaseUtil {
     	menses2.save();
     	Menses menses3 = new Menses(u1.id, new Date(),"鲜红", "少", true, true,"稀");
     	menses3.mMeasure="适度";
-    	menses3.save();
+    	menses3.save();*/
     	
     	/*体温测试数据*/
     	Temperature temperature1 = new Temperature(u1.id,new Date(), 36.7F);

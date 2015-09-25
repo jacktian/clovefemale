@@ -1,0 +1,102 @@
+#{extends 'client.html' /}
+#{set title:'产检通' /}
+#{set 'moreStyles'}
+<link rel="stylesheet" href="@{'/public/stylesheets/client/stools.css'}">
+#{/set}
+
+<header class="mui-bar mui-bar-nav babyTitle">
+  <a class="mui-icon mui-icon-left-nav mui-pull-left" href="stools"></a>
+  <h1 class="mui-title">产检通</h1>
+</header>
+
+<!-- 菜单 -->
+<ul class="mui-table-view mui-grid-view mui-grid-9 navList checkTimeList">
+  <li class="mui-table-view-cell mui-media mui-col-xs-4">
+   <!--  <a href="/client/pregMense">
+      <i>1</i>
+      <div class="mui-media-body">助孕记录</div>
+    </a> -->
+    <a class="checkLink" href="checkList">
+    <div class="checkTime">
+        <div  class="checkName">
+            <i><span class="checkNum">1</span><span  class="unit">检</span></i>
+        </div>
+        <div class="timeIntro">(6-13<sup class="corner">+6</sup>周)</div>
+    </div>
+    </a>
+  </li>
+  <li class="mui-table-view-cell mui-media mui-col-xs-4">
+    <a class="checkLink" href="checkList">
+     <div class="checkTime">
+        <div  class="checkName">
+            <i><span class="checkNum">2</span><span  class="unit">检</span></i>
+        </div>
+        <div class="timeIntro">(14-19<sup class="corner">+6</sup>周)</div>
+    </div>
+    </a>
+  </li>
+  <li class="mui-table-view-cell mui-media mui-col-xs-4">
+    <a class="checkLink" href="checkList">
+     <div class="checkTime">
+        <div  class="checkName">
+            <i><span class="checkNum">3</span><span  class="unit">检</span></i>
+        </div>
+        <div class="timeIntro">(20-23<sup class="corner">+6</sup>周)</div>
+    </div>
+    </a>
+  </li>
+  <li class="mui-table-view-cell mui-media mui-col-xs-4">
+    <a class="checkLink" href="checkList">
+     <div class="checkTime">
+        <div  class="checkName">
+            <i><span class="checkNum">4</span><span  class="unit">检</span></i>
+        </div>
+        <div class="timeIntro">(24-27<sup class="corner">+6</sup>周)</div>
+    </div>
+    </a>
+  </li>
+  <li class="mui-table-view-cell mui-media mui-col-xs-4">
+    <a class="checkLink" href="checkList">
+     <div class="checkTime">
+        <div  class="checkName">
+            <i><span class="checkNum">5</span><span  class="unit">检</span></i>
+        </div>
+        <div class="timeIntro">(28-31<sup class="corner">+6</sup>周)</div>
+    </div>
+    </a>
+  </li>
+  <li class="mui-table-view-cell mui-media mui-col-xs-4">
+    <a class="checkLink" href="checkList">
+     <div class="checkTime">
+        <div  class="checkName">
+            <i><span class="checkNum">6</span><span  class="unit">检</span></i>
+        </div>
+        <div class="timeIntro">(32-36<sup class="corner">+6</sup>周)</div>
+    </div>
+    </a>
+  </li>
+  <li class="mui-table-view-cell mui-media mui-col-xs-4">
+    <a class="checkLink" href="checkList">
+     <div class="checkTime">
+        <div  class="checkName">
+            <i><span class="checkNum">7</span><span  class="unit">检</span></i>
+        </div>
+        <div class="timeIntro">(37-41<sup class="corner">+6</sup>周)</div>
+    </div>
+    </a>
+  </li>
+</ul>
+
+
+<script type="text/javascript" src = "@{'/public/javascripts/jquery-1.8.3.min.js'}"></script>
+<script>
+  $(function(){
+    $(".checkLink").click(function(){
+        var checkTime = $(this).children(".checkTime").children(".checkName").children().children(".checkNum").text();
+        localStorage.checkTime = checkTime;
+        // return false;
+    });//{
+        // console.log($(this).child(".checkNum").text());
+    //};
+  });
+</script>

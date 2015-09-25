@@ -28,6 +28,8 @@ public class MedicineBox extends BasicModel{
 	public String userId;//用户id
 	@Column(name = "disabled")
 	public int disabled;//用户id
+
+	public int weight;
 	
 	public MedicineBox(){}
 	public MedicineBox(String name,Date cDate,String mark,String userId){

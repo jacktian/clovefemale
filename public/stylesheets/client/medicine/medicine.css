@@ -1,10 +1,10 @@
 /* 阿里图标 */
 @font-face {font-family: 'iconfont';
-    src: url('../../fonts/iconfont-med.eot'); /* IE9*/
-    src: url('../../fonts/iconfont-med.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-    url('../../fonts/iconfont-med.woff') format('woff'), /* chrome、firefox */
-    url('../../fonts/iconfont-med.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
-    url('../../fonts/iconfont-med.svg#iconfont') format('svg'); /* iOS 4.1- */
+    src: url('../../../fonts/iconfont-med.eot'); /* IE9*/
+    src: url('../../../fonts/iconfont-med.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('../../../fonts/iconfont-med.woff') format('woff'), /* chrome、firefox */
+    url('../../../fonts/iconfont-med.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+    url('../../../fonts/iconfont-med.svg#iconfont') format('svg'); /* iOS 4.1- */
 }
 .iconfont{
     font-family:"iconfont" !important;
@@ -24,18 +24,23 @@
 }
 .med-box-content{
 	background:#FFF;
-	margin-top:50px;
 	margin-bottom:50px;
+}
+.medicine-content{
+	margin-top:50px;
 }
 /* 药箱列表  */
 .med-box-list a i{
 	font-size:25px;
 	margin-right:10px;
+	color:green;
+}
+.med-box-list a i.delnot {
 	color:#ED7878;
 }
 .med-box-name{
 	font-size:15px;
-	color:#838383;
+	color:#000;
 }
 .med-box-mark{
 	font-size:13px;
@@ -108,7 +113,7 @@
 	width:80%;
 	min-width: 230px;
 	left:10%;
-	top:10%;
+	top:20%;
 	background:#FFFFFF;
 	z-index:2;
 	border-radius:5px;
@@ -249,4 +254,10 @@
 }
 .mui-content-padded.medicine-detail-content{
 	margin-top:58px;
+}
+/* 到期提醒标签 */
+.deadlineTip{
+  color:red;
+  font-size:12px;
+  display: inline-block;
 }

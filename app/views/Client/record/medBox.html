@@ -1,43 +1,34 @@
-#{extends 'client.html' /}
-#{set title:'小药箱' /}
-#{set 'moreStyles'}
-<link href="@{'/public/stylesheets/client/medicine.css'}?v=20150609" rel="stylesheet" />
-#{/set}
-#{output 'Client/record/medBoxTpl.html'/}
+#{extends 'client.html' /} #{set title:'家庭药箱' /} #{set 'moreStyles'}
+<link href="@{'/public/stylesheets/client/medicine/medicine.css'}?v=20150822" rel="stylesheet" /> #{/set} #{output 'Client/record/medBoxTpl.html'/}
 <header class="mui-bar mui-bar-nav client-bar-nav">
-	<a class="mui-icon mui-icon-left-nav mui-pull-left"></a>
-	<h1 class="mui-title client-title">小药箱</h1>
-</header>
-
-<div class="mui-content med-box-search-content">
-	<div class="mui-content-padded">
-		<div class="mui-input-row mui-search">
-			<input type="search" id="medbox-search" placeholder="输入药箱名称"></div>
+	<a class="mui-icon mui-icon-home mui-pull-left" href="@{Client.first()}"></a>
+	<h1 class="mui-title client-title">家庭药箱</h1>
+	<a href="#mui-popover" class="mui-icon mui-icon-bars mui-pull-right medbox-collapse-menu"></a>
+	<div id="mui-popover" class="med-popover">
+		<ul class="mui-table-view mui-table-view-chevron mui-table-view-inverted">
+			<li class="mui-table-view-cell">
+				<a class="mui-navigate-right medbox-item add-item">
+					添加
+				</a>
+			</li>
+			<li class="mui-table-view-cell">
+				<a class="mui-navigate-right medbox-item select-item">
+					选择
+				</a>
+			</li>
+			<li class="mui-table-view-cell">
+				<a class="mui-navigate-right medbox-item del-item">
+					删除
+				</a>
+			</li>
+		</ul>
 	</div>
-</div>
+</header>
 
 <div class="mui-content med-box-content">
 	<ul class="mui-table-view med-box-list">
 	</ul>
 </div>
-<nav class="mui-bar mui-bar-tab">
-	<a class="mui-tab-item mui-active medbox-item add-item" href="#tabbar">
-		<span class="mui-icon">
-			<i class="iconfont">&#xe636;</i>
-		</span>
-		<span class="mui-tab-label">添加</span>
-	</a>
-	<a class="mui-tab-item medbox-item select-item" href="#tabbar-with-chat">
-		<span class="mui-icon mui-icon-checkmarkempty"></span>
-		<span class="mui-tab-label">选择</span>
-	</a>
-	<a class="mui-tab-item medbox-item del-item" href="#tabbar-with-sms">
-		<span class="mui-icon">
-			<i class="iconfont">&#xf008b;</i>
-		</span>
-		<span class="mui-tab-label">删除</span>
-	</a>
-</nav>
 <!-- 遮罩层 -->
 <div id='pregDrop'></div>
 <!-- 添加model -->
@@ -49,19 +40,13 @@
 		<div class="model-item">
 			<span class="model-item-title">名称</span>
 			<span class="model-item-content">
-				<input type="text" name="medBox-name" placeholder="输入药箱名称"/>
-			</span>
-		</div>
-		<div class="model-item">
-			<span class="model-item-title">标签</span>
-			<span class="model-item-content">
-				<input type="text" name="medBox-tag" placeholder="输入药箱标签"/>
+				<input type="text" name="medBox-name" placeholder="输入药箱名称(必填)" />
 			</span>
 		</div>
 		<div class="model-item">
 			<span class="model-item-title">描述</span>
 			<span class="model-item-content">
-				<input type="text" name="medBox-mark" placeholder="输入药箱描述"/>
+				<input type="text" name="medBox-mark" placeholder="输入药箱描述(非必填)" />
 			</span>
 		</div>
 	</div>
@@ -69,111 +54,169 @@
 		<button class="mui-btn mui-btn-negative model-btn-refresh medBox-add-btn">添加</button>
 	</div>
 </div>
+
 #{set 'moreScripts'}
-<script type="text/javascript" charset="utf-8">mui.init();</script>
+<script type="text/javascript" charset="utf-8">
+	mui.init();
+</script>
 <script src="@{'/public/javascripts/client/jquery-1.9.1.min.js'}"></script>
-<script type="text/javascript" src = "@{'/public/javascripts/juicer.js'}"></script>
+<script type="text/javascript" src="@{'/public/javascripts/juicer.js'}"></script>
 <script type="text/javascript">
-	$(function(){
+//<<<<<<< HEAD
+//	$(function(){
 		//alert(location.href.split('#')[0]);
+//=======
+	$(function() {
+		/* 删除选中，0表示没有选择，1表示已选择*/
+//>>>>>>> 5ead0f23a57d04868cb50d44cb6573517df23c05
 		var delSelect = 0;
 		/*加载药箱列表*/
-		var loadMedBoxList = function(){
-			$.get("/CMedicine/loadMedboxList",function(data){
-				var html = juicer($('#medBoxTpl').html(),{medBoxList:data.data});
+		var loadMedBoxList = function() {
+			$.get("/CMedicine/loadMedboxList", function(data) {
+				var html = juicer($('#medBoxTpl').html(), {
+					medBoxList: data.data
+				});
 				$('.med-box-list').html(html);
 			});
 		}
 		loadMedBoxList();
-		/*遮罩层*/
-		$('#pregDrop').bind('touchstart',function(){
-			$('.med-model').hide();
-			$(this).hide();
-		});
-		/*药箱菜单*/
-		$(document).on('click', '.med-box-item a', function() {
-		   if(delSelect == 1){
-				return false;
+		/* 显示与关闭窗口 */
+		var closeMask = function() {
+				$('#pregDrop').hide();
+			},
+			closeAddModel = function() {
+				$('.med-model').hide();
+			},
+			showMask = function() {
+				$('#pregDrop').show();
+			},
+			showAddModel = function() {
+				$('.med-model').show();
+			},
+			showPopover = function() {
+				$('#mui-popover').show();
+			},
+			closePopover = function() {
+				$('#mui-popover').hide();
 			}
-			else{
+			/* 点击遮罩层 */
+		$('#pregDrop').bind('touchstart', function() {
+			closeAddModel();
+			closeMask();
+		});
+		/* 点击药箱列表 */
+		var clickListItem = function() {
+			if (delSelect == 1) {
+				var canSelect = $(this).prev().attr("disabled");
+				if (canSelect == "disabled") {
+					mui.toast('该药箱不能删除');
+				}
+				return false;
+			} else {
 				return true;
 			}
-		});
-		/* 底部菜单 */
-		$('.medbox-item').bind('touchstart',function(){
-			if(delSelect == 1){
+		};
+		$(document).on('click', '.med-box-item a', clickListItem);
+		/* 点击折叠菜单 */
+		var clickCollapseMenu = function(e) {
+			e.stopPropagation();
+			if ($('#mui-popover').css('display') == "block") {
+				closePopover();
+			} else {
+				showPopover();
+			}
+		}
+		$('.medbox-collapse-menu').bind('touchstart', clickCollapseMenu);
+		$(document).bind('touchstart',closePopover);
+		/* 点击药箱菜单 */
+		var clickMenuItem = function() {
+			if (delSelect == 1) {
 				delSelect = 0;
 				$('.med-box-item').removeClass('mui-checkbox');
 				$('.med-box-item').removeClass('mui-left');
 				$('.med-box-check').removeClass('show');
 				$('.medbox-item-iconfont').removeClass('hidden');
 			}
-		});
-		$('.add-item').bind('touchstart',function(){
-			$('.med-model').show();
-			$('#pregDrop').show();
-		});
-		$('.select-item').bind('touchstart',function(){
-			if(delSelect == 0){
+		};
+		$('.medbox-item').bind('touchstart', clickMenuItem);
+		/* 点击添加药箱菜单 */
+		var clickAddMenu = function(e) {
+			e.stopPropagation();
+			showAddModel();
+			showMask();
+			closePopover();
+		};
+		$('.add-item').bind('touchstart', clickAddMenu);
+		/* 点击选择药箱菜单 */
+		var editMode = function() {
+			if (delSelect == 0) {
 				delSelect = 1;
 				$('.med-box-item').addClass('mui-checkbox');
 				$('.med-box-item').addClass('mui-left');
 				$('.med-box-check').addClass('show');
 				$('.medbox-item-iconfont').addClass('hidden');
 
-				$("input[name='checkbox']:checked").attr("checked",false);
+				$("input[name='checkbox']:checked").attr("checked", false);
 			}
-		});
-		/* 删除药箱 */
-		$('.del-item').bind('touchstart',function(){
+			closePopover();
+		};
+		$('.select-item').bind('touchstart', editMode);
+		/* 点击删除药箱菜单 */
+		var delMedBox = function() {
 			var medBox = $("input[name='checkbox']:checked");
-			if(medBox.length == 0){
+			if (medBox.length == 0) {
 				mui.toast('请选择要删除的药箱');
-			}
-			else{
+			} else {
 				var midArr = new Array();
-				for(var i=0;i<medBox.length;i++){
+				for (var i = 0; i < medBox.length; i++) {
 					midArr[i] = medBox[i].getAttribute('data-mid');
 				}
-				$.get("/CMedicine/removeMedBox?mid="+midArr,function(data){
-					if(data.result == 0){
+				$.get("/CMedicine/removeMedBox?mid=" + midArr, function(data) {
+					if (data.result == 0) {
 						mui.toast('删除成功');
 						loadMedBoxList();
-					}
-					else
+					} else
 						mui.toast('删除失败');
 				});
-				$("input[name='checkbox']:checked").attr("checked",false);
+				$("input[name='checkbox']:checked").attr("checked", false);
 			}
-		});
-		/* 添加药箱 */
-		$('.medBox-add-btn').bind('click',function(){
+		};
+		$('.del-item').bind('touchstart', delMedBox);
+		/* 点击添加按钮 */
+		var addMedBox = function() {
 			var name = $("input[name='medBox-name']").val();
 			var mark = $("input[name='medBox-mark']").val();
-			$.get("/CMedicine/addMedBox?name="+name+"&mark="+mark,function(data){
-				if(data.result == 0){
-					mui.toast('创建成功');
-					loadMedBoxList();
-					$('.med-model').hide();
-					$('#pregDrop').hide();
-				}
+			if (name == "") {
+				alert("请填写药箱名");
+			} else {
+				$.get("/CMedicine/addMedBox?name=" + name + "&mark=" + mark, function(data) {
+					if (data.result == 0) {
+						mui.toast('创建成功');
+						loadMedBoxList();
+						$('.med-model').hide();
+						$('#pregDrop').hide();
+					} else
+						mui.toast('创建失败');
+				});
+			}
+		};
+		$('.medBox-add-btn').bind('click', addMedBox);
+		/*药品搜索*/
+		$('#medbox-search').change(function() {
+			var keyWord = $.trim($(this).val());
+			$.get('/CMedicine/searchMedbox?medBoxName=' + keyWord, function(data) {
+				var html = juicer($('#medBoxSearchTpl').html(), {
+					medBoxList: data.data
+				});
+				var newhtml = "";
+				if (keyWord == '')
+					newhtml = html;
 				else
-					mui.toast('创建失败');
+					newhtml = html.replace(new RegExp(keyWord, "g"), "<span class='key-word'>" + keyWord + "</span>");
+				$('.med-box-list').html(newhtml);
 			});
 		});
-		/*药品搜索*/
-	    $('#medbox-search').change(function(){
-	    	var keyWord = $.trim($(this).val());
-	    	$.get('/CMedicine/searchMedbox?medBoxName='+keyWord,function(data){
-	    		var html = juicer($('#medBoxSearchTpl').html(),{medBoxList:data.data});
-	    		var newhtml = "";
-	    		if(keyWord == '')
-	    			newhtml = html;
-	    		else
-	    			newhtml = html.replace(new RegExp(keyWord,"g"),"<span class='key-word'>"+keyWord+"</span>");
-	    		$('.med-box-list').html(newhtml);
-	    	});
-	    }); 
+
 	});
 </script>
 #{/set}
