@@ -8,6 +8,7 @@ import javax.persistence.Table;
 
 /**
  * Created by boxizen on 15/8/22.
+ * 提醒0关，1开
  */
 @Entity
 @Table(name = "remind")

@@ -91,6 +91,9 @@
   var setItem = 0;//0代表生理记录提醒，1代表药品到期提醒，2代表疫苗接种提醒
   var tapToggle = false; //点击的是toggle控件
   $(function(){
+      //加载用户提醒信息
+      loadRemindInf();
+
       /*点击生理记录提醒*/
       document.getElementById("remindItem_phy").addEventListener("tap",function(event){
         if(!tapToggle){
@@ -148,21 +151,59 @@
        /*生理记录开关*/
       document.getElementById("toggle-phy").addEventListener("toggle",function(event){
         tapToggle = true;
+        var open = false;
+        var status = 0;
+        var result = 1;
         if(event.detail.isActive){
-          showResTips("生理记录提醒已打开")
+          open = true;
+          status = 1;
+          result = modifyRemingdSetting("healremind",status);
+          if(result == true){
+            showResTips("生理记录提醒已打开")
+          }else{//失败 
+            mui("#toggle-phy").switch().toggle();  
+            showResTips("操作失败！")        
+          }
+
         }else{
-           showResTips("生理记录提醒已关闭")
+          status = 0;
+          result = modifyRemingdSetting("healremind",status);
+          if(result == true){
+            showResTips("生理记录提醒已关闭")
+          }else{//失败 
+            mui("#toggle-phy").switch().toggle();  
+            showResTips("操作失败！")        
+          }
         }
+        
       })
 
 
       /*药品到期开关*/
       document.getElementById("toggle-med").addEventListener("toggle",function(event){
         tapToggle = true;
+        var status = 0;
+        var result = 1;
         if(event.detail.isActive){
-          showResTips("药品到期提醒已打开")
+          open = true;
+          status = 1;
+          result = modifyRemingdSetting("medremind",status);
+          if(result == true){
+            showResTips("药品到期提醒已打开")
+          }else{//失败 
+            mui("#toggle-phy").switch().toggle();  
+            showResTips("操作失败！")        
+          }
+
         }else{
-           showResTips("药品到期提醒已关闭")
+          status = 0;
+          result = modifyRemingdSetting("medremind",status);
+          if(result == true){
+            showResTips("药品到期提醒已关闭")
+          }else{//失败 
+            mui("#toggle-phy").switch().toggle();  
+            showResTips("操作失败！")        
+          }
         }
       })
 
@@ -170,14 +211,32 @@
       /*疫苗开关*/
       document.getElementById("toggle-vac").addEventListener("toggle",function(event){
         tapToggle = true;
+        var status = 0;
+        var result = 1;
         if(event.detail.isActive){
-          showResTips("疫苗提醒已打开")
+          open = true;
+          status = 1;
+          result = modifyRemingdSetting("yiremind",status);
+          if(result == true){
+            showResTips("疫苗提醒已打开")
+          }else{//失败 
+            mui("#toggle-phy").switch().toggle();  
+            showResTips("操作失败！")        
+          }
+
         }else{
-           showResTips("疫苗提醒已关闭")
+          status = 0;
+          result = modifyRemingdSetting("yiremind",status);
+          if(result == true){
+            showResTips("疫苗提醒已关闭")
+          }else{//失败 
+            mui("#toggle-phy").switch().toggle();  
+            showResTips("操作失败！")        
+          }
         }
       })
 
-     /*科目选择滚轮*/
+     /*提前提醒天数选择滚轮*/
       $('#scroller_remind').mobiscroll().scroller({
           theme: 'mobiscroll',
           lang: 'zh',
@@ -215,6 +274,46 @@
   function hideTips(){
       $(".response-tips").text("");
       $(".response-tips").hide();
+  }
+
+  /*加载提醒设置信息*/
+  function loadRemindInf(){
+      $.post("/CRemindAction/getRemindInf",function(data){
+         if(data.result == 0){//成功
+             if(medremind == 1){
+                $("#toggle-phy").addClass("mui-active");
+             }
+             if(healremind == 0){
+                $("#toggle-med").removeClass("mui-active");
+             }
+             if(yiremind == 0){
+                $("#toggle-vac").removeClass("mui-active");
+             }
+               
+          }else{//失败
+            // $("#toggle-phy").addClass("mui-switch-mini mui-active");
+             // $("#toggle-phy").addClass("mui-active");
+            // $("#toggle-med").removeClass("mui-active");
+          }
+      });
+  }
+
+  /*打开/关闭提醒,
+  remindKind:提醒类型 “medremind”：药品到期提醒   "healremind"：生理记录提醒  “yiremind”:疫苗提醒
+  status：0：关闭    1：打开*/
+  function modifyRemingdSetting(remindKind,status){
+      var result;
+      $.post("/CRemindAction/changeRemindStatus",{
+        remindKind:remindKind,
+        status:status
+      },function(data){
+        if(data.result == 0){//成功
+          result = true;
+        }else{
+          result = false;
+        }
+      });
+      return result;//返回结果
   }
 </script>
 

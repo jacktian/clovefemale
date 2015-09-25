@@ -26,7 +26,6 @@ import models.BabyVac;
 import models.GradeForm;
 import models.Note;
 import models.BodyIndex;
-import models.Remind;
 import models.Vaccine;
 import models.Vaccine;
 import models.WeChat;
@@ -204,7 +203,6 @@ public class CBabyAction extends WebService{
 				baby.dateStr = format.format(baby.date);
 				baby.save();
 				modifyVacEtm(babyId,date);//修改疫苗预计接种日期
-										//修改疫苗提醒日期			
 				wsOk("修改成功");
 			}else{
 				wsError("找不到该宝宝");
@@ -1022,17 +1020,6 @@ public class CBabyAction extends WebService{
 		if("".equals(babyId) || babyId == null){
 			babyId = "1BFB8CDDECC24BE49F8D3C5B9528BBB0";
 		}
-		String openid = session.get("openid");//从session中获取openid
-		if(openid == null){
-			openid = "ob1R-uIRkLLp6lmmrT4w-2rrZ5jQ";
-		}	
-		List<Remind> remindList = Remind.find("byOpenid", openid).fetch();
-		Remind remind = null;
-		if(remindList.size()!=0){
-			remind = remindList.get(0);
-		}else{
-			wsError("没有找到该用户的提醒记录！");
-		}
 		if(birthday == null){
 			Baby baby = Baby.findById(babyId);
 			birthday = baby.date;
@@ -1055,7 +1042,6 @@ public class CBabyAction extends WebService{
 				babyVac.etmDate = cld.getTime();
 				babyVac.vacId = vac.id;
 				babyVac.isDone = "0";//"0"表示未来接种
-				babyVac.remindTime = DateUtil.dateAdd(babyVac.etmDate, remind.yi_adv_day);//生成接种提醒日期				
 				babyVac.save();
 			}
 			wsOk("初始化疫苗列表成功");

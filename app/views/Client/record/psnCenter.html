@@ -181,7 +181,7 @@
   /*加载用户信息*/
   function loadUserInfo(){
      $.post("/CUserAction/loadUserInf",function(data){
-        if(data.result == 0){//成功
+       if(data.result == 0){//成功
           $(".headImg>img").attr("src",data.data.headimgurl);
           $(".headImg>img").attr("alt",data.data.nickname);
           $(".nickname").text(data.data.nickname);

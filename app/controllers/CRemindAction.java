@@ -86,5 +86,26 @@ public class CRemindAction extends WebService {
 		}
 		wsOk("保存成功");
 	}
+	
+	/**
+	 * 获取提醒设置信息
+	 */
+	public static void getRemindInf(){
+		String openid = session.get("openid");//从session中获取openid
+		if(openid == null){
+			openid = "ob1R-uIRkLLp6lmmrT4w-2rrZ5jQ";
+		}
+		List<Remind> remindList = null;
+		try{
+			remindList = Remind.find("byOpenid", openid).fetch();
+		}catch(Exception e){
+			wsError("出错了");
+		}
+		if(remindList != null && remindList.size()>0){
+			wsOk(remindList.get(0));
+		}else{
+			wsError("没有找到用户设置信息哦");
+		}
+	}
 	 
 }
