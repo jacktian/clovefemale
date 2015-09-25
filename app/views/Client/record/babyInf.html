@@ -225,7 +225,7 @@ body{
 
 		//弹出删除宝宝确定模态对话框
 		document.getElementById("del-link-baby").addEventListener("tap",function(event){
-			if(window.confirm('你确定要取消交易吗？')){
+			if(window.confirm('删除后资料无法恢复，你确定要删除吗？')){
                  $.post("/CBabyAction/deleteBaby",{
 					babyId:babyId
 				 },function(data){
