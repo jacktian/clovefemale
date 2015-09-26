@@ -1,18 +1,41 @@
 $(function() {
   /* 加载胎动数据，从服务器获取数据 */
   var pregmData, pregmLabel;
+
+  $('#cus-model-yes').click(function(){
+    if($('#cus-check').is(':checked') == true) {
+      localStorage.moveTip = '0';
+    }
+    $('.cus-model').hide();
+  });
+
+  $('#cus-model-no').click(function(){
+    $('.cus-model').hide();
+  });
+
   loadMovementFromServer = function() {
+
     //加载表格数据
     $.get('/CMove/findMovement', function(data) {
       var html = juicer($('#pregmTpl').html(), {
         pregmList: data.data
       });
+
+
       for(var i = 0; i<data.data.length; i++) {
         if(data.data[i].num <10) {
-          alert(data.data[i].dateStr+': 胎动次数过少，请及时联系医生检查');
+          if(localStorage.moveTip != '0'){
+            //alert(data.data[i].dateStr+': 胎动次数过少，请及时联系医生检查');
+            $('.cus-model-content').html(data.data[i].dateStr+': 胎动次数过少，请及时联系医生检查');
+            $('.cus-model').show();
+          }
         }
         else if(data.data[i].num <20) {
-          alert(data.data[i].dateStr+': 胎动次数偏少，留意胎动变化');
+          if(localStorage.moveTip != '0') {
+            //alert(data.data[i].dateStr+': 胎动次数偏少，留意胎动变化');
+            $('.cus-model-content').html(data.data[i].dateStr+': 胎动次数偏少，留意胎动变化' );
+            $('.cus-model').show();
+          }
         }
       }
       $('#pregmTable tbody').html(html);
