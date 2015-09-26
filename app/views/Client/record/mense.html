@@ -1,5 +1,5 @@
 #{extends 'client.html' /} #{set title:'助孕记录' /} #{set 'moreStyles'}
-<link href="@{'/public/stylesheets/client/preg/pregnant.css'}?v=20150822" rel="stylesheet" type="text/css"/>
+<link href="@{'/public/stylesheets/client/preg/pregnant.css'}?v=20150926" rel="stylesheet" type="text/css"/>
 <link href="@{'/public/stylesheets/client/preg/mobiscroll.css'}" rel="stylesheet" type="text/css" />
 #{/set} #{output 'Client/record/pregTpl.html'/}
 <header class="mui-bar mui-bar-nav client-bar-nav">
@@ -185,6 +185,21 @@
 			<div class="pregm-chart-empty chart-empty not-shown">图表无数据显示</div>
 			<div id="pregmChart" style="height:250px;">
 
+			</div>
+		</div>
+		<div class="cus-model">
+			<div class="cus-model-header">
+				消息提示
+			</div>
+			<div class="cus-model-content">
+				胎动次数过少，请及时联系医生检查
+			</div>
+			<div class="cus-model-check">
+				<input type="checkbox" id="cus-check">&nbsp;&nbsp;不再提醒
+			</div>
+			<div class="cus-model-bottom">
+				<input type="button" value="确认" id="cus-model-yes">
+				<input type="button" value="取消" id="cus-model-no">
 			</div>
 		</div>
 	</div>

@@ -120,7 +120,7 @@ public class WeChat extends WebService{
 				//如果是关注事件
 				else if(bean.event.equals("subscribe")){
 
-					
+
 					/*首先获取accessToken的值，直接从数据库取出即可*/
 					models.WeChat wxbean = new models.WeChat();
 					wxbean = (models.WeChat) models.WeChat.findAll().get(0);

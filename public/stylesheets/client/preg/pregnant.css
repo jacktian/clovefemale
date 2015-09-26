@@ -339,3 +339,39 @@
 .preg-echart.hidden{
 	opacity: 0;
 }
+
+.cus-model {
+	    position: fixed;
+        width: 100%;
+        height: 150px;
+        top: 100px;
+        z-index: 2000;
+        background: #FFF;
+        text-align: center;
+        border: 1px solid #F7BEBE;
+        top: 50%;
+        margin-top: -75px;
+		display: none;
+}
+.cus-model-header {
+	height: 30px;
+	background:#F7BEBE;
+	line-height: 30px;
+	text-align: left;
+	padding-left:10px;
+}
+.cus-model-content{
+	height: 50px;
+	line-height: 50px;
+}
+.cus-model-check{
+	height: 20px;
+}
+.cus-model-bottom {
+	height: 50px;
+	padding-top: 10px;
+}
+.cus-model-header,.cus-model-content,.cus-model-check {
+	color: #000;
+	font-size: 14px;
+}
