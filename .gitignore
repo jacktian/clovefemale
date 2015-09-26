@@ -3,7 +3,7 @@
 eclipse
 .settings
 tmp
-application.conf
+conf/application.conf
 logs
 server.pid
 .idea
@@ -13,4 +13,3 @@ test
 *.iml
 *.ipr
 *.iws
-conf/

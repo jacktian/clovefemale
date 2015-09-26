@@ -300,24 +300,20 @@ var lowW_female =[2.54,4.15,5.48,6.26,7.03,7.61,8.12,8.63,9.15,9.64,10.52,11.36,
 					console.log("图表记录页数："+maxPage_biC);
 					if(maxPage_biC > 1){
 						console.log("记录大于1页");
-				 	// $(".turnPage_gf_h").show();
-				 		$(".turnPage_bi").show();
+				 		$(".changeAge").show();
 					}else{
 				 		lastData_c = null;
 				 		console.log("记录小于1页");
-				 	// $(".turnPage_gf_h").hide();
-				 		$(".turnPage_bi").hide();
+				 		$(".changeAge").hide();
 				 	}
 				 }else{//历史记录页数
 				 	maxPage_biH = page;
 				 	if(maxPage_biH > 1){
 				 		console.log("记录大于1页");
-				 	// $(".turnPage_gf_h").show();
 				 		$(".turnPage_bi").show();
 					}else{
 						console.log("记录小于1页");
 				 		lastData = null;
-				 	// $(".turnPage_gf_h").hide();
 				 		$(".turnPage_bi").hide();
 				 	}
 				 }

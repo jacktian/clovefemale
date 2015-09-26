@@ -80,20 +80,10 @@ public class CBabyAction extends WebService{
 		baby.name = name;
 		baby.userId = openid;
 		baby.headImgUrl = headImgUrl;
-		baby.dateStr = "" + DateUtil.getAge(birthday);;	
+		baby.dateStr = "" + DateUtil.getAge(birthday);
 		List<Baby> babyList = new ArrayList<Baby>();
 		try{
 			baby.save();
-//			String downloadResult = downloadBabyImg(baby.id,media_id);
-//			if(downloadResult.equals("error")){
-//				downloadResult = downloadBabyImg(baby.id,media_id);//再次调用
-//				if(downloadResult.equals("error")){//两次调用失败
-//					babyList.add(baby);
-//					wsOk(babyList);
-//				}
-//			}
-//			baby.headImgUrl = downloadResult;
-//			baby.save();	
 			initBabyVac(baby.date,baby.id);
 			if("".equals(baby.headImgUrl) || baby.headImgUrl == null){//未上传头像
 				if("男".equals(baby.sex)){
@@ -344,18 +334,19 @@ public class CBabyAction extends WebService{
 			String queryString;
 			Query query;
 			if(hasStander == true){
-				queryString = "select count(*) from BodyIndex bi where baby_Id = ?1 and hasStander = ?2";
+				queryString = "select count(*) from bodyindex bi where bi.baby_Id = ?1 and bi.hasStander = ?2";
 				query = JPA.em().createNativeQuery(queryString);
 				query.setParameter(1, babyId);//给编号为1的参数设值 	
 				query.setParameter(2 , hasStander);//给编号为2的参数设值 
 			}else{
-				queryString = "select count(*) from BodyIndex bi where baby_Id = ?1";
+				queryString = "select count(*) from bodyindex bi where bi.baby_Id = ?1";
 				query = JPA.em().createNativeQuery(queryString);
 				query.setParameter(1, babyId);//给编号为1的参数设值 
 			} 		
 			String size = query.getSingleResult().toString();
 			wsOk(Math.ceil(Float.parseFloat(size) / 6));
 		}catch(Exception e){
+//			wsError(e.toString());
 			wsError("噢噢，出错了！");
 		}
 	}
@@ -695,7 +686,7 @@ public class CBabyAction extends WebService{
 	 */
 	public static void loadPageSizeOfSubject(String babyId,String subject){
 		try{
-			String queryString = "select count(*) from GradeForm gf where baby_Id = ?1 and subject = ?2";
+			String queryString = "select count(*) from gradeform gf where baby_Id = ?1 and subject = ?2";
 			Query query = JPA.em().createNativeQuery(queryString);
 			query.setParameter(1, babyId);//给编号为1的参数设值 	
 			query.setParameter(2 , subject);//给编号为1的参数设值 
@@ -703,6 +694,7 @@ public class CBabyAction extends WebService{
 			System.out.println(subject+"--"+size);
 			wsOk(Math.ceil(Float.parseFloat(size) / 6));
 		}catch(Exception e){
+			//wsError(e.toString());
 			wsError("噢噢，出错了！");
 		}
 	}
@@ -864,13 +856,6 @@ public class CBabyAction extends WebService{
 			query.setParameter(1, babyId);//给编号为1的参数设值 
 			List<BabyVacBean> vacList  = query.setMaxResults(3).getResultList();
 			if(vacList.size()!=0){
-//				int length = vacList.size();
-//				int monthAfter = vacList.get(0).monthAfter;
-//				for(int i = length -1; i > 0; i--){
-//					if(vacList.get(i).monthAfter != monthAfter){
-//						vacList.remove(i);
-//					}
-//				}
 				wsOk(vacList);
 			}else{
 				wsError("null");

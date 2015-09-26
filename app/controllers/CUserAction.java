@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import beans.ResponseStatus;
+import beans.UserCenterBean;
 
 import models.Baby;
 import models.User;
@@ -61,7 +62,53 @@ public class CUserAction extends WebService{
 		try{
 			List<User> userList = User.find("openid = ?", openid).fetch();
 			if(userList.size()!=0){
-				User user = userList.get(0);
+				User userModel = userList.get(0);
+				UserCenterBean user = new UserCenterBean();	
+				System.out.println("Here");
+
+				//头像
+				user.headimgurl = userModel.headimgurl ;
+
+				//昵称
+				user.nickname = userModel.nickname;
+
+				//丁香号
+				if(userModel.cloveId == null || "".equals(userModel.cloveId)){
+					user.cloveId = "未设置";
+				}else{
+					user.cloveId = userModel.cloveId;
+				}
+
+				//个性签名
+				if(userModel.signName == null || "".equals(userModel.signName)){
+					user.signName = "点击设置心情";
+				}else{
+					user.signName = userModel.signName;
+				}
+
+				//加V
+				if(userModel.isAddV == null || userModel.isAddV == false){
+					user.isAddV = "未加V";
+				}else{
+					user.isAddV = "已加V";
+				}
+
+				//用户等级
+				user.userGrade = userModel.userGrade;
+
+				//手机
+				if(userModel.phoneNum == null || "".equals(userModel.phoneNum)){
+					user.phoneNum = "未绑定";
+				}else{
+					user.phoneNum = userModel.phoneNum;
+				}
+
+				//邮箱
+				if(userModel.email == null || "".equals(userModel.email)){
+					user.email = "未绑定";
+				}else{
+					user.email = userModel.phoneNum;
+				}
 				wsOk(user);
 			}else{
 				wsError("null");

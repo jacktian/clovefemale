@@ -1,6 +1,7 @@
 package utils;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class DateUtil {
@@ -52,4 +53,17 @@ public class DateUtil {
 		return age;
 	}
 	 
+	/**
+	 * 日期加减
+	 * date:原始日期
+	 * day:加减的天数，正数为加，负数为减
+	 */
+	public static Date dateAdd(Date oldDate,int day){
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		Calendar date = Calendar.getInstance();
+		date.setTime(oldDate);
+		date.add(Calendar.DAY_OF_YEAR, day);
+		Date newDate = date.getTime();
+		return newDate;
+	}
 }

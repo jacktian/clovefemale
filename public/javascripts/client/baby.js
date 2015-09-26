@@ -610,7 +610,7 @@ function showBodyIndexChart(bodyIndexList){
 		}
 
 		if(count == 1){
-			$(".oneData-height").text("只有一条数据哦！");
+			$(".oneData-height").text("只有一个阶段的数据哦！");
 			$(".oneData-height").show();
 
 			// $("#oneDataVal-age-h").text(bodyIndexList[0].ageDcb);
@@ -619,7 +619,7 @@ function showBodyIndexChart(bodyIndexList){
 			// $("#oneDataVal-age-w").text(bodyIndexList[count-1].ageDcb);
 			// $("#oneDataVal-baby-w").text(data_weight[0]);
 			// $("#oneDataVal-stander-w").text(stander_weight[0]);
-			$(".oneData-weight").text("只有一条数据哦！");
+			$(".oneData-weight").text("只有一个阶段的数据哦！");
 			$(".oneData-weight").show();
 			$("#chartbox_bi_h").hide();
 			$("#chartbox_bi_w").hide();

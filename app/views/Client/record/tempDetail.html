@@ -173,6 +173,15 @@
                     tempLabel = data.data.label;
 										sexData = data.data.sex;
 										console.log(sexData);
+
+                    //获取数据的最大最小值作为图标的上下限
+
+                    var max_temp = -1;
+                    for(var i = 0; i < tempData.length; i++){
+                        if(max_temp < tempData[i]) max_temp = tempData[i];
+                    }
+                    var max_temp_int = Math.floor(max_temp) + 1;
+
                     if(tempData.length != 0){
                         var loadMenseChart = function() {
                             // 基于准备好的dom，初始化echarts图表
@@ -190,7 +199,7 @@
 										          },
 										          title: {
 																text: '体温曲线图',
-										            subtext: '所有体温变化'
+                                                    subtext: '所有体温变化'
 										          },
 										          toolbox: {
 										            show: true,
@@ -215,8 +224,10 @@
 										          }],
 										          yAxis: [{
 										            type: 'value',
-										            min: 35,
-										            max: 43,
+										            /*min: 35,
+										            max: 43,*/
+                                                    min: 35.5,
+                                                    max: max_temp_int,
 										            axisLabel: {
 										              formatter: '{value} °C'
 										            }
@@ -240,6 +251,7 @@
 										            smooth: true,
 										            showAllSymbol: true,
 										            markPoint: {
+                                                      symbolSize: 5,
 										              data: sexData
 										            },
 										          }]

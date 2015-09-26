@@ -45,6 +45,16 @@ $(function() {
                   $('#menseChart').css("width", $(window).get(0).innerWidth * 0.94);
                   var myChart = echarts.init(document.getElementById('menseChart'));
 
+                //获取数据的最大最小值作为图标的上下限
+                var max_preg = -1;
+                var min_preg = 1000;
+                for(var i = 0; i < pregData.length; i++){
+                  if(max_preg < pregData[i]) max_preg = pregData[i];
+                  if(min_preg > pregData[i]) min_preg = pregData[i];
+                }
+                var max_preg_int = Math.floor(max_preg) + 1;
+                var min_preg_int = Math.ceil(min_preg) - 1;
+
                   var option = {
                     color: ['#E79996'],
                     tooltip: {
@@ -82,6 +92,8 @@ $(function() {
                       type: 'value',
                       /*min: 0,
                       max: 100,*/
+                      max: max_preg_int,
+                      min: min_preg_int,
                       axisLabel: {
                         formatter: '{value} 天'
                       }
