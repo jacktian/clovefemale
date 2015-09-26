@@ -151,8 +151,8 @@ public class WeChat extends WebService{
 					}
 
 					// 自动回复用户信息
-					Element content = doc.getElementsByTag("Content").get(0);
-					bean.content = content.html();
+					//Element content = doc.getElementsByTag("Content").get(0);
+					//bean.content = content.html();
 					WeChatResponse resp1 = new WeChatResponse();
 					resp1.toUserName = bean.fromUserName;
 					resp1.fromUserName = bean.toUserName;
