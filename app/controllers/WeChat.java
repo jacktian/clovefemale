@@ -119,6 +119,8 @@ public class WeChat extends WebService{
 				}
 				//如果是关注事件
 				else if(bean.event.equals("subscribe")){
+
+
 					/*首先获取accessToken的值，直接从数据库取出即可*/
 					models.WeChat wxbean = new models.WeChat();
 					wxbean = (models.WeChat) models.WeChat.findAll().get(0);
@@ -147,6 +149,20 @@ public class WeChat extends WebService{
 						//新建药箱
 						MedboxInit.init(openid);
 					}
+
+					// 自动回复用户信息
+					Element content = doc.getElementsByTag("Content").get(0);
+					bean.content = content.html();
+					WeChatResponse resp1 = new WeChatResponse();
+					resp1.toUserName = bean.fromUserName;
+					resp1.fromUserName = bean.toUserName;
+					resp1.createTime = bean.createTime;
+					resp1.msgType = bean.msgType;
+					resp1.content = bean.content;
+						resp1.content = "欢迎您使用家庭助理，家庭助理公众号可能是微信中第一个面向家庭开发的实用工具型的公众号。开发团队由医学博士等不同领域的资深人员组成。如果没有您所需要的功能，也可以按回复消息发送文字消息或者语音消息提醒我们，您的提醒能帮助我们成长。本公众号的理念：家庭助理，助力家庭。";
+					renderText(resp1);
+
+
 		
 				}
 				//丁香资讯
