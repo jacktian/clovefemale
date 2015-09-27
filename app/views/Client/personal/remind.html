@@ -132,15 +132,28 @@
           var pre_remind_day = $(".stressDate").text();
           switch(setItem){
             case 0: 
-                    $("#remindDate_phy").text(pre_remind_day);
+                    if(modifyAdvDay("healremind",pre_remind_day)){
+                       $("#remindDate_phy").text(pre_remind_day);
+                     }else{
+                       showResTips("操作失败")
+                     }
+                   
                     // alert("修改的是生理记录提醒");
                     break;
             case 1:
-                    $("#remindDate_med").text(pre_remind_day);
+                    if(modifyAdvDay("medremind",pre_remind_day)){
+                       $("#remindDate_med").text(pre_remind_day);
+                     }else{
+                       showResTips("操作失败")
+                     }
                     // alert("修改的是药品到期提醒");
                     break;
             case 2:
-                    $("#remindDate_vac").text(pre_remind_day);
+                    if(modifyAdvDay("yiremind",pre_remind_day)){
+                       $("#remindDate_vac").text(pre_remind_day);
+                     }else{
+                       showResTips("操作失败")
+                     }
                     // alert("修改的是疫苗接种提醒");
                     break;
             default:break;
@@ -159,7 +172,7 @@
           status = 1;
           result = modifyRemingdSetting("healremind",status);
           if(result == true){
-            showResTips("生理记录提醒已打开")
+            showResTips("生理记录提醒已打开");
           }else{//失败 
             mui("#toggle-phy").switch().toggle();  
             showResTips("操作失败！")        
@@ -315,5 +328,24 @@
       });
       return result;//返回结果
   }
+
+  /**
+  *修改提醒提前天数，setItem:0 生理记录提醒的设置  setItem:1 药品到期的提醒设置  setItem:2 疫苗
+  */
+  function modifyAdvDay(remindKind,day){
+      var result;
+      $.post("/CRemindAction/modifyAdvDay",{
+        remindKind:remindKind,
+        day:day
+      },function(data){
+        if(data.result == 0){//成功
+          result = true;
+        }else{
+          result = false;
+        }
+      });
+      return result;//返回结果
+  }
+
 </script>
 
