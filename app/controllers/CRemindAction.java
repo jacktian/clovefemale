@@ -4,6 +4,8 @@ import java.util.List;
 
 import models.Remind;
 
+import utils.VacUtil;
+
 /*
  * 提醒控制器
  * @author cater
@@ -81,6 +83,11 @@ public class CRemindAction extends WebService {
 		
 		try{
 			remind.save();
+			if("yiremind".equals(remindKind)){//疫苗提醒
+				if(!VacUtil.modifyUserBabyRemind(openid)){
+					wsError("修改宝宝疫苗预计接种时间出错!");
+				}
+			}
 		}catch(Exception e){
 			wsError("保存提醒提前天数出错了");
 		}
