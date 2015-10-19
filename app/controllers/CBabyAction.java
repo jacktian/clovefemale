@@ -26,11 +26,14 @@ import models.BabyVac;
 import models.GradeForm;
 import models.Note;
 import models.BodyIndex;
+import models.Remind;
 import models.Vaccine;
 import models.Vaccine;
 import models.WeChat;
 
 import beans.BabyVacBean;
+
+import utils.VacUtil;
 
 /**
  * 客户端婴儿控制器
@@ -84,7 +87,9 @@ public class CBabyAction extends WebService{
 		List<Baby> babyList = new ArrayList<Baby>();
 		try{
 			baby.save();
-			initBabyVac(baby.date,baby.id);
+			if(!initBabyVac(openid,baby.date,baby.id)){
+				wsError("初始化宝宝疫苗数据失败");
+			}
 			if("".equals(baby.headImgUrl) || baby.headImgUrl == null){//未上传头像
 				if("男".equals(baby.sex)){
 					baby.headImgUrl = "/public/images/client/default-boy.jpg";
@@ -197,12 +202,19 @@ public class CBabyAction extends WebService{
 	public static void modifyBabyBtd(String babyId,Date date){
 		try{
 			Baby baby = Baby.findById(babyId);
+			String openid = session.get("openid");//从session中获取openid
+			if(openid == null){
+				openid = "ob1R-uIRkLLp6lmmrT4w-2rrZ5jQ";
+			}
 			if(baby!=null){
 				baby.date = date;		
 				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");	
 				baby.dateStr = format.format(baby.date);
 				baby.save();
-				modifyVacEtm(babyId,date);//修改疫苗预计接种日期
+				if(!VacUtil.modifyVacEtm(openid,babyId)){
+					wsError("修改预计接种时间失败！");
+				}
+				//modifyVacEtm(babyId,date);//修改疫苗预计接种日期
 				wsOk("修改成功");
 			}else{
 				wsError("找不到该宝宝");
@@ -1016,18 +1028,32 @@ public class CBabyAction extends WebService{
 	 *	birthday:宝宝出生日期
 	 *  babyId: 宝宝Id
 	 */
-	public static void initBabyVac(Date birthday, String babyId){
+	public static boolean initBabyVac(String openid,Date birthday, String babyId){
 		if("".equals(babyId) || babyId == null){
 			babyId = "1BFB8CDDECC24BE49F8D3C5B9528BBB0";
 		}
+		List<Remind> remindList = null;
+		Remind remind = null;
 		if(birthday == null){
 			Baby baby = Baby.findById(babyId);
 			birthday = baby.date;
 		}
+		try{
+			remindList = Remind.find("byOpenid", openid).fetch();
+		}catch(Exception e){
+			//throw e;
+			return false;
+		}
+		if(remindList != null && remindList.size() != 0){
+			remind = remindList.get(0);
+		}else{
+			return false;//("没有找到该用户提醒信息");
+		}
+		
 		List<Vaccine> vacList = Vaccine.findAll();
 //		wsOk(vacList);
 		int length = vacList.size();
-		
+		int advDay = remind.yi_adv_day;
 		try{
 			for(int i = 0 ; i < length ; i++){
 				Vaccine vac =  vacList.get(i);
@@ -1040,13 +1066,16 @@ public class CBabyAction extends WebService{
 					cld.add(Calendar.DATE,8);
 				}
 				babyVac.etmDate = cld.getTime();
+				babyVac.remindTime = DateUtil.dateAdd(birthday,-advDay);
 				babyVac.vacId = vac.id;
 				babyVac.isDone = "0";//"0"表示未来接种
 				babyVac.save();
 			}
-			wsOk("初始化疫苗列表成功");
+		//	wsOk("初始化疫苗列表成功");
+			return true;
 		}catch(Exception e){
-			wsError("初始化疫苗列表失败");
+			return false;
+		//	wsError("初始化疫苗列表失败");
 		}
 		
 	}
@@ -1116,57 +1145,40 @@ public class CBabyAction extends WebService{
 	/**
 	 * 修改宝宝疫苗预计接种日期（全部一起修改）
 	 */
-	public static void modifyVacEtm(String babyId,Date etm){
-		try{
-			List<BabyVac> babyVacList = BabyVac.find("babyId = ?",babyId).fetch();//BabyVac.find("select new BabyVac(bv.id,bv.etmDate,bv.date,bv.name,bv.monthAfter,bv.ageDcb,bv.babyId,bv.pvDisease,bv.isDone) from BabyVac bv where bv.babyId = ?  order by bv.monthAfter", babyId).fetch(29); 
-			List<Vaccine> vacList = Vaccine.findAll();
-			int count = babyVacList.size();
-			int vacNum = vacList.size();
-			if(count != 0){
-				for(int i = 0; i < count; i++ ){
-					BabyVac babyVac = babyVacList.get(i);
-					int monthAfter = 0;
-					Vaccine vac = new Vaccine();
-					for(int j = 0; j < vacNum; j++){
-						vac = vacList.get(j);
-						if(babyVac.vacId.equals(vac.id)){
-							monthAfter = vac.monthAfter;
-							break;
-						}
-					}
-					Calendar cld = Calendar.getInstance();
-					cld.setTime(etm);
-					cld.add(Calendar.MONTH,monthAfter);
-					if("乙脑灭活疫苗(第二次)".equals(vac.name)){//如果是乙脑灭活疫苗(第二次)，则从预计接种时间+8天
-						cld.add(Calendar.DATE,8);
-					}
-					babyVac.etmDate = cld.getTime();
-					babyVac.save();
-				}
-				
-//				for(int i = 0 ; i < length ; i++){
-//					Vaccine vac =  vacList.get(i);
+//	public static void modifyVacEtm(String babyId,Date etm){
+//		try{
+//			List<BabyVac> babyVacList = BabyVac.find("babyId = ?",babyId).fetch();//BabyVac.find("select new BabyVac(bv.id,bv.etmDate,bv.date,bv.name,bv.monthAfter,bv.ageDcb,bv.babyId,bv.pvDisease,bv.isDone) from BabyVac bv where bv.babyId = ?  order by bv.monthAfter", babyId).fetch(29); 
+//			List<Vaccine> vacList = Vaccine.findAll();
+//			int count = babyVacList.size();
+//			int vacNum = vacList.size();
+//			if(count != 0){
+//				for(int i = 0; i < count; i++ ){
+//					BabyVac babyVac = babyVacList.get(i);
+//					int monthAfter = 0;
+//					Vaccine vac = new Vaccine();
+//					for(int j = 0; j < vacNum; j++){
+//						vac = vacList.get(j);
+//						if(babyVac.vacId.equals(vac.id)){
+//							monthAfter = vac.monthAfter;
+//							break;
+//						}
+//					}
 //					Calendar cld = Calendar.getInstance();
-//					cld.setTime(birthday);
-//					BabyVac babyVac = new BabyVac();
-//					cld.add(Calendar.MONTH,vac.monthAfter);
-//					babyVac.babyId = babyId;
+//					cld.setTime(etm);
+//					cld.add(Calendar.MONTH,monthAfter);
 //					if("乙脑灭活疫苗(第二次)".equals(vac.name)){//如果是乙脑灭活疫苗(第二次)，则从预计接种时间+8天
 //						cld.add(Calendar.DATE,8);
 //					}
 //					babyVac.etmDate = cld.getTime();
-//					babyVac.vacId = vac.id;
-//					babyVac.isDone = "0";//"0"表示未来接种
 //					babyVac.save();
 //				}
-				
-				
-			}
-			wsOk("成功");
-		}catch(Exception e){
-			wsError("异常");
-		}
-	}
+//			
+//			}
+//			wsOk("成功");
+//		}catch(Exception e){
+//			wsError("异常");
+//		}
+//	}
 	
 	/**
 	 * 给现有的所有宝宝初始化疫苗数据
