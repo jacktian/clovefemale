@@ -363,7 +363,7 @@ $(function(){
  		// var age = localStorage.age;
  		// var ageDcb = localStorage.ageDcb;
 
- 		if(height==""||height==null){
+ 		/*if(height==""||height==null){
  			$(".nbi-Tips").text("身高不能为空哦!");
  			$(".nbi-Tips").show();
  			return false;
@@ -373,21 +373,32 @@ $(function(){
  			$(".nbi-Tips").text("体重不能为空哦!");
  			$(".nbi-Tips").show();
  			return false;
- 		}
+ 		}*/
 
- 		var tips = checkHeight(height);
- 		if(tips != ""){
- 			$(".nbi-Tips").text(tips);
- 			$(".nbi-Tips").show();
- 			return false;
- 		}
+        if((height==""||height==null) && (weight==""||weight==null)){
+            $(".nbi-Tips").text("身高和体重不能同时为空哦!");
+            $(".nbi-Tips").show();
+            return false;
+        }
 
- 		tips = checkWeight(weight);
- 		if(tips != ""){
- 			$(".nbi-Tips").text(tips);
- 			$(".nbi-Tips").show();
- 			return false;
- 		}
+        if(height != null && height != ""){
+            var tips = checkHeight(height);
+            if(tips != ""){
+                $(".nbi-Tips").text(tips);
+                $(".nbi-Tips").show();
+                return false;
+            }           
+        }
+
+        if(weight != null && weight != ""){
+            tips = checkWeight(weight);
+            if(tips != ""){
+                $(".nbi-Tips").text(tips);
+                $(".nbi-Tips").show();
+                return false;
+            }            
+        }
+
 
  		// alert(localStorage.birthday);
  		//var babyId = "1BFB8CDDECC24BE49F8D3C5B9528BBB0";//angela的babyId
@@ -550,7 +561,9 @@ function showBodyIndexChart(bodyIndexList){
 		var maxAgeIndex = 0;
 
 		var labels = new Array();
-		var data_height = new Array();//宝宝身高数据
+        var labels_h = new Array();
+        var labels_w = new Array();
+ 		var data_height = new Array();//宝宝身高数据
 		var stander_height = new Array();//宝宝记录对应年龄的身高标准数据
 		var up_height = new Array();//宝宝+2Sd
 		var low_height = new Array();//宝宝-2Sd
@@ -584,6 +597,9 @@ function showBodyIndexChart(bodyIndexList){
 
 		var i = 0,vlen = babyAge.length;
 			// console.log(data.data[count-1].ageDcb);
+
+        var idx_h = 0;
+        var idx_w = 0;
 		for(var i = 0; i < count; i++){
 			for(j=0 ; j < vlen; j++){ 
 				
@@ -591,41 +607,72 @@ function showBodyIndexChart(bodyIndexList){
 					console.log(bodyIndexList[count-1-i].ageDcb+"--i="+i+"---j="+j);
 					// stander_height[i] = starderH_all[j];
 					// stander_weight[i] = starderW_all[j];
-					up_height[i]  = upH_all[j];
-					low_height[i]  = lowH_all[j];
 
-					up_weight[i]  = upW_all[j];
-					low_weight[i]  = lowW_all[j];
+                    if(bodyIndexList[count-i-1].height != 0){      
+                        up_height[idx_h]  = upH_all[j];
+                        low_height[idx_h]  = lowH_all[j];
+                        idx_h = idx_h + 1;
+                    }
+
+                    if(bodyIndexList[count-i-1].weight != 0){
+                        up_weight[idx_w]  = upW_all[j];
+                        low_weight[idx_w]  = lowW_all[j];   
+                        idx_w = idx_w + 1;   
+                    }
 					// labels[i] = bodyIndexList[count-i-1].ageDcb;
 					// console.log(stander_height[i]+"---"+j+"--"+babyAge[j]);
 				}
 			}
 				
 		}
+        idx_h = 0;
+        idx_w = 0;
 		for(var i = 0;i<count ; i++){
-			labels[i] = bodyIndexList[count-i-1].ageDcb;
-			data_height[i] = bodyIndexList[count-i-1].height;
-			data_weight[i] = bodyIndexList[count-i-1].weight;
+            if(bodyIndexList[count-i-1].height != 0){ 
+                labels_h[idx_h] = bodyIndexList[count-i-1].ageDcb;
+                data_height[idx_h] = bodyIndexList[count-i-1].height;
+                idx_h = idx_h + 1;           
+            } 
+            if(bodyIndexList[count-i-1].weight != 0){ 
+                labels_w[idx_w] = bodyIndexList[count-i-1].ageDcb;
+                data_weight[idx_w] = bodyIndexList[count-i-1].weight;  
+                idx_w = idx_w + 1;              
+            } 
 			// stander_height[i] = standerH_male[maxAgeIndex+1-count+i];
 		}
 
-		if(count == 1){
-			$(".oneData-height").text("只有一个阶段的数据哦！");
-			$(".oneData-height").show();
+        /*if(count == 1){
+            $(".oneData-height").text("只有一个阶段的数据哦！");
+            $(".oneData-height").show();
 
-			// $("#oneDataVal-age-h").text(bodyIndexList[0].ageDcb);
-			// $("#oneDataVal-baby-h").text(data_height[0]);
-			// $("#oneDataVal-stander-h").text(stander_height[0]);
-			// $("#oneDataVal-age-w").text(bodyIndexList[count-1].ageDcb);
-			// $("#oneDataVal-baby-w").text(data_weight[0]);
-			// $("#oneDataVal-stander-w").text(stander_weight[0]);
-			$(".oneData-weight").text("只有一个阶段的数据哦！");
-			$(".oneData-weight").show();
-			$("#chartbox_bi_h").hide();
-			$("#chartbox_bi_w").hide();
-			showResTips("多添加数据，可以展示炫酷的图表哦！");
-			return ;
-		}
+            // $("#oneDataVal-age-h").text(bodyIndexList[0].ageDcb);
+            // $("#oneDataVal-baby-h").text(data_height[0]);
+            // $("#oneDataVal-stander-h").text(stander_height[0]);
+            // $("#oneDataVal-age-w").text(bodyIndexList[count-1].ageDcb);
+            // $("#oneDataVal-baby-w").text(data_weight[0]);
+            // $("#oneDataVal-stander-w").text(stander_weight[0]);
+            $(".oneData-weight").text("只有一个阶段的数据哦！");
+            $(".oneData-weight").show();
+            $("#chartbox_bi_h").hide();
+            $("#chartbox_bi_w").hide();
+            showResTips("多添加数据，可以展示炫酷的图表哦！");
+            return ;
+        }*/
+
+        if(idx_w == 1){
+            $(".oneData-weight").text("只有一个阶段的数据哦！");
+            $(".oneData-weight").show();
+            $("#chartbox_bi_w").hide();
+            showResTips("多添加数据，可以展示炫酷的图表哦！");
+            return ;
+        }
+        if(idx_h == 1){
+            $(".oneData-height").text("只有一个阶段的数据哦！");
+            $(".oneData-height").show();
+            $("#chartbox_bi_h").hide();
+            showResTips("多添加数据，可以展示炫酷的图表哦！");
+            return ;
+        }
 
 		$(".oneData-height").hide();
 		$(".oneData-weight").hide();
@@ -634,7 +681,7 @@ function showBodyIndexChart(bodyIndexList){
 
 		var options = {};
 		var data = {
-			labels : labels,
+			labels : labels_h,
 			datasets : [
 				{
 					// fillColor : "rgba(151,187,205,0.5)",
@@ -676,7 +723,7 @@ function showBodyIndexChart(bodyIndexList){
 		// data.datasets[0].data = stander_weight;
 		// data.datasets[1].data = data_weight;
 		var data_w = {
-			labels : labels,
+			labels : labels_w,
 			datasets : [
 				{
 					// fillColor : "rgba(151,187,205,0.5)",

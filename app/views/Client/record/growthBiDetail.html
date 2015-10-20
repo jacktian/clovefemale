@@ -350,6 +350,8 @@ var lowW_female =[2.54,4.15,5.48,6.26,7.03,7.61,8.12,8.63,9.15,9.64,10.52,11.36,
 			var maxAgeIndex = 0;
 
 			var labels = new Array();
+			var labels_w = new Array();
+			var labels_h = new Array();
 			var data_height = new Array();//宝宝身高数据
 			var stander_height = new Array();//宝宝记录对应年龄的身高标准数据
 			var up_height = new Array();//宝宝+2Sd
@@ -421,24 +423,43 @@ var lowW_female =[2.54,4.15,5.48,6.26,7.03,7.61,8.12,8.63,9.15,9.64,10.52,11.36,
 
 			var i = 0,vlen = babyAge.length;
 			
+			var idx_w = 0; 
+			var idx_h = 0;
 			for(var i = 0; i < count; i++){
 				for(j=0 ; j < vlen; j++){ 
 					
 					if(bodyIndexList[count-1-i].ageDcb == babyAge[j]){ 
 						console.log(bodyIndexList[count-1-i].ageDcb+"--i="+i+"---j="+j);
-						up_height[i]  = upH_all[j];
-						low_height[i]  = lowH_all[j];
 
-						up_weight[i]  = upW_all[j];
-						low_weight[i]  = lowW_all[j];
+						if(bodyIndexList[count-i-1].height != 0){
+							up_height[idx_h]  = upH_all[j];
+							low_height[idx_h]  = lowH_all[j];
+							idx_h = idx_h + 1;
+						}
+
+						if(bodyIndexList[count-i-1].weight != 0){
+							up_weight[idx_w]  = upW_all[j];
+							low_weight[idx_w]  = lowW_all[j];
+							idx_w = idx_w + 1;
+						}
 					}
 				}
 					
 			}
+
+			idx_w = 0;
+			idx_h = 0;
 			for(var i = 0;i<count ; i++){
-				labels[i] = bodyIndexList[count-i-1].ageDcb;
-				data_height[i] = bodyIndexList[count-i-1].height;
-				data_weight[i] = bodyIndexList[count-i-1].weight;
+				if(bodyIndexList[count-i-1].height != 0){
+					labels_h[idx_h] = bodyIndexList[count-i-1].ageDcb;
+					data_height[idx_h] = bodyIndexList[count-i-1].height;
+					idx_h = idx_h + 1;
+				}
+				if(bodyIndexList[count-i-1].weight != 0){
+					labels_w[idx_w] = bodyIndexList[count-i-1].ageDcb;
+					data_weight[idx_w] = bodyIndexList[count-i-1].weight;
+					idx_w = idx_w + 1;
+				}
 			}			
 
 			$(".oneData-height").hide();
@@ -446,8 +467,8 @@ var lowW_female =[2.54,4.15,5.48,6.26,7.03,7.61,8.12,8.63,9.15,9.64,10.52,11.36,
 			$("#chartbox_bi_h").show();
 			$("#chartbox_bi_w").show();
 
-			showBiChart(labels,up_height,data_height,low_height);
-			showWeightChart(labels,up_weight,data_weight,low_weight);
+			showBiChart(labels_h,up_height,data_height,low_height);
+			showWeightChart(labels_w,up_weight,data_weight,low_weight);
 
 			// $(".nextPage").addClass("disablePage");
 			// if(page == 1){
