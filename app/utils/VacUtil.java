@@ -493,6 +493,26 @@ public class VacUtil {
 	}
 	
 	/**
+	 * 修改用户所有宝宝的疫苗提醒时间
+	 * 
+	 */
+	public static boolean modifyUserBabyRemind(String openid){
+		List<Baby> babyList = Baby.find("ByUserId", openid).fetch();
+		boolean result = true;
+		if(babyList == null && babyList.size() == 0){
+			return true;
+		}
+		for(int i = 0; i < babyList.size(); i++){
+			result = modifyRemindTime(openid,babyList.get(i).userId);
+			if(result == false){
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	
+	/**
 	 * 修改疫苗提醒时间
 	 */
 	public static boolean modifyRemindTime(String openid,String babyId){
