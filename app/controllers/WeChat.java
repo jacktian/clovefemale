@@ -17,6 +17,7 @@ import java.util.Map;
 import models.Client;
 import models.MedicineBox;
 import models.User;
+import models.Remind;
 
 import org.h2.store.Page;
 import org.jboss.netty.handler.codec.http.HttpRequest;
@@ -148,6 +149,7 @@ public class WeChat extends WebService{
 						client.save();
 						//新建药箱
 						MedboxInit.init(openid);
+
 					}
 
 					// 自动回复用户信息
@@ -156,7 +158,7 @@ public class WeChat extends WebService{
 					resp1.fromUserName = bean.toUserName;
 					resp1.createTime = bean.createTime;
 					resp1.msgType = "text";
-					resp1.content = "欢迎您使用家庭助理，家庭助理公众号可能是微信中第一个面向家庭开发的实用工具型的公众号。开发团队由医学博士等不同领域的资深人员组成。如果没有您所需要的功能，也可以按回复消息发送文字消息或者语音消息提醒我们，您的提醒能帮助我们成长。本公众号的理念：家庭助理，助力家庭。";
+					resp1.content = "欢迎您的到来。我们希望为家庭开发实用的工具小软件，如果还需增加您想要的功能，可以按屏幕左下角，发送语音或文字提醒我们，帮助我们成长。本软件的使用方法可在个人中心找到。本公众号的理念：家庭助理，助力家庭。";
 					renderText(resp1);
 
 
@@ -242,10 +244,10 @@ public class WeChat extends WebService{
 						a1.url = "http://t.im/questions";
 						a1.desciption = "点击链接了解常见问题";
 						PicArticle a2 = new PicArticle();
-						a2.title = "助孕记录";
+						a2.title = "女性助手";
 						a2.picUrl = "http://t.im/preimg";
 						a2.url = "http://t.im/pregnant";
-						a2.desciption = "点击链接了解助孕记录";
+						a2.desciption = "点击链接了解女性助手";
 						PicArticle a3 = new PicArticle();
 						a3.title = "宝宝成长";
 						a3.picUrl = "http://t.im/growthimg";

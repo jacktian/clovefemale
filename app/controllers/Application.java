@@ -258,7 +258,7 @@ public class Application extends WebService {
  	
  	
  	/**
- 	 * 查询所有用户的助孕记录
+ 	 * 查询所有用户的女性助手
  	 * */
  	public static void listUserGR(int curpage){
  		if(curpage==0){
@@ -280,7 +280,7 @@ public class Application extends WebService {
  	
  	
  	/**
- 	 * 根据用户编号或姓名查询所有助孕记录
+ 	 * 根据用户编号或姓名查询所有女性助手
  	 * */
  	public static void listUsergrInfo(String searchmsg,int curpage){
  		if(curpage==0){
@@ -294,7 +294,7 @@ public class Application extends WebService {
  	
  	
  	/**
- 	 * 查询特定用户的助孕记录,返回选择日期区间页面
+ 	 * 查询特定用户的女性助手,返回选择日期区间页面
  	 * */
  	public static void selectGrcondition(String userId,String type){
  		User user = User.findById(userId);
@@ -302,7 +302,7 @@ public class Application extends WebService {
  		render("/gestationMgm/searchGrInfo.html",userId,userName,type);
  	}
  	/**
- 	 * 跳转至根据用户Id或姓名查找对应的助孕记录
+ 	 * 跳转至根据用户Id或姓名查找对应的女性助手
  	 * */
  	public static void  searchUsergr(){
  		render("/gestationMgm/searchUsergtr.html");

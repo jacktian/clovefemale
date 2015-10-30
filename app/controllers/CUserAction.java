@@ -8,6 +8,7 @@ import beans.UserCenterBean;
 
 import models.Baby;
 import models.User;
+import models.Remind;
 import play.mvc.*;
 
 /**
@@ -243,4 +244,24 @@ public class CUserAction extends WebService{
     	/* List<User> userList = User.find("userName = ?",username).fetch();*/
     	 wsOk(userList);
      }
+
+
+    public static void initAllUserRemindInfo(){
+		List<User> userList = User.findAll();
+		for(int i = 0; i < userList.size(); i++){
+			User user = userList.get(i);
+			Remind remind = Remind.find("byOpenid",user.openid).first();
+			if(remind == null){
+				remind = new Remind();
+				remind.openid = user.openid;
+				remind.medremind = 0;
+				remind.med_adv_day = 7;
+				remind.healremind = 0;
+				remind.heal_adv_day = 7;
+				remind.yiremind = 0;
+				remind.yi_adv_day = 7;
+				remind.save();
+			}
+		}
+	}
 }

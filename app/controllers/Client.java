@@ -68,7 +68,7 @@ public class Client extends WebService{
 	}
 
 	/**
-	 * 助孕记录
+	 * 女性助手
 	 */
 	public static void pregMense(){
 		System.out.println("用户openid"+session.get("openid"));

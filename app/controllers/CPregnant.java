@@ -10,7 +10,7 @@ import models.Menses;
 import play.db.jpa.JPA;
 
 /**
- * 助孕记录
+ * 女性助手
  *
  * @author boxiZen
  * @since 2015/05/22

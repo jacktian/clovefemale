@@ -14,7 +14,7 @@
     -webkit-text-stroke-width: 0.2px;
     -moz-osx-font-smoothing: grayscale;
 }
-/* 助孕记录菜单 */
+/* 女性助手菜单 */
 .preg-menu-content{
 	position:fixed;
 	top:0px;
@@ -267,7 +267,7 @@
 	font-size:14px;
 	color:#989898;
 }
-/* 助孕记录表格 */
+/* 女性助手表格 */
 .preg-record-table{
 	width:100%;
 	text-align: center;

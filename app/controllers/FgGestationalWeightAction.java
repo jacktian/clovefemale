@@ -13,14 +13,14 @@ import models.GestationalWeight;
 import models.Menses;
 
 /**
- * 孕重控制器，与客户端交互专用
+ * 体重控制器，与客户端交互专用
  * 
  * @author Tanshichang
  * @since 2015-2-10
  */
 public class FgGestationalWeightAction extends WebService {
 
-	// 增加孕重记录
+	// 增加体重记录
 	public static void addWeight(GestationalWeight model) {
 		String result = "";
 		if (model != null) {

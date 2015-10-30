@@ -179,7 +179,7 @@ $(function() {
       }]
     ]
   });
-  /* 孕重滚轮 */
+  /* 体重滚轮 */
   $('#pregw-scroller').mobiscroll().scroller({
     theme: 'mobiscroll',
     display: 'inline',

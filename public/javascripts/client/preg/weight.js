@@ -1,5 +1,5 @@
 $(function() {
-  /* 加载孕重数据，从服务器获取数据 */
+  /* 加载体重数据，从服务器获取数据 */
   var pregwData, pregwLabel;
   loadWeightFromServer = function() {
       //加载表格数据
@@ -49,7 +49,7 @@ $(function() {
             },
             legend: {
               x: 'center',
-              data: ['孕重']
+              data: ['体重']
             },
             title: {
               subtext: '近7日体重变化'
@@ -84,7 +84,7 @@ $(function() {
               }
             }],
             series: [{
-              "name": "孕重",
+              "name": "体重",
               "type": "line",
               "data": pregwData,
               smooth: true,
@@ -113,7 +113,7 @@ $(function() {
         }
       })
     }
-    /* 孕重数据提交与修改*/
+    /* 体重数据提交与修改*/
   $('.pregw-data-refresh').bind('touchend',
     function() {
       var date = $("#pregw-date-val").attr("data-val");
@@ -135,7 +135,7 @@ $(function() {
           }
         });
     });
-  /* 孕重数据删除 */
+  /* 体重数据删除 */
   $('.pregw-data-delete').bind('touchend', function() {
       var date = $('#pregw-date-val').attr('data-val');
       $.get('/CWeight/removeWeight?date=' + date, function(data) {
@@ -151,7 +151,7 @@ $(function() {
         }
       });
     })
-    /* 加载孕重图表 */
+    /* 加载体重图表 */
   loadPregwChart = function() {
     var ctx = $("#pregw-chart").get(0).getContext("2d");
     ctx.clearRect(0, 0, $(window).get(0).innerWidth, 150);

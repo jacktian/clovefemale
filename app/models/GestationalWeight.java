@@ -10,7 +10,7 @@ import com.sudocn.play.BasicModel;
 import play.data.validation.Required;
 
 /**
- * 孕重实体类
+ * 体重实体类
  * 
  * @author caterZhong
  * @since 14/12/16

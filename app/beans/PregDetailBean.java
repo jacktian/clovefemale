@@ -24,7 +24,7 @@ public class PregDetailBean {
 	public Temperature temp;
 	
 	/**
-     * 孕重对象
+     * 体重对象
      */
 	public GestationalWeight weight;
 	

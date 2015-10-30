@@ -1,10 +1,10 @@
-#{extends 'client.html' /} #{set title:'助孕记录' /} #{set 'moreStyles'}
+#{extends 'client.html' /} #{set title:'女性助手' /} #{set 'moreStyles'}
 <link href="@{'/public/stylesheets/client/preg/pregnant.css'}?v=20150926" rel="stylesheet" type="text/css"/>
 <link href="@{'/public/stylesheets/client/preg/mobiscroll.css'}" rel="stylesheet" type="text/css" />
 #{/set} #{output 'Client/record/pregTpl.html'/}
 <header class="mui-bar mui-bar-nav client-bar-nav">
 	<a class="mui-icon mui-icon-home mui-pull-left" href="@{Client.first()}"></a>
-	<h1 class="mui-title client-title">助孕记录</h1>
+	<h1 class="mui-title client-title">女性助手</h1>
 </header>
 <div class="mui-content preg-menu-content">
 	<div id="preg-menu">
@@ -23,7 +23,7 @@
 				<a class="pregIcon" id="pregw-menu-btn" href="#" tabNum="3">
 					<i class="icon iconfont">&#xe673;</i>
 				</a>
-				孕重
+				体重
 			</li>
 			<li>
 				<a class="pregIcon" id="pregm-menu-btn" href="#" tabNum="4">
@@ -118,7 +118,7 @@
 			</div>
 		</div>
 	</div>
-	<!-- 孕重记录 -->
+	<!-- 体重记录 -->
 	<div class="mui-content preg-content danamic-content pregw-content">
 		<div class="preg-content-section">
 			<a href="/CWeight/weightDetail" class="mui-pull-right more-link">更多></a>
@@ -145,7 +145,7 @@
 		</div>
 		<div class="preg-content-section chart-section">
 			<a href="/CWeight/weightDetail" class="mui-pull-right more-link">分析></a>
-			<div class="preg-title">孕重分析</div>
+			<div class="preg-title">体重分析</div>
 			<!-- <canvas id="pregw-chart" class="preg-chart"></canvas> -->
 			<div class="pregw-chart-empty chart-empty not-shown">图表无数据显示</div>
 			<!-- echatsjs图表 -->
@@ -163,7 +163,7 @@
 				<thead>
 					<tr>
 						<th>记录日期</th>
-						<th>次数</th>
+						<th>折算12小时次数</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -307,12 +307,12 @@
 			<!--span class="model-content-list-content" id="lastTempContent">38.5℃ (正常)</span-->
 		</div>
 	</div>
-	<!-- 孕重model -->
+	<!-- 体重model -->
 	<div class="form-model pregw-model mui-hidden">
 		<header class="mui-bar mui-bar-nav model-header">
 			<button class="mui-btn mui-pull-right model-btn" id="pregw-date-btn">日期</button>
 			<input type="hidden" id="pregw-date-val" data-val="" />
-			<h1 class="mui-title model-title">孕重记录</h1>
+			<h1 class="mui-title model-title">体重记录</h1>
 		</header>
 		<div class="model-content">
 			<p>记录体重后，可以判断你的身高是否标准</p>

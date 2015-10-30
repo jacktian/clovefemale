@@ -13,7 +13,7 @@ import models.Temperature;
 import play.mvc.*;
 
 /**
- * 客户端专用助孕记录控制器
+ * 客户端专用女性助手控制器
  * 
  * @author boxiZen
  * @since 2015/03/13
@@ -36,7 +36,7 @@ public class FgPregAction extends WebService{
 		else
 			pregDetail.temp = null;
 		
-		/* 存储孕重信息 */
+		/* 存储体重信息 */
 		List<GestationalWeight> weight =  GestationalWeight.find("dateStr=?", dateStr).fetch();
 		if(weight.size()>0)
 			pregDetail.weight = weight.get(0);

@@ -99,7 +99,7 @@ public class DatabaseUtil {
 		
 		
 		
-		/*孕重测试数据*/
+		/*体重测试数据*/
 		try{
 		GestationalWeight gw =new GestationalWeight();
 		gw.userId = u1.id;

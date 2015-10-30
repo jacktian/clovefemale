@@ -1,5 +1,5 @@
 #{extends 'client.html' /}
-#{set title:'孕重分析' /}
+#{set title:'体重分析' /}
 #{set 'moreStyles'}
 <link href="@{'/public/stylesheets/client/preg/pregDetai.css'}?v=20150822" rel="stylesheet" />
 <link href="@{'/public/stylesheets/client/preg/mobiscroll.css'}" rel="stylesheet" type="text/css" />
@@ -9,7 +9,7 @@
 <!-- 网页首部 -->
 <header class="mui-bar mui-bar-nav client-bar-nav">
 	<a class="mui-icon mui-icon-left-nav mui-pull-left" href="@{Client.pregMense}"></a>
-	<h1 class="mui-title client-title">孕重分析</h1>
+	<h1 class="mui-title client-title">体重分析</h1>
 </header>
 
 <!-- 日期选择 -->
@@ -19,7 +19,7 @@
 <div class="mui-content">
 	<div id="slider" class="mui-slider">
 	<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
-		<a class="mui-control-item active" href="#menseItem">孕重记录</a>
+		<a class="mui-control-item active" href="#menseItem">体重记录</a>
 		<a class="mui-control-item" href="#menseChart">图表统计</a>
 	</div>
 	<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-6 negative"></div>
@@ -33,7 +33,7 @@
 				<thead>
 					<tr>
 						<th>记录日期</th>
-						<th>孕重(Kg)</th>
+						<th>体重(Kg)</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -190,11 +190,11 @@
 									            },
 									            legend: {
 									              x: 'center',
-									              data: ['孕重']
+									              data: ['体重']
 									            },
 									            title: {
-																text: '孕重曲线图',
-									              subtext: '所有孕重变化'
+																text: '体重曲线图',
+									              subtext: '所有体重变化'
 									            },
 									            toolbox: {
 									              show: true,
@@ -228,7 +228,7 @@
 									              }
 									            }],
 									            series: [{
-									              "name": "孕重",
+									              "name": "体重",
 									              "type": "line",
 									              "data": pregwData,
 									              smooth: true,

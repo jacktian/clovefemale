@@ -406,6 +406,7 @@ public class VacUtil {
 		if(remindList.size()!=0){
 			remind = remindList.get(0);
 		}else{
+			//System.out.println("没有找到该用户的提醒记录！");
 			return false;//wsError("没有找到该用户的提醒记录！");
 		}
 		Baby baby = Baby.findById(babyId);
@@ -432,6 +433,7 @@ public class VacUtil {
 			}
 			
 		}catch(Exception e){
+			//System.out.println("初始化疫苗列表失败");
 			return false;//"初始化疫苗列表失败";
 		}
 		return true;

@@ -47,7 +47,7 @@ $(function(){
          $('.userList nav ul li a').click(pageJump);
 
 
-        /*查看特定用户的孕重情况，跳转到日期选择区间页面*/
+        /*查看特定用户的体重情况，跳转到日期选择区间页面*/
 	var findGrByUser = function(){
 	var uId = $(this).attr('uid');
 	var type = $(this).attr('typeflag');

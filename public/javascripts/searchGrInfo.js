@@ -5,7 +5,7 @@ $(function(){
 	});
 
 	$('.submitBtn').click(function(){
-		/*根据查询助孕记录的类型筛选*/
+		/*根据查询女性助手的类型筛选*/
 		if($('.findgrcondition').find("option:selected").val()==1){
 			
 			var type = $('.typeFlag').val();

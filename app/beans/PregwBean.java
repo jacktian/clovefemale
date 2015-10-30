@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * 孕重数据
+ * 体重数据
  * @author boxizen
  * @since 2015/05/31
  */

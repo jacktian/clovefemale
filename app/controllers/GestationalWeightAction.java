@@ -11,27 +11,27 @@ import models.GestationalWeight;
 import models.User;
 
 /**
- * 孕重控制器
+ * 体重控制器
  * 
  * @author Yingpeng
  * @since 2014/12/16
  */
 public class GestationalWeightAction extends WebService {
-	//增加孕重记录
+	//增加体重记录
 	public static void addWeight(String userId, Date wDate, float wValue){
 		GestationalWeight weight = new GestationalWeight(userId,wDate, wValue);
 		weight.save();
 	}
 	
-	//获取某个用户的所有孕重记录
+	//获取某个用户的所有体重记录
 	public static void listByUser(String userId){
 		List<GestationalWeight> weights = GestationalWeight.find("userId = ?", userId).fetch();
 		wsOk(weights);
 	}
 	
-	/* 查询一段时间内的孩子孕重数据
+	/* 查询一段时间内的孩子体重数据
 	 * 参数：开始时间，结束时间，用户id
-	 * 返回：时间+孕重的数据
+	 * 返回：时间+体重的数据
 	 * */
     public static void getWeightDataByDate(String sDate,String eDate,String userId){
 		

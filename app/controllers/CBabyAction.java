@@ -76,7 +76,10 @@ public class CBabyAction extends WebService{
 	 */
 	public static void addBaby(String name,String sex,String headImgUrl,Date birthday){
 		String openid = session.get("openid");//从session中获取openid
-//		String openid = "ob1R-uIRkLLp6lmmrT4w-2rrZ5jQ";
+		if(openid == null || openid.equals("")){
+			openid =  "ob1R-uIRkLLp6lmmrT4w-2rrZ5jQ";
+		}
+		//String openid = "ob1R-uIRkLLp6lmmrT4w-2rrZ5jQ";
 		Baby baby = new Baby();
 		baby.date = birthday;
 		baby.sex = sex;
@@ -1047,7 +1050,16 @@ public class CBabyAction extends WebService{
 		if(remindList != null && remindList.size() != 0){
 			remind = remindList.get(0);
 		}else{
-			return false;//("没有找到该用户提醒信息");
+			//return false;//("没有找到该用户提醒信息");
+			remind = new Remind();
+			remind.openid = openid;
+			remind.medremind = 0;
+			remind.med_adv_day = 7;
+			remind.healremind = 0;
+			remind.heal_adv_day = 7;
+			remind.yiremind = 0;
+			remind.yi_adv_day = 7;
+			remind.save();
 		}
 		
 		List<Vaccine> vacList = Vaccine.findAll();
@@ -1193,6 +1205,7 @@ public class CBabyAction extends WebService{
 		}
 		wsOk(result);
 	}
+
 	
 	/**
 	 * 清除所有宝宝疫苗数据

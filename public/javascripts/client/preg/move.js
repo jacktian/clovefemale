@@ -75,9 +75,9 @@ $(function() {
         if(min_pregm > pregmEven[i]) min_pregm = pregmEven[i];
       }
 
-      var max_pregm_int = Math.floor(max_pregm) + 1;
-      var min_pregm_int = Math.ceil(min_pregm) - 1;
+      var min_pregm_int = min_pregm - 1;
       if(min_pregm_int < 0) min_pregm_int = 0;
+      var max_pregm_int = ((max_pregm - min_pregm + 1 - 1) / 5 + 1) * 5 + min_pregm;
 
 
       var loadMoveChart = function() {
