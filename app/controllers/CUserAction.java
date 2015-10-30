@@ -57,9 +57,9 @@ public class CUserAction extends WebService{
 	 */
 	public static void loadUserInf(){
 		String openid = session.get("openid");
-		if(openid == null){
+		/*if(openid == null){
 			openid = "ob1R-uIRkLLp6lmmrT4w-2rrZ5jQ";
-		}
+		}*/
 		try{
 			List<User> userList = User.find("openid = ?", openid).fetch();
 			if(userList.size()!=0){
