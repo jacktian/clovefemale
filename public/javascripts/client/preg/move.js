@@ -4,7 +4,7 @@ $(function() {
 
   $('#cus-model-yes').click(function(){
     if($('#cus-check').is(':checked') == true) {
-      localStorage.moveTip = '0';
+      localStorage.moveTip = new Date().toDateString();
     }
     $('.cus-model').hide();
   });
@@ -21,17 +21,20 @@ $(function() {
         pregmList: data.data
       });
 
-
+      var today = new Date().toDateString();
+      var local_date = new Date(localStorage.moveTip).toDateString();
       for(var i = 0; i<data.data.length; i++) {
         if(data.data[i].num <10) {
-          if(localStorage.moveTip != '0'){
+          var cur_date = new Date(data.data[i].dateStr).toDateString();
+          if(cur_date == today && local_date != today){
             //alert(data.data[i].dateStr+': 胎动次数过少，请及时联系医生检查');
             $('.cus-model-content').html(data.data[i].dateStr+': 胎动次数过少，请及时联系医生检查');
             $('.cus-model').show();
           }
         }
         else if(data.data[i].num <20) {
-          if(localStorage.moveTip != '0') {
+          var cur_date = new Date(data.data[i].dateStr).toDateString();
+          if(cur_date == today && local_date != today) {
             //alert(data.data[i].dateStr+': 胎动次数偏少，留意胎动变化');
             $('.cus-model-content').html(data.data[i].dateStr+': 胎动次数偏少，留意胎动变化' );
             $('.cus-model').show();
