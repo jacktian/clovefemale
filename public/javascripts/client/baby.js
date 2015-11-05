@@ -363,19 +363,33 @@ $(function(){
  		// var age = localStorage.age;
  		// var ageDcb = localStorage.ageDcb;
 
- 		/*if(height==""||height==null){
+ 		if(height==null || height==""){
  			$(".nbi-Tips").text("身高不能为空哦!");
  			$(".nbi-Tips").show();
  			return false;
  		}
 
- 		if(weight==""||weight==null){
+ 		if(weight==null || weight==""){
  			$(".nbi-Tips").text("体重不能为空哦!");
  			$(".nbi-Tips").show();
  			return false;
- 		}*/
+ 		}       
 
-        if((height==""||height==null) && (weight==""||weight==null)){
+        var tips = checkHeight(height);
+        if(tips != ""){
+           $(".nbi-Tips").text(tips);
+           $(".nbi-Tips").show();
+           return false;
+        }
+
+       tips = checkWeight(weight);
+       if(tips != ""){
+           $(".nbi-Tips").text(tips);
+           $(".nbi-Tips").show();
+           return false;
+       }
+
+        /*if((height==""||height==null) && (weight==""||weight==null)){
             $(".nbi-Tips").text("身高和体重不能同时为空哦!");
             $(".nbi-Tips").show();
             return false;
@@ -397,7 +411,9 @@ $(function(){
                 $(".nbi-Tips").show();
                 return false;
             }            
-        }
+        }*/
+
+
 
 
  		// alert(localStorage.birthday);
