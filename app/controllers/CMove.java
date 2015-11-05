@@ -26,7 +26,7 @@ public class CMove extends WebService {
 	 */
 	public static void addMovement(String date, int pregm, int time) {
 		String openid = session.get("openid");
-		openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		System.out.println(time);
 		try {
 			if (openid == null) {
@@ -113,7 +113,7 @@ public class CMove extends WebService {
 	 */
 	public static void findMovement() {
 		String openid = session.get("openid");
-		openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		String sql = "select new beans.PregmBean(m.fDate,m.num,m.time) from FetalMovement m where  m.userId = '"
 				+ openid + "' order by m.fDate desc";
 		List<PregmBean> bean = JPA.em().createQuery(sql).setMaxResults(21)
@@ -159,7 +159,7 @@ public class CMove extends WebService {
 	 */
 	public static void lastMovementChart() {
 		String openid = session.get("openid");
-		openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		String sql = "select new beans.PregmBean(m.fDate,m.num,m.time) from FetalMovement m where  m.userId = '"
 				+ openid + "' order by m.fDate desc";
 		List<PregmBean> pregBean = JPA.em().createQuery(sql).setMaxResults(21)
@@ -197,7 +197,7 @@ public class CMove extends WebService {
 	 */
 	public static void findMove(String date) {
 		String openid = session.get("openid");
-		openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		Date newDate;
 		String dateStr;
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -227,7 +227,7 @@ public class CMove extends WebService {
 	 */
 	public static void removeMovement(String date) {
 		String openid = session.get("openid");
-		openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		try {
 			String sql = "select id from FetalMovement m where date_format(m.f_date,'%Y-%m-%d') = '"
 					+ date + "' and m.user_id = '" + openid + "'";
@@ -251,7 +251,7 @@ public class CMove extends WebService {
 	 */
 	public static void loadAllMovement() {
 		String openid = session.get("openid");
-	  	openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+	  	//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		String sql = "select new beans.PregmBean(m.fDate,m.num,m.time) from FetalMovement m where m.num != -1 and m.userId = '"
 				+ openid + "' order by m.fDate desc,m.time desc";
 		List<PregmBean> bean = JPA.em().createQuery(sql).getResultList();
@@ -267,7 +267,7 @@ public class CMove extends WebService {
 	 */
 	public static void loadAllMovementChart() {
 		String openid = session.get("openid");
-		openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
+		//openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs";
 		String sql = "select new beans.PregmBean(m.fDate,m.num,m.time) from FetalMovement m where  m.userId = '" + openid + "' order by m.fDate desc";
 		List<PregmBean> pregBean = JPA.em().createQuery(sql)
 				.getResultList();

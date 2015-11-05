@@ -49,9 +49,9 @@ public class CBabyAction extends WebService{
 		
 //		String openid = "ob1R-uIRkLLp6lmmrT4w-2rrZ5jQ";
 		String openid = session.get("openid");//从session中获取openid
-		if(openid == null){
+		/*if(openid == null){
 			openid = "ob1R-uIRkLLp6lmmrT4w-2rrZ5jQ";
-		}
+		}*/
 		String queryString = "select new Baby(b.id,b.userId,b.date,CONCAT(TIMESTAMPDIFF(YEAR,b.date,now()),''),b.headImgUrl,b.sex,b.name) " +
 				" from Baby b where b.userId = ?1";
 		
@@ -76,9 +76,9 @@ public class CBabyAction extends WebService{
 	 */
 	public static void addBaby(String name,String sex,String headImgUrl,Date birthday){
 		String openid = session.get("openid");//从session中获取openid
-		if(openid == null || openid.equals("")){
+		/*if(openid == null || openid.equals("")){
 			openid =  "ob1R-uIRkLLp6lmmrT4w-2rrZ5jQ";
-		}
+		}*/
 		//String openid = "ob1R-uIRkLLp6lmmrT4w-2rrZ5jQ";
 		Baby baby = new Baby();
 		baby.date = birthday;
@@ -206,9 +206,9 @@ public class CBabyAction extends WebService{
 		try{
 			Baby baby = Baby.findById(babyId);
 			String openid = session.get("openid");//从session中获取openid
-			if(openid == null){
+			/*if(openid == null){
 				openid = "ob1R-uIRkLLp6lmmrT4w-2rrZ5jQ";
-			}
+			}*/
 			if(baby!=null){
 				baby.date = date;		
 				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");	
@@ -604,9 +604,9 @@ public class CBabyAction extends WebService{
 	 */
 	public static void loadBabyGrowth(String babyId){
 //		String babyId = "1BFB8CDDECC24BE49F8D3C5B9528BBB0";
-		if("".equals(babyId) || babyId == null){
+		/*if("".equals(babyId) || babyId == null){
 			babyId = "1BFB8CDDECC24BE49F8D3C5B9528BBB0";
-		}
+		}*/
 //		babyId
 //		50.4,54.8,58.7,62,64.6,66.7,68.4,69.8,71.2,72.6,74,75.3,76.5,82.7,88.5,93.3,97.5,100.6,104.1,107.7,111.3,114.7,117.7,120.7,124,130,135.4,140.2,145.3,151.9,159.5,165.9,169.8,171.6,172.3,172.7
 		

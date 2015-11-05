@@ -20,9 +20,9 @@ public class CRemindAction extends WebService {
 	public static void changeRemindStatus(String remindKind,int status){
 		String openid = session.get("openid");//从session中获取openid
 		Remind remind = null;
-		if(openid == null){
+		/*if(openid == null){
 			openid = "ob1R-uIRkLLp6lmmrT4w-2rrZ5jQ";
-		}
+		}*/
 		try{
 			List<Remind> remindList = Remind.find("byOpenid", openid).fetch();
 			if(remindList.size()!=0){
@@ -58,9 +58,9 @@ public class CRemindAction extends WebService {
 	public static void modifyAdvDay(String remindKind,int day){
 		String openid = session.get("openid");//从session中获取openid
 		Remind remind = null;
-		if(openid == null){
+		/*if(openid == null){
 			openid = "ob1R-uIRkLLp6lmmrT4w-2rrZ5jQ";
-		}
+		}*/
 		try{
 			List<Remind> remindList = Remind.find("byOpenid", openid).fetch();
 			if(remindList.size()!=0){
@@ -99,9 +99,9 @@ public class CRemindAction extends WebService {
 	 */
 	public static void getRemindInf(){
 		String openid = session.get("openid");//从session中获取openid
-		if(openid == null){
+		/*if(openid == null){
 			openid = "ob1R-uIRkLLp6lmmrT4w-2rrZ5jQ";
-		}
+		}*/
 		List<Remind> remindList = null;
 		try{
 			remindList = Remind.find("byOpenid", openid).fetch();
