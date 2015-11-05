@@ -14,10 +14,10 @@ $(function() {
           $('#tempTable tbody').html(emptyHtml);
         } else if (data.data.length <= 4) {
           $('.tempTableArrow').css("display", "none");
-          $('#lastTempViewBtn').html("上一次(" + data.data[data.data.length - 1].dateStr + "):" + data.data[data.data.length - 1].temp + "摄氏度");
+          $('#lastTempViewBtn').html("上一次(" + data.data[0].dateStr + "):" + data.data[data.data.length - 1].temp + "摄氏度");
         } else {
           $('.tempTableArrow').css("display", "block");
-          $('#lastTempViewBtn').html("上一次(" + data.data[data.data.length - 1].dateStr + "):" + data.data[data.data.length - 1].temp + "摄氏度");
+          $('#lastTempViewBtn').html("上一次(" + data.data[0].dateStr + "):" + data.data[data.data.length - 1].temp + "摄氏度");
         }
       })
       //加载图表数据
