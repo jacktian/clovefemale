@@ -841,8 +841,8 @@ public class CBabyAction extends WebService{
 	/**
 	 * 
 	 */
-	public static void modifyGrade(){
-		//String babyId = "1BFB8CDDECC24BE49F8D3C5B9528BBB0";
+	/*public static void modifyGrade(){
+		String babyId = "1BFB8CDDECC24BE49F8D3C5B9528BBB0";
 		List<GradeForm> gradeFormList = GradeForm.find("babyId=?", babyId).fetch(6);
 		GradeForm grade;
 		for(int i = 0; i < gradeFormList.size(); i++){
@@ -850,7 +850,7 @@ public class CBabyAction extends WebService{
 			grade.grade_int = 1;
 			grade.delete();
 		}
-	}
+	}*/
 	
 	
 	
