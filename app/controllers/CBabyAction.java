@@ -774,9 +774,9 @@ public class CBabyAction extends WebService{
 	 * 未完成
 	 */
 	public static void loadGradeForm(String babyId,String subject){
-		if("".equals(babyId)||babyId==null){
+		/*if("".equals(babyId)||babyId==null){
 			babyId = "1BFB8CDDECC24BE49F8D3C5B9528BBB0";
-		}
+		}*/
 		List<GradeForm> gradeFormList;
 		try{
 			if(subject == null || "".equals(subject)){//subject没选定的时候，加载最新记录的一次的科目
@@ -842,7 +842,7 @@ public class CBabyAction extends WebService{
 	 * 
 	 */
 	public static void modifyGrade(){
-		String babyId = "1BFB8CDDECC24BE49F8D3C5B9528BBB0";
+		//String babyId = "1BFB8CDDECC24BE49F8D3C5B9528BBB0";
 		List<GradeForm> gradeFormList = GradeForm.find("babyId=?", babyId).fetch(6);
 		GradeForm grade;
 		for(int i = 0; i < gradeFormList.size(); i++){
@@ -859,9 +859,9 @@ public class CBabyAction extends WebService{
 	 */
 	public static void loadNextVac(String babyId){
 //		wsOk(BabyVac.findAll());
-		if("".equals(babyId)||babyId==null){
+		/*if("".equals(babyId)||babyId==null){
 			babyId = "1BFB8CDDECC24BE49F8D3C5B9528BBB0";
-		}
+		}*/
 
 		try{
 //			List<BabyVac> vacList = BabyVac.find("select new BabyVac(bv.id,bv.etmDate,bv.date,bv.remindTime,bv.name,bv.monthAfter,bv.ageDcb,bv.babyId,bv.pvDisease,bv.isDone) from BabyVac bv where bv.babyId = ? and bv.isDone = 0 order by bv.monthAfter", babyId).fetch(3); 
@@ -885,9 +885,9 @@ public class CBabyAction extends WebService{
 	 *加载宝宝所有未接种疫苗 
 	 */
 	public static void loadTodoVac(String babyId){
-		if("".equals(babyId)||babyId==null){
+		/*if("".equals(babyId)||babyId==null){
 			babyId = "1BFB8CDDECC24BE49F8D3C5B9528BBB0";
-		}
+		}*/
 
 		try{
 //			List<BabyVac> vacList = BabyVac.find("select new BabyVac(bv.id,bv.etmDate,bv.date,bv.remindTime,bv.name,bv.monthAfter,bv.ageDcb,bv.babyId,bv.pvDisease,bv.isDone) from BabyVac bv where bv.babyId = ? and bv.isDone = 0 order by bv.monthAfter", babyId).fetch(); 
@@ -912,9 +912,9 @@ public class CBabyAction extends WebService{
 	 */
 	public static void loadVaccinated(String babyId){
 //		wsOk(BabyVac.findAll());
-		if("".equals(babyId)||babyId==null){
+		/*if("".equals(babyId)||babyId==null){
 			babyId = "1BFB8CDDECC24BE49F8D3C5B9528BBB0";
-		}
+		}*/
 
 		try{
 //			List<BabyVac> vacList = BabyVac.find("select new BabyVac(bv.id,bv.etmDate,bv.date,bv.remindTime,bv.name,bv.monthAfter,bv.ageDcb,bv.babyId,bv.pvDisease,bv.isDone) from BabyVac bv where bv.babyId = ? and bv.isDone = 1 order by bv.monthAfter desc", babyId).fetch(3); 
@@ -939,9 +939,9 @@ public class CBabyAction extends WebService{
 	 *
 	 */
 	public static void loadAllDoneVac(String babyId){
-		if("".equals(babyId)||babyId==null){
+		/*if("".equals(babyId)||babyId==null){
 			babyId = "1BFB8CDDECC24BE49F8D3C5B9528BBB0";
-		}
+		}*/
 
 		try{
 //			List<BabyVac> vacList = BabyVac.find("select new BabyVac(bv.id,bv.etmDate,bv.date,bv.remindTime,bv.name,bv.monthAfter,bv.ageDcb,bv.babyId,bv.pvDisease,bv.isDone) from BabyVac bv where bv.babyId = ? and  bv.isDone = 1 order by bv.monthAfter desc", babyId).fetch(); 
@@ -965,9 +965,9 @@ public class CBabyAction extends WebService{
 	 * 
 	 */
 	public static void loadSearchVac(String babyId,String searchWord){
-		if("".equals(babyId)||babyId==null){
+		/*if("".equals(babyId)||babyId==null){
 			babyId = "1BFB8CDDECC24BE49F8D3C5B9528BBB0";
-		}
+		}*/
 
 		try{
 //			List<BabyVac> vacList = BabyVac.find("select new BabyVac(bv.id,bv.etmDate,bv.date,bv.remindTime,bv.name,bv.monthAfter,bv.ageDcb,bv.babyId,bv.pvDisease,bv.isDone) from BabyVac bv where bv.babyId = ? and  bv.name like '%"+searchWord+"%' order by bv.monthAfter", babyId).fetch(); 
@@ -1005,9 +1005,9 @@ public class CBabyAction extends WebService{
 	 *
 	 */
 	public static void loadAllVac(String babyId){
-		if("".equals(babyId)||babyId==null){
+		/*if("".equals(babyId)||babyId==null){
 			babyId = "1BFB8CDDECC24BE49F8D3C5B9528BBB0";
-		}
+		}*/
 		try{
 //			List<BabyVac> vacList = BabyVac.find("select new BabyVac(bv.id,bv.etmDate,bv.date,bv.remindTime,bv.name,bv.monthAfter,bv.ageDcb,bv.babyId,bv.pvDisease,bv.isDone) from BabyVac bv where bv.babyId = ?  order by bv.monthAfter", babyId).fetch(); 
 			String queryString = "select new beans.BabyVacBean(bv.id,bv.etmDate,bv.date,bv.remindTime,v.name,v.time,v.monthAfter,v.ageDcb,bv.babyId,v.pvDisease,bv.isDone) "
@@ -1032,9 +1032,9 @@ public class CBabyAction extends WebService{
 	 *  babyId: 宝宝Id
 	 */
 	public static boolean initBabyVac(String openid,Date birthday, String babyId){
-		if("".equals(babyId) || babyId == null){
+		/*if("".equals(babyId) || babyId == null){
 			babyId = "1BFB8CDDECC24BE49F8D3C5B9528BBB0";
-		}
+		}*/
 		List<Remind> remindList = null;
 		Remind remind = null;
 		if(birthday == null){
@@ -1232,9 +1232,9 @@ public class CBabyAction extends WebService{
 	 * 加载所有宝宝id为BabyId疫苗数据
 	 */
 	public static void loadAllBabyVac(String babyId){
-		if("".equals(babyId) || babyId == null){
+		/*if("".equals(babyId) || babyId == null){
 			babyId = "1BFB8CDDECC24BE49F8D3C5B9528BBB0";
-		}
+		}*/
 		List<BabyVac> babyVacList = BabyVac.find("babyId = ?", babyId).fetch();
 		wsOk(babyVacList);
 	}
