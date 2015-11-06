@@ -866,7 +866,7 @@ public class CBabyAction extends WebService{
 		try{
 //			List<BabyVac> vacList = BabyVac.find("select new BabyVac(bv.id,bv.etmDate,bv.date,bv.remindTime,bv.name,bv.monthAfter,bv.ageDcb,bv.babyId,bv.pvDisease,bv.isDone) from BabyVac bv where bv.babyId = ? and bv.isDone = 0 order by bv.monthAfter", babyId).fetch(3); 
 			String queryString = "select new beans.BabyVacBean(bv.id,bv.etmDate,bv.date,bv.remindTime,v.name,v.time,v.monthAfter,v.ageDcb,bv.babyId,v.pvDisease,bv.isDone) "
-					+" from BabyVac as bv,Vaccine as v where bv.vacId = v.id and bv.babyId = ?1 and bv.isDone = 0 order by v.monthAfter";//
+					+" from BabyVac as bv,Vaccine as v where bv.vacId = v.id and bv.babyId = ?1 and bv.isDone = 0 and bv.etmDate >= curdate() order by v.monthAfter";//
 			Query query = JPA.em().createQuery(queryString);
 			query.setParameter(1, babyId);//给编号为1的参数设值 
 			List<BabyVacBean> vacList  = query.setMaxResults(3).getResultList();
