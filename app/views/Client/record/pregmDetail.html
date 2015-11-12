@@ -177,7 +177,19 @@
 	      pregmAfter = data.data.afternoon;
 	      pregmEven = data.data.evening;
 
-	                      //获取数据的最大最小值作为图标的上下限
+	      for(var i = 0; i < pregmMor.length; i++){
+	        if(pregmMor[i]  == -1) pregmMor[i] = 0;
+	      }
+
+	      for(var i = 0; i < pregmAfter.length; i++){
+	        if(pregmAfter[i]  == -1) pregmAfter[i] = 0;
+	      }
+
+	      for(var i = 0; i < pregmEven.length; i++){
+	        if(pregmEven[i]  == -1) pregmEven[i] = 0;
+	      }
+
+	       //获取数据的最大最小值作为图标的上下限
 	      var max_pregm = -1;
 	      var min_pregm = pregmMor[0];
 

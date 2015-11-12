@@ -174,13 +174,13 @@ public class CMove extends WebService {
 				labelList.add(pregBean.get(pregBean.size() - 1 - i).dateStr);
 			}
 			if(pregBean.get(pregBean.size() - 1 - i).time == 0){
-				if(pregBean.get(pregBean.size() - 1 - i).num != -1) morning.add(pregBean.get(pregBean.size() - 1 - i).num);
+				morning.add(pregBean.get(pregBean.size() - 1 - i).num);
 			}
 			else if(pregBean.get(pregBean.size() - 1 - i).time == 1){
-				if(pregBean.get(pregBean.size() - 1 - i).num != -1) afternoon.add(pregBean.get(pregBean.size() - 1 - i).num);
+				afternoon.add(pregBean.get(pregBean.size() - 1 - i).num);
 			}
 			else{
-				if(pregBean.get(pregBean.size() - 1 - i).num != -1) evening.add(pregBean.get(pregBean.size() - 1 - i).num);
+				evening.add(pregBean.get(pregBean.size() - 1 - i).num);
 			}
 
 		}
@@ -286,13 +286,13 @@ public class CMove extends WebService {
 				labelList.add(pregBean.get(pregBean.size() - 1 - i).dateStr);
 			}
 			if(pregBean.get(pregBean.size() - 1 - i).time == 0){
-				if(pregBean.get(pregBean.size() - 1 - i).num != -1) morning.add(pregBean.get(pregBean.size() - 1 - i).num);
+				morning.add(pregBean.get(pregBean.size() - 1 - i).num);
 			}
 			else if(pregBean.get(pregBean.size() - 1 - i).time == 1){
-				if(pregBean.get(pregBean.size() - 1 - i).num != -1) afternoon.add(pregBean.get(pregBean.size() - 1 - i).num);
+				afternoon.add(pregBean.get(pregBean.size() - 1 - i).num);
 			}
 			else{
-				if(pregBean.get(pregBean.size() - 1 - i).num != -1) evening.add(pregBean.get(pregBean.size() - 1 - i).num);
+				evening.add(pregBean.get(pregBean.size() - 1 - i).num);
 			}
 
 		}
