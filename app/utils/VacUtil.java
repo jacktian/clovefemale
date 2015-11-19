@@ -499,13 +499,15 @@ public class VacUtil {
 	 * 
 	 */
 	public static boolean modifyUserBabyRemind(String openid){
-		List<Baby> babyList = Baby.find("ByUserId", openid).fetch();
+		List<Baby> babyList = Baby.find("byPid", openid).fetch();
+		System.out.println("babySize:"+babyList.size());
 		boolean result = true;
 		if(babyList == null && babyList.size() == 0){
 			return true;
 		}
 		for(int i = 0; i < babyList.size(); i++){
-			result = modifyRemindTime(openid,babyList.get(i).userId);
+			System.out.println("babyIndex:"+i);
+			result = modifyRemindTime(openid,babyList.get(i).id);//userId
 			if(result == false){
 				return false;
 			}

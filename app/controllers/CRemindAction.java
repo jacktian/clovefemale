@@ -3,6 +3,7 @@ package controllers;
 import java.util.List;
 
 import models.Remind;
+import models.User;
 
 import utils.VacUtil;
 
@@ -20,9 +21,9 @@ public class CRemindAction extends WebService {
 	public static void changeRemindStatus(String remindKind,int status){
 		String openid = session.get("openid");//从session中获取openid
 		Remind remind = null;
-		/*if(openid == null){
+		if(openid == null){
 			openid = "ob1R-uIRkLLp6lmmrT4w-2rrZ5jQ";
-		}*/
+		}
 		try{
 			List<Remind> remindList = Remind.find("byOpenid", openid).fetch();
 			if(remindList.size()!=0){
@@ -58,9 +59,9 @@ public class CRemindAction extends WebService {
 	public static void modifyAdvDay(String remindKind,int day){
 		String openid = session.get("openid");//从session中获取openid
 		Remind remind = null;
-		/*if(openid == null){
+		if(openid == null){
 			openid = "ob1R-uIRkLLp6lmmrT4w-2rrZ5jQ";
-		}*/
+		}
 		try{
 			List<Remind> remindList = Remind.find("byOpenid", openid).fetch();
 			if(remindList.size()!=0){
@@ -78,6 +79,7 @@ public class CRemindAction extends WebService {
 			remind.heal_adv_day = day;
 		}else{//疫苗提醒
 			remind.yi_adv_day = day;
+			//remind.
 			                    //修改疫苗接种提醒时间
 		}
 		
@@ -85,10 +87,12 @@ public class CRemindAction extends WebService {
 			remind.save();
 			if("yiremind".equals(remindKind)){//疫苗提醒
 				if(!VacUtil.modifyUserBabyRemind(openid)){
+					//wsError();
 					wsError("修改宝宝疫苗预计接种时间出错!");
 				}
 			}
 		}catch(Exception e){
+			wsError(e.toString());
 			wsError("保存提醒提前天数出错了");
 		}
 		wsOk("保存成功");
@@ -99,9 +103,9 @@ public class CRemindAction extends WebService {
 	 */
 	public static void getRemindInf(){
 		String openid = session.get("openid");//从session中获取openid
-		/*if(openid == null){
+		if(openid == null){
 			openid = "ob1R-uIRkLLp6lmmrT4w-2rrZ5jQ";
-		}*/
+		}
 		List<Remind> remindList = null;
 		try{
 			remindList = Remind.find("byOpenid", openid).fetch();
@@ -114,5 +118,35 @@ public class CRemindAction extends WebService {
 			wsError("没有找到用户设置信息哦");
 		}
 	}
+	
+	/*
+	 * 初始化已存在的所有用户初始化提醒数据
+	 */
+	public static void initExistUserRemindData(){
+		try{
+			List<User> userList = User.findAll();
+			Remind remind = null;
+			User user = null;
+			for(int i = 0; i < userList.size(); i++){
+				user = userList.get(i);
+				if(Remind.find("byOpenid", user.openid) == null){//没有此用户的提醒记录
+					remind = new Remind();
+					remind.openid = user.openid;
+					remind.medremind = 1;
+					remind.med_adv_day = 7;
+					remind.healremind = 0;
+					remind.heal_adv_day = 7;
+					remind.yiremind = 1;
+					remind.yi_adv_day = 7;
+					remind.save();
+				}
+			}
+			wsOk("初始化已存在的所有用户初始化提醒数据---成功");
+		}catch(Exception e){
+			wsError(e.toString());
+			//wsOk("初始化已存在的所有用户初始化提醒数据---成功");
+		}	
+	}
+	
 	 
 }

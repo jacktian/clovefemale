@@ -235,6 +235,7 @@ body{
 .remindList{
 	/*padding-top: 44px;*/
 	margin-top: 64px;
+	display: none;
 }
 
 /*toggle控件*/

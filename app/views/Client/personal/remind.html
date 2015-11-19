@@ -16,7 +16,7 @@
     </div>
    <!--  <a href="" class="mui-navigate-right"></a> -->
    生理记录提醒
-   <div class="remindDate">提前<span id="remindDate_phy">7</span>天</div>
+   <div class="remindDate">提前<span id="remindDate_phy"></span>天</div>
    </div>
     <div id="toggle-phy" class="mui-switch mui-switch-mini">
       <div class="mui-switch-handle"></div>
@@ -30,7 +30,7 @@
       <i class="icon-remindItem iconfont">&#xe679;</i>
     </div>
     药品到期提醒
-    <div class="remindDate">提前<span id="remindDate_med">7</span>天</div>
+    <div class="remindDate">提前<span id="remindDate_med"></span>天</div>
     </div>
     <div id="toggle-med" class="mui-switch mui-switch-mini mui-active">
       <div class="mui-switch-handle"></div>
@@ -44,7 +44,7 @@
       <i class="icon-remindItem iconfont">&#xe611;</i>
     </div>
     疫苗接种提醒
-    <div class="remindDate">提前<span id="remindDate_vac">7</span>天</div>
+    <div class="remindDate">提前<span id="remindDate_vac"></span>天</div>
     </div>
     <div id="toggle-vac" class="mui-switch mui-switch-mini mui-active">
       <div class="mui-switch-handle"></div>
@@ -90,6 +90,9 @@
 <script>
   var setItem = 0;//0代表生理记录提醒，1代表药品到期提醒，2代表疫苗接种提醒
   var tapToggle = false; //点击的是toggle控件
+  var toggle_auto_back_phy = false;//toggle控件滚动是否由于操作失败自动回滚
+  var toggle_auto_back_med = false;
+  var toggle_auto_back_vac = false;
   $(function(){
       //加载用户提醒信息
       loadRemindInf();
@@ -131,29 +134,29 @@
       document.getElementById("remind-confirm-btn").addEventListener("tap",function(event){
           var pre_remind_day = $(".stressDate").text();
           switch(setItem){
-            case 0: 
-                    if(modifyAdvDay("healremind",pre_remind_day)){
-                       $("#remindDate_phy").text(pre_remind_day);
-                     }else{
-                       showResTips("操作失败")
-                     }
+            case 0: modifyAdvDay("healremind",pre_remind_day);
+                    // if(modifyAdvDay("healremind",pre_remind_day)){
+                    //    $("#remindDate_phy").text(pre_remind_day);
+                    //  }else{
+                    //    showResTips("操作失败")
+                    //  }
                    
                     // alert("修改的是生理记录提醒");
                     break;
-            case 1:
-                    if(modifyAdvDay("medremind",pre_remind_day)){
-                       $("#remindDate_med").text(pre_remind_day);
-                     }else{
-                       showResTips("操作失败")
-                     }
+            case 1: modifyAdvDay("medremind",pre_remind_day);
+                    // if(modifyAdvDay("medremind",pre_remind_day)){
+                    //    $("#remindDate_med").text(pre_remind_day);
+                    //  }else{
+                    //    showResTips("操作失败")
+                    //  }
                     // alert("修改的是药品到期提醒");
                     break;
-            case 2:
-                    if(modifyAdvDay("yiremind",pre_remind_day)){
-                       $("#remindDate_vac").text(pre_remind_day);
-                     }else{
-                       showResTips("操作失败")
-                     }
+            case 2: modifyAdvDay("yiremind",pre_remind_day);
+                    // if(modifyAdvDay("yiremind",pre_remind_day)){
+                    //    $("#remindDate_vac").text(pre_remind_day);
+                    //  }else{
+                    //    showResTips("操作失败")
+                    //  }
                     // alert("修改的是疫苗接种提醒");
                     break;
             default:break;
@@ -163,30 +166,21 @@
 
        /*生理记录开关*/
       document.getElementById("toggle-phy").addEventListener("toggle",function(event){
-        tapToggle = true;
-        var open = false;
-        var status = 0;
-        var result = 1;
-        if(event.detail.isActive){
-          open = true;
-          status = 1;
-          result = modifyRemingdSetting("healremind",status);
-          if(result == true){
-            showResTips("生理记录提醒已打开");
-          }else{//失败 
-            mui("#toggle-phy").switch().toggle();  
-            showResTips("操作失败！")        
+        if(toggle_auto_back_phy == false){
+          tapToggle = true;
+          var open = false;
+          var status = 0;
+          var result = 1;
+          if(event.detail.isActive){
+            open = true;
+            status = 1;
+            modifyRemingdSetting("healremind",status);
+          }else{
+            status = 0;
+            modifyRemingdSetting("healremind",status);
           }
-
         }else{
-          status = 0;
-          result = modifyRemingdSetting("healremind",status);
-          if(result == true){
-            showResTips("生理记录提醒已关闭")
-          }else{//失败 
-            mui("#toggle-phy").switch().toggle();  
-            showResTips("操作失败！")        
-          }
+          toggle_auto_back_phy = false;
         }
         
       })
@@ -194,58 +188,42 @@
 
       /*药品到期开关*/
       document.getElementById("toggle-med").addEventListener("toggle",function(event){
-        tapToggle = true;
-        var status = 0;
-        var result = 1;
-        if(event.detail.isActive){
-          open = true;
-          status = 1;
-          result = modifyRemingdSetting("medremind",status);
-          if(result == true){
-            showResTips("药品到期提醒已打开")
-          }else{//失败 
-            mui("#toggle-phy").switch().toggle();  
-            showResTips("操作失败！")        
+        if(toggle_auto_back_med == false){
+          tapToggle = true;
+          var status = 0;
+          var result = 1;
+          if(event.detail.isActive){
+            open = true;
+            status = 1;
+            modifyRemingdSetting("medremind",status);
+          }else{
+            status = 0;
+            modifyRemingdSetting("medremind",status);
           }
-
         }else{
-          status = 0;
-          result = modifyRemingdSetting("medremind",status);
-          if(result == true){
-            showResTips("药品到期提醒已关闭")
-          }else{//失败 
-            mui("#toggle-phy").switch().toggle();  
-            showResTips("操作失败！")        
-          }
+          toggle_auto_back_med = false;
         }
       })
 
 
       /*疫苗开关*/
       document.getElementById("toggle-vac").addEventListener("toggle",function(event){
-        tapToggle = true;
-        var status = 0;
-        var result = 1;
-        if(event.detail.isActive){
-          open = true;
-          status = 1;
-          result = modifyRemingdSetting("yiremind",status);
-          if(result == true){
-            showResTips("疫苗提醒已打开")
-          }else{//失败 
-            mui("#toggle-phy").switch().toggle();  
-            showResTips("操作失败！")        
+        if(toggle_auto_back_vac == false){
+          tapToggle = true;
+          var status = 0;
+          var result = 1;
+          if(event.detail.isActive){
+            open = true;
+            status = 1;
+            modifyRemingdSetting("yiremind",status);
+            
+          }else{
+            status = 0;
+            modifyRemingdSetting("yiremind",status);
+            
           }
-
         }else{
-          status = 0;
-          result = modifyRemingdSetting("yiremind",status);
-          if(result == true){
-            showResTips("疫苗提醒已关闭")
-          }else{//失败 
-            mui("#toggle-phy").switch().toggle();  
-            showResTips("操作失败！")        
-          }
+          toggle_auto_back_med = false;
         }
       })
 
@@ -293,20 +271,27 @@
   function loadRemindInf(){
       $.post("/CRemindAction/getRemindInf",function(data){
          if(data.result == 0){//成功
-             if(medremind == 1){
+            //设置开关
+             if(data.data.healremind == 1){
                 $("#toggle-phy").addClass("mui-active");
              }
-             if(healremind == 0){
+             if(data.data.medremind == 0){
                 $("#toggle-med").removeClass("mui-active");
              }
-             if(yiremind == 0){
+             if(data.data.yiremind == 0){
                 $("#toggle-vac").removeClass("mui-active");
              }
-               
+
+            //设置提前天数
+            $("#remindDate_phy").text(data.data.heal_adv_day);
+            $("#remindDate_med").text(data.data.med_adv_day);
+            $("#remindDate_vac").text(data.data.yi_adv_day);
+            $(".remindList").show();  
           }else{//失败
             // $("#toggle-phy").addClass("mui-switch-mini mui-active");
              // $("#toggle-phy").addClass("mui-active");
             // $("#toggle-med").removeClass("mui-active");
+            $(".remindList").show();  
           }
       });
   }
@@ -314,37 +299,70 @@
   /*打开/关闭提醒,
   remindKind:提醒类型 “medremind”：药品到期提醒   "healremind"：生理记录提醒  “yiremind”:疫苗提醒
   status：0：关闭    1：打开*/
-  function modifyRemingdSetting(remindKind,status){
-      var result;
+  function modifyRemingdSetting(remindKind,status,kindStr){
+    var kindStr = "";
+    //var 
+    
       $.post("/CRemindAction/changeRemindStatus",{
         remindKind:remindKind,
         status:status
       },function(data){
         if(data.result == 0){//成功
-          result = true;
+          switch(remindKind){
+            case "healremind": kindStr = "生理记录";
+                  toggle_auto_back_phy = false;
+                  break;
+            case "medremind": kindStr = "药品到期";
+                  toggle_auto_back_med = false;
+                  break;
+            case "yiremind": kindStr = "疫苗接种";
+                  toggle_auto_back_vac = false;
+                  break;
+          }
+          if(status == 1){
+            showResTips(kindStr+"提醒已打开");
+          }else{
+            showResTips(kindStr+"提醒已关闭");
+          }
+          
         }else{
-          result = false;
+          switch(remindKind){
+            case "yiremind": kindStr = "生理记录";
+                  toggle_auto_back_phy = true;
+                  break;
+            case "medremind": kindStr = "药品到期";
+                  toggle_auto_back_med = true;
+                  break;
+            case "healremind": kindStr = "疫苗接种";
+                  toggle_auto_back_vac = true;
+                  break;
+          }
+          showResTips("操作失败！")   
         }
       });
-      return result;//返回结果
   }
 
   /**
   *修改提醒提前天数，setItem:0 生理记录提醒的设置  setItem:1 药品到期的提醒设置  setItem:2 疫苗
   */
   function modifyAdvDay(remindKind,day){
-      var result;
       $.post("/CRemindAction/modifyAdvDay",{
         remindKind:remindKind,
         day:day
       },function(data){
         if(data.result == 0){//成功
-          result = true;
+          switch(remindKind){
+              case "healremind":   $("#remindDate_phy").text(day);break;
+              case "medremind":  $("#remindDate_med").text(day);break;
+              case "yiremind": $("#remindDate_vac").text(day);break;
+          }
+         // return true;
         }else{
-          result = false;
+         // return false;
+          showResTips("操作失败")
         }
       });
-      return result;//返回结果
+
   }
 
 </script>
