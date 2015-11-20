@@ -10,6 +10,7 @@ import java.util.Map;
 
 import javax.persistence.Query;
 
+import com.alibaba.fastjson.JSONObject;
 import jobs.AccessTokenRefresher;
 
 import com.google.gson.JsonElement;
@@ -226,5 +227,32 @@ public class Client extends WebService{
 	 */
 	public static void unitChange(){
 		render("/Client/record/unitChange.html");
+	}
+
+	/*
+	 * 测试
+	 */
+	public static void tplSend() {
+
+		/*首先获取accessToken的值，直接从数据库取出即可*/
+		models.WeChat wxbean = new models.WeChat();
+		wxbean = (models.WeChat) models.WeChat.findAll().get(0);
+		String accessToken = wxbean.access_token,
+				openid = "ob1R-uD5CgT-x-FEdtMIgAWYr4Vs",
+				templateid = "HvRnzfLMciblzK12-emWJ4xtAjrwXDUTk4SauMPRx-M";
+
+
+		String api = Play.configuration.getProperty("tplApi") + accessToken;
+
+		String jsonStr = "{ \"touser\":\""+openid+"\", \"template_id\":\""+templateid+"\", \"url\":\"http://weixin.qq.com/download\", \"data\":{ \"first\": { \"value\":\"恭喜你购买成功！\", \"color\":\"#173177\" }, \"keyword1\":{ \"value\":\"2014年9月22日\", \"color\":\"#173177\" }, \"keyword2\": { \"value\":\"2014年9月22日\", \"color\":\"#173177\" },  \"remark\":{ \"value\":\"欢迎再次购买！\", \"color\":\"#173177\" } } }";
+
+		JSONObject json = JSONObject.parseObject(jsonStr);
+		WSRequest request = WS.url(api);
+
+		System.out.println(json);
+
+		HttpResponse response = request.body(json).post();
+
+		System.out.println(response.getString());
 	}
 }

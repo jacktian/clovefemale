@@ -11,7 +11,7 @@ import java.util.Date;
  * Created by boxizen on 15/8/22.
  */
 
-@Every("10min")
+@Every("1min")
 public class Notification extends Job {
 
     @Override
