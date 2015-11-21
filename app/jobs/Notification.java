@@ -42,6 +42,10 @@ public class Notification extends Job {
                         System.out.println("medicine name:" + mList.get(m).name);
 
                         Date dead = mList.get(m).deadline;
+                        System.out.println("now:" + now);
+                        System.out.println("dead:" + dead);
+                        System.out.println(now.compareTo(dead));
+
                         if (now.compareTo(dead) == -1) {
                             System.out.println("medicine inside" + mList.get(m).name);
                             // 设置消息内容
