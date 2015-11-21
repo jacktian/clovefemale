@@ -235,7 +235,7 @@ public class Client extends WebService{
 	 */
 	public static void tplSend() {
 
-		String openid = "o7NE5wJ9U0Gjes3geAnq-0oly5vI";
-		utils.MsgUtil.sengMsg(openid);
+//		String openid = "o7NE5wJ9U0Gjes3geAnq-0oly5vI";
+//		utils.MsgUtil.sengMsg(openid);
 	}
 }
