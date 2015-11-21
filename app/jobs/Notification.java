@@ -22,7 +22,7 @@ public class Notification extends Job {
     public void doJob(){
 
         System.out.println("debug");
-        
+
         List<Remind> remindList = Remind.findAll();
         Date now = new Date();
 
@@ -39,8 +39,11 @@ public class Notification extends Job {
                 if (medRemind == 1) {
                     List<Medicine> mList = Medicine.find("byOpenid", openid).fetch();
                     for (int m = 0; m < mList.size(); m++) {
+                        System.out.println("medicine name:" + mList.get(m).name);
+
                         Date dead = mList.get(m).deadline;
                         if (now.compareTo(dead) == -1) {
+                            System.out.println("medicine inside" + mList.get(m).name);
                             // 设置消息内容
                             String msg = "您的姨妈要来咯";
                             String remark = "请好好注意身体哦";
