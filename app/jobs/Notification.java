@@ -21,6 +21,8 @@ public class Notification extends Job {
     @Override
     public void doJob(){
 
+        System.out.println("debug");
+        
         List<Remind> remindList = Remind.findAll();
         Date now = new Date();
 
