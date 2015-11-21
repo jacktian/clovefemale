@@ -46,7 +46,7 @@ public class Notification extends Job {
                         System.out.println("dead:" + dead);
                         System.out.println(now.compareTo(dead));
 
-                        if (now.compareTo(dead) == -1) {
+                        if (now.compareTo(dead) == 1) {
                             System.out.println("medicine inside" + mList.get(m).name);
                             // 设置消息内容
                             String msg = "您的姨妈要来咯";
