@@ -15,7 +15,7 @@ import utils.*;
  * Created by boxizen on 15/8/22.
  */
 
-@Every("1min")
+@Every("24h")
 public class Notification extends Job {
 
     @Override
