@@ -2,11 +2,15 @@ package jobs;
 
 import models.Medicine;
 import models.Remind;
+import play.Play;
 import play.jobs.Every;
 import play.jobs.Job;
 
 import java.util.List;
 import java.util.Date;
+
+import utils.*;
+
 /**
  * Created by boxizen on 15/8/22.
  */
@@ -16,24 +20,46 @@ public class Notification extends Job {
 
     @Override
     public void doJob(){
+
         List<Remind> remindList = Remind.findAll();
+        Date now = new Date();
 
-        for(int i = 0; i < remindList.size(); i++) {
+        try {
+            // 遍历提醒表
+            for (int i = 0; i < remindList.size(); i++) {
 
-            String openid = remindList.get(i).openid;
+                String openid = remindList.get(i).openid;
+                int medRemind = remindList.get(i).medremind;
+                int ymRemind = remindList.get(i).yiremind;
+                int pregRemind = remindList.get(i).healremind;
 
-            int medr = remindList.get(i).medremind;
-            // 查看药品是否过期
-            if(medr == 1) {
-                Date now = new Date();
-                List<Medicine> mList = Medicine.find("byOpenid",openid).fetch();
-                for(int m = 0; m < mList.size(); m++) {
-                    Date dead = mList.get(m).deadline;
-                    if(now.compareTo(dead) == -1) {
-                        // 发送信息提醒
+                // 药品提醒
+                if (medRemind == 1) {
+                    List<Medicine> mList = Medicine.find("byOpenid", openid).fetch();
+                    for (int m = 0; m < mList.size(); m++) {
+                        Date dead = mList.get(m).deadline;
+                        if (now.compareTo(dead) == -1) {
+                            // 设置消息内容
+                            String msg = "您的姨妈要来咯";
+                            String remark = "请好好注意身体哦";
+                            String name = mList.get(m).name;
+                            String endDate = StringUtils.formatDate_yyyy_MM_dd(mList.get(m).deadline);
+                            MsgUtil.sendMedMsg(openid, msg, name, endDate, remark);
+                        }
                     }
                 }
+
+                // 月经提醒
+                if (pregRemind == 1) {
+
+
+                }
+
+
             }
+        }
+        catch(Exception ex) {
+            ex.printStackTrace();
         }
     }
 }

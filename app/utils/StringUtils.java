@@ -26,6 +26,11 @@ public class StringUtils {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss") ; 
 		return sdf.format(date) ;
 	}
+
+	public static String formatDate_yyyy_MM_dd(Date date){
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日") ;
+		return sdf.format(date) ;
+	}
 	
 	public static String formatDate_yyyy_MM_dd_HH_mm_ss_SSS(Date date){
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS") ; 
