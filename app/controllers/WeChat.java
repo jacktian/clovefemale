@@ -170,7 +170,7 @@ public class WeChat extends WebService{
 					if(key.equals("V001_CloveMsg")){
 
 						PicArticle a1 = new PicArticle();
-						List<Article> articleList = Article.find("byType","1").fetch();
+						List<Article> articleList = Article.find("byTypeAndPrioty","1","1").fetch();
 						a1.title = articleList.get(0).title;
 						a1.picUrl = articleList.get(0).picUrl;
 						a1.url = articleList.get(0).url;
