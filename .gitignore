@@ -13,3 +13,4 @@ test
 *.iml
 *.ipr
 *.iws
+conf/
