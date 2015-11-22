@@ -170,7 +170,7 @@ public class WeChat extends WebService{
 					if(key.equals("V001_CloveMsg")){
 
 						PicArticle a1 = new PicArticle();
-						List<Article> articleList = Article.find("byTypeAndPrioty","1","1").fetch();
+						List<Article> articleList = Article.find("byType","1").fetch();
 						a1.title = articleList.get(0).title;
 						a1.picUrl = articleList.get(0).picUrl;
 						a1.url = articleList.get(0).url;
@@ -195,7 +195,7 @@ public class WeChat extends WebService{
 						list.add(a2);
 						list.add(a3);
 						response.articleList = list;
-						response.articleCount = articleList.size();
+						response.articleCount = list.size();
 						renderText(response);
 					}else if(key.equals("V002_CloveMsg")){
 
@@ -225,7 +225,7 @@ public class WeChat extends WebService{
 						list.add(a2);
 						list.add(a3);
 						response.articleList = list;
-						response.articleCount = articleList.size();
+						response.articleCount = list.size();
 						renderText(response);
 					}
 					//会员绑定
