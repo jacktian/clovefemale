@@ -7,18 +7,9 @@ import java.util.List;
 import java.util.Map;
 
 
-
-
-
-
-
-
+import models.*;
 
 import models.Client;
-import models.MedicineBox;
-import models.User;
-import models.Remind;
-
 import org.h2.store.Page;
 import org.jboss.netty.handler.codec.http.HttpRequest;
 import org.jsoup.Jsoup;
@@ -61,7 +52,7 @@ public class WeChat extends WebService{
 	/**
 	 * 接收来自微信服务器的消息
 	 */
-	public static void process(){
+	public static void process() {
 		//如果是get请求，则执行令牌验证
 		if(request.method.toLowerCase().equals("get")){
 			if(SignUtil.checkSignature(params.get("signature"), params.get("timestamp"), params.get("nonce"))){
@@ -177,49 +168,63 @@ public class WeChat extends WebService{
 					response.createTime = System.currentTimeMillis();
 					//丁香咨询
 					if(key.equals("V001_CloveMsg")){
+
 						PicArticle a1 = new PicArticle();
-						a1.title = "超重准妈妈的胎儿更易缺氧";
-						a1.picUrl = "http://t.im/hypoxia";
-						a1.url = "http://t.im/mev2";
-						a1.desciption = "";
+						List<Article> articleList = Article.find("byTypeAndPrioty","1","1").fetch();
+						a1.title = articleList.get(0).title;
+						a1.picUrl = articleList.get(0).picUrl;
+						a1.url = articleList.get(0).url;
+						a1.desciption = articleList.get(0).description;
+
 						PicArticle a2 = new PicArticle();
-						a2.title = "宝宝夏季出游去海边带点什么好呢?";
-						a2.picUrl = "http://t.im/tourismimg";
-						a2.url = "http://t.im/tourism";
-						a2.desciption = "";
+						articleList = Article.find("byTypeAndPrioty","1","2").fetch();
+						a2.title = articleList.get(0).title;
+						a2.picUrl = articleList.get(0).picUrl;
+						a2.url = articleList.get(0).url;
+						a2.desciption = articleList.get(0).description;
+
 						PicArticle a3 = new PicArticle();
-						a3.title = "父母近视真的会遗传给孩子吗？快来看看真相...";
-						a3.picUrl = "http://t.im/myopiaimg";
-						a3.url = "http://t.im/myopia";
-						a3.desciption = "";
-						List<PicArticle> articleList = new ArrayList();
-						articleList.add(a1);
-						articleList.add(a2);
-						articleList.add(a3);
-						response.articleList = articleList;
+						articleList = Article.find("byTypeAndPrioty","1","3").fetch();
+						a3.title = articleList.get(0).title;
+						a3.picUrl = articleList.get(0).picUrl;
+						a3.url = articleList.get(0).url;
+						a3.desciption = articleList.get(0).description;
+
+						List<PicArticle> list = new ArrayList();
+						list.add(a1);
+						list.add(a2);
+						list.add(a3);
+						response.articleList = list;
 						response.articleCount = articleList.size();
 						renderText(response);
 					}else if(key.equals("V002_CloveMsg")){
+
 						PicArticle a1 = new PicArticle();
-						a1.title = "超重准妈妈的胎儿更易缺氧";
-						a1.picUrl = "http://t.im/hypoxia";
-						a1.url = "http://t.im/mev2";
-						a1.desciption = "";
+						List<Article> articleList = Article.find("byTypeAndPrioty","2","1").fetch();
+						a1.title = articleList.get(0).title;
+						a1.picUrl = articleList.get(0).picUrl;
+						a1.url = articleList.get(0).url;
+						a1.desciption = articleList.get(0).description;
+
 						PicArticle a2 = new PicArticle();
-						a2.title = "宝宝夏季出游去海边带点什么好呢?";
-						a2.picUrl = "http://t.im/tourismimg";
-						a2.url = "http://t.im/tourism";
-						a2.desciption = "";
+						articleList = Article.find("byTypeAndPrioty","2","2").fetch();
+						a2.title = articleList.get(0).title;
+						a2.picUrl = articleList.get(0).picUrl;
+						a2.url = articleList.get(0).url;
+						a2.desciption = articleList.get(0).description;
+
 						PicArticle a3 = new PicArticle();
-						a3.title = "父母近视真的会遗传给孩子吗？快来看看真相...";
-						a3.picUrl = "http://t.im/myopiaimg";
-						a3.url = "http://t.im/myopia";
-						a3.desciption = "";
-						List<PicArticle> articleList = new ArrayList();
-						articleList.add(a1);
-						articleList.add(a2);
-						articleList.add(a3);
-						response.articleList = articleList;
+						articleList = Article.find("byTypeAndPrioty","2","3").fetch();
+						a3.title = articleList.get(0).title;
+						a3.picUrl = articleList.get(0).picUrl;
+						a3.url = articleList.get(0).url;
+						a3.desciption = articleList.get(0).description;
+
+						List<PicArticle> list = new ArrayList();
+						list.add(a1);
+						list.add(a2);
+						list.add(a3);
+						response.articleList = list;
 						response.articleCount = articleList.size();
 						renderText(response);
 					}
@@ -302,7 +307,7 @@ public class WeChat extends WebService{
 	/**
 	 * 获取access_token
 	 */
-	public static void getAccessToken(){
+	public static void getAccessToken() {
 		/* 从配置文件中获取appKey与appSecret */
 		String appKey = Play.configuration.getProperty("wechat_appkey");
 		String appSecret = Play.configuration.getProperty("wechat_secret");

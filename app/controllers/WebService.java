@@ -55,7 +55,7 @@ public abstract class WebService extends XController {
     	bean.data=data;
     	Gson gson = new Gson();
     	String json = gson.toJson(bean);
-    	renderJSON(jsonP(callback,json));
+    	renderJSON(jsonP(callback, json));
     }
     
     static void wsErrorAsJsonP(Object data){
