@@ -39,4 +39,14 @@ public class ArticleAction extends WebService  {
 
         wsOkAsJsonP(Article.findAll());
     }
+
+    public static void delarticle(String id) {
+        Article article = Article.findById(id);
+
+        if(article!=null) {
+            article.delete();
+        }
+
+        wsOkAsJsonP(Article.findAll());
+    }
 }

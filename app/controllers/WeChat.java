@@ -170,60 +170,72 @@ public class WeChat extends WebService{
 					if(key.equals("V001_CloveMsg")){
 
 						PicArticle a1 = new PicArticle();
+						List<PicArticle> list = new ArrayList();
+
 						List<Article> articleList = Article.find("byTypeAndPrioty","1","1").fetch();
-						a1.title = articleList.get(0).title;
-						a1.picUrl = articleList.get(0).picUrl;
-						a1.url = articleList.get(0).url;
-						a1.desciption = articleList.get(0).description;
+						if(articleList.size()>0) {
+							a1.title = articleList.get(0).title;
+							a1.picUrl = articleList.get(0).picUrl;
+							a1.url = articleList.get(0).url;
+							a1.desciption = articleList.get(0).description;
+							list.add(a1);
+						}
 
 						PicArticle a2 = new PicArticle();
 						articleList = Article.find("byTypeAndPrioty","1","2").fetch();
-						a2.title = articleList.get(0).title;
-						a2.picUrl = articleList.get(0).picUrl;
-						a2.url = articleList.get(0).url;
-						a2.desciption = articleList.get(0).description;
+						if(articleList.size()>0) {
+							a2.title = articleList.get(0).title;
+							a2.picUrl = articleList.get(0).picUrl;
+							a2.url = articleList.get(0).url;
+							a2.desciption = articleList.get(0).description;
+							list.add(a2);
+						}
 
 						PicArticle a3 = new PicArticle();
 						articleList = Article.find("byTypeAndPrioty","1","3").fetch();
-						a3.title = articleList.get(0).title;
-						a3.picUrl = articleList.get(0).picUrl;
-						a3.url = articleList.get(0).url;
-						a3.desciption = articleList.get(0).description;
-
-						List<PicArticle> list = new ArrayList();
-						list.add(a1);
-						list.add(a2);
-						list.add(a3);
+						if(articleList.size()>0) {
+							a3.title = articleList.get(0).title;
+							a3.picUrl = articleList.get(0).picUrl;
+							a3.url = articleList.get(0).url;
+							a3.desciption = articleList.get(0).description;
+							list.add(a3);
+						}
 						response.articleList = list;
 						response.articleCount = list.size();
 						renderText(response);
 					}else if(key.equals("V002_CloveMsg")){
 
 						PicArticle a1 = new PicArticle();
+						List<PicArticle> list = new ArrayList();
 						List<Article> articleList = Article.find("byTypeAndPrioty","2","1").fetch();
-						a1.title = articleList.get(0).title;
-						a1.picUrl = articleList.get(0).picUrl;
-						a1.url = articleList.get(0).url;
-						a1.desciption = articleList.get(0).description;
+						if(articleList.size()>0) {
+							a1.title = articleList.get(0).title;
+							a1.picUrl = articleList.get(0).picUrl;
+							a1.url = articleList.get(0).url;
+							a1.desciption = articleList.get(0).description;
+							list.add(a1);
+						}
 
 						PicArticle a2 = new PicArticle();
 						articleList = Article.find("byTypeAndPrioty","2","2").fetch();
-						a2.title = articleList.get(0).title;
-						a2.picUrl = articleList.get(0).picUrl;
-						a2.url = articleList.get(0).url;
-						a2.desciption = articleList.get(0).description;
+						if(articleList.size()>0) {
+							a2.title = articleList.get(0).title;
+							a2.picUrl = articleList.get(0).picUrl;
+							a2.url = articleList.get(0).url;
+							a2.desciption = articleList.get(0).description;
+							list.add(a2);
+						}
 
 						PicArticle a3 = new PicArticle();
 						articleList = Article.find("byTypeAndPrioty","2","3").fetch();
-						a3.title = articleList.get(0).title;
-						a3.picUrl = articleList.get(0).picUrl;
-						a3.url = articleList.get(0).url;
-						a3.desciption = articleList.get(0).description;
+						if(articleList.size()>0) {
+							a3.title = articleList.get(0).title;
+							a3.picUrl = articleList.get(0).picUrl;
+							a3.url = articleList.get(0).url;
+							a3.desciption = articleList.get(0).description;
+							list.add(a3);
+						}
 
-						List<PicArticle> list = new ArrayList();
-						list.add(a1);
-						list.add(a2);
-						list.add(a3);
 						response.articleList = list;
 						response.articleCount = list.size();
 						renderText(response);
