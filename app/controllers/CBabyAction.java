@@ -49,9 +49,9 @@ public class CBabyAction extends WebService{
 		
 //		String openid = "ob1R-uIRkLLp6lmmrT4w-2rrZ5jQ";
 		String openid = session.get("openid");//从session中获取openid
-		/*if(openid == null){
+		if(openid == null){
 			openid = "ob1R-uIRkLLp6lmmrT4w-2rrZ5jQ";
-		}*/
+		}
 		String queryString = "select new Baby(b.id,b.userId,b.date,CONCAT(TIMESTAMPDIFF(YEAR,b.date,now()),''),b.headImgUrl,b.sex,b.name) " +
 				" from Baby b where b.userId = ?1";
 		

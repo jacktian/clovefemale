@@ -428,7 +428,7 @@ public class VacUtil {
 				babyVac.etmDate = cld.getTime();
 				babyVac.vacId = vac.id;
 				babyVac.isDone = "0";//"0"表示未来接种
-				babyVac.remindTime = DateUtil.dateAdd(babyVac.etmDate, remind.yi_adv_day);//生成接种提醒日期	
+				babyVac.remindTime = DateUtil.dateAdd(babyVac.etmDate, -remind.yi_adv_day);//生成接种提醒日期	
 				babyVac.save();
 			}
 			
@@ -484,7 +484,7 @@ public class VacUtil {
 						cld.add(Calendar.DATE,8);
 					}
 					babyVac.etmDate = cld.getTime();
-					babyVac.remindTime = DateUtil.dateAdd(birthday,-advDay);
+					babyVac.remindTime = DateUtil.dateAdd(babyVac.etmDate,-advDay);
 					babyVac.save();
 				}			
 			}
@@ -500,13 +500,13 @@ public class VacUtil {
 	 */
 	public static boolean modifyUserBabyRemind(String openid){
 		List<Baby> babyList = Baby.find("byPid", openid).fetch();
-		System.out.println("babySize:"+babyList.size());
+		//System.out.println("babySize:"+babyList.size());
 		boolean result = true;
 		if(babyList == null && babyList.size() == 0){
 			return true;
 		}
 		for(int i = 0; i < babyList.size(); i++){
-			System.out.println("babyIndex:"+i);
+			//System.out.println("babyIndex:"+i);
 			result = modifyRemindTime(openid,babyList.get(i).id);//userId
 			if(result == false){
 				return false;
@@ -546,7 +546,7 @@ public class VacUtil {
 			if(babyVacList != null && babyVacList.size() != 0){
 				for(int i = 0;  i < babyVacList.size(); i++){
 					BabyVac babyVac = babyVacList.get(i);
-					babyVac.remindTime = DateUtil.dateAdd(birthday,-advDay);
+					babyVac.remindTime = DateUtil.dateAdd(babyVac.etmDate,-advDay);
 					babyVac.save();
 				}
 			}

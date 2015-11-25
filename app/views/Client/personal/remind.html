@@ -8,21 +8,18 @@
 </header>
 
 <ul class="mui-table-view navList remindList">
-  <li  class="mui-table-view-cell">
-  <!-- <a class="mui-navigate-right"> -->
+  <!-- <li  class="mui-table-view-cell">
     <div id="remindItem_phy" class="remind-item">
     <div class="listItemIcon">
       <i class="icon-remindItem iconfont">&#xe7af;</i>
     </div>
-   <!--  <a href="" class="mui-navigate-right"></a> -->
    生理记录提醒
    <div class="remindDate">提前<span id="remindDate_phy"></span>天</div>
    </div>
     <div id="toggle-phy" class="mui-switch mui-switch-mini">
       <div class="mui-switch-handle"></div>
     </div>
-    <!-- </a> -->
-  </li>
+  </li> -->
   <li class="mui-table-view-cell">
   <!-- <a class="mui-navigate-right"> -->
     <div id="remindItem_med"  class="remind-item">
@@ -98,18 +95,19 @@
       loadRemindInf();
 
       /*点击生理记录提醒*/
-      document.getElementById("remindItem_phy").addEventListener("tap",function(event){
-        if(!tapToggle){
-          showRemindBox("生理记录提醒");
-          setItem = 0;
-        }
-        tapToggle = false;
-      });
+      // document.getElementById("remindItem_phy").addEventListener("tap",function(event){
+      //   if(!tapToggle){
+      //     showRemindBox("生理记录提醒");
+      //     setItem = 0;
+      //   }
+      //   tapToggle = false;
+      // });
 
       /*点击药品到期提醒*/
       document.getElementById("remindItem_med").addEventListener("tap",function(event){
           if(!tapToggle){
-            showRemindBox("药品到期提醒");
+            var day = $("#remindDate_med").text();
+            showRemindBox("药品到期提醒",day);
             setItem = 1;
           }
           
@@ -119,7 +117,8 @@
       /*点击疫苗接种提醒*/
       document.getElementById("remindItem_vac").addEventListener("tap",function(event){
           if(!tapToggle){
-            showRemindBox("疫苗接种提醒");
+            var day = $("#remindDate_vac").text();
+            showRemindBox("疫苗接种提醒",day);
             setItem = 2;  
           }
           tapToggle = false;
@@ -165,25 +164,25 @@
       });
 
        /*生理记录开关*/
-      document.getElementById("toggle-phy").addEventListener("toggle",function(event){
-        if(toggle_auto_back_phy == false){
-          tapToggle = true;
-          var open = false;
-          var status = 0;
-          var result = 1;
-          if(event.detail.isActive){
-            open = true;
-            status = 1;
-            modifyRemingdSetting("healremind",status);
-          }else{
-            status = 0;
-            modifyRemingdSetting("healremind",status);
-          }
-        }else{
-          toggle_auto_back_phy = false;
-        }
+      // document.getElementById("toggle-phy").addEventListener("toggle",function(event){
+      //   if(toggle_auto_back_phy == false){
+      //     tapToggle = true;
+      //     var open = false;
+      //     var status = 0;
+      //     var result = 1;
+      //     if(event.detail.isActive){
+      //       open = true;
+      //       status = 1;
+      //       modifyRemingdSetting("healremind",status);
+      //     }else{
+      //       status = 0;
+      //       modifyRemingdSetting("healremind",status);
+      //     }
+      //   }else{
+      //     toggle_auto_back_phy = false;
+      //   }
         
-      })
+      // })
 
 
       /*药品到期开关*/
@@ -247,11 +246,11 @@
       });
  });//结束$(funciton)
 
-  function showRemindBox(title){
+  function showRemindBox(title,day){
       $(".model-title").text(title);
-      $(".stressDate").text("7");
+      $(".stressDate").text(day);
       mui('.modifyRemindDate').popover('toggle');
-      $('#scroller_remind').mobiscroll('setVal', 7, true, true, false, 0);
+      $('#scroller_remind').mobiscroll('setVal', day, true, true, false, 0);
   }
 
   /*展示操作信息*/
