@@ -66,4 +66,20 @@ public class DateUtil {
 		Date newDate = date.getTime();
 		return newDate;
 	}
+
+	public static int getMonthBetween(Date startDate,Date endDate){
+		int result = 0;
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        Calendar c1 = Calendar.getInstance();
+        Calendar c2 = Calendar.getInstance();
+
+        c1.setTime(startDate);
+        c2.setTime(endDate);
+
+        result = c2.get(Calendar.MONTH) - c1.get(Calendar.MONTH);
+
+        return result ;//== 0 ? 1 : Math.abs(result);
+	}
 }

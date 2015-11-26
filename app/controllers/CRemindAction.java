@@ -172,9 +172,9 @@ public class CRemindAction extends WebService {
 		}	
 	}
 
-	public static void testDate(){
-		Date now = new Date();
-		wsOk(DateUtil.dateAdd(now,2));
+	public static void test(){
+		List<Baby> babyList = Baby.findAll();
+		wsOk(babyList);
 	}
 
 	public static void vacNotifi(){

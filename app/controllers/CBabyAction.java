@@ -34,6 +34,7 @@ import models.WeChat;
 import beans.BabyVacBean;
 
 import utils.VacUtil;
+import utils.DateUtil;
 
 /**
  * 客户端婴儿控制器
@@ -52,15 +53,33 @@ public class CBabyAction extends WebService{
 		if(openid == null){
 			openid = "ob1R-uIRkLLp6lmmrT4w-2rrZ5jQ";
 		}
-		String queryString = "select new Baby(b.id,b.userId,b.date,CONCAT(TIMESTAMPDIFF(YEAR,b.date,now()),''),b.headImgUrl,b.sex,b.name) " +
+		// String queryString = "select new Baby(b.id,b.userId,b.date,CONCAT(IF(TIMESTAMPDIFF(YEAR,b.date,now())=0,CONCAT(MONTHS_BETWEEN(b.date,now()),'个月'),CONCAT(TIMESTAMPDIFF(YEAR,b.date,now())+'岁'),'岁'),b.headImgUrl,b.sex,b.name) " +
+		// 		" from Baby b where b.userId = ?1";
+
+			String queryString = "select new Baby(b.id,b.userId,b.date,CONCAT(TIMESTAMPDIFF(YEAR,b.date,now()),''),b.headImgUrl,b.sex,b.name) " +
 				" from Baby b where b.userId = ?1";
+				// CONCAT(MONTHS_BETWEEN(b.date,now()),'月')
+	//	IF(TIMESTAMPDIFF(YEAR,b.date,now())=0,CONCAT(MONTHS_BETWEEN(b.date,now()),'个月'),CONCAT(TIMESTAMPDIFF(YEAR,b.date,now()),'岁'))
 		
 		List<Baby> babyList =  new ArrayList<Baby>();
 		try{
 			Query query = JPA.em().createQuery(queryString);
 			query.setParameter(1, openid);//给编号为1的参数设值 
 			babyList  = query.getResultList();
+			Date now = new Date();
 			if(babyList.size() != 0){
+				for(int i = 0; i < babyList.size(); i++){
+					if("0".equals(babyList.get(i).dateStr)){
+						int month = DateUtil.getMonthBetween(babyList.get(i).date,now);
+						if(month <= 0){
+							babyList.get(i).dateStr = "初生儿";
+						}else{
+							babyList.get(i).dateStr = month+"个月"; 
+						}
+					}else{
+						babyList.get(i).dateStr = babyList.get(i).dateStr + "岁";
+					}
+				}
 				wsOk(babyList);
 			}else{
 				wsError("找不到宝宝");
