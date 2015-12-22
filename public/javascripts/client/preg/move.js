@@ -93,7 +93,7 @@ $(function() {
 
       var min_pregm_int = min_pregm - 1;
       if(min_pregm_int < 0) min_pregm_int = 0;
-      var max_pregm_int = ((max_pregm - min_pregm + 1 - 1) / 5 + 1) * 5 + min_pregm;
+      var max_pregm_int = (parseInt((max_pregm - min_pregm - 1) / 5) + 1) * 5 + min_pregm;
 
 
       var loadMoveChart = function() {
