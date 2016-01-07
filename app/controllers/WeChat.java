@@ -144,15 +144,54 @@ public class WeChat extends WebService{
 					}
 
 					// 自动回复用户信息
-					WeChatResponse resp1 = new WeChatResponse();
+					/*WeChatResponse resp1 = new WeChatResponse();
 					resp1.toUserName = bean.fromUserName;
 					resp1.fromUserName = bean.toUserName;
 					resp1.createTime = bean.createTime;
 					resp1.msgType = "text";
 					resp1.content = "欢迎您的到来。我们希望为家庭开发实用的工具小软件，如果还需增加您想要的功能，可以按屏幕左下角，发送语音或文字提醒我们，帮助我们成长。本软件的使用方法可在个人中心找到。本公众号的理念：家庭助理，助力家庭。";
-					renderText(resp1);
+					renderText(resp1);*/
 
+					WeChatPicMsgResponse response = new WeChatPicMsgResponse();
+					response.fromUserName = bean.toUserName;
+					response.toUserName = bean.fromUserName;
+					response.msgType = "news";
+					response.createTime = System.currentTimeMillis();
+					
+					PicArticle a1 = new PicArticle();
+					List<PicArticle> list = new ArrayList();
+					List<Article> articleList = Article.find("byTypeAndPrioty","2","1").fetch();
+					if(articleList.size()>0) {
+						a1.title = articleList.get(0).title;
+						a1.picUrl = articleList.get(0).picUrl;
+						a1.url = articleList.get(0).url;
+						a1.desciption = articleList.get(0).description;
+						list.add(a1);
+					}
 
+					PicArticle a2 = new PicArticle();
+					articleList = Article.find("byTypeAndPrioty","2","2").fetch();
+					if(articleList.size()>0) {
+						a2.title = articleList.get(0).title;
+						a2.picUrl = articleList.get(0).picUrl;
+						a2.url = articleList.get(0).url;
+						a2.desciption = articleList.get(0).description;
+						list.add(a2);
+					}
+
+					PicArticle a3 = new PicArticle();
+					articleList = Article.find("byTypeAndPrioty","2","3").fetch();
+					if(articleList.size()>0) {
+						a3.title = articleList.get(0).title;
+						a3.picUrl = articleList.get(0).picUrl;
+						a3.url = articleList.get(0).url;
+						a3.desciption = articleList.get(0).description;
+						list.add(a3);
+					}
+
+					response.articleList = list;
+					response.articleCount = list.size();
+					renderText(response);
 		
 				}
 				//丁香资讯
