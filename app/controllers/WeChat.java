@@ -157,37 +157,37 @@ public class WeChat extends WebService{
 					response.toUserName = bean.fromUserName;
 					response.msgType = "news";
 					response.createTime = System.currentTimeMillis();
-					
-					PicArticle a1 = new PicArticle();
+
 					List<PicArticle> list = new ArrayList();
-					List<Article> articleList = Article.find("byTypeAndPrioty","2","1").fetch();
-					if(articleList.size()>0) {
-						a1.title = articleList.get(0).title;
-						a1.picUrl = articleList.get(0).picUrl;
-						a1.url = articleList.get(0).url;
-						a1.desciption = articleList.get(0).description;
+					PicArticle a1 = new PicArticle();
+					//List<Article> articleList = Article.find("byTypeAndPrioty","2","1").fetch();
+					//if(articleList.size()>0) {
+						a1.title = "关于家庭助理";
+						a1.picUrl = "http://mmbiz.qpic.cn/mmbiz/iad5fRhd8Vp1yKhCmQprGibcRl54ZZ3MCEV6P6niaHQn4Pbf9u4ic5NojWq1LBlmlvib43yaiapYGYFjkjHMN0gNgkjw/640?wx_fmt=jpeg&tp=webp&wxfrom=5";
+						a1.url = "http://mp.weixin.qq.com/s?__biz=MzIyNTAxNDc2NA==&mid=211340236&idx=1&sn=48cadd8ab8a474fc2bba147d1acbad69&scene=4#wechat_redirect";
+						a1.desciption = "关于家庭助理";
 						list.add(a1);
-					}
+					//}
 
 					PicArticle a2 = new PicArticle();
-					articleList = Article.find("byTypeAndPrioty","2","2").fetch();
-					if(articleList.size()>0) {
-						a2.title = articleList.get(0).title;
-						a2.picUrl = articleList.get(0).picUrl;
-						a2.url = articleList.get(0).url;
-						a2.desciption = articleList.get(0).description;
+					//articleList = Article.find("byTypeAndPrioty","2","2").fetch();
+					//if(articleList.size()>0) {
+						a2.title = "使用声明";
+						a2.picUrl = "http://mmbiz.qpic.cn/mmbiz/iad5fRhd8Vp1yKhCmQprGibcRl54ZZ3MCE9106mGMYT9O3D4xibvJeXP8hzNSc5TLAIG7ibUgJxKEbUNiapNaxIDrOA/640?wx_fmt=jpeg&tp=webp&wxfrom=5";
+						a2.url = "http://mp.weixin.qq.com/s?__biz=MzIyNTAxNDc2NA==&mid=211340236&idx=2&sn=e7b269b7206ef58785af413f5ed19143&scene=4#wechat_redirect";
+						a2.desciption = "使用声明";
 						list.add(a2);
-					}
+					//}
 
 					PicArticle a3 = new PicArticle();
-					articleList = Article.find("byTypeAndPrioty","2","3").fetch();
-					if(articleList.size()>0) {
-						a3.title = articleList.get(0).title;
-						a3.picUrl = articleList.get(0).picUrl;
-						a3.url = articleList.get(0).url;
-						a3.desciption = articleList.get(0).description;
+					//articleList = Article.find("byTypeAndPrioty","2","3").fetch();
+					//if(articleList.size()>0) {
+						a3.title = "常见问题";
+						a3.picUrl = "http://mmbiz.qpic.cn/mmbiz/iad5fRhd8Vp1yKhCmQprGibcRl54ZZ3MCE3dxhlZGhPnxUYiaAYxvJ8eD5hTjluhuez5J1pib8ZJq9pXwhicY4xkySg/640?wx_fmt=jpeg&tp=webp&wxfrom=5";
+						a3.url = "http://mp.weixin.qq.com/s?__biz=MzIyNTAxNDc2NA==&mid=211340236&idx=3&sn=26b5067951fab54db46677cb139aec8a&scene=4#wechat_redirect";
+						a3.desciption = "常见问题";
 						list.add(a3);
-					}
+					//}
 
 					response.articleList = list;
 					response.articleCount = list.size();
