@@ -163,8 +163,8 @@ public class WeChat extends WebService{
 					//List<Article> articleList = Article.find("byTypeAndPrioty","2","1").fetch();
 					//if(articleList.size()>0) {
 						a1.title = "关于家庭助理";
-						a1.picUrl = "http://mmbiz.qpic.cn/mmbiz/iad5fRhd8Vp1yKhCmQprGibcRl54ZZ3MCEV6P6niaHQn4Pbf9u4ic5NojWq1LBlmlvib43yaiapYGYFjkjHMN0gNgkjw/640?wx_fmt=jpeg&tp=webp&wxfrom=5";
-						a1.url = "http://mp.weixin.qq.com/s?__biz=MzIyNTAxNDc2NA==&mid=211340236&idx=1&sn=48cadd8ab8a474fc2bba147d1acbad69&scene=4#wechat_redirect";
+						a1.picUrl = "http://mmbiz.qpic.cn/mmbiz/iad5fRhd8Vp1ImoPHN0tsMSTEomNVM8ae6JcicNmHicOxk9DzwWkJHRmCegNQbtTmKKcYCgTjjibycD6dq2UicobKGw/640?wx_fmt=jpeg&tp=webp&wxfrom=5";
+						a1.url = "http://mp.weixin.qq.com/s?__biz=MzIyNTAxNDc2NA==&mid=403403758&idx=1&sn=ac6aa38fff7a7742d9c998c6e5f7c62a&scene=0#wechat_redirect";
 						a1.desciption = "关于家庭助理";
 						list.add(a1);
 					//}
